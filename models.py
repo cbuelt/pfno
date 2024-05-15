@@ -142,7 +142,7 @@ class FNO_reparam(FNO, name = "FNO_reparam"):
         sigma = nn.functional.softplus(self.sigma(x)).unsqueeze(-1)
 
         # Reparameterization trick
-        x = mu + sigma * torch.randn(*mu.shape[:-1], n_samples)
+        x = mu + sigma * torch.randn(*mu.shape[:-1], n_samples).to(x.device)
         return x
 
 # Factorized FNO
