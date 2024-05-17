@@ -408,8 +408,7 @@ class VariogramScore(object):
         term_1 = torch.pow(torch.abs(torch.unsqueeze(y_flat, dim = -1) - torch.unsqueeze(y_flat, dim = -2)), self.p)
         term_2 = torch.pow(torch.abs(torch.unsqueeze(x_flat, dim = -1) - torch.unsqueeze(x_flat, dim = -2)), self.p)
 
-
-        score = torch.sum(weights * term_1, dim = (-2,-1)) - torch.sum(weights * torch.mean(term_2, dim = 1, keepdim=True), dim = (-2,-1))
+        score = torch.sum(weights * torch.pow(term_1 - torch.mean(term_2, dim = 1, keepdim=True), 2), dim = (-2,-1))
 
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score
