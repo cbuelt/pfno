@@ -345,15 +345,16 @@ class KernelScore(object):
         K2 = self.norm(x_flat, x_flat, const = const, p = self.p)
 
         if self.kernel == "laplace":
-            K1 = torch.exp(-K1/(2*np.power(self.gamma,2)))
-            K2 = torch.exp(-K2/(2*np.power(self.gamma,2)))
+            K1 = torch.exp(-K1/(2*self.gamma**2))
+            K2 = torch.exp(-K2/(2*self.gamma**2))
         elif self.kernel == "gauss":
-            K1 = torch.exp(- np.power(K1/(2*self.gamma),2))
-            K2 = torch.exp(- np.power(K2/(2*self.gamma),2))
+            K1 = torch.exp(- torch.pow(K1/(2*self.gamma),2))
+            K2 = torch.exp(- torch.pow(K2/(2*self.gamma),2))
 
         # Calculate kernel score
-        score = torch.sum(K2-torch.eye(n_samples), dim = (1,2)) / (2 * n_samples * (n_samples - 1)) - torch.mean(K1, dim=(1,2))
-
+        # Remove diag
+        K2 = K2 - torch.eye(n_samples).to(x.device)
+        score = torch.sum(K2, dim = (1,2)) / (2 * n_samples * (n_samples - 1)) - torch.mean(K1, dim=(1,2))
 
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score
@@ -369,9 +370,9 @@ class KernelScore(object):
 if __name__ == '__main__':
     # set torch seed
     torch.manual_seed(0)
-    input = torch.rand(10, 10, 5)
-    truth = torch.ones(10, 10, 1)
-    ks = KernelScore(d = 1, p = 2, type = "p", kernel = "laplace", reduce_dims=False)
+    input = torch.rand(64, 1, 15, 64, 25)
+    truth = torch.rand(64, 1, 15, 64)
+    ks = KernelScore(d = 1, p = 2, type = "p", kernel = "laplace", L = [0.0,50.0], reduce_dims=False, gamma = 10)
 
     score = ks(input, truth)
     print(score.shape)
