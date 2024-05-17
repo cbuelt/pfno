@@ -361,7 +361,61 @@ class KernelScore(object):
 
     def __call__(self, y_pred, y, **kwargs):
         return self.calculate_score(y_pred, y, **kwargs)
+    
 
+
+class VariogramScore(object):
+    def __init__(self, p = 1, reduction = 'mean', reduce_dims = True, **kwargs):
+        super().__init__()
+
+        self.reduction = reduction
+        self.reduce_dims = reduce_dims
+        self.p = kwargs.get('p', 1)
+
+    def reduce(self, x):
+        if self.reduction == "sum":
+            x = torch.sum(x, dim=0, keepdim=True)
+        else:
+            x = torch.mean(x, dim=0, keepdim=True)
+        return x
+
+    def calculate_score(self, x, y, h = None):
+        """Calculates the energy score for different metrics
+
+        Args:
+            x (_type_): Model prediction (Batch size, ..., n_samples)
+            y (_type_): Target (Batch size, ..., 1)
+            h (_type_, optional): _description_. Defaults to None.
+
+        Returns:
+            _type_: Energy score
+        """
+        n_samples = x.size()[-1]
+
+        # Add additional dimension if necessary
+        if len(x.size()) != len(y.size()):
+            y = torch.unsqueeze(y, dim=-1)
+
+        # Restructure tensors to shape (Batch size, n_samples, flatted dims)
+        x_flat = torch.swapaxes(torch.flatten(x, start_dim=1, end_dim=-2), 1, 2)
+        y_flat = torch.swapaxes(torch.flatten(y, start_dim=1, end_dim=-2), 1, 2)
+
+        d = x_flat.size(-1)
+
+
+        # Calculate variogram score
+        weights = (1/d**2)*torch.ones(d,d).to(x.device)
+        term_1 = torch.pow(torch.abs(torch.unsqueeze(y_flat, dim = -1) - torch.unsqueeze(y_flat, dim = -2)), self.p)
+        term_2 = torch.pow(torch.abs(torch.unsqueeze(x_flat, dim = -1) - torch.unsqueeze(x_flat, dim = -2)), self.p)
+
+
+        score = torch.sum(weights * term_1, dim = (-2,-1)) - torch.sum(weights * torch.mean(term_2, dim = 1, keepdim=True), dim = (-2,-1))
+
+        # Reduce
+        return self.reduce(score).squeeze() if self.reduce_dims else score
+
+    def __call__(self, y_pred, y, **kwargs):
+        return self.calculate_score(y_pred, y, **kwargs)
 
 
 
@@ -369,10 +423,10 @@ class KernelScore(object):
     #test with main method
 if __name__ == '__main__':
     # set torch seed
-    torch.manual_seed(0)
-    input = torch.rand(64, 1, 15, 64, 25)
-    truth = torch.rand(64, 1, 15, 64)
-    ks = KernelScore(d = 1, p = 2, type = "p", kernel = "laplace", L = [0.0,50.0], reduce_dims=False, gamma = 10)
+  #  torch.manual_seed(0)
+    input = torch.rand(32, 1, 10, 25)
+    truth = torch.ones(32, 1, 10)
+    ks = VariogramScore()
 
     score = ks(input, truth)
     print(score.shape)
