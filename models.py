@@ -404,12 +404,13 @@ class UNO_reparam(nn.Module):
 
 
 
-class FNO_complex(FNO, name = "FNO_copmlex"):
+class FNO_complex(FNO, name = "FNO_complex"):
     def __init__(
     self,
     n_modes,
     hidden_channels,
     n_samples,
+    output_type = "real",
     in_channels=3,
     out_channels=1,
     lifting_channels=256,
@@ -473,6 +474,7 @@ class FNO_complex(FNO, name = "FNO_copmlex"):
             SpectralConv=SpectralConv,
         )
         self.n_samples = n_samples
+        self.output_type = output_type
 
         # Add complex convolution layer
         self.final_conv = SpectralConv_complex(
@@ -551,23 +553,26 @@ class FNO_complex(FNO, name = "FNO_copmlex"):
         sigma = complex_relu(self.sigma(x)).unsqueeze(-1)
 
         # Reparameterization trick
-        x = mu + sigma * torch.randn(*mu.shape[:-1], n_samples, dtype = torch.complex64).to(x.device)
+       # x = mu + sigma * torch.randn(*mu.shape[:-1], n_samples, dtype = torch.complex64).to(x.device)
 
-        # Return to physical space for sanity check
-        x = torch.fft.irfftn(x, s=mode_sizes, dim=fft_dims, norm=self.fft_norm)
-
-        return x
+        # Return to physical
+        if self.output_type == "real":
+            x = torch.fft.irfftn(x, s=mode_sizes, dim=fft_dims, norm=self.fft_norm)
+            return x
+        elif self.output_type == "complex":
+            return torch.real(x), torch.imag(x)
 
 
 
 # Main method
 if __name__ == '__main__':
     # Create a model
-    model = FNO_complex(n_modes=(64,64), hidden_channels=64, in_channels=2, out_channels=1, n_samples = 10)
+    model = FNO_complex(n_modes=(64,64), hidden_channels=64, in_channels=2, out_channels=1, n_samples = 10, output_type = "complex")
     x = torch.randn(5, 2, 128, 128)
 
-    out = model(x)
+    out, out2 = model(x)
     print(out.shape)
     print(out.dtype)
+    print(out2.dtype)
 
 
