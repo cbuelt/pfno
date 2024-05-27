@@ -494,18 +494,23 @@ class FNO_complex(FNO, name = "FNO_complex"):
         )
 
         # Add a reparameterization layer
-        self.mu = MLP_complex(
-        in_channels=self.hidden_channels,
+        self.mu = MLP(
+        in_channels=hidden_channels,
         out_channels=out_channels,
         hidden_channels=self.projection_channels,
         n_layers=2,
+        n_dim=self.n_dim,
+        non_linearity=self.non_linearity,
     )
+
         
-        self.sigma = MLP_complex(
-        in_channels=self.hidden_channels,
+        self.sigma = MLP(
+        in_channels=hidden_channels,
         out_channels=out_channels,
         hidden_channels=self.projection_channels,
         n_layers=2,
+        n_dim=self.n_dim,
+        non_linearity=self.non_linearity,
     )
         
     def forward(self, x, n_samples = None, output_shape = None, **kwargs):
@@ -524,7 +529,8 @@ class FNO_complex(FNO, name = "FNO_complex"):
 
         batchsize, channels, *mode_sizes = x.shape
         order = len(self.n_modes)
-        fft_dims = list(range(-order-1, -1))
+        fft_dims_in = list(range(-order, 0))
+        fft_dims_out = list(range(-order-1,-1))
 
         if output_shape is None:
             output_shape = [None]*self.n_layers
@@ -545,20 +551,19 @@ class FNO_complex(FNO, name = "FNO_complex"):
         if self.domain_padding is not None:
             x = self.domain_padding.unpad(x)
 
-        # Final layer
-        x = self.final_conv(x)
-
-        # Reprameterization layer
+        # Final layer Fourier transform
         mu = self.mu(x).unsqueeze(-1)
-        sigma = complex_relu(self.sigma(x)).unsqueeze(-1)
+        sigma = self.sigma(x).unsqueeze(-1) + 0.5
+        x = mu + sigma * torch.randn(*mu.shape[:-1], n_samples, ).to(x.device) 
 
-        # Reparameterization trick
-       # x = mu + sigma * torch.randn(*mu.shape[:-1], n_samples, dtype = torch.complex64).to(x.device)
+        x = torch.fft.rfftn(x, norm=self.fft_norm, dim=fft_dims_out)
+
 
         # Return to physical
         if self.output_type == "real":
-            x = torch.fft.irfftn(x, s=mode_sizes, dim=fft_dims, norm=self.fft_norm)
-            return x
+            x = torch.fft.irfftn(x, dim=fft_dims_out, norm=self.fft_norm)
+            return x, None
+        
         elif self.output_type == "complex":
             return torch.real(x), torch.imag(x)
 
@@ -567,7 +572,7 @@ class FNO_complex(FNO, name = "FNO_complex"):
 # Main method
 if __name__ == '__main__':
     # Create a model
-    model = FNO_complex(n_modes=(64,64), hidden_channels=64, in_channels=2, out_channels=1, n_samples = 10, output_type = "complex")
+    model = FNO_complex(n_modes=(64,64), hidden_channels=64, in_channels=2, out_channels=1, n_samples = 10, output_type = "real")
     x = torch.randn(5, 2, 128, 128)
 
     out, out2 = model(x)
