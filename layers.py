@@ -128,6 +128,49 @@ class SpectralConv_complex(SpectralConv):
         return x
     
 
+# Reimplementation of the MLP class using Linear instead of Conv
+class MLPLinear(torch.nn.Module):
+    # Obtain input of shape [Batch, channels, d1, ..., dn]
+    def __init__(self, in_channels, out_channels, hidden_channels, non_linearity=F.gelu, dropout=0.0,
+                 n_layers = 2):
+        super().__init__()
+
+        self.n_layers = n_layers
+
+        assert self.n_layers >= 1
+
+        self.fcs = nn.ModuleList()
+        self.non_linearity = non_linearity
+        self.dropout = (
+            nn.ModuleList([nn.Dropout(dropout) for _ in range(self.n_layers)])
+            if dropout > 0.0
+            else None
+        )
+
+        # Input layer
+        self.fcs.append(torch.nn.Linear(in_channels, hidden_channels))
+        #Hidden layers
+        for j in range(self.n_layers-2):
+            self.fcs.append(torch.nn.Linear(hidden_channels, hidden_channels))
+        # Output layer
+        self.fcs.append(torch.nn.Linear(hidden_channels, out_channels))
+
+    def forward(self, x):
+        # Reorder channel dim to last dim
+        x = torch.movedim(x, 1, -1)
+
+        for i, fc in enumerate(self.fcs):
+            x = fc(x)
+            if i < self.n_layers - 1:
+                x = self.non_linearity(x)
+            if self.dropout is not None:
+                x = self.dropout[i](x)
+        # Return channel dim
+        x = torch.movedim(x, -1, 1)
+
+        return x
+    
+
     # Reimplementation of the MLP class using Linear instead of Conv
 class MLP_complex(torch.nn.Module):
     # Obtain input of shape [Batch, channels, d1, ..., dn]

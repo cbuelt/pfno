@@ -13,7 +13,7 @@ from neuralop.layers.skip_connections import skip_connection
 from neuralop.models.base_model import BaseModel
 from neuralop.models.fno import FNO, partialclass
 from neuralop.models.uno import UNO
-from layers import SpectralConv_complex, MLP_complex
+from layers import SpectralConv_complex, MLP_complex, MLPLinear
 from complexPyTorch.complexFunctions import complex_relu
 
 
@@ -89,23 +89,32 @@ class FNO_reparam(FNO, name = "FNO_reparam"):
         self.n_samples = n_samples
 
         # Add a reparameterization layer
-        self.mu = MLP(
+    #     self.mu = MLP(
+    #     in_channels=self.hidden_channels,
+    #     out_channels=out_channels,
+    #     hidden_channels=self.projection_channels,
+    #     n_layers=2,
+    #     n_dim=self.n_dim,
+    #     non_linearity=self.non_linearity,
+    # )
+        
+    #     self.sigma = MLP(
+    #     in_channels=self.hidden_channels,
+    #     out_channels=out_channels,
+    #     hidden_channels=self.projection_channels,
+    #     n_layers=2,
+    #     n_dim=self.n_dim,
+    #     non_linearity=self.non_linearity,
+    # )
+        
+        self.projection = MLPLinear(
         in_channels=self.hidden_channels,
         out_channels=out_channels,
         hidden_channels=self.projection_channels,
         n_layers=2,
-        n_dim=self.n_dim,
         non_linearity=self.non_linearity,
     )
         
-        self.sigma = MLP(
-        in_channels=self.hidden_channels,
-        out_channels=out_channels,
-        hidden_channels=self.projection_channels,
-        n_layers=2,
-        n_dim=self.n_dim,
-        non_linearity=self.non_linearity,
-    )
         
     def forward(self, x, n_samples = None, output_shape = None, **kwargs):
         """TFNO's forward pass
@@ -140,11 +149,15 @@ class FNO_reparam(FNO, name = "FNO_reparam"):
         if self.domain_padding is not None:
             x = self.domain_padding.unpad(x)
 
-        mu = self.mu(x).unsqueeze(-1)
-        sigma = nn.functional.softplus(self.sigma(x)).unsqueeze(-1)
+      #  mu = self.mu(x).unsqueeze(-1)
+       # sigma = nn.functional.softplus(self.sigma(x)).unsqueeze(-1)
 
         # Reparameterization trick
-        x = mu + sigma * torch.randn(*mu.shape[:-1], n_samples).to(x.device)
+        #x = mu + sigma * torch.randn(*mu.shape[:-1], n_samples).to(x.device)
+
+        # Noise before transformation
+        x = x.unsqueeze(-1) + torch.randn(*x.shape, n_samples).to(x.device)
+        x = self.projection(x)
         return x
 
 # Factorized FNO
@@ -572,12 +585,12 @@ class FNO_complex(FNO, name = "FNO_complex"):
 # Main method
 if __name__ == '__main__':
     # Create a model
-    model = FNO_complex(n_modes=(64,64), hidden_channels=64, in_channels=2, out_channels=1, n_samples = 10, output_type = "real")
+    model = FNO_reparam(n_modes=(64,64), hidden_channels=64, in_channels=2, out_channels=1, n_samples = 10, output_type = "real")
     x = torch.randn(5, 2, 128, 128)
 
-    out, out2 = model(x)
+    out = model(x)
     print(out.shape)
     print(out.dtype)
-    print(out2.dtype)
+
 
 
