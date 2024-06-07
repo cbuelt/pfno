@@ -4,7 +4,7 @@ import h5py
 import numpy as np
 from torch.utils.data.dataset import Dataset
 
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
 class MatReader(object):
@@ -63,7 +63,7 @@ class MatReader(object):
 
 class TensorDataset(Dataset):
     def __init__(self, x, y, transform_x=None, transform_y=None):
-        assert (x.size(0) == y.size(0)), "Size mismatch between tensors"
+        assert x.size(0) == y.size(0), "Size mismatch between tensors"
         self.x = x
         self.y = y
         self.transform_x = transform_x
@@ -72,24 +72,24 @@ class TensorDataset(Dataset):
     def __getitem__(self, index):
         x = self.x[index]
         y = self.y[index]
-        
+
         if self.transform_x is not None:
             x = self.transform_x(x)
 
         if self.transform_y is not None:
             y = self.transform_y(y)
 
-        return {'x': x, 'y':y}
+        return {"x": x, "y": y}
 
     def __len__(self):
         return self.x.size(0)
 
 
-def get_dataloaders(path, ntrain, ntest, batch_size, sampling_rate, grid_range = 1):
+def get_dataloaders(path, ntrain, ntest, batch_size, sampling_rate, grid_range=1):
     sub = 2**sampling_rate
     reader = MatReader(path)
-    x_data = reader.read_field("a")[:,::sub]
-    y_data = reader.read_field("u")[:,::sub]
+    x_data = reader.read_field("a")[:, ::sub]
+    y_data = reader.read_field("u")[:, ::sub]
     size_x = x_data.shape[1]
 
     # Add channel dimension
@@ -106,9 +106,11 @@ def get_dataloaders(path, ntrain, ntest, batch_size, sampling_rate, grid_range =
     x_train = torch.cat((x_train, gridx.repeat([ntrain, 1, 1])), dim=1)
     x_test = torch.cat((x_test, gridx.repeat([ntest, 1, 1])), dim=1)
 
-    train_loader = torch.utils.data.DataLoader(TensorDataset(x_train, y_train),
-                                            batch_size=batch_size, shuffle=True)
-    test_loader = torch.utils.data.DataLoader(TensorDataset(x_test, y_test),
-                                            batch_size=batch_size, shuffle=False)
+    train_loader = torch.utils.data.DataLoader(
+        TensorDataset(x_train, y_train), batch_size=batch_size, shuffle=True
+    )
+    test_loader = torch.utils.data.DataLoader(
+        TensorDataset(x_test, y_test), batch_size=batch_size, shuffle=False
+    )
     test_data = [x_test, y_test]
     return train_loader, test_loader, test_data
