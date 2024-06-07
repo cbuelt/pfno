@@ -18,6 +18,41 @@ from complexPyTorch.complexFunctions import complex_relu
 
 
 
+class PFNO_Wrapper(nn.Module):
+    def __init__(self, model: nn.Module, n_samples: int = 3):
+        """ Takes a deterministic model and wraps it to simulate n_samples
+
+        Args:
+            model (nn.Module): Neural network.
+            n_samples (int, optional): Number of output samples. Defaults to 3.
+        """
+        super(PFNO_Wrapper, self).__init__()
+        self.model = model
+        self.n_samples = n_samples
+
+    def forward(self, input, n_samples: int = None):
+        """
+        Forward pass through the network self.n_samples times
+
+        Args:
+            _input: torch Tensor input to the network
+
+        Returns:
+            Outputs of the network, stacked along the last dimension
+            Shape is therefore [batch, out_size, n_samples].
+        """
+
+        if n_samples is None:
+            n_samples = self.n_samples
+
+        outputs = [self.model(input) for _ in range(n_samples)]
+
+        # stack along the second dimension and add a last dimension if missing.
+        return torch.atleast_3d(torch.stack(outputs, dim=-1))
+
+
+
+
 class FNO_reparam(FNO, name = "FNO_reparam"):
     def __init__(
     self,
