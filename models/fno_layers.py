@@ -50,7 +50,6 @@ class MLPLinear(torch.nn.Module):
     def forward(self, x):
         # Reorder channel dim to last dim
         x = torch.movedim(x, 1, -1)
-
         for i, fc in enumerate(self.fcs):
             x = fc(x)
             if i < self.n_layers - 1:
@@ -59,7 +58,7 @@ class MLPLinear(torch.nn.Module):
                 x = self.non_linearity(x)
 
         # Return channel dim
-        x = torch.movedim(x, -1, 1)
+        x = torch.movedim(x, -1, 1)                
         return x
 
 
