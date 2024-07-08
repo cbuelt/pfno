@@ -14,7 +14,7 @@ class DarcyFlowDataset(Dataset):
         test: bool = False,
         beta: float = 1.0,
         downscaling_factor: int = 1,
-    ):
+    ) -> None:
         """Initialize Darcy Flow Dataset
 
         Args:
@@ -41,22 +41,67 @@ class DarcyFlowDataset(Dataset):
         u = self.dataset.u[
             idx, 0, :: self.downscaling_factor, :: self.downscaling_factor
         ].to_numpy()
+        # Create grid
         x = self.dataset["x-coordinate"][:: self.downscaling_factor]
         y = self.dataset["y-coordinate"][:: self.downscaling_factor]
         grid = np.stack(np.meshgrid(x, y))
-        # Stack grid and input
-        tensor_a = torch.cat(
-            (torch.tensor(a).float().unsqueeze(0), torch.tensor(grid).float()), dim=0
-        )
+        tensor_grid = torch.tensor(grid).float()
+        tensor_a = tensor_a.float().unsqueeze(0)
         tensor_u = torch.tensor(u).float().unsqueeze(0)
-        return tensor_a, tensor_u
+        return tensor_a, tensor_u, tensor_grid
+    
+
+class SWEDataset(Dataset):
+    """Shallow Water Equation Dataset."""
+
+    def __init__(
+            self,
+            data_dir: str,
+            test:bool = False,
+            init_steps: int = 10,
+            mode:str = "single",
+            downscaling_factor: int = 1,
+            max_steps: int = 10,
+            ) -> None:
+        
+        if test:
+            self.filename = "swe_test.nc"
+        else:
+            self.filename = "swe_train.nc"
+        self.dataset = xr.open_dataset(data_dir + self.filename)
+        assert isinstance(downscaling_factor, int), "Scaling factor must be Integer"
+        self.downscaling_factor = downscaling_factor
+        self.init_steps = init_steps
+        self.mode = mode
+        self.max_steps = max_steps
+
+
+    def __len__(self):
+        return len(self.dataset["samples"])
+    
+
+    def __getitem__(self, idx):
+        a = self.dataset.data[idx, 0:self.init_steps, ::self.downscaling_factor, ::self.downscaling_factor].to_numpy()
+        if self.mode == "single":
+            u = self.dataset.data[idx, self.init_steps:self.init_steps+1, ::self.downscaling_factor, ::self.downscaling_factor].to_numpy()
+        elif self.mode == "autoregressive":
+            u = self.dataset.data[idx, self.init_steps:self.init_steps+self.max_steps, ::self.downscaling_factor, ::self.downscaling_factor].to_numpy()
+        # Create grid
+        x = self.dataset.coords["x"][::self.downscaling_factor]
+        y = self.dataset.coords["y"][::self.downscaling_factor]
+        grid = np.stack(np.meshgrid(x, y))
+        tensor_grid = torch.tensor(grid).float()
+        tensor_a = torch.tensor(a).float()
+        tensor_u = torch.tensor(u).float()
+        return tensor_a, tensor_u, tensor_grid
 
 
 if __name__ == "__main__":
-    data_dir = "data/DarcyFlow/processed/"
-    dataset = DarcyFlowDataset(data_dir, test=True, beta=1.0, downscaling_factor=1)
-    train_loader = torch.utils.data.DataLoader(dataset, batch_size=32, shuffle=True)
+    data_dir = "data/SWE/processed/"
+    dataset = SWEDataset(data_dir, test=False, downscaling_factor=2, mode = "autoregressive")
+    print(dataset.__len__())
+    train_loader = torch.utils.data.DataLoader(dataset, batch_size=10, shuffle=True)
     for sample in train_loader:
-        a, u = sample
-        print(a.shape, u.shape)
+        a, u, grid = sample
+        print(a.shape, u.shape, grid.shape)
         break

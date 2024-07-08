@@ -39,7 +39,7 @@ def load_dataset(file_path):
         ],
         dim="samples",
     )
-    dataset = xr.Dataset({"data": data_array})
+    dataset = xr.Dataset({"u": data_array})
     return dataset
 
 
