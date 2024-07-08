@@ -7,29 +7,41 @@ from torchvision.datasets.utils import download_url
 import h5py
 
 
-def download_data(data_dir, url_file = "PDEBench/pdebench/data_download/pdebench_data_urls.csv"):
+def download_data(
+    data_dir, url_file="PDEBench/pdebench/data_download/pdebench_data_urls.csv"
+):
     """Download SWE dataset from pdebench
     Args:
         data_dir (_type_): Directory to save the downloaded files.
         url_file (str, optional): Path to csv with urls from pdebench. Defaults to "PDEBench/pdebench/data_download/pdebench_data_urls.csv".
     """
-    url_df= pd.read_csv(url_file)
+    url_df = pd.read_csv(url_file)
     # Filter Darcy Flow
     data_df = url_df[url_df["PDE"].str.lower() == "swe"]
     # Iterate filtered dataframe and download the files
     for index, row in tqdm(data_df.iterrows(), total=data_df.shape[0]):
-        file_path = os.path.join(data_dir+"raw/", row["Path"])
+        file_path = os.path.join(data_dir + "raw/", row["Path"])
         download_url(row["URL"], file_path, row["Filename"], md5=row["MD5"])
 
+
 def load_dataset(file_path):
-    data_raw = h5py.File(file_path, 'r')
+    data_raw = h5py.File(file_path, "r")
     # Get coordinates
     x = data_raw["0000"]["grid"]["x"]
     y = data_raw["0000"]["grid"]["y"]
     t = data_raw["0000"]["grid"]["t"]
-    data_array = xr.concat([xr.DataArray(data_raw[key]["data"][...,0], dims=["time", "x", "y"], coords=[t,x,y]) for key in data_raw.keys()], dim="samples")
+    data_array = xr.concat(
+        [
+            xr.DataArray(
+                data_raw[key]["data"][..., 0], dims=["time", "x", "y"], coords=[t, x, y]
+            )
+            for key in data_raw.keys()
+        ],
+        dim="samples",
+    )
     dataset = xr.Dataset({"data": data_array})
     return dataset
+
 
 def train_test_split(ds, seed, train_size):
     """Split darcy flow dataset into training and testing datasets
@@ -45,12 +57,12 @@ def train_test_split(ds, seed, train_size):
     n_samples = ds.sizes["samples"]
     np.random.seed(seed)
     indices = np.random.permutation(n_samples)
-    train_data = ds.isel(samples=indices[:int(n_samples * train_size)])
-    test_data = ds.isel(samples=indices[int(n_samples * train_size):])
+    train_data = ds.isel(samples=indices[: int(n_samples * train_size)])
+    test_data = ds.isel(samples=indices[int(n_samples * train_size) :])
     return train_data, test_data
 
 
-def main(data_dir, train_split, seed, download = True, remove = True):
+def main(data_dir, train_split, seed, download=True, remove=True):
     """Main function to download, process and split Darcy Flow datasets
 
     Args:
@@ -71,7 +83,7 @@ def main(data_dir, train_split, seed, download = True, remove = True):
     train_data, test_data = train_test_split(ds, seed, train_split)
     train_data.to_netcdf(data_dir + "processed/swe_train.nc")
     test_data.to_netcdf(data_dir + "processed/swe_test.nc")
-        
+
     # Remove raw data
     if remove:
         os.system(f"rm -r {data_dir}/raw")
@@ -83,8 +95,3 @@ if __name__ == "__main__":
     seed = 42
     download = True
     main(data_dir, train_split, seed, download)
-
-
-
-
-
