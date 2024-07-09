@@ -23,6 +23,7 @@ class FNO1d(nn.Module):
             non_linearity = F.gelu,
             dropout_rate = None,
             fourier_dropout_rate = None,
+            type = "complex",
             ):
         """A one-dimensional FNO with n_layers layers of spectral convolutions.
 
@@ -50,6 +51,7 @@ class FNO1d(nn.Module):
         self.non_linearity = non_linearity
         self.dropout_rate = dropout_rate
         self.fourier_dropout_rate = fourier_dropout_rate
+        self.type = type
         # Different dropout ratio in Fourier space
         if self.fourier_dropout_rate is None:
             self.fourier_dropout_rate = dropout_rate
@@ -72,6 +74,7 @@ class FNO1d(nn.Module):
                     out_channels = self.hidden_channels,
                     modes = self.n_modes,
                     dropout_rate=self.fourier_dropout_rate,
+                    type = self.type,
                 )
                 for _ in range(n_layers)
             ]
@@ -134,6 +137,7 @@ class FNO2d(nn.Module):
             non_linearity = F.gelu,
             dropout_rate = None,
             fourier_dropout_rate = None,
+            type = "complex",
             ):
         """A one-dimensional FNO with n_layers layers of spectral convolutions.
 
@@ -160,6 +164,7 @@ class FNO2d(nn.Module):
         self.n_layers = n_layers
         self.non_linearity = non_linearity
         self.dropout_rate = dropout_rate
+        self.type = type
         self.fourier_dropout_rate = fourier_dropout_rate
         # Different dropout ratio in Fourier space
         if self.fourier_dropout_rate is None:
@@ -183,6 +188,7 @@ class FNO2d(nn.Module):
                     out_channels = self.hidden_channels,
                     modes = self.n_modes,
                     dropout_rate=self.fourier_dropout_rate,
+                    type = self.type,
                 )
                 for _ in range(n_layers)
             ]

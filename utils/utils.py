@@ -79,7 +79,7 @@ class TensorDataset(Dataset):
         if self.transform_y is not None:
             y = self.transform_y(y)
 
-        return {"x": x, "y": y}
+        return x,y
 
     def __len__(self):
         return self.x.size(0)

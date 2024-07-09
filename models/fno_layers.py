@@ -63,7 +63,7 @@ class MLPLinear(torch.nn.Module):
 
 
 class SpectralConv1d(nn.Module):
-    def __init__(self, in_channels, out_channels, modes, dropout_rate=None):
+    def __init__(self, in_channels, out_channels, modes, dropout_rate=None, type = "complex"):
         super(SpectralConv1d, self).__init__()
 
         """
@@ -73,12 +73,24 @@ class SpectralConv1d(nn.Module):
         self.in_channels = in_channels
         self.out_channels = out_channels
         self.mode = modes  # Number of Fourier modes
+        self.type = type
 
         self.scale = 1 / (in_channels * out_channels)
-        self.weights = nn.Parameter(
-            self.scale
-            * torch.rand(in_channels, out_channels, self.mode, dtype=torch.cfloat)
-        )
+
+        if self.type == "complex":
+            self.weights = nn.Parameter(
+                self.scale
+                * torch.rand(in_channels, out_channels, self.mode, dtype=torch.cfloat)
+            )
+        elif self.type == "real":
+            self.weights_imag = nn.Parameter(
+                self.scale
+                * torch.rand(in_channels, out_channels, self.mode, dtype=torch.float)
+            )
+            self.weights_real = nn.Parameter(
+                self.scale
+                * torch.rand(in_channels, out_channels, self.mode, dtype=torch.float)
+            )
 
         # Create dropout layer
         self.dropout_rate = dropout_rate
@@ -87,6 +99,11 @@ class SpectralConv1d(nn.Module):
     def compl_mul1d(self, input, weights):
         return torch.einsum("bix,iox->box", input, weights)
     
+    def real_mul1d(self, input, weights_real, weights_imag):
+        real = torch.einsum("bix,iox->box", input.real, weights_real) - torch.einsum("bix,iox->box", input.imag, weights_imag)
+        imag = torch.einsum("bix,iox->box", input.real, weights_imag) + torch.einsum("bix,iox->box", input.imag, weights_real)
+        return torch.complex(real, imag)
+
     # Dropout mask
     def get_dropout_mask(self, weights):
         mask = torch.ones_like(weights.real)
@@ -110,9 +127,14 @@ class SpectralConv1d(nn.Module):
             dtype=torch.cfloat,
         )
 
-        out_ft[:, :, : self.mode] = self.compl_mul1d(
-            x_ft[:, :, : self.mode], self.weights
-        )
+        if self.type == "complex":
+            out_ft[:, :, : self.mode] = self.compl_mul1d(
+                x_ft[:, :, : self.mode], self.weights
+            )
+        elif self.type == "real":
+            out_ft[:, :, : self.mode] = self.real_mul1d(
+                x_ft[:, :, : self.mode], self.weights_real, self.weights_imag
+            )
 
         # Apply dropout        
         out_ft = out_ft * self.get_dropout_mask(out_ft)
@@ -361,8 +383,9 @@ class MLP_complex(torch.nn.Module):
 # Test spectral conv in main method
 if __name__ == "__main__":
     # Create a spectral conv layer
-    layer = SpectralConv2d(in_channels=3, out_channels=2, modes=(32,32), dropout_rate=None)
-    x = torch.rand(5, 3, 64, 64)
+    layer = SpectralConv1d(in_channels=3, out_channels=2, modes=32, dropout_rate=None,
+                           type = "real")
+    x = torch.rand(5, 3, 64)
     y = layer(x)
     print(y.shape)
     print(y.dtype)
