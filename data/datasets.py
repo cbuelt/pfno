@@ -45,10 +45,10 @@ class DarcyFlowDataset(Dataset):
         x = self.dataset["x-coordinate"][:: self.downscaling_factor]
         y = self.dataset["y-coordinate"][:: self.downscaling_factor]
         grid = np.stack(np.meshgrid(x, y))
-        tensor_grid = torch.tensor(grid).float()
-        tensor_a = tensor_a.float().unsqueeze(0)
-        tensor_u = torch.tensor(u).float().unsqueeze(0)
-        return tensor_a, tensor_u, tensor_grid
+        # Stack input and grid
+        tensor_a = torch.cat([torch.tensor(a).unsqueeze(0), torch.tensor(grid)], dim = 0)
+        tensor_u = torch.tensor(u).unsqueeze(0)
+        return tensor_a, tensor_u
     
 
 class SWEDataset(Dataset):
@@ -90,18 +90,19 @@ class SWEDataset(Dataset):
         x = self.dataset.coords["x"][::self.downscaling_factor]
         y = self.dataset.coords["y"][::self.downscaling_factor]
         grid = np.stack(np.meshgrid(x, y))
-        tensor_grid = torch.tensor(grid).float()
-        tensor_a = torch.tensor(a).float()
-        tensor_u = torch.tensor(u).float()
-        return tensor_a, tensor_u, tensor_grid
+        # Stack input and grid
+        tensor_a = torch.cat([torch.tensor(a), torch.tensor(grid)], dim = 0)
+        tensor_u = torch.tensor(u)
+        return tensor_a, tensor_u
 
 
 if __name__ == "__main__":
     data_dir = "data/SWE/processed/"
-    dataset = SWEDataset(data_dir, test=False, downscaling_factor=2, mode = "autoregressive")
+    dataset = SWEDataset(data_dir, test=False, downscaling_factor=2, mode = "autoregressive", init_steps = 1, max_steps = 10)
     print(dataset.__len__())
-    train_loader = torch.utils.data.DataLoader(dataset, batch_size=10, shuffle=True)
+    train_loader = torch.utils.data.DataLoader(dataset, batch_size=4, shuffle=True)
     for sample in train_loader:
-        a, u, grid = sample
-        print(a.shape, u.shape, grid.shape)
+        a, u = sample
+        print(a.shape, u.shape)
+        print(a.dtype, u.dtype)
         break
