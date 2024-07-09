@@ -75,10 +75,13 @@ class SpectralConv1d(nn.Module):
         self.mode = modes  # Number of Fourier modes
 
         self.scale = 1 / (in_channels * out_channels)
+
+
         self.weights = nn.Parameter(
             self.scale
             * torch.rand(in_channels, out_channels, self.mode, dtype=torch.cfloat)
         )
+
 
         # Create dropout layer
         self.dropout_rate = dropout_rate
@@ -107,8 +110,8 @@ class SpectralConv1d(nn.Module):
             self.out_channels,
             x.size(-1) // 2 + 1,
             device=x.device,
-            dtype=torch.cfloat,
-        )
+            dtype=torch.cfloat,        )
+
 
         out_ft[:, :, : self.mode] = self.compl_mul1d(
             x_ft[:, :, : self.mode], self.weights
@@ -361,8 +364,9 @@ class MLP_complex(torch.nn.Module):
 # Test spectral conv in main method
 if __name__ == "__main__":
     # Create a spectral conv layer
-    layer = SpectralConv2d(in_channels=3, out_channels=2, modes=(32,32), dropout_rate=None)
-    x = torch.rand(5, 3, 64, 64)
+    layer = SpectralConv1d(in_channels=3, out_channels=2, modes=32, dropout_rate=None,
+                           type = "real")
+    x = torch.rand(5, 3, 64)
     y = layer(x)
     print(y.shape)
     print(y.dtype)
