@@ -88,11 +88,12 @@ class SpectralConv1d(nn.Module):
         return torch.einsum("bix,iox->box", input, weights)
     
     # Dropout mask
-    def get_dropout_mask(self):
-        mask = torch.ones_like(self.weights.real)
-        mask = torch.nn.functional.dropout(
-            mask, p=self.dropout_rate, training=self.training
-        )
+    def get_dropout_mask(self, weights):
+        mask = torch.ones_like(weights.real)
+        if self.dropout_rate is not None:
+            mask = torch.nn.functional.dropout(
+                mask, p=self.dropout_rate, training=self.training
+            )
         return mask
 
     def forward(self, x):
@@ -109,13 +110,12 @@ class SpectralConv1d(nn.Module):
             dtype=torch.cfloat,
         )
 
-        # Apply dropout
-        if self.dropout_rate is not None:
-            weights = self.weights * self.get_dropout_mask()
-
         out_ft[:, :, : self.mode] = self.compl_mul1d(
-            x_ft[:, :, : self.mode], weights
+            x_ft[:, :, : self.mode], self.weights
         )
+
+        # Apply dropout        
+        out_ft = out_ft * self.get_dropout_mask(out_ft)
 
         # Return to physical space
         x = torch.fft.irfft(out_ft, n=x.size(-1))
@@ -142,28 +142,28 @@ class SpectralConv2d(nn.Module):
         return torch.einsum("bixy,ioxy->boxy", input, weights)
     
     # Dropout mask
-    def get_dropout_mask(self):
-        mask = torch.ones_like(self.weights1.real)
-        mask = torch.nn.functional.dropout(
-            mask, p=self.dropout_rate, training=self.training
-        )
+    def get_dropout_mask(self, weights):
+        mask = torch.ones_like(weights.real)
+        if self.dropout_rate is not None:
+            mask = torch.nn.functional.dropout(
+                mask, p=self.dropout_rate, training=self.training
+            )
         return mask
 
     def forward(self, x):
         batchsize = x.shape[0]
         x_ft = torch.fft.rfft2(x)
 
-# Apply dropout
-        if self.dropout_rate is not None:
-            weights1 = self.weights1 * self.get_dropout_mask()
-            weights2 = self.weights2 * self.get_dropout_mask()
-
         # Multiply relevant Fourier modes
         out_ft = torch.zeros(batchsize, self.out_channels,  x.size(-2), x.size(-1)//2 + 1, dtype=torch.cfloat, device=x.device)
         out_ft[:, :, :self.mode1, :self.mode2] = \
-            self.compl_mul2d(x_ft[:, :, :self.mode1, :self.mode2], weights1)
+            self.compl_mul2d(x_ft[:, :, :self.mode1, :self.mode2], self.weights1)
         out_ft[:, :, -self.mode1:, :self.mode2] = \
-            self.compl_mul2d(x_ft[:, :, -self.mode1:, :self.mode2], weights2)
+            self.compl_mul2d(x_ft[:, :, -self.mode1:, :self.mode2], self.weights2)
+        
+        # Apply dropout        
+        out_ft = out_ft * self.get_dropout_mask(out_ft)
+
 
         #Return to physical space
         x = torch.fft.irfft2(out_ft, s=(x.size(-2), x.size(-1)))
@@ -361,8 +361,8 @@ class MLP_complex(torch.nn.Module):
 # Test spectral conv in main method
 if __name__ == "__main__":
     # Create a spectral conv layer
-    layer = SpectralConv1d(in_channels=3, out_channels=2, modes=32, dropout_rate=0.7)
-    x = torch.rand(5, 3, 64)
+    layer = SpectralConv2d(in_channels=3, out_channels=2, modes=(32,32), dropout_rate=None)
+    x = torch.rand(5, 3, 64, 64)
     y = layer(x)
     print(y.shape)
     print(y.dtype)

@@ -22,6 +22,7 @@ class FNO1d(nn.Module):
             n_layers = 4,
             non_linearity = F.gelu,
             dropout_rate = None,
+            fourier_dropout_rate = None,
             ):
         """A one-dimensional FNO with n_layers layers of spectral convolutions.
 
@@ -48,6 +49,10 @@ class FNO1d(nn.Module):
         self.n_layers = n_layers
         self.non_linearity = non_linearity
         self.dropout_rate = dropout_rate
+        self.fourier_dropout_rate = fourier_dropout_rate
+        # Different dropout ratio in Fourier space
+        if self.fourier_dropout_rate is None:
+            self.fourier_dropout_rate = dropout_rate
 
 
         self.lifting = MLPLinear(
@@ -66,7 +71,7 @@ class FNO1d(nn.Module):
                     in_channels = self.hidden_channels,
                     out_channels = self.hidden_channels,
                     modes = self.n_modes,
-                    dropout_rate=self.dropout_rate,
+                    dropout_rate=self.fourier_dropout_rate,
                 )
                 for _ in range(n_layers)
             ]
@@ -107,7 +112,9 @@ class FNO1d(nn.Module):
         for layer_idx in range(self.n_layers):
             x1 = self.spectral_convs[layer_idx](x)
             x2 = self.convs[layer_idx](x)
-            x = self.non_linearity(x1 + x2)
+            x = x1 + x2
+            if layer_idx < self.n_layers - 1:
+                x = self.non_linearity(x)
 
         # Project from the channel space to the output space
         x = self.projection(x)
@@ -126,6 +133,7 @@ class FNO2d(nn.Module):
             n_layers = 4,
             non_linearity = F.gelu,
             dropout_rate = None,
+            fourier_dropout_rate = None,
             ):
         """A one-dimensional FNO with n_layers layers of spectral convolutions.
 
@@ -152,6 +160,10 @@ class FNO2d(nn.Module):
         self.n_layers = n_layers
         self.non_linearity = non_linearity
         self.dropout_rate = dropout_rate
+        self.fourier_dropout_rate = fourier_dropout_rate
+        # Different dropout ratio in Fourier space
+        if self.fourier_dropout_rate is None:
+            self.fourier_dropout_rate = dropout_rate
 
 
         self.lifting = MLPLinear(
@@ -170,7 +182,7 @@ class FNO2d(nn.Module):
                     in_channels = self.hidden_channels,
                     out_channels = self.hidden_channels,
                     modes = self.n_modes,
-                    dropout_rate=self.dropout_rate,
+                    dropout_rate=self.fourier_dropout_rate,
                 )
                 for _ in range(n_layers)
             ]
@@ -211,7 +223,9 @@ class FNO2d(nn.Module):
         for layer_idx in range(self.n_layers):
             x1 = self.spectral_convs[layer_idx](x)
             x2 = self.convs[layer_idx](x)
-            x = self.non_linearity(x1 + x2)
+            x = x1 + x2
+            if layer_idx < self.n_layers - 1:
+                x = self.non_linearity(x)
 
         # Project from the channel space to the output space
         x = self.projection(x)
