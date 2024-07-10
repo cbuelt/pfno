@@ -60,256 +60,219 @@ class MLPLinear(torch.nn.Module):
         # Return channel dim
         x = torch.movedim(x, -1, 1)                
         return x
-
-
-class SpectralConv1d(nn.Module):
-    def __init__(self, in_channels, out_channels, modes, dropout_rate=None):
-        super(SpectralConv1d, self).__init__()
-
-        """
-        1D Fourier layer. It does FFT, linear transform, and Inverse FFT.    
-        """
-
-        self.in_channels = in_channels
-        self.out_channels = out_channels
-        self.mode = modes  # Number of Fourier modes
-
-        self.scale = 1 / (in_channels * out_channels)
-
-
-        self.weights = nn.Parameter(
-            self.scale
-            * torch.rand(in_channels, out_channels, self.mode, dtype=torch.cfloat)
-        )
-
-
-        # Create dropout layer
-        self.dropout_rate = dropout_rate
-
-    # Complex multiplication
-    def compl_mul1d(self, input, weights):
-        return torch.einsum("bix,iox->box", input, weights)
     
-    # Dropout mask
-    def get_dropout_mask(self, weights):
-        mask = torch.ones_like(weights.real)
-        if self.dropout_rate is not None:
-            mask = torch.nn.functional.dropout(
-                mask, p=self.dropout_rate, training=self.training
-            )
-        return mask
 
-    def forward(self, x):
-        batchsize = x.shape[0]
-        # Compute Fourier coeffcients
-        x_ft = torch.fft.rfft(x)
+class SpectralConv1d(SpectralConv):
+    """1D Spectral Conv
 
-        # Multiply relevant Fourier modes
-        out_ft = torch.zeros(
-            batchsize,
-            self.out_channels,
-            x.size(-1) // 2 + 1,
-            device=x.device,
-            dtype=torch.cfloat,        )
+    This is provided for reference only,
+    see :class:`neuralop.layers.SpectraConv` for the preferred, general implementation
+    """
 
-
-        out_ft[:, :, : self.mode] = self.compl_mul1d(
-            x_ft[:, :, : self.mode], self.weights
-        )
-
-        # Apply dropout        
-        out_ft = out_ft * self.get_dropout_mask(out_ft)
-
-        # Return to physical space
-        x = torch.fft.irfft(out_ft, n=x.size(-1))
-        return x
-    
-    
-class SpectralConv2d(nn.Module):
-    def __init__(self, in_channels, out_channels, modes, dropout_rate=None):
-        super(SpectralConv2d, self).__init__()
-
-        self.in_channels = in_channels
-        self.out_channels = out_channels
-        self.mode1, self.mode2 = modes  # Number of Fourier modes to keep
-
-        self.scale = (1 / (in_channels * out_channels))
-        self.weights1 = nn.Parameter(self.scale * torch.rand(in_channels, out_channels, self.mode1, self.mode2, dtype=torch.cfloat))
-        self.weights2 = nn.Parameter(self.scale * torch.rand(in_channels, out_channels, self.mode1, self.mode2, dtype=torch.cfloat))
-
-        # Create dropout layer
-        self.dropout_rate = dropout_rate
-
-    # Complex multiplication
-    def compl_mul2d(self, input, weights):
-        return torch.einsum("bixy,ioxy->boxy", input, weights)
-    
-    # Dropout mask
-    def get_dropout_mask(self, weights):
-        mask = torch.ones_like(weights.real)
-        if self.dropout_rate is not None:
-            mask = torch.nn.functional.dropout(
-                mask, p=self.dropout_rate, training=self.training
-            )
-        return mask
-
-    def forward(self, x):
-        batchsize = x.shape[0]
-        x_ft = torch.fft.rfft2(x)
-
-        # Multiply relevant Fourier modes
-        out_ft = torch.zeros(batchsize, self.out_channels,  x.size(-2), x.size(-1)//2 + 1, dtype=torch.cfloat, device=x.device)
-        out_ft[:, :, :self.mode1, :self.mode2] = \
-            self.compl_mul2d(x_ft[:, :, :self.mode1, :self.mode2], self.weights1)
-        out_ft[:, :, -self.mode1:, :self.mode2] = \
-            self.compl_mul2d(x_ft[:, :, -self.mode1:, :self.mode2], self.weights2)
-        
-        # Apply dropout        
-        out_ft = out_ft * self.get_dropout_mask(out_ft)
-
-
-        #Return to physical space
-        x = torch.fft.irfft2(out_ft, s=(x.size(-2), x.size(-1)))
-        return x
-
-
-class SpectralConv_complex(SpectralConv):
     def __init__(
-        self,
-        in_channels,
-        out_channels,
-        n_modes,
-        max_n_modes=None,
-        bias=True,
-        n_layers=1,
-        separable=False,
-        output_scaling_factor: Optional[Union[Number, List[Number]]] = None,
-        fno_block_precision="full",
-        rank=0.5,
-        factorization=None,
-        implementation="reconstructed",
-        fixed_rank_modes=False,
-        joint_factorization=False,
-        decomposition_kwargs: Optional[dict] = None,
-        init_std="auto",
-        fft_norm="backward",
-        device=None,
-        dtype=None,
+            self,
+            in_channels,
+            out_channels,
+            n_modes,
+            dropout_rate = None,
+            output_scaling_factor = None
     ):
         super().__init__(
-            in_channels=in_channels,
-            out_channels=out_channels,
-            n_modes=n_modes,
-            max_n_modes=max_n_modes,
-            bias=bias,
-            n_layers=n_layers,
-            separable=separable,
-            output_scaling_factor=output_scaling_factor,
-            fno_block_precision=fno_block_precision,
-            rank=rank,
-            factorization=factorization,
-            implementation=implementation,
-            fixed_rank_modes=fixed_rank_modes,
-            joint_factorization=joint_factorization,
-            decomposition_kwargs=decomposition_kwargs,
-            init_std=init_std,
-            fft_norm=fft_norm,
-            device=device,
-            dtype=dtype,
+            in_channels = in_channels,
+            out_channels = out_channels,
+            n_modes = n_modes,
+            output_scaling_factor=output_scaling_factor
         )
 
-    def forward(
-        self, x: torch.Tensor, indices=0, output_shape: Optional[Tuple[int]] = None
-    ):
-        """Generic forward pass for the Factorized Spectral Conv
+        self.in_channels = in_channels
+        self.out_channels = out_channels
+        self.dropout_rate = dropout_rate
 
-        Parameters
-        ----------
-        x : torch.Tensor
-            input activation of size (batch_size, channels, d1, ..., dN)
-        indices : int, default is 0
-            if joint_factorization, index of the layers for n_layers > 1
+    # Dropout mask
+    def get_dropout_mask(self, weights):
+        mask = torch.ones_like(weights.real)
+        if self.dropout_rate is not None:
+            mask = torch.nn.functional.dropout(
+                mask, p=self.dropout_rate, training=self.training
+            )
+        return mask
 
-        Returns
-        -------
-        tensorized_spectral_conv(x)
-        """
-        batchsize, channels, *mode_sizes = x.shape
+    def forward(self, x, indices=0):
+        batchsize, channels, width = x.shape
 
-        fft_size = list(mode_sizes)
-        fft_size[-1] = fft_size[-1] // 2 + 1  # Redundant last coefficient
-        fft_dims = list(range(-self.order, 0))
+        x = torch.fft.rfft(x, norm=self.fft_norm)
 
-        if self.fno_block_precision == "half":
-            x = x.half()
-
-        x = torch.fft.rfftn(x, norm=self.fft_norm, dim=fft_dims)
-        if self.order > 1:
-            x = torch.fft.fftshift(x, dim=fft_dims[:-1])
-
-        if self.fno_block_precision == "mixed":
-            # if 'mixed', the above fft runs in full precision, but the
-            # following operations run at half precision
-            x = x.chalf()
-
-        if self.fno_block_precision in ["half", "mixed"]:
-            out_dtype = torch.chalf
-        else:
-            out_dtype = torch.cfloat
         out_fft = torch.zeros(
-            [batchsize, self.out_channels, *fft_size], device=x.device, dtype=out_dtype
+            [batchsize, self.out_channels, width // 2 + 1],
+            device=x.device,
+            dtype=torch.cfloat,
         )
-        starts = [
-            (max_modes - min(size, n_mode))
-            for (size, n_mode, max_modes) in zip(
-                fft_size, self.n_modes, self.max_n_modes
+        slices = (
+            slice(None),  # Equivalent to: [:,
+            slice(None),  # ............... :,
+            slice(None, self.n_modes[0]), # :half_n_modes[0]]
+        )
+        out_fft[slices] = self._contract(
+            x[slices], self._get_weight(indices)[slices], separable=self.separable
+        )
+
+        # Apply Dropout in Fourier space
+        out_fft = out_fft * self.get_dropout_mask(out_fft)
+
+
+        if self.output_scaling_factor is not None:
+            width = round(width * self.output_scaling_factor[0])
+
+        x = torch.fft.irfft(out_fft, n=width, norm=self.fft_norm)
+
+        if self.bias is not None:
+            x = x + self.bias[indices, ...]
+
+        return x
+    
+
+
+
+class SpectralConv2d(SpectralConv):
+    """2D Spectral Conv, see :class:`neuralop.layers.SpectraConv` for the general case
+
+    This is provided for reference only,
+    see :class:`neuralop.layers.SpectraConv` for the preferred, general implementation
+    """
+
+    def __init__(
+            self,
+            in_channels,
+            out_channels,
+            n_modes,
+            dropout_rate = None,
+            output_scaling_factor = None
+
+    ):
+        super().__init__(
+            in_channels = in_channels,
+            out_channels = out_channels,
+            n_modes = n_modes,
+            output_scaling_factor=output_scaling_factor
+        )
+
+        self.in_channels = in_channels
+        self.out_channels = out_channels
+        self.dropout_rate = dropout_rate
+
+    # Dropout mask
+    def get_dropout_mask(self, weights):
+        mask = torch.ones_like(weights.real)
+        if self.dropout_rate is not None:
+            mask = torch.nn.functional.dropout(
+                mask, p=self.dropout_rate, training=self.training
             )
-        ]
-        slices_w = [slice(None), slice(None)]  # Batch_size, channels
-        slices_w += [
-            slice(start // 2, -start // 2) if start else slice(start, None)
-            for start in starts[:-1]
-        ]
-        slices_w += [
-            slice(None, -starts[-1]) if starts[-1] else slice(None)
-        ]  # The last mode already has redundant half removed
-        weight = self._get_weight(indices)[slices_w]
+        return mask
 
-        starts = [
-            (size - min(size, n_mode))
-            for (size, n_mode) in zip(list(x.shape[2:]), list(weight.shape[2:]))
-        ]
-        slices_x = [slice(None), slice(None)]  # Batch_size, channels
-        slices_x += [
-            slice(start // 2, -start // 2) if start else slice(start, None)
-            for start in starts[:-1]
-        ]
-        slices_x += [
-            slice(None, -starts[-1]) if starts[-1] else slice(None)
-        ]  # The last mode already has redundant half removed
-        out_fft[slices_x] = self._contract(x[slices_x], weight, separable=False)
 
-        if self.output_scaling_factor is not None and output_shape is None:
-            mode_sizes = tuple(
-                [
-                    round(s * r)
-                    for (s, r) in zip(mode_sizes, self.output_scaling_factor[indices])
-                ]
-            )
+    def forward(self, x, indices=0):
+        batchsize, channels, height, width = x.shape
 
-        if output_shape is not None:
-            mode_sizes = output_shape
+        x = torch.fft.rfft2(x.float(), norm=self.fft_norm, dim=(-2, -1))
 
-        if self.order > 1:
-            out_fft = torch.fft.fftshift(out_fft, dim=fft_dims[:-1])
-        #   x = torch.fft.irfftn(out_fft, s=mode_sizes, dim=fft_dims, norm=self.fft_norm)
+        # The output will be of size (batch_size, self.out_channels,
+        # x.size(-2), x.size(-1)//2 + 1)
+        out_fft = torch.zeros(
+            [batchsize, self.out_channels, height, width // 2 + 1],
+            dtype=x.dtype,
+            device=x.device,
+        )
+
+        slices0 = (
+            slice(None),  # Equivalent to: [:,
+            slice(None),  # ............... :,
+            slice(self.n_modes[0] // 2),  # :half_n_modes[0],
+            slice(self.n_modes[1]),  #      :half_n_modes[1]]
+        )
+        slices1 = (
+            slice(None),  # Equivalent to:        [:,
+            slice(None),  # ...................... :,
+            slice(-self.n_modes[0] // 2, None),  # -half_n_modes[0]:,
+            slice(self.n_modes[1]),  # ......      :half_n_modes[1]]
+        )
+
+        """Upper block (truncate high frequencies)."""
+        out_fft[slices0] = self._contract(
+            x[slices0], self._get_weight(indices)[slices1], separable=self.separable
+        )
+
+        """Lower block"""
+        out_fft[slices1] = self._contract(
+            x[slices1], self._get_weight(indices)[slices0], separable=self.separable
+        )
+
+        # Apply Dropout in Fourier space
+        out_fft = out_fft * self.get_dropout_mask(out_fft)
+
+
+        if self.output_scaling_factor is not None:
+            width = round(width * self.output_scaling_factor[0])
+
+        x = torch.fft.irfft2(
+            out_fft, s=(height, width), dim=(-2, -1), norm=self.fft_norm
+        )
 
         if self.bias is not None:
             x = x + self.bias[indices, ...]
 
         return x
 
-    # Reimplementation of the MLP class using Linear instead of Conv
+
+    
+    
+# class SpectralConv2d(nn.Module):
+#     def __init__(self, in_channels, out_channels, modes, dropout_rate=None):
+#         super(SpectralConv2d, self).__init__()
+
+#         self.in_channels = in_channels
+#         self.out_channels = out_channels
+#         self.mode1, self.mode2 = modes  # Number of Fourier modes to keep
+
+#         self.scale = (1 / (in_channels * out_channels))
+#         self.weights1 = nn.Parameter(self.scale * torch.rand(in_channels, out_channels, self.mode1, self.mode2, dtype=torch.cfloat))
+#         self.weights2 = nn.Parameter(self.scale * torch.rand(in_channels, out_channels, self.mode1, self.mode2, dtype=torch.cfloat))
+
+#         # Create dropout layer
+#         self.dropout_rate = dropout_rate
+
+#     # Complex multiplication
+#     def compl_mul2d(self, input, weights):
+#         return torch.einsum("bixy,ioxy->boxy", input, weights)
+    
+#     # Dropout mask
+#     def get_dropout_mask(self, weights):
+#         mask = torch.ones_like(weights.real)
+#         if self.dropout_rate is not None:
+#             mask = torch.nn.functional.dropout(
+#                 mask, p=self.dropout_rate, training=self.training
+#             )
+#         return mask
+
+#     def forward(self, x):
+#         batchsize = x.shape[0]
+#         x_ft = torch.fft.rfft2(x)
+
+#         # Multiply relevant Fourier modes
+#         out_ft = torch.zeros(batchsize, self.out_channels,  x.size(-2), x.size(-1)//2 + 1, dtype=torch.cfloat, device=x.device)
+#         out_ft[:, :, :self.mode1, :self.mode2] = \
+#             self.compl_mul2d(x_ft[:, :, :self.mode1, :self.mode2], self.weights1)
+#         out_ft[:, :, -self.mode1:, :self.mode2] = \
+#             self.compl_mul2d(x_ft[:, :, -self.mode1:, :self.mode2], self.weights2)
+        
+#         # Apply dropout        
+#         out_ft = out_ft * self.get_dropout_mask(out_ft)
+
+
+#         #Return to physical space
+#         x = torch.fft.irfft2(out_ft, s=(x.size(-2), x.size(-1)))
+#         return x
+
+
 
 
 class MLP_complex(torch.nn.Module):
@@ -364,9 +327,17 @@ class MLP_complex(torch.nn.Module):
 # Test spectral conv in main method
 if __name__ == "__main__":
     # Create a spectral conv layer
-    layer = SpectralConv1d(in_channels=3, out_channels=2, modes=32, dropout_rate=None,
-                           type = "real")
-    x = torch.rand(5, 3, 64)
+    layer = SpectralConv2d(in_channels=32, out_channels=32, modes=(16,16), dropout_rate=None)
+    x = torch.rand(5, 32, 64, 64)
     y = layer(x)
     print(y.shape)
     print(y.dtype)
+
+    from neuralop.utils import count_model_params
+    n_params = count_model_params(layer)
+    print(f'\nOur model has {n_params} parameters.')
+
+    from neuralop.layers.spectral_convolution import SpectralConv2d
+    layer = SpectralConv2d(in_channels=32, out_channels=32, n_modes=(16,16), factorization = "tucker")
+    n_params = count_model_params(layer)
+    print(f'\nOur model has {n_params} parameters.')

@@ -50,6 +50,14 @@ class DarcyFlowDataset(Dataset):
         tensor_u = torch.tensor(u).unsqueeze(0)
         return tensor_a, tensor_u
     
+    def get_coordinates(self):
+        x = self.dataset["x-coordinate"][::self.downscaling_factor]
+        y = self.dataset["y-coordinate"][::self.downscaling_factor]
+        return (x,y)
+    
+    def get_domain_range(self):
+        return [1.0,1.0]
+    
 
 class SWEDataset(Dataset):
     """Shallow Water Equation Dataset."""
@@ -75,10 +83,8 @@ class SWEDataset(Dataset):
         self.mode = mode
         self.max_steps = max_steps
 
-
     def __len__(self):
-        return len(self.dataset["samples"])
-    
+        return len(self.dataset["samples"])    
 
     def __getitem__(self, idx):
         a = self.dataset.data[idx, 0:self.init_steps, ::self.downscaling_factor, ::self.downscaling_factor].to_numpy()
@@ -94,6 +100,15 @@ class SWEDataset(Dataset):
         tensor_a = torch.cat([torch.tensor(a), torch.tensor(grid)], dim = 0)
         tensor_u = torch.tensor(u)
         return tensor_a, tensor_u
+    
+    def get_coordinates(self):
+        x = dataset.coords["x"][::self.downscaling_factor]
+        y = dataset.coords["y"][::self.downscaling_factor]
+        t = dataset.coords["time"].values
+        return (x,y,t)
+    
+    def get_domain_range(self):
+        return [5.0,5.0]
 
 
 if __name__ == "__main__":

@@ -23,6 +23,7 @@ class FNO1d(nn.Module):
             non_linearity = F.gelu,
             dropout_rate = None,
             fourier_dropout_rate = None,
+
             ):
         """A one-dimensional FNO with n_layers layers of spectral convolutions.
 
@@ -70,7 +71,7 @@ class FNO1d(nn.Module):
                 SpectralConv1d(
                     in_channels = self.hidden_channels,
                     out_channels = self.hidden_channels,
-                    modes = self.n_modes,
+                    n_modes = self.n_modes,
                     dropout_rate=self.fourier_dropout_rate,
                 )
                 for _ in range(n_layers)
@@ -181,7 +182,7 @@ class FNO2d(nn.Module):
                 SpectralConv2d(
                     in_channels = self.hidden_channels,
                     out_channels = self.hidden_channels,
-                    modes = self.n_modes,
+                    n_modes = self.n_modes,
                     dropout_rate=self.fourier_dropout_rate,
                 )
                 for _ in range(n_layers)

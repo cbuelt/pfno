@@ -35,12 +35,15 @@ class LA_Wrapper():
                 # Cache features at the first iteration
                 f, feats = self.la.model.forward_with_features(
                     x.to(self.la._device),
-                )            
+                )
+                # f-shape: (B, C, d1, ..., dn)
+                          
 
             else:
                 # Used the cached features for the rest iterations
                 f = self.la.model.last_layer(feats)
-                f = torch.movedim(f, 1,-1)
+                #f-shape: (B, d1, ..., dn, C)
+                f = torch.movedim(f, -1, 1)
             prediction.append(f.detach() if not self.la.enable_backprop else f)
 
         vector_to_parameters(self.la.mean, self.la.model.last_layer.parameters())
