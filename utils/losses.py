@@ -415,6 +415,49 @@ class VariogramScore(object):
 
     def __call__(self, y_pred, y, **kwargs):
         return self.calculate_score(y_pred, y, **kwargs)
+    
+
+
+class SpectralEnergyScore(object):
+    def __init__(self, d = 1, type = "p", reduction = 'mean', reduce_dims = True, **kwargs):
+        super().__init__()
+
+        self.d = d
+        self.type = type
+        self.reduction = reduction
+        self.reduce_dims = reduce_dims
+        self.p = kwargs.get('p', 2)
+        self.L = kwargs.get('L', 2*math.pi)
+
+        if isinstance(self.L, float):
+            self.L = [self.L]*self.d
+
+    def calculate_score(self, x, y, h = None):
+
+        """Calculates the energy score for different metrics
+
+        Args:
+            x (_type_): Model prediction (Batch size, ..., n_samples)
+            y (_type_): Target (Batch size, ..., 1)
+            h (_type_, optional): _description_. Defaults to None.
+
+        Returns:
+            _type_: Energy score
+        """
+
+        fourier_dims = list(range(2, 2+self.d))
+        x_transformed = torch.fft.rfftn(x, dim = fourier_dims)
+        y_transformed = torch.fft.rfftn(y, dim = fourier_dims)
+
+        score_func = EnergyScore(d = self.d, type = "complex", reduction = self.reduction,
+                                 reduce_dims = self.reduce_dims, L = self.L, p = self.p)
+
+        score = score_func(x_transformed, y_transformed)
+        return score
+
+    def __call__(self, y_pred, y, **kwargs):
+        return self.calculate_score(y_pred, y, **kwargs)
+    
 
 
 
@@ -425,9 +468,12 @@ if __name__ == '__main__':
   #  torch.manual_seed(0)
     input = torch.rand(32, 1, 10, 25)
     truth = torch.ones(32, 1, 10)
-    ks = VariogramScore()
+  
 
-    score = ks(input, truth)
+    score_func = SpectralEnergyScore(d = 1)
+
+    score = score_func(input, truth)
+
     print(score.shape)
     print(score)
 

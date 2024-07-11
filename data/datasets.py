@@ -69,6 +69,7 @@ class SWEDataset(Dataset):
         init_steps: int = 10,
         mode: str = "single",
         downscaling_factor: int = 1,
+        temporal_downscaling_factor: int = 1,
         pred_horizon: int = 10,
         t_start: int = 0,
     ) -> None:
@@ -77,13 +78,24 @@ class SWEDataset(Dataset):
             self.filename = "swe_test.nc"
         else:
             self.filename = "swe_train.nc"
-        self.dataset = xr.open_dataset(data_dir + self.filename)
         assert isinstance(downscaling_factor, int), "Scaling factor must be Integer"
+        assert isinstance(
+            temporal_downscaling_factor, int
+        ), "Scaling factor must be Integer"
         self.downscaling_factor = downscaling_factor
+        self.temporal_downscaling_factor = temporal_downscaling_factor
         self.init_steps = init_steps
         self.t_start = t_start
         self.mode = mode
         self.pred_horizon = pred_horizon
+
+        # Downscaling
+        self.dataset = xr.open_dataset(data_dir + self.filename).u[
+            :,
+            :: self.temporal_downscaling_factor,
+            :: self.downscaling_factor,
+            :: self.downscaling_factor,
+        ]
 
     def __len__(self):
         return len(self.dataset["samples"])
@@ -93,30 +105,23 @@ class SWEDataset(Dataset):
         a_end = a_start + self.init_steps
         u_end = a_end + self.pred_horizon
 
-
-        a = self.dataset.u[
+        a = self.dataset[
             idx,
-            a_start : a_end,
-            :: self.downscaling_factor,
-            :: self.downscaling_factor,
+            a_start:a_end,
         ].to_numpy()
         if self.mode == "single":
-            u = self.dataset.u[
+            u = self.dataset[
                 idx,
-                u_end : u_end+1,
-                :: self.downscaling_factor,
-                :: self.downscaling_factor,
+                u_end : u_end + 1,
             ].to_numpy()
         elif self.mode == "autoregressive":
-            u = self.dataset.u[
+            u = self.dataset[
                 idx,
-                a_end : u_end,
-                :: self.downscaling_factor,
-                :: self.downscaling_factor,
+                a_end:u_end,
             ].to_numpy()
         # Create grid
-        x = self.dataset.coords["x"][:: self.downscaling_factor]
-        y = self.dataset.coords["y"][:: self.downscaling_factor]
+        x = self.dataset.coords["x"]
+        y = self.dataset.coords["y"]
         grid = np.stack(np.meshgrid(x, y))
         # Stack input and grid
         tensor_a = torch.cat([torch.tensor(a), torch.tensor(grid)], dim=0)
@@ -124,8 +129,8 @@ class SWEDataset(Dataset):
         return tensor_a, tensor_u
 
     def get_coordinates(self):
-        x = self.dataset.coords["x"][:: self.downscaling_factor].values
-        y = self.dataset.coords["y"][:: self.downscaling_factor].values
+        x = self.dataset.coords["x"].values
+        y = self.dataset.coords["y"].values
         t = self.dataset.coords["time"].values
         return (x, y, t)
 
