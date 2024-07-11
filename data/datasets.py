@@ -46,32 +46,33 @@ class DarcyFlowDataset(Dataset):
         y = self.dataset["y-coordinate"][:: self.downscaling_factor]
         grid = np.stack(np.meshgrid(x, y))
         # Stack input and grid
-        tensor_a = torch.cat([torch.tensor(a).unsqueeze(0), torch.tensor(grid)], dim = 0)
+        tensor_a = torch.cat([torch.tensor(a).unsqueeze(0), torch.tensor(grid)], dim=0)
         tensor_u = torch.tensor(u).unsqueeze(0)
         return tensor_a, tensor_u
-    
+
     def get_coordinates(self):
-        x = self.dataset["x-coordinate"][::self.downscaling_factor]
-        y = self.dataset["y-coordinate"][::self.downscaling_factor]
-        return (x,y)
-    
+        x = self.dataset["x-coordinate"][:: self.downscaling_factor]
+        y = self.dataset["y-coordinate"][:: self.downscaling_factor]
+        return (x, y)
+
     def get_domain_range(self):
-        return [1.0,1.0]
-    
+        return [1.0, 1.0]
+
 
 class SWEDataset(Dataset):
     """Shallow Water Equation Dataset."""
 
     def __init__(
-            self,
-            data_dir: str,
-            test:bool = False,
-            init_steps: int = 10,
-            mode:str = "single",
-            downscaling_factor: int = 1,
-            max_steps: int = 10,
-            ) -> None:
-        
+        self,
+        data_dir: str,
+        test: bool = False,
+        init_steps: int = 10,
+        mode: str = "single",
+        downscaling_factor: int = 1,
+        pred_horizon: int = 10,
+        t_start: int = 0,
+    ) -> None:
+
         if test:
             self.filename = "swe_test.nc"
         else:
@@ -80,40 +81,68 @@ class SWEDataset(Dataset):
         assert isinstance(downscaling_factor, int), "Scaling factor must be Integer"
         self.downscaling_factor = downscaling_factor
         self.init_steps = init_steps
+        self.t_start = t_start
         self.mode = mode
-        self.max_steps = max_steps
+        self.pred_horizon = pred_horizon
 
     def __len__(self):
-        return len(self.dataset["samples"])    
+        return len(self.dataset["samples"])
 
     def __getitem__(self, idx):
-        a = self.dataset.data[idx, 0:self.init_steps, ::self.downscaling_factor, ::self.downscaling_factor].to_numpy()
+        a_start = self.t_start
+        a_end = a_start + self.init_steps
+        u_end = a_end + self.pred_horizon
+
+
+        a = self.dataset.u[
+            idx,
+            a_start : a_end,
+            :: self.downscaling_factor,
+            :: self.downscaling_factor,
+        ].to_numpy()
         if self.mode == "single":
-            u = self.dataset.data[idx, self.init_steps:self.init_steps+1, ::self.downscaling_factor, ::self.downscaling_factor].to_numpy()
+            u = self.dataset.u[
+                idx,
+                u_end : u_end+1,
+                :: self.downscaling_factor,
+                :: self.downscaling_factor,
+            ].to_numpy()
         elif self.mode == "autoregressive":
-            u = self.dataset.data[idx, self.init_steps:self.init_steps+self.max_steps, ::self.downscaling_factor, ::self.downscaling_factor].to_numpy()
+            u = self.dataset.u[
+                idx,
+                a_end : u_end,
+                :: self.downscaling_factor,
+                :: self.downscaling_factor,
+            ].to_numpy()
         # Create grid
-        x = self.dataset.coords["x"][::self.downscaling_factor]
-        y = self.dataset.coords["y"][::self.downscaling_factor]
+        x = self.dataset.coords["x"][:: self.downscaling_factor]
+        y = self.dataset.coords["y"][:: self.downscaling_factor]
         grid = np.stack(np.meshgrid(x, y))
         # Stack input and grid
-        tensor_a = torch.cat([torch.tensor(a), torch.tensor(grid)], dim = 0)
+        tensor_a = torch.cat([torch.tensor(a), torch.tensor(grid)], dim=0)
         tensor_u = torch.tensor(u)
         return tensor_a, tensor_u
-    
+
     def get_coordinates(self):
-        x = dataset.coords["x"][::self.downscaling_factor]
-        y = dataset.coords["y"][::self.downscaling_factor]
-        t = dataset.coords["time"].values
-        return (x,y,t)
-    
+        x = self.dataset.coords["x"][:: self.downscaling_factor].values
+        y = self.dataset.coords["y"][:: self.downscaling_factor].values
+        t = self.dataset.coords["time"].values
+        return (x, y, t)
+
     def get_domain_range(self):
-        return [5.0,5.0]
+        return [5.0, 5.0]
 
 
 if __name__ == "__main__":
     data_dir = "data/SWE/processed/"
-    dataset = SWEDataset(data_dir, test=False, downscaling_factor=2, mode = "autoregressive", init_steps = 1, max_steps = 10)
+    dataset = SWEDataset(
+        data_dir,
+        test=False,
+        downscaling_factor=2,
+        mode="autoregressive",
+        init_steps=1,
+        pred_horizon=10,
+    )
     print(dataset.__len__())
     train_loader = torch.utils.data.DataLoader(dataset, batch_size=4, shuffle=True)
     for sample in train_loader:
