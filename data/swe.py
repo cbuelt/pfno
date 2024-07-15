@@ -43,7 +43,7 @@ def load_dataset(file_path):
     return dataset
 
 
-def train_test_split(ds, seed, train_size):
+def train_test_split(ds, seed, train_size, type = "random"):
     """Split darcy flow dataset into training and testing datasets
 
     Args:
@@ -56,9 +56,20 @@ def train_test_split(ds, seed, train_size):
     """
     n_samples = ds.sizes["samples"]
     np.random.seed(seed)
-    indices = np.random.permutation(n_samples)
-    train_data = ds.isel(samples=indices[: int(n_samples * train_size)])
-    test_data = ds.isel(samples=indices[int(n_samples * train_size) :])
+    if type == "random":
+        indices = np.random.permutation(n_samples)
+        train_data = ds.isel(samples=indices[: int(n_samples * train_size)])
+        test_data = ds.isel(samples=indices[int(n_samples * train_size) :])
+    elif type == "ood":
+        # Filter radius
+        radius = ds.u[:,0,:,63]
+        radius = (radius > 1.0).sum(dim = "x") / 128 / 2 * 5
+        # Select lowest and highest discrete radius
+        radius_filtered = ((radius < 0.34) | (radius > 0.68))
+        ood_test_index = np.where(radius_filtered == True)[0]
+        ood_train_index = np.where(radius_filtered == False)[0]
+        train_data = ds.sel(samples = ood_train_index)
+        test_data = ds.sel(samples = ood_test_index)
     return train_data, test_data
 
 
@@ -80,9 +91,16 @@ def main(data_dir, train_split, seed, download=True, remove=True):
     # Load datasets and create train/test splits
     file_path = data_dir + "raw/2D/shallow-water/2D_rdb_NA_NA.h5"
     ds = load_dataset(file_path)
-    train_data, test_data = train_test_split(ds, seed, train_split)
+    # Random data split
+    train_data, test_data = train_test_split(ds, seed, train_split, type = "random")
     train_data.to_netcdf(data_dir + "processed/swe_train.nc")
     test_data.to_netcdf(data_dir + "processed/swe_test.nc")
+
+    # OOD data split
+    train_data, test_data = train_test_split(ds, seed, train_split, type = "ood")
+    train_data.to_netcdf(data_dir + "processed/swe_ood_train.nc")
+    test_data.to_netcdf(data_dir + "processed/swe_ood_test.nc")
+
 
     # Remove raw data
     if remove:
