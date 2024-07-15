@@ -8,12 +8,12 @@ import h5py
 
 
 def download_data(
-    data_dir, url_file="PDEBench/pdebench/data_download/pdebench_data_urls.csv"
+    data_dir, url_file="data/download/pdebench_data_urls.csv"
 ):
     """Download SWE dataset from pdebench
     Args:
         data_dir (_type_): Directory to save the downloaded files.
-        url_file (str, optional): Path to csv with urls from pdebench. Defaults to "PDEBench/pdebench/data_download/pdebench_data_urls.csv".
+        url_file (str, optional): Path to csv with urls from pdebench. Defaults to "data/download/pdebench_data_urls.csv".
     """
     url_df = pd.read_csv(url_file)
     # Filter Darcy Flow
