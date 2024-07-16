@@ -56,7 +56,10 @@ class DarcyFlowDataset(Dataset):
         return (x, y)
 
     def get_domain_range(self):
-        return [1.0, 1.0]
+        x,y = self.get_coordinates()
+        L_x = x[-1]-x[0]
+        L_y = y[-1] - y[0]
+        return [L_x, L_y]
 
 
 class SWEDataset(Dataset):
@@ -97,35 +100,38 @@ class SWEDataset(Dataset):
             :: self.downscaling_factor,
         ]
 
+        # Set timesteps for extraction
+        self.a_start = self.t_start
+        self.a_end = self.a_start + self.init_steps
+        self.u_end = self.a_end + self.pred_horizon
+
     def __len__(self):
         return len(self.dataset["samples"])
 
     def __getitem__(self, idx):
-        a_start = self.t_start
-        a_end = a_start + self.init_steps
-        u_end = a_end + self.pred_horizon
-
         a = self.dataset[
             idx,
-            a_start:a_end,
-        ].to_numpy()
+            self.a_start:self.a_end,
+        ]
         if self.mode == "single":
             u = self.dataset[
                 idx,
-                u_end : u_end + 1,
-            ].to_numpy()
+                self.u_end : self.u_end + 1,
+            ]
         elif self.mode == "autoregressive":
             u = self.dataset[
                 idx,
-                a_end:u_end,
-            ].to_numpy()
+                self.a_end:self.u_end,
+            ]
         # Create grid
-        x = self.dataset.coords["x"]
-        y = self.dataset.coords["y"]
-        grid = np.stack(np.meshgrid(x, y))
+        x = a.coords["x"]
+        y = a.coords["y"]
+        t = a.coords["time"]
+        grid = np.stack(np.meshgrid(x, t, y))
         # Stack input and grid
-        tensor_a = torch.cat([torch.tensor(a), torch.tensor(grid)], dim=0)
-        tensor_u = torch.tensor(u)
+        tensor_a = torch.tensor(a.to_numpy()).float().unsqueeze(0)
+        tensor_a = torch.cat([tensor_a, torch.tensor(grid)], dim=0).float()
+        tensor_u = torch.tensor(u.to_numpy()).float().unsqueeze(0)
         return tensor_a, tensor_u
 
     def get_coordinates(self):
@@ -135,7 +141,14 @@ class SWEDataset(Dataset):
         return (x, y, t)
 
     def get_domain_range(self):
-        return [5.0, 5.0]
+        x, y, t = self.get_coordinates()
+        L_x = x[-1] - x[0]
+        if self.mode == "single":
+            t = t[self.u_end:self.u_end+1]
+        elif self.mode == "autoregressive":
+            t = t[self.a_end:self.u_end+1]
+        L_t = t[-1]-t[0]
+        return [L_x, L_t]
     
 
 
@@ -177,33 +190,37 @@ class KSDataset(Dataset):
             :: self.downscaling_factor,
         ]
 
+        # Set timesteps for extraction
+        self.a_start = self.t_start
+        self.a_end = self.a_start + self.init_steps
+        self.u_end = self.a_end + self.pred_horizon
+
     def __len__(self):
         return len(self.dataset["samples"])
 
     def __getitem__(self, idx):
-        a_start = self.t_start
-        a_end = a_start + self.init_steps
-        u_end = a_end + self.pred_horizon
-
         a = self.dataset[
             idx,
-            a_start:a_end,
-        ].to_numpy()
+            self.a_start:self.a_end,
+        ]
         if self.mode == "single":
             u = self.dataset[
                 idx,
-                u_end : u_end + 1,
-            ].to_numpy()
+                self.u_end : self.u_end + 1,
+            ]
         elif self.mode == "autoregressive":
             u = self.dataset[
                 idx,
-                a_end:u_end,
-            ].to_numpy()
+                self.a_end:self.u_end,
+            ]
         # Create grid
-        x = np.stack(np.meshgrid(self.dataset.coords["x"]))
+        x = a.coords["x"]
+        t = a.coords["t"]
+        grid = np.stack(np.meshgrid(x,t))
         # Stack input and grid
-        tensor_a = torch.cat([torch.tensor(a), torch.tensor(x)], dim=0)
-        tensor_u = torch.tensor(u)
+        tensor_a = torch.tensor(a.to_numpy()).float().unsqueeze(0)
+        tensor_a = torch.cat([tensor_a, torch.tensor(grid)], dim=0).float()
+        tensor_u = torch.tensor(u.to_numpy()).float().unsqueeze(0)
         return tensor_a, tensor_u
 
     def get_coordinates(self):
@@ -212,24 +229,31 @@ class KSDataset(Dataset):
         return (x, t)
 
     def get_domain_range(self):
-        return [100.0]
+        x, t = self.get_coordinates()
+        L_x = x[-1] - x[0]
+        if self.mode == "single":
+            t = t[self.u_end:self.u_end+1]
+        elif self.mode == "autoregressive":
+            t = t[self.a_end:self.u_end+1]
+        L_t = t[-1]-t[0]
+        return [L_x, L_t]
 
 
 if __name__ == "__main__":
-    data_dir = "data/KS/processed/"
-    dataset = KSDataset(
+    data_dir = "data/SWE/processed/"
+    dataset = SWEDataset(
         data_dir,
         test=False,
-        downscaling_factor=1,
-        temporal_downscaling_factor=4,
+        downscaling_factor=2,
+        temporal_downscaling_factor=2,
         mode="autoregressive",
         init_steps=10,
-        pred_horizon=5,
+        pred_horizon=10,
     )
     print(dataset.__len__())
+    print(dataset.get_domain_range())
     train_loader = torch.utils.data.DataLoader(dataset, batch_size=4, shuffle=True)
     for sample in train_loader:
         a, u = sample
         print(a.shape, u.shape)
-        print(a.dtype, u.dtype)
         break
