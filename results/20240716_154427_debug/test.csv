@@ -1,0 +1,48 @@
+,0,1,2
+dataset_name,SWE,SWE,SWE
+max_training_set_size,10000,10000,10000
+downscaling_factor,2,2,2
+temporal_downscaling,4,4,4
+init_steps,10,10,10
+t_start,10,10,10
+pred_horizon,5,5,5
+model,FNO,FNO,FNO
+uncertainty_quantification,scoring-rule-dropout,laplace,dropout
+batch_size,32,32,32
+n_epochs,1,1,1
+early_stopping,10,10,10
+dropout,0.0,0.0,0.0
+init,default,default,default
+learning_rate,0.0001,0.0001,0.0001
+lr_schedule,no,no,no
+optimizer,adam,adam,adam
+gradient_clipping,1,1,1
+layer_normalization,True,True,True
+data_loader_pin_memory,False,False,False
+data_loader_num_workers,0,0,0
+distributed_training,False,False,False
+fourier_dropout,0.0,0.0,0.0
+hidden_channels,32,32,32
+projection_channels,64,64,64
+alpha,0.05,0.05,0.05
+n_samples_uq,10,10,10
+weight_decay,0,0,0
+n_samples,3,3,3
+lifting_channels,128,128,128
+n_modes,"(16, 16)","(16, 16)","(16, 16)"
+uno_out_channels,"[32, 64, 64, 32]","[32, 64, 64, 32]","[32, 64, 64, 32]"
+uno_scalings,"[[1.0, 1.0], [0.5, 0.5], [1, 1], [2, 2]]","[[1.0, 1.0], [0.5, 0.5], [1, 1], [2, 2]]","[[1.0, 1.0], [0.5, 0.5], [1, 1], [2, 2]]"
+uno_n_modes,"[[16, 16], [8, 8], [8, 8], [16, 16]]","[[16, 16], [8, 8], [8, 8], [16, 16]]","[[16, 16], [8, 8], [8, 8], [16, 16]]"
+t_training,31.337,9.4,9.321
+MSEtrain,3.63288,3.39045,3.97759
+EnergyScoretrain,8.15439,7.12456,8.91124
+Coveragetrain,0.0,9e-05,0.0
+IntervalWidthtrain,0.0,98.56139,0.0
+MSEvalidation,1.00103,0.91966,1.09492
+EnergyScorevalidation,2.24688,1.95262,2.45301
+Coveragevalidation,0.0,2e-05,0.0
+IntervalWidthvalidation,0.0,23.28916,0.0
+MSEtest,1.67856,1.57119,1.8055
+EnergyScoretest,3.76744,3.33885,4.04511
+Coveragetest,0.0,2e-05,0.0
+IntervalWidthtest,0.0,45.82823,0.0
