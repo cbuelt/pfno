@@ -70,6 +70,11 @@ def aggregate(config):
     train_data.to_netcdf("data/KS/processed/ks_train.nc")
     test_data.to_netcdf("data/KS/processed/ks_test.nc")
 
+    # Remove raw data
+    os.system(f"rm -r data/KS/raw")
+
+
+
 def main(config, sim = True):
     # Simulate data
     if sim:
