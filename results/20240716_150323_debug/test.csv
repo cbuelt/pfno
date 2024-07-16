@@ -1,0 +1,47 @@
+,0,1
+dataset_name,SWE,SWE
+max_training_set_size,10000,10000
+downscaling_factor,2,2
+temporal_downscaling,4,4
+init_steps,10,10
+t_start,10,10
+pred_horizon,5,5
+model,FNO,FNO
+uncertainty_quantification,dropout,laplace
+batch_size,32,32
+n_epochs,1,1
+early_stopping,10,10
+dropout,0.0,0.0
+init,default,default
+learning_rate,0.0001,0.0001
+lr_schedule,no,no
+optimizer,adam,adam
+gradient_clipping,1,1
+layer_normalization,True,True
+data_loader_pin_memory,False,False
+data_loader_num_workers,0,0
+distributed_training,False,False
+fourier_dropout,0.0,0.0
+hidden_channels,32,32
+projection_channels,64,64
+alpha,0.05,0.05
+n_samples_uq,10,10
+n_samples,3,3
+lifting_channels,128,128
+n_modes,"(16, 16)","(16, 16)"
+uno_out_channels,"[32, 64, 64, 32]","[32, 64, 64, 32]"
+uno_scalings,"[[1.0, 1.0], [0.5, 0.5], [1, 1], [2, 2]]","[[1.0, 1.0], [0.5, 0.5], [1, 1], [2, 2]]"
+uno_n_modes,"[[16, 16], [8, 8], [8, 8], [16, 16]]","[[16, 16], [8, 8], [8, 8], [16, 16]]"
+t_training,11.647,10.18
+MSEtrain,3.57425,3.42483
+EnergyScoretrain,8.06852,7.34986
+Coveragetrain,0.0,4e-05
+IntervalWidthtrain,tensor(0.),tensor(66.6520)
+MSEvalidation,0.98312,0.92246
+EnergyScorevalidation,2.2193,1.97307
+Coveragevalidation,0.0,1e-05
+IntervalWidthvalidation,tensor(0.),tensor(18.2516)
+MSEtest,1.64647,1.55205
+EnergyScoretest,3.71641,3.32045
+Coveragetest,0.0,3e-05
+IntervalWidthtest,tensor(0.),tensor(33.2598)

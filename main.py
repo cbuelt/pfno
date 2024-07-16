@@ -19,9 +19,10 @@ import configparser
 import ast
 import shutil
 
-from data.datasets import DarcyFlowDataset
+from data.datasets import DarcyFlowDataset, SWEDataset
 from train import trainer
-
+from utils import train_utils
+from evaluate import start_evaluation
 
 print(os.getcwd())
 sys.path[0] = os.getcwd()
@@ -60,14 +61,12 @@ def construct_result_dict(entry_names, data_parameters_dict, training_parameters
         results_dict[entry_name] = []
     return results_dict
 
-def append_results_dict(results_dict, data_parameters, training_parameters, t_training,
-                        t_data_creation):
+def append_results_dict(results_dict, data_parameters, training_parameters, t_training):
     for key in data_parameters.keys():
         results_dict[key].append(data_parameters[key])
     for key in training_parameters.keys():
         results_dict[key].append(training_parameters[key])
     results_dict['t_training'].append(t_training)
-    results_dict['t_data_creation'].append(t_data_creation)
     
     
 if __name__ == '__main__':
@@ -89,16 +88,16 @@ if __name__ == '__main__':
     training_parameters_dict = dict(config.items("TRAININGPARAMETERS"))
     training_parameters_dict = {key: ast.literal_eval(training_parameters_dict[key]) for key in
                                 training_parameters_dict.keys()}
-    training_parameters_dict = utils.get_hyperparameters_combination(training_parameters_dict) # except_keys for keys that are coming as a list for each training process
-
+    # except_keys for keys that are coming as a list for each training process
+    training_parameters_dict = train_utils.get_hyperparameters_combination(training_parameters_dict, 
+                                                                           except_keys=['uno_out_channels', 'uno_scalings', 'uno_n_modes'])
+    
     data_parameters_dict = dict(config.items("DATAPARAMETERS"))
     data_parameters_dict = {key: ast.literal_eval(data_parameters_dict[key]) for key in
                             data_parameters_dict.keys()}
-    data_parameters_dict = utils.get_hyperparameters_combination(data_parameters_dict) # except_keys for keys that are coming as a list for each training process
+    data_parameters_dict = train_utils.get_hyperparameters_combination(data_parameters_dict) # except_keys for keys that are coming as a list for each training process
     
-    objective = config['META']['objective']
-
-    entry_names = ['t_training', 'mse_test'] 
+    entry_names = ['t_training'] 
     
     results_dict = construct_result_dict(entry_names, data_parameters_dict, training_parameters_dict)
 
@@ -109,11 +108,18 @@ if __name__ == '__main__':
         
         data_dir = f"data/{data_parameters['dataset_name']}/processed/"
         if data_parameters['dataset_name'] == 'DarcyFlow':
-            train_data = DarcyFlowDataset(data_dir, test = False, downscaling_factor=2)
+            train_data = DarcyFlowDataset(data_dir, test = False, downscaling_factor=int(data_parameters['downscaling_factor']))
             test_data = DarcyFlowDataset(data_dir, test = True)
-        
+        elif data_parameters['dataset_name'] == 'SWE':
+            train_data = SWEDataset(data_dir, test = False, downscaling_factor=int(data_parameters['downscaling_factor']), mode = "autoregressive",
+                        pred_horizon=data_parameters['pred_horizon'], t_start=data_parameters['t_start'], init_steps=data_parameters['init_steps'],
+                        temporal_downscaling_factor=data_parameters['temporal_downscaling'])
+            test_data = SWEDataset(data_dir, test = True, mode = "autoregressive",
+                        pred_horizon=data_parameters['pred_horizon'], t_start=data_parameters['t_start'], init_steps=data_parameters['init_steps'],
+                        temporal_downscaling_factor=data_parameters['temporal_downscaling'])
+
+        domain_range = train_data.get_domain_range()
         train_data, val_data = train_test_split(train_data, test_size=0.20, random_state=42)
-        
 
         for i, training_parameters in enumerate(training_parameters_dict):
             logging.info(f"###{i + 1} out of {len(training_parameters_dict)} training parameter combinations ###")
@@ -122,15 +128,17 @@ if __name__ == '__main__':
             
             filename = f"{data_parameters['dataset_name']}_{training_parameters['model']}_dropout_{training_parameters['dropout']}"
             
-            train_loader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
-            val_loader = torch.utils.data.DataLoader(val_data, batch_size=batch_size, shuffle=True)
-            test_loader = torch.utils.data.DataLoader(test_data, batch_size=batch_size, shuffle=True)
+            batch_size = training_parameters['batch_size']
+            
+            train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
+            val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=True)
+            test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
                         
             t_0 = time()
             d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
             if not training_parameters['distributed_training']:
-                net = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters, logging=logging,
-                              filename=filename, d_time=d_time_train)
+                model = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters, logging=logging,
+                              filename_ending=filename, d_time=d_time_train, domain_range=domain_range)
             else:
                 world_size = torch.cuda.device_count()
                 mp.spawn(trainer, args=(input_training, target_training, target_validation,
@@ -138,7 +146,7 @@ if __name__ == '__main__':
                             data_parameters['num_samples_min'], training_parameters['lr_schedule'], objective, 
                             directory, d_time_train, world_size), nprocs=world_size)
 
-                net = torch.load(os.path.join(directory,
+                model = torch.load(os.path.join(directory,
                                 f'Datetime_{d_time_train}_parameters_{filename}.pt'), map_location=device)
                         
             t_1 = time()
@@ -148,15 +156,11 @@ if __name__ == '__main__':
             torch.cuda.empty_cache()
             t_1 = time()
             logging.info(f'Emptying the cuda cache took {np.round(t_1 - t_0, 3)}s.')
-            evaluate(net=net, input_training=input_training, target_training=target_training, target_test=target_test, input_test=input_test,
-                     results_dict=results_dict, batch_size=training_parameters['batch_size'], objective=objective, 
-                     num_samples_min=data_parameters['num_samples_min'], function_names_str=data_parameters['function_names_str'],
-                     one_hot=training_parameters['one_hot'], data_parameters=data_parameters)
-            append_results_dict(results_dict, data_parameters, training_parameters, t_training,
-                                t_data_creation)
+            start_evaluation(model, training_parameters, train_loader, val_loader, test_loader, results_dict, device, domain_range, logging)
+            append_results_dict(results_dict, data_parameters, training_parameters, t_training)
             results_pd = pd.DataFrame(results_dict)
             results_pd.T.to_csv(os.path.join(directory, 'test.csv'))
 
-            del net
+            del model
             torch.cuda.empty_cache()
             gc.collect()

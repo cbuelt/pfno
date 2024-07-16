@@ -7,7 +7,7 @@ import torch
   
 #loss function with abs Lp loss
 class LpLoss(object):
-    def __init__(self, d=1, p=2, L=2*math.pi, reduce_dims=0, reductions='mean'):
+    def __init__(self, d=1, p=2, L=2*math.pi, reduce_dims=[0, 1], reductions='mean'):
         super().__init__()
 
         self.d = d
@@ -68,9 +68,6 @@ class LpLoss(object):
     def __call__(self, y_pred, y, **kwargs):
         return self.abs(y_pred, y)
 
-
-
-  
 class LpLoss_energy(object):
     """Calculates the LPLoss as EnergyScore
 
@@ -157,8 +154,6 @@ class LpLoss_energy(object):
 
     def __call__(self, y_pred, y, **kwargs):
         return self.es(y_pred, y)
-    
-
 
 def lp_norm(x, y, const, p=2):
     """Calculates the Lp norm between two tensors
@@ -463,6 +458,7 @@ class SpectralEnergyScore(object):
 
     
     #test with main method
+
 if __name__ == '__main__':
     # set torch seed
   #  torch.manual_seed(0)
