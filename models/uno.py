@@ -1,12 +1,16 @@
+# This file provides the implementation of the U-shaped Fourier neural operator.
+# The code is adapted from https://github.com/neuraloperator/neuraloperator.
+
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
+import os
+import sys
+sys.path.append(os.getcwd())
 from models.layers import FNOBlocks, SpectralConv, MLP
 from neuralop.layers.skip_connections import skip_connection
 from neuralop.layers.padding import DomainPadding
 from neuralop.layers.resample import resample
-
-
 
 class UNO(nn.Module):
     def __init__(
@@ -251,11 +255,14 @@ class UNO(nn.Module):
 
 if __name__ == "__main__":
     # Create a model
-    model = UNO(3,1, hidden_channels=64, projection_channels=64,uno_out_channels = [32,64,64,32],
-                uno_n_modes= [[16],[8],[8],[16]], uno_scalings=  [[1.0],[0.5],[1],[2]],
-                dropout = 0.2, fourier_dropout=0.4)
-    x = torch.randn(5, 3, 128)
+    model = UNO(3,1, projection_channels=32, lifting_channels=16, hidden_channels=8, uno_out_channels = [16, 32, 64, 128, 64, 32, 16],
+                uno_n_modes= [[4,20,20],[4,14,14],[4,6,6], [7,6,6], [7,6,6], [10,14,14], [10,20,20]], uno_scalings=  [[1.0,0.75,0.75], [1.0,0.67,0.67], [1.0,0.5,0.5], [1.0,1.0,1.0], [1.0, 2.0,2.0], [1.0,1.5,1.5], [1.0, 1.33, 1.33]],
+                dropout = 0.2, fourier_dropout=0.4, n_layers = 7)
+    x = torch.randn(2, 3, 5, 64, 64)
 
     out = model(x)
     print(out.shape)
     print(out.dtype)
+    from neuralop.utils import count_model_params
+    n_params = count_model_params(model)
+    print(f'\nOur model has {n_params} parameters.')

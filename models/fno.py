@@ -1,8 +1,8 @@
-from functools import partialmethod
+# This file provides the implementation of the Fourier neural operator.
+# The code is adapted from https://github.com/neuraloperator/neuraloperator.
 
 import torch
 import torch.nn.functional as F
-
 import os
 import sys
 sys.path.append(os.getcwd())

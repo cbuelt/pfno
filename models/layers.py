@@ -1,22 +1,15 @@
-from functools import partialmethod
-from typing import List, Optional, Tuple, Union
+# This file provides the implementation of the FNOBlocks and SpectralConv classes as layers of the neuraloperator.
+# The code is adapted from https://github.com/neuraloperator/neuraloperator.
 
+from typing import List, Optional, Tuple, Union
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
 from typing import List, Optional, Tuple, Union
-
 from neuralop.utils import validate_scaling_factor
-
 import torch
 from torch import nn
-
-import tensorly as tl
-from tensorly.plugins import use_opt_einsum
 from tltorch.factorized_tensors.core import FactorizedTensor
-
-from neuralop.layers.einsum_utils import einsum_complexhalf
 from neuralop.layers.base_spectral_conv import BaseSpectralConv
 from neuralop.layers.resample import resample
 from neuralop.layers.spectral_convolution import get_contract_fun
@@ -24,12 +17,9 @@ from neuralop.layers.skip_connections import skip_connection
 from neuralop.layers.normalization_layers import AdaIN
 from neuralop.layers.fno_block import SubModule
 from neuralop.layers.spectral_convolution import SubConv
-
 Number = Union[int, float]
 
 
-
-# Reimplementation of the MLP class using Linear instead of Conv
 class MLP(torch.nn.Module):
     # Obtain input of shape [Batch, channels, d1, ..., dn]
     def __init__(
@@ -74,8 +64,7 @@ class MLP(torch.nn.Module):
 
         # Return channel dim
         x = torch.movedim(x, -1, 1)                
-        return x
-    
+        return x    
 
 
 class SpectralConv(BaseSpectralConv):
@@ -334,7 +323,6 @@ class SpectralConv(BaseSpectralConv):
     def __getitem__(self, indices):
         return self.get_conv(indices)
     
-
 
 class FNOBlocks(nn.Module):
     def __init__(

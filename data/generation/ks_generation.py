@@ -1,4 +1,5 @@
 import pde
+from pde.grids import GridBase
 import numpy as np
 import yaml
 import multiprocessing as mp
@@ -6,7 +7,17 @@ import os
 from tqdm import tqdm
 import xarray as xr
 
-def get_sim(grid, n_steps, t_range = 150, dt = 0.001):
+def get_sim(grid:GridBase, n_steps:int, t_range:int = 150, dt:float = 0.001)->np.ndarray:
+    """ Simulate an instance of the Kuramoto-Sivashinsky equation.
+    Args:
+        grid (GridBase): The grid over which to simulate the PDE.
+        n_steps (int): The timesteps to track.
+        t_range (int, optional): The time range up to which to simulate. Defaults to 150.
+        dt (float, optional): The temporal resolution of the solver. Defaults to 0.001.
+
+    Returns:
+        np.ndarray: Simulated data.
+    """
     eq = pde.PDE({"u": "-u * d_dx(u) / 2 - laplace(u + laplace(u))"})
     state = pde.ScalarField.random_uniform(grid, vmin = -1, vmax = 1)  # generate initial condition
     # solve the system
@@ -21,12 +32,25 @@ def get_sim(grid, n_steps, t_range = 150, dt = 0.001):
     res = np.array(storage.data)
     return res
 
-def load_config(path = "data/generation/ks_config.yaml"):
+def load_config(path:str = "data/generation/ks_config.yaml")-> dict:
+    """ Load the configuration file for the simulation.
+
+    Args:
+        path (str, optional): Path to config file. Defaults to "data/generation/ks_config.yaml".
+
+    Returns:
+        dict: Configuration dictionary.
+    """
     with open(path, 'r') as f:
         config = yaml.load(f, yaml.FullLoader)
     return config
 
-def simulate(config):
+def simulate(config:dict)->None:
+    """ Simulate the Kuramoto-Sivashinsky equation and save the raw data to disk.
+
+    Args:
+        config (dict): Configuration dictionary.
+    """
     # Check for number of cores
     assert(config["sim"]["n_cores"] <= mp.cpu_count())
     n_cores = config["sim"]["n_cores"]
@@ -52,7 +76,12 @@ def simulate(config):
         result_array = np.array(results)
         np.save(f"data/KS/raw/ks_data_{i+1}.npy", result_array)
 
-def aggregate(config):
+def aggregate(config:dict)-> None:
+    """ Aggregate the raw data into a train and test dataset and save to disk.
+
+    Args:
+        config (dict): Configuration dictionary.
+    """
     #Check for and create data directory
     if not os.path.exists("data/KS/processed"):
         os.makedirs("data/KS/processed")
