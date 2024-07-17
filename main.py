@@ -34,7 +34,8 @@ msg = 'Start main'
 
 # initialize parser
 parser = argparse.ArgumentParser(description=msg)
-default_config = 'debug.ini'
+# default_config = 'debug.ini'
+default_config = 'darcy_flow/fno.ini'
 
 parser.add_argument('-c', '--config', help='Name of the config file:', default=default_config)
 parser.add_argument('-f', '--results_folder', help='Name of the results folder (only use if you only want to evaluate the models):', default=None)
