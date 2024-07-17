@@ -113,7 +113,8 @@ def ddp_setup(rank: int, world_size: int):
 def get_hyperparameters_combination(hp_dict, except_keys=[]):
     except_dict = {}
     for except_key in except_keys:
-        except_dict[except_key] = hp_dict.pop(except_key)
+        if except_key in hp_dict.keys():
+            except_dict[except_key] = hp_dict.pop(except_key)
     iterables = [value if isinstance(value, list) else [value] for value in hp_dict.values()]
     all_combinations = list(product(*iterables))
     # Create a list of dictionaries for each combination
