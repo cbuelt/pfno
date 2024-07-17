@@ -148,7 +148,7 @@ if __name__ == '__main__':
             d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
             if not training_parameters['distributed_training']:
                 model = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters, logging=logging,
-                              filename_ending=filename, d_time=d_time_train, domain_range=domain_range)
+                              filename_ending=filename, d_time=d_time_train, domain_range=domain_range, results_dict=results_dict)
             else:
                 world_size = torch.cuda.device_count()
                 mp.spawn(trainer, args=(input_training, target_training, target_validation,
