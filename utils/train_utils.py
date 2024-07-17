@@ -2,14 +2,14 @@ from time import time
 from itertools import product
 
 import torch
-import torch.multiprocessing as mp
-from torch.utils.data.distributed import DistributedSampler
-from torch.nn.parallel import DistributedDataParallel as DDP
+
 from torch.distributed import destroy_process_group
 import torch.distributed as dist
+import numpy as np
 
 import utils.losses as losses 
 from models import FNO, PFNO_Wrapper, UNO
+import random
 
 
 def checkpoint(model, filename):
@@ -20,9 +20,9 @@ def resume(model, filename):
 
 def get_criterion(training_parameters, domain_range, d):
     if training_parameters['uncertainty_quantification'].startswith('scoring-rule'):
-        criterion = losses.EnergyScore(d = 2, p = 2, type = "lp", L = domain_range)
+        criterion = losses.EnergyScore(d =d, p = 2, type = "lp", L = domain_range)
     else:
-        criterion = losses.LpLoss(d=2, p=2, L = domain_range)
+        criterion = losses.LpLoss(d=d, p=2, L = domain_range)
     return criterion
 
 def initialize_weights(model, init):
@@ -111,3 +111,9 @@ def get_hyperparameters_combination(hp_dict, except_keys=[]):
     combination_dicts = [{**{param: value for param, value in zip(hp_dict.keys(), combination)}, **except_dict} for combination in
                          all_combinations]
     return combination_dicts
+
+def subsample(data, max_size):
+    if max_size < len(data):
+        return random.sample(data, max_size)
+    else:
+        return data

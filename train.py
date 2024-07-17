@@ -2,8 +2,8 @@ import os
 
 import torch
 from torch import optim
+from torch.utils.data.distributed import DistributedSampler
 from torch.nn.parallel import DistributedDataParallel as DDP
-
 import matplotlib.pyplot as plt
 
 from utils import train_utils

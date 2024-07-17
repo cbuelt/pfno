@@ -143,12 +143,13 @@ class SWEDataset(Dataset):
     def get_domain_range(self):
         x, y, t = self.get_coordinates()
         L_x = x[-1] - x[0]
+        L_y = y[-1] - y[0]
         if self.mode == "single":
             t = t[self.u_end:self.u_end+1]
         elif self.mode == "autoregressive":
             t = t[self.a_end:self.u_end+1]
         L_t = t[-1]-t[0]
-        return [L_x, L_t]
+        return [L_x, L_y, L_t]
     
 
 

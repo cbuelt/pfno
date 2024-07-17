@@ -111,15 +111,25 @@ if __name__ == '__main__':
             train_data = DarcyFlowDataset(data_dir, test = False, downscaling_factor=int(data_parameters['downscaling_factor']))
             test_data = DarcyFlowDataset(data_dir, test = True)
         elif data_parameters['dataset_name'] == 'SWE':
-            train_data = SWEDataset(data_dir, test = False, downscaling_factor=int(data_parameters['downscaling_factor']), mode = "autoregressive",
-                        pred_horizon=data_parameters['pred_horizon'], t_start=data_parameters['t_start'], init_steps=data_parameters['init_steps'],
-                        temporal_downscaling_factor=data_parameters['temporal_downscaling'])
+            downscaling_factor = int(data_parameters['downscaling_factor'])
+            temporal_downscaling_factor = int(data_parameters['temporal_downscaling'])
+            pred_horizon = data_parameters['pred_horizon']
+            t_start = data_parameters['t_start']
+            init_steps = data_parameters['init_steps']
+            
+            assert 100 > temporal_downscaling_factor * (pred_horizon + t_start + init_steps)
+            
+            train_data = SWEDataset(data_dir, test = False, downscaling_factor=downscaling_factor, mode = "autoregressive",
+                        pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
+                        temporal_downscaling_factor=temporal_downscaling_factor)
             test_data = SWEDataset(data_dir, test = True, mode = "autoregressive",
-                        pred_horizon=data_parameters['pred_horizon'], t_start=data_parameters['t_start'], init_steps=data_parameters['init_steps'],
-                        temporal_downscaling_factor=data_parameters['temporal_downscaling'])
+                        pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
+                        temporal_downscaling_factor=temporal_downscaling_factor)
 
         domain_range = train_data.get_domain_range()
         train_data, val_data = train_test_split(train_data, test_size=0.20, random_state=42)
+        
+        train_data = train_utils.subsample(train_data, data_parameters['max_training_set_size'])
 
         for i, training_parameters in enumerate(training_parameters_dict):
             logging.info(f"###{i + 1} out of {len(training_parameters_dict)} training parameter combinations ###")
