@@ -1,0 +1,38 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:############### Starting experiment with config file debug.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'SWE', 'max_training_set_size': 10000, 'downscaling_factor': 2, 'temporal_downscaling': 2, 'init_steps': 10, 't_start': 0, 'pred_horizon': 10}
+INFO:root:###1 out of 1 training parameter combinations ###
+INFO:root:Training parameters: {'model': 'FNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 32, 'n_epochs': 10, 'early_stopping': 10, 'dropout': 0.1, 'init': 'default', 'learning_rate': 0.0001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'fourier_dropout': 0.0, 'hidden_channels': 32, 'projection_channels': 64, 'alpha': 0.05, 'n_samples_uq': 10, 'weight_decay': 0, 'n_samples': 3, 'lifting_channels': 128, 'n_modes': (2, 2, 2), 'uno_out_channels': [32, 64, 64, 32], 'uno_scalings': [[1.0, 1.0], [0.5, 0.5], [1, 1], [2, 2]], 'uno_n_modes': [[16, 16], [8, 8], [8, 8], [16, 16]]}
+INFO:root:NumberParameters: 76705
+INFO:root:Memory allocated: 2097152
+INFO:root:Training starts now.
+INFO:root:[    1] Training loss: 1.91021439, Validation loss: 10.23377120, Gradient norm: 3.09934294
+INFO:root:[    2] Training loss: 1.24121287, Validation loss: 2.27338991, Gradient norm: 4.85448603
+INFO:root:[    3] Training loss: 0.17386102, Validation loss: 0.82076171, Gradient norm: 3.27213700
+INFO:root:[    4] Training loss: 0.12991769, Validation loss: 0.76525860, Gradient norm: 0.63585678
+INFO:root:[    5] Training loss: 0.12526277, Validation loss: 0.74987074, Gradient norm: 0.37214751
+INFO:root:[    6] Training loss: 0.12126629, Validation loss: 0.72028123, Gradient norm: 0.26586519
+INFO:root:[    7] Training loss: 0.11758787, Validation loss: 0.70228555, Gradient norm: 0.25253279
+INFO:root:[    8] Training loss: 0.11474497, Validation loss: 0.68846293, Gradient norm: 0.37186561
+INFO:root:[    9] Training loss: 0.11224589, Validation loss: 0.66973321, Gradient norm: 0.49168271
+INFO:root:[   10] Training loss: 0.11020496, Validation loss: 0.65767518, Gradient norm: 0.35256677
+INFO:root:Training the model took 268.82s.
+INFO:root:Emptying the cuda cache took 0.079s.
+INFO:root:Starting evaluation: model FNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on train data.
+INFO:root:MSEtrain: 0.12237
+INFO:root:EnergyScoretrain: 0.08219
+INFO:root:Coveragetrain: 0.69508
+INFO:root:IntervalWidthtrain: 207.07997
+INFO:root:Evaluating the model on validation data.
+INFO:root:MSEvalidation: 0.03377
+INFO:root:EnergyScorevalidation: 0.02268
+INFO:root:Coveragevalidation: 0.19108
+INFO:root:IntervalWidthvalidation: 55.41194
+INFO:root:Evaluating the model on test data.
+INFO:root:MSEtest: 0.04985
+INFO:root:EnergyScoretest: 0.03347
+INFO:root:Coveragetest: 0.32297
+INFO:root:IntervalWidthtest: 102.37992
