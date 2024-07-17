@@ -56,7 +56,7 @@ class LpLoss(object):
             if isinstance(h, float):
                 h = [h]*self.d
         
-        const = math.prod(h)**(1.0/self.p)
+        const = torch.tensor(np.array(math.prod(h)**(1.0/self.p)), device=x.device)
         diff = const*torch.norm(torch.flatten(x, start_dim=-self.d) - torch.flatten(y, start_dim=-self.d), \
                                               p=self.p, dim=-1, keepdim=False)
 
@@ -165,7 +165,7 @@ class EnergyScore(object):
             if isinstance(h, float):
                 h = [h]*self.d
         if self.type == "lp":
-            const = math.prod(h)**(1.0/self.p)
+            const = torch.tensor(np.array(math.prod(h)**(1.0/self.p)), device=x.device)
         else:
             const = 1.0
 
@@ -245,7 +245,7 @@ class KernelScore(object):
             if isinstance(h, float):
                 h = [h]*self.d
         if self.type == "lp":
-            const = math.prod(h)**(1.0/self.p)
+            const = torch.tensor(np.array(math.prod(h)**(1.0/self.p)), device=x.device)
         else:
             const = 1.0
 
