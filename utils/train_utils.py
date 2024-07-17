@@ -45,7 +45,8 @@ def setup_model(training_parameters, device, in_channels, out_channels):
         hidden_model = UNO(in_channels=in_channels, out_channels=out_channels, hidden_channels=training_parameters['hidden_channels'], 
                            projection_channels=training_parameters['projection_channels'], uno_out_channels = training_parameters['uno_out_channels'],
                            uno_n_modes=training_parameters['uno_n_modes'], uno_scalings=training_parameters['uno_scalings'], 
-                           fourier_dropout=training_parameters['fourier_dropout'], dropout = training_parameters['dropout'])
+                           fourier_dropout=training_parameters['fourier_dropout'], dropout = training_parameters['dropout'],
+                           lifting_channels=training_parameters['lifting_channels'])
     
     if training_parameters['uncertainty_quantification'] == 'scoring-rule-dropout':
         return PFNO_Wrapper(hidden_model, n_samples=training_parameters['n_samples']).to(device)

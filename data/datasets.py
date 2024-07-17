@@ -246,7 +246,7 @@ class SWEDataset(Dataset):
         elif self.mode == "autoregressive":
             t = t[self.a_end : self.u_end + 1]
         L_t = t[-1] - t[0]
-        return [L_x, L_y, L_t]
+        return [L_t, L_x, L_y]
 
 
 class KSDataset(Dataset):
@@ -384,14 +384,14 @@ class KSDataset(Dataset):
         elif self.mode == "autoregressive":
             t = t[self.a_end : self.u_end + 1]
         L_t = t[-1] - t[0]
-        return [L_x, L_t]
+        return [L_t, L_x]
 
 
 if __name__ == "__main__":
-    data_dir = "data/SWE/processed/"
-    dataset = SWEDataset(
+    data_dir = "data/KS/processed/"
+    dataset = KSDataset(
         data_dir,
-        test=False,
+        test=True,
         downscaling_factor=2,
         temporal_downscaling_factor=2,
         mode="autoregressive",

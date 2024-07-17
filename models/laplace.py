@@ -2,17 +2,52 @@ from torch.nn.utils import vector_to_parameters
 from laplace import Laplace
 import torch
 
-
 class LA_Wrapper:
+    """
+    A class used to handle the Laplace approximation.
+
+    Attributes
+    ----------
+    model : torch.nn.Module
+        the underlying model
+    n_samples : int
+        number of samples to generate
+    method : str
+        the method to use for the Laplace approximation
+    hessian_structure : str
+        the structure of the Hessian matrix
+    optimize : bool
+        whether to optimize the prior
+
+    Methods
+    -------
+    fit(train_loader)
+        Fits the Laplace approximation to the training data
+    optimize_precision()
+        Optimizes the prior precision
+    parameter_samples()
+        Generate samples from the weight distribution
+    predictive_samples(x)
+        Generate samples from the predictive distribution
+    """
+
     def __init__(
         self,
         model: torch.nn.Module,
         n_samples: int = 100,
-        method="last_layer",
-        hessian_structure="full",
-        optimize=True,
+        method: str = "last_layer",
+        hessian_structure: str = "full",
+        optimize: bool = True,
     ):
+        """Initializes the Laplace approximation wrapper.
 
+        Args:
+            model (torch.nn.Module): The underlying model.
+            n_samples (int, optional): The number of samples to generate. Defaults to 100.
+            method (str, optional): The type of the approximation. Defaults to "last_layer".
+            hessian_structure (str, optional): The structure of the Hessian. Defaults to "full".
+            optimize (bool, optional): Whether to optimize prior precision. Defaults to True.
+        """
         super().__init__()
         self.model = model
         self.n_samples = n_samples
@@ -21,8 +56,12 @@ class LA_Wrapper:
         self.optimize = optimize
         self.model.eval()
 
+    def fit(self, train_loader: torch.utils.data.DataLoader):
+        """Fits the Laplace approximation to the training data.
 
-    def fit(self, train_loader):
+        Args:
+            train_loader (torch.utils.data.DataLoader): The train loader.
+        """
         self.la = Laplace(
             self.model,
             "regression",
@@ -34,13 +73,26 @@ class LA_Wrapper:
             self.optimize_precision()
 
     def optimize_precision(self):
-        # Optimizer 1
+        """Optimize prior precision of the laplace approximation."""
         self.la.optimize_prior_precision(pred_type="nn", method="marglik")
 
-    def parameter_samples(self):
+    def parameter_samples(self) -> torch.Tensor:
+        """Generate samples from the weight distribution.
+
+        Returns:
+            torch.Tensor: Output samples.
+        """
         return self.la.sample()
 
-    def predictive_samples(self, x):
+    def predictive_samples(self, x: torch.Tensor) -> torch.Tensor:
+        """Generate samples from the predictive distribution.
+
+        Args:
+            x (torch.Tensor): Input tensor.
+
+        Returns:
+            torch.Tensor: Output tensor.
+        """
         prediction = list()
         feats = None
         for sample in self.la.sample(self.n_samples):
