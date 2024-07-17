@@ -120,6 +120,8 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
         model.train()
 
         for input, target in train_loader:
+            input = input.to(device)
+            target = target.to(device)
             batch_loss, batch_grad_norm = train(model, optimizer, input, target, criterion, training_parameters['gradient_clipping'])
             running_loss += batch_loss
             grad_norm += batch_grad_norm
@@ -140,6 +142,8 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
             validation_loss = 0
             with torch.no_grad():
                 for input, target in val_loader:
+                    input = input.to(device)
+                    target = target.to(device)
                     output_target = model(input)
                     validation_loss += criterion(output_target, target).item()
 
