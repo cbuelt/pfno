@@ -1,15 +1,8 @@
 import torch
 
 from models import generate_mcd_samples, LA_Wrapper
-from utils import losses
+from utils import losses, train_utils
 import numpy as np
-
-def log_and_save_evaluation(value, key, results_dict, logging):
-    value = np.round(value, decimals=5)
-    logging.info(f'{key}: {value}')
-    if not key in results_dict.keys():
-        results_dict[key] = []
-    results_dict[key].append(value)
 
 def generate_samples(uncertainty_quantification, model, a, u, n_samples):
     if uncertainty_quantification == 'dropout':
@@ -68,9 +61,9 @@ def start_evaluation(model, training_parameters, train_loader, validation_loader
         
         mse, es, coverage, int_width = evaluate(model, training_parameters, loader, device, domain_range)
         
-        log_and_save_evaluation(mse, 'MSE' + name, results_dict, logging)
-        log_and_save_evaluation(es, 'EnergyScore' + name, results_dict, logging)
-        log_and_save_evaluation(coverage, 'Coverage' + name, results_dict, logging)
-        log_and_save_evaluation(int_width, 'IntervalWidth' + name, results_dict, logging)
+        train_utils.log_and_save_evaluation(mse, 'MSE' + name, results_dict, logging)
+        train_utils.log_and_save_evaluation(es, 'EnergyScore' + name, results_dict, logging)
+        train_utils.log_and_save_evaluation(coverage, 'Coverage' + name, results_dict, logging)
+        train_utils.log_and_save_evaluation(int_width, 'IntervalWidth' + name, results_dict, logging)
         
     

@@ -12,6 +12,14 @@ from models import FNO, PFNO_Wrapper, UNO
 import random
 
 
+
+def log_and_save_evaluation(value, key, results_dict, logging):
+    value = np.round(value, decimals=5)
+    logging.info(f'{key}: {value}')
+    if not key in results_dict.keys():
+        results_dict[key] = []
+    results_dict[key].append(value)
+
 def checkpoint(model, filename):
     torch.save(model.state_dict(), filename)
     

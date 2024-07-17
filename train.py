@@ -45,7 +45,7 @@ def train(net, optimizer, input, target, criterion, gradient_clipping):
     return loss.item(), gradient_norm
 
 def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, logging, filename_ending,
-            domain_range, d_time, world_size=None):
+            domain_range, d_time, results_dict, world_size=None):
     
     model_name = training_parameters['model']
         
@@ -80,8 +80,9 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
     n_parameters = 0
     for parameter in model.parameters():
         n_parameters += parameter.nelement()
-    logging.info(f'Number parameters: {n_parameters}')
 
+    train_utils.log_and_save_evaluation(n_parameters, 'NumberParameters', results_dict, logging)
+    
     logging.info(f'Memory allocated: {torch.cuda.memory_reserved(device=device)}')
     
     # create your optimizer
