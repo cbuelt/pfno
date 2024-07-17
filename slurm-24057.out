@@ -1,0 +1,37 @@
+Using cuda.
+/home/math/scholl/projects/pfno
+Using cuda.
+Created directory results/20240717_160701_debug
+Data parameters: {'dataset_name': 'DarcyFlow', 'max_training_set_size': 10000, 'downscaling_factor': 2}
+Training parameters: {'model': 'FNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.0001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 10, 'weight_decay': 0, 'dropout': 0.1, 'fourier_dropout': 0.1, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (12, 12), 'n_samples': 3}
+Traceback (most recent call last):
+  File "/home/math/scholl/projects/pfno/main.py", line 150, in <module>
+    model = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters, logging=logging,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/math/scholl/projects/pfno/train.py", line 126, in trainer
+    batch_loss, batch_grad_norm = train(model, optimizer, input, target, criterion, training_parameters['gradient_clipping'])
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/math/scholl/projects/pfno/train.py", line 23, in train
+    loss = criterion(out, target)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/math/scholl/projects/pfno/utils/losses.py", line 181, in __call__
+    return self.calculate_score(y_pred, y, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/math/scholl/projects/pfno/utils/losses.py", line 173, in calculate_score
+    term_1 = torch.mean(self.norm(x_flat, y_flat, const = const, p = self.p), dim=(1,2))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/math/scholl/projects/pfno/utils/losses.py", line 84, in lp_norm
+    norm = const*torch.cdist(x, y, p = p)
+           ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/xarray/core/_typed_ops.py", line 252, in __mul__
+    return self._binary_op(other, operator.mul)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/xarray/core/dataarray.py", line 4726, in _binary_op
+    f(self.variable, other_variable_or_arraylike)
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/xarray/core/_typed_ops.py", line 482, in __mul__
+    return self._binary_op(other, operator.mul)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/xarray/core/variable.py", line 2317, in _binary_op
+    f(self_data, other_data) if not reflexive else f(other_data, self_data)
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for *: 'numpy.ndarray' and 'Tensor'
