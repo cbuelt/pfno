@@ -42,15 +42,15 @@ def evaluate(model, training_parameters, loader, device, domain_range):
             # Calculate coverage
             q_lower = torch.quantile(out, alpha/2, axis = -1)
             q_upper = torch.quantile(out, 1-alpha/2, axis = -1)
-            coverage += ((u>q_lower) & (u<q_upper)).float().mean().item() * batch_size / len(loader)
-            int_width += torch.abs(q_upper - q_lower).mean().item() * batch_size / len(loader)
+            coverage += ((u>q_lower) & (u<q_upper)).float().mean().item() * batch_size / len(loader.dataset)
+            int_width += torch.abs(q_upper - q_lower).mean().item() * batch_size / len(loader.dataset)
     
     return mse, es, coverage, int_width
     
 def start_evaluation(model, training_parameters, train_loader, validation_loader, test_loader, results_dict, device, domain_range, logging):
     logging.info(f'Starting evaluation: model {training_parameters["model"]} & uncertainty quantification {training_parameters["uncertainty_quantification"]}')
     
-    data_loaders = {'train': train_loader, 'validation': validation_loader, 'test': test_loader}
+    data_loaders = {'Train': train_loader, 'Validation': validation_loader, 'Test': test_loader}
 
     if training_parameters['uncertainty_quantification'] == 'laplace':
         model = LA_Wrapper(model, n_samples=training_parameters['n_samples'], method = "last_layer", hessian_structure = "full", optimize = True)
