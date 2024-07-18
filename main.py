@@ -137,7 +137,8 @@ if __name__ == '__main__':
             print(f'Training parameters: {training_parameters}')
             logging.info(f'Training parameters: {training_parameters}')
             
-            filename = f"{data_parameters['dataset_name']}_{training_parameters['model']}_dropout_{training_parameters['dropout']}"
+            filename = f"{data_parameters['dataset_name']}_{training_parameters['model']}_{training_parameters['uncertainty_quantification']}_" + \
+                       f"dropout_{training_parameters['dropout']}"
             
             batch_size = training_parameters['batch_size']
             
