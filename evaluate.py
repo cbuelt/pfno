@@ -43,7 +43,7 @@ def evaluate(model, training_parameters, loader, device, domain_range):
             q_lower = torch.quantile(out, alpha/2, axis = -1)
             q_upper = torch.quantile(out, 1-alpha/2, axis = -1)
             coverage += ((u>q_lower) & (u<q_upper)).float().mean().item() * batch_size / len(loader)
-            int_width += torch.linalg.abs(q_upper - q_lower).mean().item() * batch_size / len(loader)
+            int_width += torch.abs(q_upper - q_lower).mean().item() * batch_size / len(loader)
     
     return mse, es, coverage, int_width
     

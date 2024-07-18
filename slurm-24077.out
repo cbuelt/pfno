@@ -1,0 +1,16 @@
+Using cuda.
+/home/math/scholl/projects/pfno
+Using cuda.
+Created directory results/20240718_094010_darcy_flow_fno
+Data parameters: {'dataset_name': 'DarcyFlow', 'max_training_set_size': 10000, 'downscaling_factor': 2}
+Training parameters: {'model': 'FNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.0001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (12, 12), 'n_samples': 3}
+Traceback (most recent call last):
+  File "/home/math/scholl/projects/pfno/main.py", line 171, in <module>
+    start_evaluation(model, training_parameters, train_loader, val_loader, test_loader, results_dict, device, domain_range, logging)
+  File "/home/math/scholl/projects/pfno/evaluate.py", line 62, in start_evaluation
+    mse, es, coverage, int_width = evaluate(model, training_parameters, loader, device, domain_range)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/math/scholl/projects/pfno/evaluate.py", line 46, in evaluate
+    int_width += torch.linalg.abs(q_upper - q_lower).mean().item() * batch_size / len(loader)
+                 ^^^^^^^^^^^^^^^^
+AttributeError: module 'torch.linalg' has no attribute 'abs'
