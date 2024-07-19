@@ -5,6 +5,11 @@ from utils import losses, train_utils
 import numpy as np
 
 def generate_samples(uncertainty_quantification, model, a, u, n_samples):
+    if uncertainty_quantification.endswith('dropout'):
+        model.train()
+    else:
+        model.eval()
+    
     if uncertainty_quantification == 'dropout':
         out = generate_mcd_samples(model, a, u.shape, n_samples=n_samples)
     elif uncertainty_quantification == 'laplace':
@@ -15,10 +20,7 @@ def generate_samples(uncertainty_quantification, model, a, u, n_samples):
 
 def evaluate(model, training_parameters, loader, device, domain_range):
     uncertainty_quantification = training_parameters['uncertainty_quantification']
-    if uncertainty_quantification.endswith('dropout'):
-        model.train()
-    elif uncertainty_quantification == 'scoring-rule-mu-std':
-        model.eval()
+
     
     mse = 0
     es = 0
@@ -37,8 +39,8 @@ def evaluate(model, training_parameters, loader, device, domain_range):
             u = u.to(device)
             batch_size = a.shape[0]
             out = generate_samples(uncertainty_quantification, model, a, u, training_parameters['n_samples_uq'])
-            mse += l2loss(out.mean(axis = -1), u).item() * batch_size / len(loader)
-            es += energy_score(out, u).item() * batch_size / len(loader)
+            mse += l2loss(out.mean(axis = -1), u).item() * batch_size / len(loader.dataset)
+            es += energy_score(out, u).item() * batch_size / len(loader.dataset)
             # Calculate coverage
             q_lower = torch.quantile(out, alpha/2, axis = -1)
             q_upper = torch.quantile(out, 1-alpha/2, axis = -1)
