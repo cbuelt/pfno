@@ -47,8 +47,6 @@ def train(net, optimizer, input, target, criterion, gradient_clipping):
 def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, logging, filename_ending,
             domain_range, d_time, results_dict, world_size=None):
     
-    model_name = training_parameters['model']
-        
     if training_parameters['distributed_training']:
         train_utils.ddp_setup(rank=gpu_id, world_size=world_size)
         print(f'GPU ID: {gpu_id}')
@@ -148,7 +146,7 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
                     output_target = model(input)
                     validation_loss += criterion(output_target, target).item()
 
-            validation_loss_list.append(validation_loss)
+            validation_loss_list.append(validation_loss / report_every / len(val_loader))
             training_loss_list.append(running_loss / report_every / (len(train_loader)))
             grad_norm_list.append(grad_norm / report_every / (len(train_loader)))
             running_loss = 0.0

@@ -1,0 +1,56 @@
+Using cuda.
+/home/math/scholl/projects/pfno
+Using cuda.
+Created directory results/20240718_182529_swe_fno
+Data parameters: {'dataset_name': 'SWE', 'max_training_set_size': 1000, 'downscaling_factor': 1, 'temporal_downscaling': 4, 'init_steps': 10, 't_start': 0, 'pred_horizon': 10}
+Training parameters: {'model': 'FNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.0001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 10, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12, 12), 'n_samples': 3}
+Traceback (most recent call last):
+  File "/home/math/scholl/projects/pfno/main.py", line 152, in <module>
+    model = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters, logging=logging,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/math/scholl/projects/pfno/train.py", line 124, in trainer
+    batch_loss, batch_grad_norm = train(model, optimizer, input, target, criterion, training_parameters['gradient_clipping'])
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/math/scholl/projects/pfno/train.py", line 21, in train
+    out = net(input)
+          ^^^^^^^^^^
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/math/scholl/projects/pfno/models/pfno.py", line 36, in forward
+    outputs = [self.model(input) for _ in range(n_samples)]
+               ^^^^^^^^^^^^^^^^^
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/math/scholl/projects/pfno/models/fno.py", line 190, in forward
+    x = self.projection(x)
+        ^^^^^^^^^^^^^^^^^^
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/math/scholl/projects/pfno/models/layers.py", line 62, in forward
+    x = self.dropout_rate[i](x)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/torch/nn/modules/dropout.py", line 59, in forward
+    return F.dropout(input, self.p, self.training, self.inplace)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/ai/scholl/miniconda3/envs/pfno2/lib/python3.12/site-packages/torch/nn/functional.py", line 1295, in dropout
+    return _VF.dropout_(input, p, training) if inplace else _VF.dropout(input, p, training)
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 2.50 GiB. GPU 
