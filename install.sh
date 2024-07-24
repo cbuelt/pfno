@@ -1,6 +1,5 @@
-conda env create -n pfno python=3.12
+conda create -n pfno python=3.12
 conda activate pfno
-git clone git@github.com:pdebench/PDEBench.git
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 conda install numpy pandas scikit-learn matplotlib 
 conda install wandb -c conda-forge
