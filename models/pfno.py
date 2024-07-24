@@ -11,7 +11,7 @@ from neuralop.layers.skip_connections import skip_connection
 from neuralop.layers.resample import resample
 
 
-class PFNO_Wrapper(nn.Module):
+class PNO_Wrapper(nn.Module):
     def __init__(self, model: nn.Module, n_samples: int = 3):
         """ Takes a deterministic model and wraps it to generate n_samples from the predictive distribution.
 
@@ -19,7 +19,7 @@ class PFNO_Wrapper(nn.Module):
             model (nn.Module): Neural network.
             n_samples (int, optional): Number of output samples. Defaults to 3.
         """
-        super(PFNO_Wrapper, self).__init__()
+        super(PNO_Wrapper, self).__init__()
         self.model = model
         self.n_samples = n_samples
 
