@@ -8,3 +8,4 @@ conda install h5py
 pip install neuraloperator
 pip install git+https://github.com/aleximmer/laplace.git@0.2
 pip install torch-harmonics
+conda install -c conda-forge py-pde
