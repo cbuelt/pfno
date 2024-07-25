@@ -17,7 +17,7 @@ def evaluate(model, training_parameters, loader, device, domain_range):
     uncertainty_quantification = training_parameters['uncertainty_quantification']
     if uncertainty_quantification.endswith('dropout'):
         model.train()
-    else:
+    elif uncertainty_quantification == "scoring-rule-reparam":
         model.eval()
     
     mse = 0

@@ -117,15 +117,16 @@ if __name__ == '__main__':
             pred_horizon = data_parameters['pred_horizon']
             t_start = data_parameters['t_start']
             init_steps = data_parameters['init_steps']
+            ood = data_parameters["ood"]
             
             assert 100 > temporal_downscaling_factor * (pred_horizon + t_start + init_steps)
             
             train_data = SWEDataset(data_dir, test = False, downscaling_factor=downscaling_factor, mode = "autoregressive",
                         pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
-                        temporal_downscaling_factor=temporal_downscaling_factor)
+                        temporal_downscaling_factor=temporal_downscaling_factor, ood = ood)
             test_data = SWEDataset(data_dir, test = True, mode = "autoregressive",
                         pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
-                        temporal_downscaling_factor=temporal_downscaling_factor)
+                        temporal_downscaling_factor=temporal_downscaling_factor, ood = ood)
         elif data_parameters["dataset_name"] == "KS":
             downscaling_factor = int(data_parameters['downscaling_factor'])
             temporal_downscaling_factor = int(data_parameters['temporal_downscaling'])

@@ -518,17 +518,18 @@ class PUNO(nn.Module):
 # Main method
 if __name__ == '__main__':
     # Create a model
-    model = PUNO(3,1, projection_channels=32, lifting_channels=16, hidden_channels=8, uno_out_channels = [16, 32, 64, 128, 64, 32],
-                uno_n_modes= [[20,20],[14,14],[6,6], [6,6], [6,6], [14,14]], uno_scalings=  [[0.75,0.75], [0.67,0.67], [0.5,0.5], [1.0,1.0], [2.0,2.0], [1.5,1.5]],
+    model = PUNO(4,1, projection_channels=32, lifting_channels=16, hidden_channels=8, uno_out_channels = [16, 32, 64, 128, 64, 32],
+                uno_n_modes= [[6,20,20],[6,14,14],[6,6,6], [6,6,6], [6,6,6], [6,14,14]], uno_scalings=  [[1.0,0.5,0.5], [1.0,0.5,0.5], [1.0,1.0,1.0], [1.0,1.0,1.0], [1.0,2.0,2.0], [2.0,2.0,2.0]],
                 dropout = 0.2, fourier_dropout=0.4)
-    x = torch.randn(2, 3, 64, 64)
+    x = torch.randn(3, 4, 5, 900, 900)
+    print(f"Memory requirements of x: {x.nelement() * x.element_size()/10e9} Gb")
 
     out = model(x)
+    print(f"Memory requirements of pred: {out.nelement() * out.element_size()/10e9} Gb")
     print(out.shape)
     print(out.dtype)
     from neuralop.utils import count_model_params
     n_params = count_model_params(model)
     print(f'\nOur model has {n_params} parameters.')
-    print(out[0,0,0,0:10])
 
 
