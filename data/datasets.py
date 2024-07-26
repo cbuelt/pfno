@@ -149,12 +149,16 @@ class SWEDataset(Dataset):
         temporal_downscaling_factor: int = 1,
         pred_horizon: int = 10,
         t_start: int = 0,
-    ) -> None:
-
+        ood:bool = False,
+    ) -> None:       
+        
+        self.filename = "swe"
+        if ood:
+            self.filename += "_ood"
         if test:
-            self.filename = "swe_test.nc"
+            self.filename += "_test.nc"
         else:
-            self.filename = "swe_train.nc"
+            self.filename += "_train.nc"
         assert isinstance(downscaling_factor, int), "Scaling factor must be Integer"
         assert isinstance(
             temporal_downscaling_factor, int
@@ -388,8 +392,8 @@ class KSDataset(Dataset):
 
 
 if __name__ == "__main__":
-    data_dir = "data/KS/processed/"
-    dataset = KSDataset(
+    data_dir = "data/SWE/processed/"
+    dataset = SWEDataset(
         data_dir,
         test=True,
         downscaling_factor=2,
@@ -397,6 +401,7 @@ if __name__ == "__main__":
         mode="autoregressive",
         init_steps=10,
         pred_horizon=10,
+        ood = True,
     )
     print(dataset.__len__())
     print(dataset.get_domain_range())

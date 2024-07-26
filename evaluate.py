@@ -7,7 +7,7 @@ import numpy as np
 def generate_samples(uncertainty_quantification, model, a, u, n_samples):
     if uncertainty_quantification.endswith('dropout'):
         model.train()
-    else:
+    elif uncertainty_quantification == "scoring-rule-reparam":
         model.eval()
     
     if uncertainty_quantification == 'dropout':
@@ -20,7 +20,6 @@ def generate_samples(uncertainty_quantification, model, a, u, n_samples):
 
 def evaluate(model, training_parameters, loader, device, domain_range):
     uncertainty_quantification = training_parameters['uncertainty_quantification']
-
     
     mse = 0
     es = 0
