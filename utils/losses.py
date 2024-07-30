@@ -3,11 +3,11 @@ import numpy as np
 from typing import List
 
 import torch
-      
-  
-#loss function with abs Lp loss
+
+
+# loss function with abs Lp loss
 class LpLoss(object):
-    def __init__(self, d=1, p=2, L=2*math.pi, reduce_dims=[0, 1], reductions='mean'):
+    def __init__(self, d=1, p=2, L=2 * math.pi, reduce_dims=[0, 1], reductions="mean"):
         super().__init__()
 
         self.d = d
@@ -17,59 +17,80 @@ class LpLoss(object):
             self.reduce_dims = [reduce_dims]
         else:
             self.reduce_dims = reduce_dims
-        
+
         if self.reduce_dims is not None:
             if isinstance(reductions, str):
-                assert reductions == 'sum' or reductions == 'mean'
-                self.reductions = [reductions]*len(self.reduce_dims)
+                assert reductions == "sum" or reductions == "mean"
+                self.reductions = [reductions] * len(self.reduce_dims)
             else:
                 for j in range(len(reductions)):
-                    assert reductions[j] == 'sum' or reductions[j] == 'mean'
+                    assert reductions[j] == "sum" or reductions[j] == "mean"
                 self.reductions = reductions
 
         if isinstance(L, float):
-            self.L = [L]*self.d
+            self.L = [L] * self.d
         else:
             self.L = L
-    
+
     def uniform_h(self, x):
-        h = [0.0]*self.d
+        h = [0.0] * self.d
         for j in range(self.d, 0, -1):
-            h[-j] = self.L[-j]/x.size(-j)
-        
+            h[-j] = self.L[-j] / x.size(-j)
+
         return h
 
     def reduce_all(self, x):
         for j in range(len(self.reduce_dims)):
-            if self.reductions[j] == 'sum':
+            if self.reductions[j] == "sum":
                 x = torch.sum(x, dim=self.reduce_dims[j], keepdim=True)
             else:
                 x = torch.mean(x, dim=self.reduce_dims[j], keepdim=True)
-        
+
         return x
 
     def abs(self, x, y, h=None):
-        #Assume uniform mesh
+        # Assume uniform mesh
         if h is None:
             h = self.uniform_h(x)
         else:
             if isinstance(h, float):
-                h = [h]*self.d
-        
-        const = torch.tensor(np.array(math.prod(h)**(1.0/self.p)), device=x.device)
-        diff = const*torch.norm(torch.flatten(x, start_dim=-self.d) - torch.flatten(y, start_dim=-self.d), \
-                                              p=self.p, dim=-1, keepdim=False)
+                h = [h] * self.d
+
+        const = torch.tensor(np.array(math.prod(h) ** (1.0 / self.p)), device=x.device)
+        diff = const * torch.norm(
+            torch.flatten(x, start_dim=-self.d) - torch.flatten(y, start_dim=-self.d),
+            p=self.p,
+            dim=-1,
+            keepdim=False,
+        )
 
         if self.reduce_dims is not None:
             diff = self.reduce_all(diff).squeeze()
-            
+
+        return diff
+
+    def rel(self, x, y):
+        diff = torch.norm(
+            torch.flatten(x, start_dim=-self.d) - torch.flatten(y, start_dim=-self.d),
+            p=self.p,
+            dim=-1,
+            keepdim=False,
+        )
+        ynorm = torch.norm(
+            torch.flatten(y, start_dim=-self.d), p=self.p, dim=-1, keepdim=False
+        )
+
+        diff = diff / ynorm
+
+        if self.reduce_dims is not None:
+            diff = self.reduce_all(diff).squeeze()
         return diff
 
     def __call__(self, y_pred, y, **kwargs):
-        return self.abs(y_pred, y)
+        return self.rel(y_pred, y)
 
 
-def lp_norm(x, y, const, p=2):
+def lp_norm(x, y, const, p=2, rel = True):
     """Calculates the Lp norm between two tensors
 
     Args:
@@ -81,7 +102,12 @@ def lp_norm(x, y, const, p=2):
     Returns:
         Tensor: Lp norm
     """
-    norm = const*torch.cdist(x, y, p = p)
+    norm = const * torch.cdist(x, y, p=p)
+    if rel:
+        ynorm = const* torch.norm(
+            torch.flatten(y, start_dim=-1), p=p, dim=-1, keepdim=True
+        )
+        norm = norm/ynorm
     return norm
 
 
@@ -99,24 +125,25 @@ def complex_norm(x, y, **kwargs):
     x_expand = torch.unsqueeze(x, dim=2)
     y_expand = torch.unsqueeze(y, dim=1)
     diff = x_expand - y_expand
-    norm = torch.sqrt(torch.sum(diff * torch.conj(diff), dim = -1))
-    
+    norm = torch.sqrt(torch.sum(diff * torch.conj(diff), dim=-1))
+
     return torch.real(norm)
 
 
 class EnergyScore(object):
-    def __init__(self, d = 1, type = "p", reduction = 'mean', reduce_dims = True, **kwargs):
+    def __init__(self, d=1, type="lp", reduction="mean", reduce_dims=True, **kwargs):
         super().__init__()
 
         self.d = d
         self.type = type
         self.reduction = reduction
         self.reduce_dims = reduce_dims
-        self.p = kwargs.get('p', 2)
-        self.L = kwargs.get('L', 2*math.pi)
+        self.rel = kwargs.get("rel", True)
+        self.p = kwargs.get("p", 2)
+        self.L = kwargs.get("L", 2 * math.pi)
 
         if isinstance(self.L, float):
-            self.L = [self.L]*self.d
+            self.L = [self.L] * self.d
 
         if self.type == "complex":
             self.norm = complex_norm
@@ -129,14 +156,14 @@ class EnergyScore(object):
         else:
             x = torch.mean(x, dim=0, keepdim=True)
         return x
-    
+
     def uniform_h(self, x):
         h = [0.0] * self.d
         for j in range(self.d, 0, -1):
-            h[-j] = self.L[-j] / x.size(-j-1)
+            h[-j] = self.L[-j] / x.size(-j - 1)
         return h
 
-    def calculate_score(self, x, y, h = None):
+    def calculate_score(self, x, y):
         """Calculates the energy score for different metrics
 
         Args:
@@ -153,25 +180,23 @@ class EnergyScore(object):
         if len(x.size()) != len(y.size()):
             y = torch.unsqueeze(y, dim=-1)
 
-
         # Restructure tensors to shape (Batch size, n_samples, flatted dims)
         x_flat = torch.swapaxes(torch.flatten(x, start_dim=1, end_dim=-2), 1, 2)
         y_flat = torch.swapaxes(torch.flatten(y, start_dim=1, end_dim=-2), 1, 2)
 
-        #Assume uniform mesh
-        if h is None:
-            h = self.uniform_h(x)
-        else:
-            if isinstance(h, float):
-                h = [h]*self.d
+        # Assume uniform mesh
         if self.type == "lp":
-            const = torch.tensor(np.array(math.prod(h)**(1.0/self.p)), device=x.device)
+            const = torch.tensor(
+                np.array(math.prod(self.L) ** (1.0 / self.p)), device=x.device
+            )
         else:
             const = 1.0
-
+  
         # Calculate energy score
-        term_1 = torch.mean(self.norm(x_flat, y_flat, const = const, p = self.p), dim=(1,2))
-        term_2 = torch.sum(self.norm(x_flat, x_flat, const = const, p = self.p), dim=(1,2))
+        term_1 = torch.mean(
+            self.norm(x_flat, y_flat, const=const, p=self.p, rel = self.rel), dim=(1, 2)
+        )
+        term_2 = torch.sum(self.norm(x_flat, x_flat, const=const, p=self.p, rel = self.rel), dim=(1, 2))
         score = term_1 - term_2 / (2 * n_samples * (n_samples - 1))
 
         # Reduce
@@ -179,11 +204,18 @@ class EnergyScore(object):
 
     def __call__(self, y_pred, y, **kwargs):
         return self.calculate_score(y_pred, y, **kwargs)
-    
-    
+
 
 class KernelScore(object):
-    def __init__(self, d = 1, type = "p", kernel = "gauss", reduction = 'mean', reduce_dims = True, **kwargs):
+    def __init__(
+        self,
+        d=1,
+        type="lp",
+        kernel="gauss",
+        reduction="mean",
+        reduce_dims=True,
+        **kwargs
+    ):
         super().__init__()
 
         self.d = d
@@ -191,12 +223,13 @@ class KernelScore(object):
         self.kernel = kernel
         self.reduction = reduction
         self.reduce_dims = reduce_dims
-        self.p = kwargs.get('p', 2)
-        self.L = kwargs.get('L', 2*math.pi)
-        self.gamma = kwargs.get('gamma', 1.0)
+        self.p = kwargs.get("p", 2)
+        self.L = kwargs.get("L", 2 * math.pi)
+        self.rel = kwargs.get("rel", True)
+        self.gamma = kwargs.get("gamma", 1.0)
 
         if isinstance(self.L, float):
-            self.L = [self.L]*self.d
+            self.L = [self.L] * self.d
 
         if self.type == "complex":
             self.norm = complex_norm
@@ -209,14 +242,14 @@ class KernelScore(object):
         else:
             x = torch.mean(x, dim=0, keepdim=True)
         return x
-    
+
     def uniform_h(self, x):
         h = [0.0] * self.d
         for j in range(self.d, 0, -1):
-            h[-j] = self.L[-j] / x.size(-j-1)
+            h[-j] = self.L[-j] / x.size(-j - 1)
         return h
 
-    def calculate_score(self, x, y, h = None):
+    def calculate_score(self, x, y):
         """Calculates the energy score for different metrics
 
         Args:
@@ -233,53 +266,50 @@ class KernelScore(object):
         if len(x.size()) != len(y.size()):
             y = torch.unsqueeze(y, dim=-1)
 
-
         # Restructure tensors to shape (Batch size, n_samples, flatted dims)
         x_flat = torch.swapaxes(torch.flatten(x, start_dim=1, end_dim=-2), 1, 2)
         y_flat = torch.swapaxes(torch.flatten(y, start_dim=1, end_dim=-2), 1, 2)
 
-        #Assume uniform mesh
-        if h is None:
-            h = self.uniform_h(x)
-        else:
-            if isinstance(h, float):
-                h = [h]*self.d
+        # Assume uniform mesh
         if self.type == "lp":
-            const = torch.tensor(np.array(math.prod(h)**(1.0/self.p)), device=x.device)
+            const = torch.tensor(
+                np.array(math.prod(self.L) ** (1.0 / self.p)), device=x.device
+            )
         else:
             const = 1.0
 
         # Calculate Gram matrix
-        K1 = self.norm(x_flat, y_flat, const = const, p = self.p)
-        K2 = self.norm(x_flat, x_flat, const = const, p = self.p)
+        K1 = self.norm(x_flat, y_flat, const=const, p=self.p, rel = self.rel)
+        K2 = self.norm(x_flat, x_flat, const=const, p=self.p, rel = self.rel)
 
         if self.kernel == "laplace":
-            K1 = torch.exp(-K1/(2*self.gamma**2))
-            K2 = torch.exp(-K2/(2*self.gamma**2))
+            K1 = torch.exp(-K1 / (2 * self.gamma**2))
+            K2 = torch.exp(-K2 / (2 * self.gamma**2))
         elif self.kernel == "gauss":
-            K1 = torch.exp(- torch.pow(K1/(2*self.gamma),2))
-            K2 = torch.exp(- torch.pow(K2/(2*self.gamma),2))
+            K1 = torch.exp(-torch.pow(K1 / (2 * self.gamma), 2))
+            K2 = torch.exp(-torch.pow(K2 / (2 * self.gamma), 2))
 
         # Calculate kernel score
         # Remove diag
         K2 = K2 - torch.eye(n_samples).to(x.device)
-        score = torch.sum(K2, dim = (1,2)) / (2 * n_samples * (n_samples - 1)) - torch.mean(K1, dim=(1,2))
+        score = torch.sum(K2, dim=(1, 2)) / (
+            2 * n_samples * (n_samples - 1)
+        ) - torch.mean(K1, dim=(1, 2)) + 1
 
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score
 
     def __call__(self, y_pred, y, **kwargs):
         return self.calculate_score(y_pred, y, **kwargs)
-    
 
 
 class VariogramScore(object):
-    def __init__(self, p = 1, reduction = 'mean', reduce_dims = True, **kwargs):
+    def __init__(self, p=1, reduction="mean", reduce_dims=True, **kwargs):
         super().__init__()
 
         self.reduction = reduction
         self.reduce_dims = reduce_dims
-        self.p = kwargs.get('p', 1)
+        self.p = kwargs.get("p", 1)
 
     def reduce(self, x):
         if self.reduction == "sum":
@@ -288,7 +318,7 @@ class VariogramScore(object):
             x = torch.mean(x, dim=0, keepdim=True)
         return x
 
-    def calculate_score(self, x, y, h = None):
+    def calculate_score(self, x, y, h=None):
         """Calculates the energy score for different metrics
 
         Args:
@@ -311,32 +341,42 @@ class VariogramScore(object):
 
         d = x_flat.size(-1)
 
-
         # Calculate variogram score
-        weights = (1/d**2)*torch.ones(d,d).to(x.device)
-        term_1 = torch.pow(torch.abs(torch.unsqueeze(y_flat, dim = -1) - torch.unsqueeze(y_flat, dim = -2)), self.p)
-        term_2 = torch.pow(torch.abs(torch.unsqueeze(x_flat, dim = -1) - torch.unsqueeze(x_flat, dim = -2)), self.p)
+        weights = (1 / d**2) * torch.ones(d, d).to(x.device)
+        term_1 = torch.pow(
+            torch.abs(
+                torch.unsqueeze(y_flat, dim=-1) - torch.unsqueeze(y_flat, dim=-2)
+            ),
+            self.p,
+        )
+        term_2 = torch.pow(
+            torch.abs(
+                torch.unsqueeze(x_flat, dim=-1) - torch.unsqueeze(x_flat, dim=-2)
+            ),
+            self.p,
+        )
 
-        score = torch.sum(weights * torch.pow(term_1 - torch.mean(term_2, dim = 1, keepdim=True), 2), dim = (-2,-1))
+        score = torch.sum(
+            weights * torch.pow(term_1 - torch.mean(term_2, dim=1, keepdim=True), 2),
+            dim=(-2, -1),
+        )
 
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score
 
     def __call__(self, y_pred, y, **kwargs):
         return self.calculate_score(y_pred, y, **kwargs)
-    
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # set torch seed
-  #  torch.manual_seed(0)
-    input = torch.rand(32, 1, 10, 25)
-    truth = torch.ones(32, 1, 10)
-  
+    torch.manual_seed(0)
+    input = torch.rand(32, 1, 10, 25,5,3)
+    truth = torch.ones(32, 1, 10, 25,5)
 
-    score_func = EnergyScore(d = 1)
+    score_func = KernelScore(d=3, L = [1, 1, 5], rel = True)
 
     score = score_func(input, truth)
 
     print(score.shape)
     print(score)
-
