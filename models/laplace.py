@@ -2,7 +2,7 @@ from torch.nn.utils import vector_to_parameters
 from laplace import Laplace
 import torch
 
-class LA_Wrapper:
+class LA_Wrapper(torch.nn.Module):
     """
     A class used to handle the Laplace approximation.
 
