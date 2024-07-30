@@ -7,11 +7,12 @@ import torch
 
 # loss function with abs Lp loss
 class LpLoss(object):
-    def __init__(self, d=1, p=2, L=2 * math.pi, reduce_dims=[0, 1], reductions="mean"):
+    def __init__(self, d=1, p=2, L=2 * math.pi, reduce_dims=[0, 1], reductions="mean", rel = True):
         super().__init__()
 
         self.d = d
         self.p = p
+        self.rel = rel
 
         if isinstance(reduce_dims, int):
             self.reduce_dims = [reduce_dims]
@@ -87,7 +88,10 @@ class LpLoss(object):
         return diff
 
     def __call__(self, y_pred, y, **kwargs):
-        return self.rel(y_pred, y)
+        if self.rel:
+            return self.rel(y_pred, y)
+        else:
+            return self.abs(y_pred,y)
 
 
 def lp_norm(x, y, const, p=2):

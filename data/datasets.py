@@ -37,6 +37,7 @@ class DarcyFlowDataset(Dataset):
         test: bool = False,
         beta: float = 1.0,
         downscaling_factor: int = 1,
+        normalize = True,
     ) -> None:
         """Initialize Darcy Flow Dataset
 
@@ -53,6 +54,7 @@ class DarcyFlowDataset(Dataset):
         self.dataset = xr.open_dataset(data_dir + self.filename)
         assert isinstance(downscaling_factor, int), "Scaling factor must be Integer"
         self.downscaling_factor = downscaling_factor
+        self.normalize = normalize
 
     def __len__(self) -> int:
         """Returns the length of the dataset
@@ -80,6 +82,10 @@ class DarcyFlowDataset(Dataset):
         # Create grid
         x = self.dataset["x-coordinate"][:: self.downscaling_factor]
         y = self.dataset["y-coordinate"][:: self.downscaling_factor]
+        # Min/max normalization
+        if self.normalize:
+            x = (x - np.min(x))//(np.max(x) - np.min(x))
+            y = (y - np.min(y))//(np.max(y) - np.min(y))
         grid = np.stack(np.meshgrid(x, y))
         # Stack input and grid
         tensor_a = torch.cat([torch.tensor(a).unsqueeze(0), torch.tensor(grid)], dim=0)
@@ -155,6 +161,7 @@ class SWEDataset(Dataset):
         pred_horizon: int = 10,
         t_start: int = 0,
         ood: bool = False,
+        normalize:bool = True,
     ) -> None:
 
         self.filename = "swe"
@@ -174,6 +181,7 @@ class SWEDataset(Dataset):
         self.t_start = t_start
         self.mode = mode
         self.pred_horizon = pred_horizon
+        self.normalize = normalize
 
         # Downscaling
         self.dataset = xr.open_dataset(data_dir + self.filename).u[
@@ -223,6 +231,11 @@ class SWEDataset(Dataset):
         x = a.coords["x"]
         y = a.coords["y"]
         t = a.coords["time"]
+        # Min/max normalization
+        if self.normalize:
+            x = (x - np.min(x))/(np.max(x) - np.min(x))
+            y = (y - np.min(y))/(np.max(y) - np.min(y))
+            t = (t - np.min(t))/(np.max(t) - np.min(t))
         grid = np.stack(np.meshgrid(x, t, y))
         # Stack input and grid
         tensor_a = torch.tensor(a.to_numpy()).float().unsqueeze(0)
@@ -305,6 +318,7 @@ class KSDataset(Dataset):
         temporal_downscaling_factor: int = 1,
         pred_horizon: int = 10,
         t_start: int = 0,
+        normalize:bool = True,
     ) -> None:
 
         if test:
@@ -321,6 +335,7 @@ class KSDataset(Dataset):
         self.t_start = t_start
         self.mode = mode
         self.pred_horizon = pred_horizon
+        self.normalize = normalize
 
         # Downscaling
         self.dataset = xr.open_dataset(data_dir + self.filename).u[
@@ -368,6 +383,10 @@ class KSDataset(Dataset):
         # Create grid
         x = a.coords["x"]
         t = a.coords["t"]
+        # Min/max normalization
+        if self.normalize:
+            x = (x - np.min(x))/(np.max(x) - np.min(x))
+            t = (t - np.min(t))/(np.max(t) - np.min(t))
         grid = np.stack(np.meshgrid(x, t))
         # Stack input and grid
         tensor_a = torch.tensor(a.to_numpy()).float().unsqueeze(0)
@@ -413,11 +432,13 @@ class RYDLDataset(Dataset):
         init_steps: int = 8,
         prediction_steps: int = 8,
         resample: int = 2,
+        normalize:bool = True,
     ):
         self.data_dir = data_dir
         self.init_steps = init_steps
         self.prediction_steps = prediction_steps
         self.resample = resample
+        self.normalize = normalize
         # Load datetime index
         self.index = np.load(self.data_dir + f"{var}.npy")
         # Prepare domain
@@ -460,6 +481,12 @@ class RYDLDataset(Dataset):
         self.x = precip.coords["x"].values / 1000
         self.y = precip.coords["y"].values / 1000
         self.t =  np.arange(0, 5*self.resample*(self.prediction_steps), 5*self.resample)
+        # Min/max normalization
+        if self.normalize:
+            self.x = (self.x - np.min(self.x))/(np.max(self.x) - np.min(self.x))
+            self.y = (self.y - np.min(self.y))/(np.max(self.y)- np.min(self.y))
+            self.t = (self.t - np.min(self.t))/(np.max(self.t)- np.min(self.t))
+
         train = precip.sel(time = range[0:self.init_steps])
         target = precip.sel(time = range[self.init_steps:])
         # Turn to tensor and log transform
@@ -475,12 +502,7 @@ class RYDLDataset(Dataset):
     def get_date(self, idx: int) -> str:
         return self.index[idx]
     
-    def get_coordinates(self, normalize = True) -> Tuple:
-        # Min/max normalization
-        if normalize:
-            self.x = (self.x - np.min(self.x))/(np.max(self.x) - np.min(self.x))
-            self.y = (self.y - np.min(self.y))/(np.max(self.y)- np.min(self.y))
-            self.t = (self.t - np.min(self.t))/(np.max(self.t)- np.min(self.t))
+    def get_coordinates(self) -> Tuple:
         return self.x, self.y, self.t
     
     def get_domain_range(self) -> List[float]:
@@ -491,15 +513,14 @@ class RYDLDataset(Dataset):
     
 
 if __name__ == "__main__":
-    data_dir = "data/RYDL/"
-    dataset = RYDLDataset(data_dir, var = "train")
+    data_dir = "data/KS/processed/"
+    dataset = KSDataset(data_dir)
     print(len(dataset))
     train, target = dataset.__getitem__(10)
+    x,y = dataset.get_coordinates(normalize = True)
     print(train.shape)
-    print(target.shape)
-    x,y,t = dataset.get_coordinates(normalize = True)
-    print(x.shape, y.shape, t.shape)
-    print(t)
-    L = dataset.get_domain_range()
-    print(L)
+    print(train[1])
+    print(x)
+
+
 
