@@ -86,7 +86,7 @@ class DarcyFlowDataset(Dataset):
         tensor_u = torch.tensor(u).unsqueeze(0)
         return tensor_a, tensor_u
 
-    def get_coordinates(self) -> Tuple:
+    def get_coordinates(self, normalize = True) -> Tuple:
         """Returns the x and y coordinates of the dataset
 
         Returns:
@@ -94,6 +94,10 @@ class DarcyFlowDataset(Dataset):
         """
         x = self.dataset["x-coordinate"][:: self.downscaling_factor]
         y = self.dataset["y-coordinate"][:: self.downscaling_factor]
+        # Min/max normalization
+        if normalize:
+            x = (x - np.min(x))//(np.max(x) - np.min(x))
+            y = (y - np.min(y))//(np.max(y) - np.min(y))
         return (x, y)
 
     def get_domain_range(self) -> List[float]:
@@ -226,7 +230,7 @@ class SWEDataset(Dataset):
         tensor_u = torch.tensor(u.to_numpy()).float().unsqueeze(0)
         return tensor_a, tensor_u
 
-    def get_coordinates(self) -> Tuple:
+    def get_coordinates(self, normalize = True) -> Tuple:
         """Returns the x and y coordinates of the dataset
 
         Returns:
@@ -235,6 +239,11 @@ class SWEDataset(Dataset):
         x = self.dataset.coords["x"].values
         y = self.dataset.coords["y"].values
         t = self.dataset.coords["time"].values
+        # Min/max normalization
+        if normalize:
+            x = (x - np.min(x))/(np.max(x) - np.min(x))
+            y = (y - np.min(y))/(np.max(y) - np.min(y))
+            t = (t - np.min(t))/(np.max(t) - np.min(t))
         return (x, y, t)
 
     def get_domain_range(self) -> List[float]:
@@ -366,7 +375,7 @@ class KSDataset(Dataset):
         tensor_u = torch.tensor(u.to_numpy()).float().unsqueeze(0)
         return tensor_a, tensor_u
 
-    def get_coordinates(self) -> Tuple:
+    def get_coordinates(self, normalize = True) -> Tuple:
         """Returns the x and y coordinates of the dataset
 
         Returns:
@@ -374,6 +383,10 @@ class KSDataset(Dataset):
         """
         x = self.dataset.coords["x"].values
         t = self.dataset.coords["t"].values
+        # Min/max normalization
+        if normalize:
+            x = (x - np.min(x))/(np.max(x) - np.min(x))
+            t = (t - np.min(t))/(np.max(t) - np.min(t))
         return (x, t)
 
     def get_domain_range(self) -> List[float]:
@@ -385,10 +398,10 @@ class KSDataset(Dataset):
         x, t = self.get_coordinates()
         L_x = x[-1] - x[0]
         if self.mode == "single":
-            t = t[self.u_end : self.u_end + 1]
+            L_t = t[self.u_end+1] - t[self.u_end]
         elif self.mode == "autoregressive":
             t = t[self.a_end : self.u_end + 1]
-        L_t = t[-1] - t[0]
+            L_t = t[-1] - t[0]
         return [L_t, L_x]
 
 
@@ -462,26 +475,31 @@ class RYDLDataset(Dataset):
     def get_date(self, idx: int) -> str:
         return self.index[idx]
     
-    def get_coordinates(self) -> Tuple:
+    def get_coordinates(self, normalize = True) -> Tuple:
+        # Min/max normalization
+        if normalize:
+            self.x = (self.x - np.min(self.x))/(np.max(self.x) - np.min(self.x))
+            self.y = (self.y - np.min(self.y))/(np.max(self.y)- np.min(self.y))
+            self.t = (self.t - np.min(self.t))/(np.max(self.t)- np.min(self.t))
         return self.x, self.y, self.t
     
     def get_domain_range(self) -> List[float]:
-        L_x = self.x[-1] - self.x[0]
+        L_x = np.abs(self.x[-1] - self.x[0])
         L_y = self.y[-1] - self.y[0]
         L_t = self.t[-1] - self.t[0]
         return [L_t, L_y, L_x]
-        
-
-
+    
 
 if __name__ == "__main__":
     data_dir = "data/RYDL/"
-    dataset = RYDLDataset(data_dir, var="train")
+    dataset = RYDLDataset(data_dir, var = "train")
     print(len(dataset))
     train, target = dataset.__getitem__(10)
     print(train.shape)
     print(target.shape)
-    x,y,t = dataset.get_coordinates()
-    print(x.shape,y.shape, t.shape)
+    x,y,t = dataset.get_coordinates(normalize = True)
+    print(x.shape, y.shape, t.shape)
+    print(t)
     L = dataset.get_domain_range()
     print(L)
+
