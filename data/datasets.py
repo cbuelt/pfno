@@ -401,11 +401,12 @@ class RYDLDataset(Dataset):
         prediction_steps: int = 8,
         resample: int = 2,
     ):
+        self.data_dir = data_dir
         self.init_steps = init_steps
         self.prediction_steps = prediction_steps
         self.resample = resample
         # Load datetime index
-        self.index = np.load(data_dir + f"{var}.npy")
+        self.index = np.load(self.data_dir + f"{var}.npy")
         # Prepare domain
         self.x = None
         self.y = None
@@ -430,13 +431,13 @@ class RYDLDataset(Dataset):
         # Load data
         if s1 == s2:
             data = xr.open_dataset(
-                f"data/RYDL/processed/{t_init.year}/{t_init.month:02d}/YW_2017.002_{s1}.nc"
+                f"{self.data_dir}processed/{t_init.year}/{t_init.month:02d}/YW_2017.002_{s1}.nc"
             )
         else:
             data = xr.open_mfdataset(
                 [
-                    f"data/RYDL/processed/{t_init.year}/{t_init.month:02d}/YW_2017.002_{s1}.nc",
-                    f"data/RYDL/processed/{t_end.year}/{t_end.month:02d}/YW_2017.002_{s2}.nc",
+                    f"{self.data_dir}processed/{t_init.year}/{t_init.month:02d}/YW_2017.002_{s1}.nc",
+                    f"{self.data_dir}processed/{t_end.year}/{t_end.month:02d}/YW_2017.002_{s2}.nc",
                 ]
             )
         # Filter domain
@@ -457,6 +458,9 @@ class RYDLDataset(Dataset):
         grid = np.stack(np.meshgrid(self.y, self.t, self.x))
         train = torch.cat([train, torch.tensor(grid)], dim=0).float()
         return train, target
+    
+    def get_date(self, idx: int) -> str:
+        return self.index[idx]
     
     def get_coordinates(self) -> Tuple:
         return self.x, self.y, self.t
