@@ -90,7 +90,7 @@ class LpLoss(object):
         return self.rel(y_pred, y)
 
 
-def lp_norm(x, y, const, p=2, rel = True):
+def lp_norm(x, y, const, p=2):
     """Calculates the Lp norm between two tensors
 
     Args:
@@ -103,11 +103,6 @@ def lp_norm(x, y, const, p=2, rel = True):
         Tensor: Lp norm
     """
     norm = const * torch.cdist(x, y, p=p)
-    if rel:
-        ynorm = const* torch.norm(
-            torch.flatten(y, start_dim=-1), p=p, dim=-1, keepdim=True
-        )
-        norm = norm/ynorm
     return norm
 
 
@@ -191,12 +186,20 @@ class EnergyScore(object):
             )
         else:
             const = 1.0
-  
+
         # Calculate energy score
         term_1 = torch.mean(
-            self.norm(x_flat, y_flat, const=const, p=self.p, rel = self.rel), dim=(1, 2)
+            self.norm(x_flat, y_flat, const=const, p=self.p), dim=(1, 2)
         )
-        term_2 = torch.sum(self.norm(x_flat, x_flat, const=const, p=self.p, rel = self.rel), dim=(1, 2))
+        term_2 = torch.sum(self.norm(x_flat, x_flat, const=const, p=self.p), dim=(1, 2))
+
+        if self.rel:
+            ynorm = const * torch.norm(
+                torch.flatten(y_flat, start_dim=-1), p=self.p, dim=-1, keepdim=False
+            ).squeeze()
+            term_1 = term_1/ynorm
+            term_2 = term_2/ynorm
+
         score = term_1 - term_2 / (2 * n_samples * (n_samples - 1))
 
         # Reduce
@@ -279,8 +282,17 @@ class KernelScore(object):
             const = 1.0
 
         # Calculate Gram matrix
-        K1 = self.norm(x_flat, y_flat, const=const, p=self.p, rel = self.rel)
-        K2 = self.norm(x_flat, x_flat, const=const, p=self.p, rel = self.rel)
+        K1 = self.norm(x_flat, y_flat, const=const, p=self.p)
+        K2 = self.norm(x_flat, x_flat, const=const, p=self.p)
+
+        print(K1.shape)
+        
+        if self.rel:
+            ynorm = const * torch.norm(
+                torch.flatten(y_flat, start_dim=-1), p=self.p, dim=-1, keepdim=True
+            )
+            K1 = K1/ynorm
+            K2 = K2/ynorm  
 
         if self.kernel == "laplace":
             K1 = torch.exp(-K1 / (2 * self.gamma**2))
@@ -292,9 +304,11 @@ class KernelScore(object):
         # Calculate kernel score
         # Remove diag
         K2 = K2 - torch.eye(n_samples).to(x.device)
-        score = torch.sum(K2, dim=(1, 2)) / (
-            2 * n_samples * (n_samples - 1)
-        ) - torch.mean(K1, dim=(1, 2)) + 1
+        score = (
+            torch.sum(K2, dim=(1, 2)) / (2 * n_samples * (n_samples - 1))
+            - torch.mean(K1, dim=(1, 2))
+            + 1
+        )
 
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score
@@ -371,10 +385,10 @@ class VariogramScore(object):
 if __name__ == "__main__":
     # set torch seed
     torch.manual_seed(0)
-    input = torch.rand(32, 1, 10, 25,5,3)
-    truth = torch.ones(32, 1, 10, 25,5)
+    input = torch.rand(32, 1, 10, 25, 5, 3)
+    truth = torch.ones(32, 1, 10, 25, 5)
 
-    score_func = KernelScore(d=3, L = [1, 1, 5], rel = True)
+    score_func = KernelScore(d=3, L=[1, 2, 5], rel=True)
 
     score = score_func(input, truth)
 
