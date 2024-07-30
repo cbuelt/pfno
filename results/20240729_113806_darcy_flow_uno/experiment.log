@@ -1,0 +1,552 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:############### Starting experiment with config file darcy_flow/uno.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'DarcyFlow', 'max_training_set_size': 10000, 'downscaling_factor': 2}
+INFO:root:###1 out of 24 training parameter combinations ###
+INFO:root:Training parameters: {'model': 'UNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'uno_out_channels': [64, 128, 128, 64, 32], 'uno_scalings': [[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]], 'uno_n_modes': [[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]}
+INFO:root:NumberParameters: 5814913
+INFO:root:Memory allocated: 44040192
+INFO:root:Training starts now.
+INFO:root:[    1] Training loss: 0.05139012, Validation loss: 0.03480971, Gradient norm: 1.31326213
+INFO:root:[    2] Training loss: 0.03091686, Validation loss: 0.02403955, Gradient norm: 0.91303328
+INFO:root:[    3] Training loss: 0.02877980, Validation loss: 0.02328687, Gradient norm: 0.93087089
+INFO:root:[    4] Training loss: 0.02595096, Validation loss: 0.01950747, Gradient norm: 0.85153609
+INFO:root:[    5] Training loss: 0.02378830, Validation loss: 0.02324078, Gradient norm: 0.62844213
+INFO:root:[    6] Training loss: 0.02412098, Validation loss: 0.02279530, Gradient norm: 0.72023969
+INFO:root:[    7] Training loss: 0.02297569, Validation loss: 0.02436030, Gradient norm: 0.73357638
+INFO:root:[    8] Training loss: 0.02064372, Validation loss: 0.02022663, Gradient norm: 0.59419367
+INFO:root:[    9] Training loss: 0.02123963, Validation loss: 0.01909368, Gradient norm: 0.67861938
+INFO:root:[   10] Training loss: 0.02012306, Validation loss: 0.02614315, Gradient norm: 0.57179333
+INFO:root:[   11] Training loss: 0.01818470, Validation loss: 0.02939052, Gradient norm: 0.51756541
+INFO:root:[   12] Training loss: 0.01930902, Validation loss: 0.01865661, Gradient norm: 0.60221709
+INFO:root:[   13] Training loss: 0.01800097, Validation loss: 0.02920208, Gradient norm: 0.52983095
+INFO:root:[   14] Training loss: 0.01783564, Validation loss: 0.02233176, Gradient norm: 0.49609570
+INFO:root:[   15] Training loss: 0.01814386, Validation loss: 0.02410757, Gradient norm: 0.53552868
+INFO:root:[   16] Training loss: 0.01750738, Validation loss: 0.02205355, Gradient norm: 0.54249291
+INFO:root:[   17] Training loss: 0.01723677, Validation loss: 0.02549924, Gradient norm: 0.51150040
+INFO:root:[   18] Training loss: 0.01785286, Validation loss: 0.02451664, Gradient norm: 0.57043808
+INFO:root:[   19] Training loss: 0.01530004, Validation loss: 0.02044759, Gradient norm: 0.40147588
+INFO:root:[   20] Training loss: 0.01684629, Validation loss: 0.02636973, Gradient norm: 0.49256976
+INFO:root:[   21] Training loss: 0.01649490, Validation loss: 0.02205933, Gradient norm: 0.46823697
+INFO:root:[   22] Training loss: 0.01736621, Validation loss: 0.03795257, Gradient norm: 0.58243694
+INFO:root:[   23] Training loss: 0.01555899, Validation loss: 0.02571114, Gradient norm: 0.43489651
+INFO:root:[   24] Training loss: 0.01449647, Validation loss: 0.02998820, Gradient norm: 0.36793785
+INFO:root:[   25] Training loss: 0.01571925, Validation loss: 0.02361652, Gradient norm: 0.48301426
+INFO:root:[   26] Training loss: 0.01371937, Validation loss: 0.03033207, Gradient norm: 0.37899511
+INFO:root:[   27] Training loss: 0.01466054, Validation loss: 0.02642958, Gradient norm: 0.45681591
+INFO:root:[   28] Training loss: 0.01548513, Validation loss: 0.03159763, Gradient norm: 0.53537680
+INFO:root:[   29] Training loss: 0.01352393, Validation loss: 0.02676767, Gradient norm: 0.33409142
+INFO:root:[   30] Training loss: 0.01386743, Validation loss: 0.03225757, Gradient norm: 0.41376797
+INFO:root:[   31] Training loss: 0.01528927, Validation loss: 0.02641731, Gradient norm: 0.51921229
+INFO:root:[   32] Training loss: 0.01384141, Validation loss: 0.02598358, Gradient norm: 0.36498303
+INFO:root:[   33] Training loss: 0.01361972, Validation loss: 0.02585747, Gradient norm: 0.39742426
+INFO:root:[   34] Training loss: 0.01323211, Validation loss: 0.02785892, Gradient norm: 0.41922783
+INFO:root:[   35] Training loss: 0.01366327, Validation loss: 0.02910308, Gradient norm: 0.42552675
+INFO:root:[   36] Training loss: 0.01365726, Validation loss: 0.02187105, Gradient norm: 0.47525688
+INFO:root:[   37] Training loss: 0.01253676, Validation loss: 0.02474559, Gradient norm: 0.42929650
+INFO:root:[   38] Training loss: 0.01319241, Validation loss: 0.02729054, Gradient norm: 0.43375988
+INFO:root:[   39] Training loss: 0.01167911, Validation loss: 0.02471148, Gradient norm: 0.31814069
+INFO:root:[   40] Training loss: 0.01346660, Validation loss: 0.02363940, Gradient norm: 0.38496147
+INFO:root:[   41] Training loss: 0.01256699, Validation loss: 0.02558460, Gradient norm: 0.38849999
+INFO:root:[   42] Training loss: 0.01265007, Validation loss: 0.02519583, Gradient norm: 0.43245864
+INFO:root:[   43] Training loss: 0.01228463, Validation loss: 0.02846228, Gradient norm: 0.32045534
+INFO:root:[   44] Training loss: 0.01295150, Validation loss: 0.02816944, Gradient norm: 0.45886067
+INFO:root:[   45] Training loss: 0.01166450, Validation loss: 0.02749754, Gradient norm: 0.34585661
+INFO:root:[   46] Training loss: 0.01143069, Validation loss: 0.02503100, Gradient norm: 0.34400370
+INFO:root:[   47] Training loss: 0.01246125, Validation loss: 0.02546460, Gradient norm: 0.43848928
+INFO:root:[   48] Training loss: 0.01127438, Validation loss: 0.02354272, Gradient norm: 0.32328354
+INFO:root:[   49] Training loss: 0.01092831, Validation loss: 0.02439411, Gradient norm: 0.30338175
+INFO:root:[   50] Training loss: 0.02823209, Validation loss: 0.19364312, Gradient norm: 0.65187748
+INFO:root:[   51] Training loss: 0.07831355, Validation loss: 0.04041671, Gradient norm: 7.25365499
+INFO:root:[   52] Training loss: 0.04011996, Validation loss: 0.03745818, Gradient norm: 4.06368487
+INFO:root:[   53] Training loss: 0.03799252, Validation loss: 0.03729932, Gradient norm: 2.81043925
+INFO:root:[   54] Training loss: 0.03622200, Validation loss: 0.03749095, Gradient norm: 2.20333143
+INFO:root:[   55] Training loss: 0.03477667, Validation loss: 0.03503504, Gradient norm: 1.91904649
+INFO:root:[   56] Training loss: 0.03346984, Validation loss: 0.03505710, Gradient norm: 1.61945847
+INFO:root:[   57] Training loss: 0.02784300, Validation loss: 0.02550420, Gradient norm: 1.79252133
+INFO:root:[   58] Training loss: 0.02204394, Validation loss: 0.03587341, Gradient norm: 1.72351490
+INFO:root:[   59] Training loss: 0.02111266, Validation loss: 0.02697806, Gradient norm: 1.51731526
+INFO:root:[   60] Training loss: 0.01944671, Validation loss: 0.03299321, Gradient norm: 1.34602505
+INFO:root:[   61] Training loss: 0.01853880, Validation loss: 0.02739012, Gradient norm: 1.24798442
+INFO:root:[   62] Training loss: 0.01735644, Validation loss: 0.03798891, Gradient norm: 1.12220044
+INFO:root:[   63] Training loss: 0.01780784, Validation loss: 0.03057805, Gradient norm: 1.26566030
+INFO:root:[   64] Training loss: 0.01689377, Validation loss: 0.03387227, Gradient norm: 1.18672300
+INFO:root:[   65] Training loss: 0.01688139, Validation loss: 0.03036697, Gradient norm: 1.07563315
+INFO:root:[   66] Training loss: 0.01609498, Validation loss: 0.02904774, Gradient norm: 0.85065715
+INFO:root:EP 66: Early stopping
+INFO:root:Training the model took 4327.239s.
+INFO:root:Emptying the cuda cache took 0.031s.
+INFO:root:Starting evaluation: model UNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.02465
+INFO:root:EnergyScoreTrain: 0.01803
+INFO:root:CoverageTrain: 0.78206
+INFO:root:IntervalWidthTrain: 0.05732
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.02491
+INFO:root:EnergyScoreValidation: 0.01853
+INFO:root:CoverageValidation: 0.70809
+INFO:root:IntervalWidthValidation: 0.05388
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.02543
+INFO:root:EnergyScoreTest: 0.01896
+INFO:root:CoverageTest: 0.70152
+INFO:root:IntervalWidthTest: 0.05385
+INFO:root:###2 out of 24 training parameter combinations ###
+INFO:root:Training parameters: {'model': 'UNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.05, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'uno_out_channels': [64, 128, 128, 64, 32], 'uno_scalings': [[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]], 'uno_n_modes': [[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]}
+INFO:root:NumberParameters: 5814913
+INFO:root:Memory allocated: 150994944
+INFO:root:Training starts now.
+INFO:root:[    1] Training loss: 0.06136190, Validation loss: 0.03622861, Gradient norm: 1.03008356
+INFO:root:[    2] Training loss: 0.03192346, Validation loss: 0.02981400, Gradient norm: 0.62831738
+INFO:root:[    3] Training loss: 0.02875934, Validation loss: 0.02426456, Gradient norm: 0.59604361
+INFO:root:[    4] Training loss: 0.02598382, Validation loss: 0.02531343, Gradient norm: 0.56962224
+INFO:root:[    5] Training loss: 0.02558715, Validation loss: 0.02493646, Gradient norm: 0.54496385
+INFO:root:[    6] Training loss: 0.02023487, Validation loss: 0.02767950, Gradient norm: 0.37751295
+INFO:root:[    7] Training loss: 0.02095593, Validation loss: 0.01892752, Gradient norm: 0.44802987
+INFO:root:[    8] Training loss: 0.01899102, Validation loss: 0.02048851, Gradient norm: 0.33349163
+INFO:root:[    9] Training loss: 0.01922158, Validation loss: 0.02274978, Gradient norm: 0.44489288
+INFO:root:[   10] Training loss: 0.01836321, Validation loss: 0.02808711, Gradient norm: 0.38051121
+INFO:root:[   11] Training loss: 0.01959592, Validation loss: 0.02002090, Gradient norm: 0.45417991
+INFO:root:[   12] Training loss: 0.01770822, Validation loss: 0.02469871, Gradient norm: 0.40937754
+INFO:root:[   13] Training loss: 0.01668542, Validation loss: 0.02511838, Gradient norm: 0.35392908
+INFO:root:[   14] Training loss: 0.01760989, Validation loss: 0.02191731, Gradient norm: 0.44548623
+INFO:root:[   15] Training loss: 0.01666325, Validation loss: 0.02531981, Gradient norm: 0.40344648
+INFO:root:[   16] Training loss: 0.01689179, Validation loss: 0.02567241, Gradient norm: 0.41369238
+INFO:root:[   17] Training loss: 0.01507100, Validation loss: 0.01884301, Gradient norm: 0.33106580
+INFO:root:[   18] Training loss: 0.01500272, Validation loss: 0.01878501, Gradient norm: 0.30491973
+INFO:root:[   19] Training loss: 0.01515198, Validation loss: 0.01975680, Gradient norm: 0.36106380
+INFO:root:[   20] Training loss: 0.01515021, Validation loss: 0.02281163, Gradient norm: 0.35533960
+INFO:root:[   21] Training loss: 0.01366296, Validation loss: 0.02137356, Gradient norm: 0.25921841
+INFO:root:[   22] Training loss: 0.01458596, Validation loss: 0.02181675, Gradient norm: 0.35439529
+INFO:root:[   23] Training loss: 0.01410595, Validation loss: 0.01879570, Gradient norm: 0.31356750
+INFO:root:[   24] Training loss: 0.01597117, Validation loss: 0.02525710, Gradient norm: 0.39736401
+INFO:root:[   25] Training loss: 0.01427478, Validation loss: 0.02430077, Gradient norm: 0.35837498
+INFO:root:[   26] Training loss: 0.01355904, Validation loss: 0.02148428, Gradient norm: 0.30948797
+INFO:root:[   27] Training loss: 0.01366406, Validation loss: 0.02040809, Gradient norm: 0.33596533
+INFO:root:[   28] Training loss: 0.01479387, Validation loss: 0.02844862, Gradient norm: 0.40742932
+INFO:root:[   29] Training loss: 0.01391680, Validation loss: 0.02377933, Gradient norm: 0.34086074
+INFO:root:[   30] Training loss: 0.01314125, Validation loss: 0.02537050, Gradient norm: 0.33185776
+INFO:root:[   31] Training loss: 0.01389338, Validation loss: 0.02184520, Gradient norm: 0.36226099
+INFO:root:[   32] Training loss: 0.01215135, Validation loss: 0.02108610, Gradient norm: 0.24998470
+INFO:root:[   33] Training loss: 0.01299080, Validation loss: 0.02331768, Gradient norm: 0.32454978
+INFO:root:[   34] Training loss: 0.01219627, Validation loss: 0.02543760, Gradient norm: 0.25128004
+INFO:root:[   35] Training loss: 0.01284794, Validation loss: 0.02176828, Gradient norm: 0.33248055
+INFO:root:[   36] Training loss: 0.01220467, Validation loss: 0.02066878, Gradient norm: 0.27309664
+INFO:root:[   37] Training loss: 0.01195468, Validation loss: 0.02130071, Gradient norm: 0.29710998
+INFO:root:[   38] Training loss: 0.01233318, Validation loss: 0.02476127, Gradient norm: 0.30966406
+INFO:root:[   39] Training loss: 0.01208929, Validation loss: 0.02440175, Gradient norm: 0.30315831
+INFO:root:[   40] Training loss: 0.01142173, Validation loss: 0.02894283, Gradient norm: 0.27970646
+INFO:root:[   41] Training loss: 0.02058067, Validation loss: 0.02627772, Gradient norm: 0.45312627
+INFO:root:[   42] Training loss: 0.01371267, Validation loss: 0.02304105, Gradient norm: 0.40251048
+INFO:root:[   43] Training loss: 0.01247595, Validation loss: 0.02124537, Gradient norm: 0.36261364
+INFO:root:[   44] Training loss: 0.01142811, Validation loss: 0.02103829, Gradient norm: 0.30374882
+INFO:root:[   45] Training loss: 0.01117687, Validation loss: 0.02296270, Gradient norm: 0.26317645
+INFO:root:[   46] Training loss: 0.01184780, Validation loss: 0.02422700, Gradient norm: 0.33320482
+INFO:root:[   47] Training loss: 0.01122859, Validation loss: 0.02368711, Gradient norm: 0.26229537
+INFO:root:[   48] Training loss: 0.01039605, Validation loss: 0.02158097, Gradient norm: 0.23917396
+INFO:root:[   49] Training loss: 0.01193949, Validation loss: 0.02471848, Gradient norm: 0.35159249
+INFO:root:[   50] Training loss: 0.01133003, Validation loss: 0.02540638, Gradient norm: 0.28422616
+INFO:root:[   51] Training loss: 0.01088757, Validation loss: 0.02003582, Gradient norm: 0.27427469
+INFO:root:[   52] Training loss: 0.01184631, Validation loss: 0.02140871, Gradient norm: 0.31736757
+INFO:root:[   53] Training loss: 0.01124731, Validation loss: 0.02459485, Gradient norm: 0.27098756
+INFO:root:[   54] Training loss: 0.01122324, Validation loss: 0.02375711, Gradient norm: 0.32729375
+INFO:root:[   55] Training loss: 0.01040308, Validation loss: 0.02272735, Gradient norm: 0.22281949
+INFO:root:[   56] Training loss: 0.01108967, Validation loss: 0.02483783, Gradient norm: 0.29039244
+INFO:root:[   57] Training loss: 0.01092678, Validation loss: 0.02947656, Gradient norm: 0.27888571
+INFO:root:[   58] Training loss: 0.01044111, Validation loss: 0.03246038, Gradient norm: 0.23973376
+INFO:root:[   59] Training loss: 0.01113487, Validation loss: 0.02470051, Gradient norm: 0.28807744
+INFO:root:[   60] Training loss: 0.01077563, Validation loss: 0.02105042, Gradient norm: 0.28526514
+INFO:root:[   61] Training loss: 0.01155432, Validation loss: 0.02369291, Gradient norm: 0.33589501
+INFO:root:[   62] Training loss: 0.01094518, Validation loss: 0.02454383, Gradient norm: 0.29289626
+INFO:root:[   63] Training loss: 0.01041349, Validation loss: 0.02285261, Gradient norm: 0.26866190
+INFO:root:[   64] Training loss: 0.01074242, Validation loss: 0.02280245, Gradient norm: 0.28443552
+INFO:root:[   65] Training loss: 0.01099378, Validation loss: 0.02879198, Gradient norm: 0.31908986
+INFO:root:[   66] Training loss: 0.01042912, Validation loss: 0.02529358, Gradient norm: 0.24940723
+INFO:root:[   67] Training loss: 0.01020124, Validation loss: 0.02771532, Gradient norm: 0.25713810
+INFO:root:[   68] Training loss: 0.02033923, Validation loss: 0.03270993, Gradient norm: 0.42654761
+INFO:root:[   69] Training loss: 0.01319238, Validation loss: 0.02426085, Gradient norm: 0.36342649
+INFO:root:EP 69: Early stopping
+INFO:root:Training the model took 4447.019s.
+INFO:root:Emptying the cuda cache took 0.032s.
+INFO:root:Starting evaluation: model UNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.01846
+INFO:root:EnergyScoreTrain: 0.0136
+INFO:root:CoverageTrain: 0.97548
+INFO:root:IntervalWidthTrain: 0.08357
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.02551
+INFO:root:EnergyScoreValidation: 0.01874
+INFO:root:CoverageValidation: 0.85607
+INFO:root:IntervalWidthValidation: 0.07581
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.02605
+INFO:root:EnergyScoreTest: 0.01919
+INFO:root:CoverageTest: 0.84936
+INFO:root:IntervalWidthTest: 0.07573
+INFO:root:###3 out of 24 training parameter combinations ###
+INFO:root:Training parameters: {'model': 'UNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.1, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'uno_out_channels': [64, 128, 128, 64, 32], 'uno_scalings': [[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]], 'uno_n_modes': [[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]}
+INFO:root:NumberParameters: 5814913
+INFO:root:Memory allocated: 232783872
+INFO:root:Training starts now.
+INFO:root:[    1] Training loss: 0.05165603, Validation loss: 0.02707868, Gradient norm: 0.61712066
+INFO:root:[    2] Training loss: 0.02946855, Validation loss: 0.02716193, Gradient norm: 0.42280392
+INFO:root:[    3] Training loss: 0.02598523, Validation loss: 0.02045532, Gradient norm: 0.43454792
+INFO:root:[    4] Training loss: 0.02387561, Validation loss: 0.02271755, Gradient norm: 0.43920954
+INFO:root:[    5] Training loss: 0.02192027, Validation loss: 0.02400439, Gradient norm: 0.42308245
+INFO:root:[    6] Training loss: 0.02017390, Validation loss: 0.01944196, Gradient norm: 0.33836647
+INFO:root:[    7] Training loss: 0.02006492, Validation loss: 0.02176756, Gradient norm: 0.36909043
+INFO:root:[    8] Training loss: 0.02052106, Validation loss: 0.02057362, Gradient norm: 0.42137113
+INFO:root:[    9] Training loss: 0.01931334, Validation loss: 0.02077119, Gradient norm: 0.37531817
+INFO:root:[   10] Training loss: 0.01761020, Validation loss: 0.01784477, Gradient norm: 0.31988731
+INFO:root:[   11] Training loss: 0.01715239, Validation loss: 0.02121528, Gradient norm: 0.29590123
+INFO:root:[   12] Training loss: 0.01869858, Validation loss: 0.02381778, Gradient norm: 0.37587417
+INFO:root:[   13] Training loss: 0.01622720, Validation loss: 0.02102860, Gradient norm: 0.29384765
+INFO:root:[   14] Training loss: 0.01607501, Validation loss: 0.01965115, Gradient norm: 0.30758075
+INFO:root:[   15] Training loss: 0.01764900, Validation loss: 0.01909852, Gradient norm: 0.39413361
+INFO:root:[   16] Training loss: 0.01526039, Validation loss: 0.01979271, Gradient norm: 0.25240666
+INFO:root:[   17] Training loss: 0.01480956, Validation loss: 0.02339326, Gradient norm: 0.25241488
+INFO:root:[   18] Training loss: 0.01625169, Validation loss: 0.02103309, Gradient norm: 0.34935291
+INFO:root:[   19] Training loss: 0.01482545, Validation loss: 0.01972650, Gradient norm: 0.27596679
+INFO:root:[   20] Training loss: 0.01424922, Validation loss: 0.02039547, Gradient norm: 0.30353620
+INFO:root:[   21] Training loss: 0.01551030, Validation loss: 0.02367940, Gradient norm: 0.33936720
+INFO:root:[   22] Training loss: 0.01435001, Validation loss: 0.03082572, Gradient norm: 0.29490064
+INFO:root:[   23] Training loss: 0.01485184, Validation loss: 0.02410174, Gradient norm: 0.33390976
+INFO:root:[   24] Training loss: 0.01306883, Validation loss: 0.02395983, Gradient norm: 0.26672841
+INFO:root:[   25] Training loss: 0.01546715, Validation loss: 0.02007504, Gradient norm: 0.36976392
+INFO:root:[   26] Training loss: 0.01545296, Validation loss: 0.02540965, Gradient norm: 0.37304472
+INFO:root:[   27] Training loss: 0.01361979, Validation loss: 0.02463720, Gradient norm: 0.29012321
+INFO:root:[   28] Training loss: 0.01292862, Validation loss: 0.01998671, Gradient norm: 0.26234866
+INFO:root:[   29] Training loss: 0.01353177, Validation loss: 0.02342523, Gradient norm: 0.31017778
+INFO:root:[   30] Training loss: 0.01368773, Validation loss: 0.03466533, Gradient norm: 0.31514607
+INFO:root:[   31] Training loss: 0.01353036, Validation loss: 0.03360856, Gradient norm: 0.29962970
+INFO:root:[   32] Training loss: 0.01328584, Validation loss: 0.02726337, Gradient norm: 0.30736414
+INFO:root:[   33] Training loss: 0.01278222, Validation loss: 0.02263967, Gradient norm: 0.27992090
+INFO:root:[   34] Training loss: 0.01295214, Validation loss: 0.02110319, Gradient norm: 0.28567727
+INFO:root:[   35] Training loss: 0.01299758, Validation loss: 0.03096409, Gradient norm: 0.30026703
+INFO:root:[   36] Training loss: 0.01227708, Validation loss: 0.02500533, Gradient norm: 0.27517143
+INFO:root:[   37] Training loss: 0.01211685, Validation loss: 0.02882761, Gradient norm: 0.25025853
+INFO:root:[   38] Training loss: 0.01281482, Validation loss: 0.02403049, Gradient norm: 0.30725904
+INFO:root:[   39] Training loss: 0.01315919, Validation loss: 0.02102774, Gradient norm: 0.30103225
+INFO:root:[   40] Training loss: 0.01163983, Validation loss: 0.02550078, Gradient norm: 0.21906824
+INFO:root:[   41] Training loss: 0.01275524, Validation loss: 0.02458878, Gradient norm: 0.29468961
+INFO:root:[   42] Training loss: 0.01132566, Validation loss: 0.02402977, Gradient norm: 0.22371767
+INFO:root:[   43] Training loss: 0.01167885, Validation loss: 0.02223081, Gradient norm: 0.23254021
+INFO:root:[   44] Training loss: 0.01259939, Validation loss: 0.02673631, Gradient norm: 0.27992702
+INFO:root:[   45] Training loss: 0.01244953, Validation loss: 0.02452385, Gradient norm: 0.28575802
+INFO:root:[   46] Training loss: 0.01270458, Validation loss: 0.03366371, Gradient norm: 0.32410227
+INFO:root:[   47] Training loss: 0.01188538, Validation loss: 0.02460959, Gradient norm: 0.24724397
+INFO:root:[   48] Training loss: 0.01159101, Validation loss: 0.03145023, Gradient norm: 0.27353697
+INFO:root:[   49] Training loss: 0.01223870, Validation loss: 0.03307895, Gradient norm: 0.32372549
+INFO:root:[   50] Training loss: 0.01138639, Validation loss: 0.02424756, Gradient norm: 0.24276279
+INFO:root:[   51] Training loss: 0.01197184, Validation loss: 0.02442922, Gradient norm: 0.30038942
+INFO:root:[   52] Training loss: 0.01200623, Validation loss: 0.02835570, Gradient norm: 0.30442139
+INFO:root:[   53] Training loss: 0.01202312, Validation loss: 0.02830077, Gradient norm: 0.31819675
+INFO:root:[   54] Training loss: 0.01125315, Validation loss: 0.02194320, Gradient norm: 0.25404399
+INFO:root:[   55] Training loss: 0.01140825, Validation loss: 0.02372253, Gradient norm: 0.27583642
+INFO:root:[   56] Training loss: 0.01169801, Validation loss: 0.02227927, Gradient norm: 0.29304662
+INFO:root:[   57] Training loss: 0.01151090, Validation loss: 0.02506727, Gradient norm: 0.25556599
+INFO:root:[   58] Training loss: 0.01188334, Validation loss: 0.02802115, Gradient norm: 0.25882849
+INFO:root:[   59] Training loss: 0.01166497, Validation loss: 0.02781802, Gradient norm: 0.30749618
+INFO:root:[   60] Training loss: 0.01135892, Validation loss: 0.03016375, Gradient norm: 0.27652179
+INFO:root:[   61] Training loss: 0.01133080, Validation loss: 0.02639388, Gradient norm: 0.27149089
+INFO:root:[   62] Training loss: 0.01194326, Validation loss: 0.02616113, Gradient norm: 0.27008711
+INFO:root:[   63] Training loss: 0.01116327, Validation loss: 0.02447226, Gradient norm: 0.26618968
+INFO:root:[   64] Training loss: 0.01086202, Validation loss: 0.02167846, Gradient norm: 0.21716059
+INFO:root:[   65] Training loss: 0.01105395, Validation loss: 0.02649628, Gradient norm: 0.25898816
+INFO:root:[   66] Training loss: 0.01172127, Validation loss: 0.02667892, Gradient norm: 0.29347112
+INFO:root:[   67] Training loss: 0.01118578, Validation loss: 0.02708732, Gradient norm: 0.26494923
+INFO:root:[   68] Training loss: 0.01066203, Validation loss: 0.02340247, Gradient norm: 0.20486961
+INFO:root:[   69] Training loss: 0.01097724, Validation loss: 0.02204877, Gradient norm: 0.25566164
+INFO:root:[   70] Training loss: 0.01124563, Validation loss: 0.02996105, Gradient norm: 0.27599266
+INFO:root:[   71] Training loss: 0.01094663, Validation loss: 0.02778347, Gradient norm: 0.26601381
+INFO:root:[   72] Training loss: 0.01087824, Validation loss: 0.02563180, Gradient norm: 0.22726150
+INFO:root:[   73] Training loss: 0.01104616, Validation loss: 0.02360943, Gradient norm: 0.24798001
+INFO:root:EP 73: Early stopping
+INFO:root:Training the model took 4692.361s.
+INFO:root:Emptying the cuda cache took 0.031s.
+INFO:root:Starting evaluation: model UNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.02291
+INFO:root:EnergyScoreTrain: 0.01685
+INFO:root:CoverageTrain: 0.9837
+INFO:root:IntervalWidthTrain: 0.11007
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.02477
+INFO:root:EnergyScoreValidation: 0.01802
+INFO:root:CoverageValidation: 0.94389
+INFO:root:IntervalWidthValidation: 0.10002
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.02499
+INFO:root:EnergyScoreTest: 0.01816
+INFO:root:CoverageTest: 0.94188
+INFO:root:IntervalWidthTest: 0.10009
+INFO:root:###4 out of 24 training parameter combinations ###
+INFO:root:Training parameters: {'model': 'UNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.15, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'uno_out_channels': [64, 128, 128, 64, 32], 'uno_scalings': [[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]], 'uno_n_modes': [[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]}
+INFO:root:NumberParameters: 5814913
+INFO:root:Memory allocated: 58720256
+INFO:root:Training starts now.
+INFO:root:[    1] Training loss: 0.04523490, Validation loss: 0.03040514, Gradient norm: 0.51529086
+INFO:root:[    2] Training loss: 0.02938107, Validation loss: 0.02532540, Gradient norm: 0.45581268
+INFO:root:[    3] Training loss: 0.02611825, Validation loss: 0.03202722, Gradient norm: 0.43063257
+INFO:root:[    4] Training loss: 0.02392927, Validation loss: 0.02619164, Gradient norm: 0.40408188
+INFO:root:[    5] Training loss: 0.02194577, Validation loss: 0.02356202, Gradient norm: 0.37710657
+INFO:root:[    6] Training loss: 0.02061256, Validation loss: 0.02117628, Gradient norm: 0.35342863
+INFO:root:[    7] Training loss: 0.02095995, Validation loss: 0.01980730, Gradient norm: 0.36017449
+INFO:root:[    8] Training loss: 0.01871009, Validation loss: 0.01969988, Gradient norm: 0.31722626
+INFO:root:[    9] Training loss: 0.01722163, Validation loss: 0.01859131, Gradient norm: 0.26180989
+INFO:root:[   10] Training loss: 0.01922645, Validation loss: 0.02433529, Gradient norm: 0.36743411
+INFO:root:[   11] Training loss: 0.01666673, Validation loss: 0.02343118, Gradient norm: 0.27312381
+INFO:root:[   12] Training loss: 0.01752932, Validation loss: 0.01820883, Gradient norm: 0.36526284
+INFO:root:[   13] Training loss: 0.01719959, Validation loss: 0.01922935, Gradient norm: 0.31182259
+INFO:root:[   14] Training loss: 0.01629040, Validation loss: 0.02042125, Gradient norm: 0.27707488
+INFO:root:[   15] Training loss: 0.01723549, Validation loss: 0.01992422, Gradient norm: 0.36195384
+INFO:root:[   16] Training loss: 0.01564165, Validation loss: 0.02501127, Gradient norm: 0.31182921
+INFO:root:[   17] Training loss: 0.01578523, Validation loss: 0.01871969, Gradient norm: 0.32518812
+INFO:root:[   18] Training loss: 0.01527142, Validation loss: 0.02538579, Gradient norm: 0.29848773
+INFO:root:[   19] Training loss: 0.01506049, Validation loss: 0.02515081, Gradient norm: 0.29684174
+INFO:root:[   20] Training loss: 0.01485775, Validation loss: 0.03110350, Gradient norm: 0.27805593
+INFO:root:[   21] Training loss: 0.01529964, Validation loss: 0.02298921, Gradient norm: 0.28432526
+INFO:root:[   22] Training loss: 0.01568764, Validation loss: 0.02260225, Gradient norm: 0.34961746
+INFO:root:[   23] Training loss: 0.01492464, Validation loss: 0.02205895, Gradient norm: 0.32926857
+INFO:root:[   24] Training loss: 0.01407661, Validation loss: 0.03597589, Gradient norm: 0.27551359
+INFO:root:[   25] Training loss: 0.01476816, Validation loss: 0.02442684, Gradient norm: 0.27279575
+INFO:root:[   26] Training loss: 0.01410316, Validation loss: 0.02314664, Gradient norm: 0.28645484
+INFO:root:[   27] Training loss: 0.01431709, Validation loss: 0.02022565, Gradient norm: 0.30692811
+INFO:root:[   28] Training loss: 0.01446535, Validation loss: 0.02658343, Gradient norm: 0.31654658
+INFO:root:[   29] Training loss: 0.01382533, Validation loss: 0.02209499, Gradient norm: 0.30379195
+INFO:root:[   30] Training loss: 0.01423036, Validation loss: 0.01988758, Gradient norm: 0.32247397
+INFO:root:[   31] Training loss: 0.01321063, Validation loss: 0.02137656, Gradient norm: 0.22471545
+INFO:root:[   32] Training loss: 0.01278781, Validation loss: 0.02533954, Gradient norm: 0.25336397
+INFO:root:[   33] Training loss: 0.01427838, Validation loss: 0.03362849, Gradient norm: 0.32101081
+INFO:root:[   34] Training loss: 0.01323008, Validation loss: 0.02458784, Gradient norm: 0.28374831
+INFO:root:[   35] Training loss: 0.01392013, Validation loss: 0.02131298, Gradient norm: 0.28913490
+INFO:root:[   36] Training loss: 0.01224740, Validation loss: 0.02518434, Gradient norm: 0.24361223
+INFO:root:[   37] Training loss: 0.01270579, Validation loss: 0.02516012, Gradient norm: 0.26544206
+INFO:root:[   38] Training loss: 0.01346935, Validation loss: 0.02513343, Gradient norm: 0.30402924
+INFO:root:[   39] Training loss: 0.01316244, Validation loss: 0.02360114, Gradient norm: 0.25988197
+INFO:root:[   40] Training loss: 0.01228250, Validation loss: 0.02357948, Gradient norm: 0.23956680
+INFO:root:[   41] Training loss: 0.01230175, Validation loss: 0.02207277, Gradient norm: 0.26796662
+INFO:root:[   42] Training loss: 0.01286658, Validation loss: 0.02284953, Gradient norm: 0.26210093
+INFO:root:[   43] Training loss: 0.01298366, Validation loss: 0.02564730, Gradient norm: 0.29408631
+INFO:root:[   44] Training loss: 0.01235875, Validation loss: 0.02292683, Gradient norm: 0.24789209
+INFO:root:[   45] Training loss: 0.01267396, Validation loss: 0.02500687, Gradient norm: 0.29452908
+INFO:root:[   46] Training loss: 0.01236534, Validation loss: 0.02621907, Gradient norm: 0.26581973
+INFO:root:[   47] Training loss: 0.01183692, Validation loss: 0.02268840, Gradient norm: 0.26407094
+INFO:root:[   48] Training loss: 0.01282077, Validation loss: 0.02120413, Gradient norm: 0.29688070
+INFO:root:[   49] Training loss: 0.01174444, Validation loss: 0.02140875, Gradient norm: 0.22096122
+INFO:root:[   50] Training loss: 0.01245980, Validation loss: 0.02992584, Gradient norm: 0.29423278
+INFO:root:[   51] Training loss: 0.01321192, Validation loss: 0.02279271, Gradient norm: 0.31420725
+INFO:root:[   52] Training loss: 0.01194455, Validation loss: 0.02606242, Gradient norm: 0.25590130
+INFO:root:[   53] Training loss: 0.01217125, Validation loss: 0.02597365, Gradient norm: 0.29112777
+INFO:root:[   54] Training loss: 0.01228173, Validation loss: 0.03058058, Gradient norm: 0.24974760
+INFO:root:[   55] Training loss: 0.01175684, Validation loss: 0.02557787, Gradient norm: 0.23988391
+INFO:root:[   56] Training loss: 0.01168170, Validation loss: 0.02762249, Gradient norm: 0.24634786
+INFO:root:[   57] Training loss: 0.01134806, Validation loss: 0.02374958, Gradient norm: 0.21804074
+INFO:root:[   58] Training loss: 0.01194467, Validation loss: 0.02420220, Gradient norm: 0.27155203
+INFO:root:[   59] Training loss: 0.01164452, Validation loss: 0.02729742, Gradient norm: 0.25283819
+INFO:root:[   60] Training loss: 0.01207327, Validation loss: 0.03178164, Gradient norm: 0.27674724
+INFO:root:[   61] Training loss: 0.01183273, Validation loss: 0.02353785, Gradient norm: 0.23946952
+INFO:root:[   62] Training loss: 0.01118999, Validation loss: 0.02118820, Gradient norm: 0.20452026
+INFO:root:[   63] Training loss: 0.01202718, Validation loss: 0.02433657, Gradient norm: 0.27348730
+INFO:root:[   64] Training loss: 0.01194635, Validation loss: 0.02446356, Gradient norm: 0.29028878
+INFO:root:[   65] Training loss: 0.01132525, Validation loss: 0.02543048, Gradient norm: 0.23543668
+INFO:root:[   66] Training loss: 0.01218488, Validation loss: 0.02737298, Gradient norm: 0.28086205
+INFO:root:[   67] Training loss: 0.01139493, Validation loss: 0.03190991, Gradient norm: 0.20689138
+INFO:root:[   68] Training loss: 0.01207616, Validation loss: 0.02356483, Gradient norm: 0.28255794
+INFO:root:[   69] Training loss: 0.01167329, Validation loss: 0.02829626, Gradient norm: 0.27215298
+INFO:root:[   70] Training loss: 0.01103043, Validation loss: 0.02459898, Gradient norm: 0.24599501
+INFO:root:[   71] Training loss: 0.01182190, Validation loss: 0.02520658, Gradient norm: 0.24078087
+INFO:root:EP 71: Early stopping
+INFO:root:Training the model took 4574.912s.
+INFO:root:Emptying the cuda cache took 0.033s.
+INFO:root:Starting evaluation: model UNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.02315
+INFO:root:EnergyScoreTrain: 0.01682
+INFO:root:CoverageTrain: 0.98727
+INFO:root:IntervalWidthTrain: 0.11243
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.02495
+INFO:root:EnergyScoreValidation: 0.01804
+INFO:root:CoverageValidation: 0.92878
+INFO:root:IntervalWidthValidation: 0.1007
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.02546
+INFO:root:EnergyScoreTest: 0.01836
+INFO:root:CoverageTest: 0.92634
+INFO:root:IntervalWidthTest: 0.10061
+INFO:root:###5 out of 24 training parameter combinations ###
+INFO:root:Training parameters: {'model': 'UNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.2, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'uno_out_channels': [64, 128, 128, 64, 32], 'uno_scalings': [[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]], 'uno_n_modes': [[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]}
+INFO:root:NumberParameters: 5814913
+INFO:root:Memory allocated: 268435456
+INFO:root:Training starts now.
+INFO:root:[    1] Training loss: 0.04757182, Validation loss: 0.02872954, Gradient norm: 0.65552824
+INFO:root:[    2] Training loss: 0.02890615, Validation loss: 0.03639477, Gradient norm: 0.42751605
+INFO:root:[    3] Training loss: 0.02830184, Validation loss: 0.02699151, Gradient norm: 0.49562302
+INFO:root:[    4] Training loss: 0.02341065, Validation loss: 0.02210817, Gradient norm: 0.34731163
+INFO:root:[    5] Training loss: 0.02433879, Validation loss: 0.02718810, Gradient norm: 0.45535088
+INFO:root:[    6] Training loss: 0.02171502, Validation loss: 0.02655436, Gradient norm: 0.33772011
+INFO:root:[    7] Training loss: 0.02119630, Validation loss: 0.02535835, Gradient norm: 0.36861325
+INFO:root:[    8] Training loss: 0.02042809, Validation loss: 0.02789557, Gradient norm: 0.34409413
+INFO:root:[    9] Training loss: 0.02009204, Validation loss: 0.02076988, Gradient norm: 0.35131452
+INFO:root:[   10] Training loss: 0.01914841, Validation loss: 0.01862793, Gradient norm: 0.30202628
+INFO:root:[   11] Training loss: 0.01916272, Validation loss: 0.02399018, Gradient norm: 0.39138497
+INFO:root:[   12] Training loss: 0.01711026, Validation loss: 0.02028979, Gradient norm: 0.27895491
+INFO:root:[   13] Training loss: 0.01643383, Validation loss: 0.02050133, Gradient norm: 0.26668704
+INFO:root:[   14] Training loss: 0.01761017, Validation loss: 0.02401329, Gradient norm: 0.31454760
+INFO:root:[   15] Training loss: 0.01689864, Validation loss: 0.02167180, Gradient norm: 0.31870701
+INFO:root:[   16] Training loss: 0.01653981, Validation loss: 0.02070217, Gradient norm: 0.32011867
+INFO:root:[   17] Training loss: 0.01633457, Validation loss: 0.02749660, Gradient norm: 0.31458985
+INFO:root:[   18] Training loss: 0.01593622, Validation loss: 0.02118590, Gradient norm: 0.30943948
+INFO:root:[   19] Training loss: 0.01532870, Validation loss: 0.02047461, Gradient norm: 0.27067009
+INFO:root:[   20] Training loss: 0.01522592, Validation loss: 0.02307391, Gradient norm: 0.29049203
+INFO:root:[   21] Training loss: 0.01487924, Validation loss: 0.01902561, Gradient norm: 0.27389907
+INFO:root:[   22] Training loss: 0.01403855, Validation loss: 0.02075502, Gradient norm: 0.23662560
+INFO:root:[   23] Training loss: 0.01513558, Validation loss: 0.02704815, Gradient norm: 0.33618755
+INFO:root:[   24] Training loss: 0.01462947, Validation loss: 0.02398194, Gradient norm: 0.28903476
+INFO:root:[   25] Training loss: 0.01366565, Validation loss: 0.02849620, Gradient norm: 0.22620185
+INFO:root:[   26] Training loss: 0.01454771, Validation loss: 0.02149031, Gradient norm: 0.28558723
+INFO:root:[   27] Training loss: 0.01399295, Validation loss: 0.02678143, Gradient norm: 0.28183887
+INFO:root:[   28] Training loss: 0.01382357, Validation loss: 0.02266689, Gradient norm: 0.26281895
+INFO:root:[   29] Training loss: 0.01294553, Validation loss: 0.02481870, Gradient norm: 0.21561243
+INFO:root:[   30] Training loss: 0.01437661, Validation loss: 0.02682214, Gradient norm: 0.31123680
+INFO:root:[   31] Training loss: 0.01374133, Validation loss: 0.02010607, Gradient norm: 0.27464096
+INFO:root:[   32] Training loss: 0.01332477, Validation loss: 0.01926930, Gradient norm: 0.25394573
+INFO:root:[   33] Training loss: 0.01283717, Validation loss: 0.02403577, Gradient norm: 0.22552145
+INFO:root:[   34] Training loss: 0.01275294, Validation loss: 0.02502908, Gradient norm: 0.23765022
+INFO:root:[   35] Training loss: 0.01397325, Validation loss: 0.02477623, Gradient norm: 0.30018043
+INFO:root:[   36] Training loss: 0.01363148, Validation loss: 0.02451970, Gradient norm: 0.28047009
+INFO:root:[   37] Training loss: 0.01296955, Validation loss: 0.02347343, Gradient norm: 0.25177998
+INFO:root:[   38] Training loss: 0.01264061, Validation loss: 0.02037318, Gradient norm: 0.24558483
+INFO:root:[   39] Training loss: 0.01269290, Validation loss: 0.02651002, Gradient norm: 0.25647450
+INFO:root:[   40] Training loss: 0.01302843, Validation loss: 0.02487487, Gradient norm: 0.24881306
+INFO:root:[   41] Training loss: 0.01333696, Validation loss: 0.02171196, Gradient norm: 0.27805820
+INFO:root:[   42] Training loss: 0.01233016, Validation loss: 0.02051344, Gradient norm: 0.21961607
+INFO:root:[   43] Training loss: 0.01254974, Validation loss: 0.02228496, Gradient norm: 0.23730594
+INFO:root:[   44] Training loss: 0.01210797, Validation loss: 0.02714927, Gradient norm: 0.21249404
+INFO:root:[   45] Training loss: 0.01249473, Validation loss: 0.02617665, Gradient norm: 0.24582464
+INFO:root:[   46] Training loss: 0.01263716, Validation loss: 0.02204148, Gradient norm: 0.25561025
+INFO:root:[   47] Training loss: 0.01250802, Validation loss: 0.02258684, Gradient norm: 0.25647432
+INFO:root:[   48] Training loss: 0.01249888, Validation loss: 0.02651195, Gradient norm: 0.26778326
+INFO:root:[   49] Training loss: 0.01159841, Validation loss: 0.02513487, Gradient norm: 0.18697527
+INFO:root:[   50] Training loss: 0.01188870, Validation loss: 0.02372955, Gradient norm: 0.20267657
+INFO:root:[   51] Training loss: 0.01237140, Validation loss: 0.02229235, Gradient norm: 0.24297292
+INFO:root:[   52] Training loss: 0.01178503, Validation loss: 0.02346539, Gradient norm: 0.19991625
+INFO:root:[   53] Training loss: 0.01288047, Validation loss: 0.02150724, Gradient norm: 0.30190676
+INFO:root:[   54] Training loss: 0.01220683, Validation loss: 0.02398842, Gradient norm: 0.21527220
+INFO:root:[   55] Training loss: 0.01208503, Validation loss: 0.02408823, Gradient norm: 0.24541177
+INFO:root:[   56] Training loss: 0.01221283, Validation loss: 0.02374199, Gradient norm: 0.24468172
+INFO:root:[   57] Training loss: 0.01200667, Validation loss: 0.02579413, Gradient norm: 0.24450676
+INFO:root:[   58] Training loss: 0.01255195, Validation loss: 0.02472091, Gradient norm: 0.25429743
+INFO:root:[   59] Training loss: 0.01259598, Validation loss: 0.02729377, Gradient norm: 0.24068206
+INFO:root:[   60] Training loss: 0.01151732, Validation loss: 0.02274758, Gradient norm: 0.21707675
+INFO:root:[   61] Training loss: 0.01231412, Validation loss: 0.02256855, Gradient norm: 0.24670141
+INFO:root:[   62] Training loss: 0.01144270, Validation loss: 0.02248102, Gradient norm: 0.20676275
+INFO:root:EP 62: Early stopping
+INFO:root:Training the model took 3994.694s.
+INFO:root:Emptying the cuda cache took 0.031s.
+INFO:root:Starting evaluation: model UNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.02146
+INFO:root:EnergyScoreTrain: 0.01676
+INFO:root:CoverageTrain: 0.98842
+INFO:root:IntervalWidthTrain: 0.12548
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.02471
+INFO:root:EnergyScoreValidation: 0.01861
+INFO:root:CoverageValidation: 0.96263
+INFO:root:IntervalWidthValidation: 0.11598
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.0253
+INFO:root:EnergyScoreTest: 0.01904
+INFO:root:CoverageTest: 0.95944
+INFO:root:IntervalWidthTest: 0.11596
+INFO:root:###6 out of 24 training parameter combinations ###
+INFO:root:Training parameters: {'model': 'UNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.3, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'uno_out_channels': [64, 128, 128, 64, 32], 'uno_scalings': [[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]], 'uno_n_modes': [[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]}
+INFO:root:NumberParameters: 5814913
+INFO:root:Memory allocated: 58720256
+INFO:root:Training starts now.
+INFO:root:[    1] Training loss: 0.05364211, Validation loss: 0.03227634, Gradient norm: 0.66765881
+INFO:root:[    2] Training loss: 0.03214566, Validation loss: 0.02655545, Gradient norm: 0.34254930
+INFO:root:[    3] Training loss: 0.02842268, Validation loss: 0.02410954, Gradient norm: 0.34224846
+INFO:root:[    4] Training loss: 0.02790822, Validation loss: 0.02504500, Gradient norm: 0.42004121
+INFO:root:[    5] Training loss: 0.02445541, Validation loss: 0.02756088, Gradient norm: 0.32423703
+INFO:root:[    6] Training loss: 0.02281494, Validation loss: 0.02231253, Gradient norm: 0.28692149
+INFO:root:[    7] Training loss: 0.02227598, Validation loss: 0.02405012, Gradient norm: 0.28247606
+INFO:root:[    8] Training loss: 0.02234787, Validation loss: 0.02437424, Gradient norm: 0.35014517
+INFO:root:[    9] Training loss: 0.02179102, Validation loss: 0.02007506, Gradient norm: 0.34522279
+INFO:root:[   10] Training loss: 0.01922974, Validation loss: 0.02108487, Gradient norm: 0.25795779
+INFO:root:[   11] Training loss: 0.01861665, Validation loss: 0.02014880, Gradient norm: 0.27021145
+INFO:root:[   12] Training loss: 0.01774715, Validation loss: 0.01968827, Gradient norm: 0.24497245
+INFO:root:[   13] Training loss: 0.01734294, Validation loss: 0.01993512, Gradient norm: 0.23969641
+INFO:root:[   14] Training loss: 0.01800397, Validation loss: 0.02614544, Gradient norm: 0.30351889
+INFO:root:[   15] Training loss: 0.01661105, Validation loss: 0.02658757, Gradient norm: 0.25751564
+INFO:root:[   16] Training loss: 0.01832542, Validation loss: 0.01937393, Gradient norm: 0.32130559
+INFO:root:[   17] Training loss: 0.01762442, Validation loss: 0.02032423, Gradient norm: 0.32795389
+INFO:root:[   18] Training loss: 0.01636578, Validation loss: 0.02781434, Gradient norm: 0.25449720
+INFO:root:[   19] Training loss: 0.01571383, Validation loss: 0.02320990, Gradient norm: 0.25764109
+INFO:root:[   20] Training loss: 0.01676630, Validation loss: 0.02219607, Gradient norm: 0.30274376
+INFO:root:[   21] Training loss: 0.01578714, Validation loss: 0.02285823, Gradient norm: 0.26416973
+INFO:root:[   22] Training loss: 0.01527056, Validation loss: 0.02470005, Gradient norm: 0.25487029
+INFO:root:[   23] Training loss: 0.01627887, Validation loss: 0.02360397, Gradient norm: 0.29739622
+INFO:root:[   24] Training loss: 0.01501839, Validation loss: 0.02741699, Gradient norm: 0.24249654
+INFO:root:[   25] Training loss: 0.01526591, Validation loss: 0.02368210, Gradient norm: 0.23871507
+INFO:root:[   26] Training loss: 0.01486580, Validation loss: 0.02115794, Gradient norm: 0.25615889
+INFO:root:[   27] Training loss: 0.01484312, Validation loss: 0.02456083, Gradient norm: 0.22470560
+INFO:root:[   28] Training loss: 0.01531789, Validation loss: 0.02648911, Gradient norm: 0.27513300
+INFO:root:[   29] Training loss: 0.01486185, Validation loss: 0.02630174, Gradient norm: 0.26035908
+INFO:root:[   30] Training loss: 0.01472103, Validation loss: 0.02436985, Gradient norm: 0.23804001
+INFO:root:[   31] Training loss: 0.01428578, Validation loss: 0.02683459, Gradient norm: 0.23725812
+INFO:root:[   32] Training loss: 0.01380043, Validation loss: 0.02556122, Gradient norm: 0.17092179
+INFO:root:[   33] Training loss: 0.01474780, Validation loss: 0.02399015, Gradient norm: 0.25033550
+INFO:root:[   34] Training loss: 0.01465341, Validation loss: 0.02506482, Gradient norm: 0.26020537
+INFO:root:[   35] Training loss: 0.01403404, Validation loss: 0.02207764, Gradient norm: 0.23140336
+INFO:root:[   36] Training loss: 0.01542366, Validation loss: 0.02949039, Gradient norm: 0.28496419
+INFO:root:[   37] Training loss: 0.01361394, Validation loss: 0.02280258, Gradient norm: 0.21459626
+INFO:root:[   38] Training loss: 0.01355413, Validation loss: 0.02484407, Gradient norm: 0.19362499
+INFO:root:[   39] Training loss: 0.01330747, Validation loss: 0.02213714, Gradient norm: 0.19544583
+INFO:root:[   40] Training loss: 0.01367238, Validation loss: 0.02788102, Gradient norm: 0.21264937
+INFO:root:[   41] Training loss: 0.01387135, Validation loss: 0.02314308, Gradient norm: 0.22718618
+INFO:root:[   42] Training loss: 0.01391632, Validation loss: 0.02880485, Gradient norm: 0.25009093
+INFO:root:[   43] Training loss: 0.01313924, Validation loss: 0.02170204, Gradient norm: 0.16895674
+INFO:root:[   44] Training loss: 0.01365036, Validation loss: 0.02264021, Gradient norm: 0.23189010
+INFO:root:[   45] Training loss: 0.01423693, Validation loss: 0.02656091, Gradient norm: 0.27176535
+INFO:root:[   46] Training loss: 0.01480317, Validation loss: 0.02607045, Gradient norm: 0.28640623
+INFO:root:[   47] Training loss: 0.01348269, Validation loss: 0.02865481, Gradient norm: 0.21629691
+INFO:root:[   48] Training loss: 0.01386692, Validation loss: 0.02335337, Gradient norm: 0.26351036
+INFO:root:[   49] Training loss: 0.01388094, Validation loss: 0.02445548, Gradient norm: 0.27866619
+INFO:root:[   50] Training loss: 0.01269540, Validation loss: 0.02570046, Gradient norm: 0.17147286
+INFO:root:[   51] Training loss: 0.01368670, Validation loss: 0.02640019, Gradient norm: 0.24495963
+INFO:root:[   52] Training loss: 0.01285276, Validation loss: 0.02586082, Gradient norm: 0.18647520
+INFO:root:[   53] Training loss: 0.01305154, Validation loss: 0.02405971, Gradient norm: 0.22232831
+INFO:root:[   54] Training loss: 0.01280174, Validation loss: 0.02294573, Gradient norm: 0.16737564
+INFO:root:[   55] Training loss: 0.01309418, Validation loss: 0.02621192, Gradient norm: 0.20647840
+INFO:root:[   56] Training loss: 0.01265960, Validation loss: 0.02391833, Gradient norm: 0.18066761
+INFO:root:[   57] Training loss: 0.01327135, Validation loss: 0.02304220, Gradient norm: 0.22823474
+INFO:root:[   58] Training loss: 0.01455237, Validation loss: 0.02593762, Gradient norm: 0.28092420
+INFO:root:[   59] Training loss: 0.01280215, Validation loss: 0.02610447, Gradient norm: 0.19214083
+INFO:root:[   60] Training loss: 0.01247246, Validation loss: 0.02362782, Gradient norm: 0.19210834
+INFO:root:[   61] Training loss: 0.01293758, Validation loss: 0.02602937, Gradient norm: 0.22365245
+INFO:root:[   62] Training loss: 0.01285855, Validation loss: 0.02293117, Gradient norm: 0.19882131
+INFO:root:[   63] Training loss: 0.01390967, Validation loss: 0.02897231, Gradient norm: 0.26476378
+INFO:root:[   64] Training loss: 0.01389106, Validation loss: 0.02455417, Gradient norm: 0.27401916
+INFO:root:[   65] Training loss: 0.01236042, Validation loss: 0.02696796, Gradient norm: 0.15819622
+INFO:root:[   66] Training loss: 0.01250209, Validation loss: 0.02509762, Gradient norm: 0.18750618
+INFO:root:[   67] Training loss: 0.01312605, Validation loss: 0.02541057, Gradient norm: 0.24031685
+INFO:root:[   68] Training loss: 0.01296485, Validation loss: 0.02536422, Gradient norm: 0.20956539
+INFO:root:[   69] Training loss: 0.01255372, Validation loss: 0.02773696, Gradient norm: 0.19949752
+INFO:root:[   70] Training loss: 0.01258168, Validation loss: 0.02635531, Gradient norm: 0.20390443
+INFO:root:[   71] Training loss: 0.01298648, Validation loss: 0.02406633, Gradient norm: 0.22152761
+INFO:root:EP 71: Early stopping
+INFO:root:Training the model took 4591.195s.
+INFO:root:Emptying the cuda cache took 0.108s.
+INFO:root:Starting evaluation: model UNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.02495
+INFO:root:EnergyScoreTrain: 0.01902
+INFO:root:CoverageTrain: 0.99413
+INFO:root:IntervalWidthTrain: 0.1343
+INFO:root:Evaluating the model on Validation data.

@@ -1,0 +1,44 @@
+,0,1,2
+dataset_name,DarcyFlow,DarcyFlow,DarcyFlow
+max_training_set_size,10000,10000,10000
+downscaling_factor,2,2,2
+model,UNO,UNO,UNO
+uncertainty_quantification,scoring-rule-dropout,scoring-rule-dropout,scoring-rule-dropout
+batch_size,64,64,64
+n_epochs,1000,1000,1000
+early_stopping,10,10,10
+init,default,default,default
+learning_rate,0.001,0.001,0.001
+lr_schedule,step,step,step
+optimizer,adam,adam,adam
+gradient_clipping,1,1,1
+layer_normalization,True,True,True
+data_loader_pin_memory,False,False,False
+data_loader_num_workers,0,0,0
+distributed_training,False,False,False
+alpha,0.05,0.05,0.05
+n_samples_uq,100,100,100
+weight_decay,0,0,0
+dropout,0.01,0.05,0.1
+fourier_dropout,,,
+hidden_channels,32,32,32
+projection_channels,32,32,32
+lifting_channels,32,32,32
+n_samples,3,3,3
+uno_out_channels,"[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]"
+uno_scalings,"[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]"
+uno_n_modes,"[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]"
+t_training,4657.091,4376.382,4041.483
+NumberParameters,5814913,5814913,5814913
+MSETrain,0.02111,0.02235,0.02094
+EnergyScoreTrain,0.01545,0.016,0.01528
+CoverageTrain,0.92728,0.97221,0.98305
+IntervalWidthTrain,0.08633,0.08477,0.09851
+MSEValidation,0.02752,0.02502,0.02485
+EnergyScoreValidation,0.02169,0.01814,0.01797
+CoverageValidation,0.5912,0.86766,0.91066
+IntervalWidthValidation,0.04631,0.07625,0.09018
+MSETest,0.02816,0.02539,0.02534
+EnergyScoreTest,0.02228,0.01844,0.01829
+CoverageTest,0.58303,0.86245,0.90774
+IntervalWidthTest,0.04646,0.07617,0.09008
