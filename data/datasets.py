@@ -429,65 +429,36 @@ class RYDLDataset(Dataset):
         self,
         data_dir: str,
         var: str = "train",
-        init_steps: int = 8,
-        prediction_steps: int = 8,
-        resample: int = 2,
         normalize:bool = True,
+        downscaling_factor: int = 1,
     ):
+        assert isinstance(downscaling_factor, int), "Scaling factor must be Integer"
         self.data_dir = data_dir
-        self.init_steps = init_steps
-        self.prediction_steps = prediction_steps
-        self.resample = resample
         self.normalize = normalize
+        self.downscaling_factor = downscaling_factor
         # Load datetime index
-        self.index = np.load(self.data_dir + f"{var}.npy")
-        # Set coordinates
-        self.y_subset = slice(410, -434)
-        self.x_subset = slice(159, -485)
+        self.index = np.load(self.data_dir + f"{var}_index.npy")
+        self.dataset = xr.open_dataset(self.data_dir + f"{var}.nc")
+        self.x = self.dataset.coords["x"].values
+        self.y = self.dataset.coords["y"].values
+        self.t = self.dataset.coords["t"].values
 
     def __len__(self) -> int:
         return len(self.index)
 
     def __getitem__(self, idx: int) -> tuple:
-        t_init = self.index[idx]
-        t_end = self.index[idx] + np.timedelta64(
-            5 * self.resample * (self.init_steps + self.prediction_steps-1), "m"
-        )
-        t_init = pd.to_datetime(str(t_init))
-        t_end = pd.to_datetime(str(t_end))
-        range = pd.date_range(t_init, t_end, freq=f"{5 *self.resample}min")
-
-        # Compare strings for overlapping days
-        s1 = t_init.strftime("%Y%m%d")
-        s2 = t_end.strftime("%Y%m%d")
-
-        # Load data
-        if s1 == s2:
-            data = xr.open_dataset(
-                f"{self.data_dir}processed/{t_init.year}/{t_init.month:02d}/YW_2017.002_{s1}.nc"
-            )
-        else:
-            data = xr.open_mfdataset(
-                [
-                    f"{self.data_dir}processed/{t_init.year}/{t_init.month:02d}/YW_2017.002_{s1}.nc",
-                    f"{self.data_dir}processed/{t_end.year}/{t_end.month:02d}/YW_2017.002_{s2}.nc",
-                ]
-            )
-        # Filter domain
-        data = data.isel(y = self.y_subset, x = self.x_subset)
-        # Precipitation data
-        precip = data.RR.fillna(0)
-        self.x = x = precip.coords["x"].values
-        self.y = y = precip.coords["y"].values
-        self.t = t = np.arange(0, 5*self.resample*(self.prediction_steps), 5*self.resample)
         # Min/max normalization
         if self.normalize:
             x = (self.x - np.min(self.x))/(np.max(self.x) - np.min(self.x))
             y = (self.y - np.min(self.y))/(np.max(self.y)- np.min(self.y))
             t = (self.t - np.min(self.t))/(np.max(self.t)- np.min(self.t))
+        else:
+            x = self.x
+            y = self.y
+            t = self.t
 
-        train = precip.sel(time = range[0:self.init_steps])
-        target = precip.sel(time = range[self.init_steps:])
+        train = self.dataset.a.isel(samples = idx).fillna(0)
+        target = self.dataset.u.isel(samples = idx).fillna(0)
         # Turn to tensor and log transform
         train = torch.tensor(train.to_numpy()).float().unsqueeze(0)
         target = torch.tensor(target.to_numpy()).float().unsqueeze(0)
@@ -496,6 +467,9 @@ class RYDLDataset(Dataset):
         # Stack grid
         grid = np.stack(np.meshgrid(y, t, x))
         train = torch.cat([train, torch.tensor(grid)], dim=0).float()
+        if self.downscaling_factor != 1:
+            train = train[:,:, ::self.downscaling_factor, ::self.downscaling_factor]
+            target = target[:,:, ::self.downscaling_factor, ::self.downscaling_factor]
         return train, target
     
     def get_date(self, idx: int) -> str:
@@ -527,14 +501,15 @@ class RYDLDataset(Dataset):
     
 
 if __name__ == "__main__":
-    data_dir = "data/KS/processed/"
-    dataset = KSDataset(data_dir)
+    data_dir = "data/RYDL/processed/"
+    dataset = RYDLDataset(data_dir, var = "val", downscaling_factor=2)
     print(len(dataset))
     train, target = dataset.__getitem__(10)
-    x,y = dataset.get_coordinates(normalize = True)
+    x,y,t = dataset.get_coordinates(normalize = False)
+    L = dataset.get_domain_range()
     print(train.shape)
-    print(train[1])
-    print(x)
+    print(target.shape)
+    print(L)
 
 
 
