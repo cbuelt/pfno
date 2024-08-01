@@ -441,10 +441,9 @@ class RYDLDataset(Dataset):
         self.normalize = normalize
         # Load datetime index
         self.index = np.load(self.data_dir + f"{var}.npy")
-        # Prepare domain
-        self.x = None
-        self.y = None
-        self.t = None
+        # Set coordinates
+        self.y_subset = slice(410, -434)
+        self.x_subset = slice(159, -485)
 
     def __len__(self) -> int:
         return len(self.index)
@@ -475,17 +474,17 @@ class RYDLDataset(Dataset):
                 ]
             )
         # Filter domain
-        data = data.isel(y = slice(88,-100), x = slice(135,-85))
+        data = data.isel(y = self.y_subset, x = self.x_subset)
         # Precipitation data
         precip = data.RR.fillna(0)
-        self.x = precip.coords["x"].values / 1000
-        self.y = precip.coords["y"].values / 1000
-        self.t =  np.arange(0, 5*self.resample*(self.prediction_steps), 5*self.resample)
+        self.x = x = precip.coords["x"].values
+        self.y = y = precip.coords["y"].values
+        self.t = t = np.arange(0, 5*self.resample*(self.prediction_steps), 5*self.resample)
         # Min/max normalization
         if self.normalize:
-            self.x = (self.x - np.min(self.x))/(np.max(self.x) - np.min(self.x))
-            self.y = (self.y - np.min(self.y))/(np.max(self.y)- np.min(self.y))
-            self.t = (self.t - np.min(self.t))/(np.max(self.t)- np.min(self.t))
+            x = (self.x - np.min(self.x))/(np.max(self.x) - np.min(self.x))
+            y = (self.y - np.min(self.y))/(np.max(self.y)- np.min(self.y))
+            t = (self.t - np.min(self.t))/(np.max(self.t)- np.min(self.t))
 
         train = precip.sel(time = range[0:self.init_steps])
         target = precip.sel(time = range[self.init_steps:])
@@ -495,20 +494,35 @@ class RYDLDataset(Dataset):
         train = torch.log(train + 0.01)
         target = torch.log(target + 0.01)
         # Stack grid
-        grid = np.stack(np.meshgrid(self.y, self.t, self.x))
+        grid = np.stack(np.meshgrid(y, t, x))
         train = torch.cat([train, torch.tensor(grid)], dim=0).float()
         return train, target
     
     def get_date(self, idx: int) -> str:
         return self.index[idx]
     
-    def get_coordinates(self) -> Tuple:
-        return self.x, self.y, self.t
+    def get_coordinates(self, normalize = True) -> Tuple:
+        _ = self.__getitem__(0)
+        if normalize:
+            x = (self.x - np.min(self.x))/(np.max(self.x) - np.min(self.x))
+            y = (self.y - np.min(self.y))/(np.max(self.y)- np.min(self.y))
+            t = (self.t - np.min(self.t))/(np.max(self.t)- np.min(self.t))
+            return x, y, t
+        else:
+            return self.x, self.y, self.t
     
-    def get_domain_range(self) -> List[float]:
-        L_x = np.abs(self.x[-1] - self.x[0])
-        L_y = self.y[-1] - self.y[0]
-        L_t = self.t[-1] - self.t[0]
+    def get_domain_range(self, normalize = True) -> List[float]:
+        if normalize:
+            x = (self.x - np.min(self.x))/(np.max(self.x) - np.min(self.x))
+            y = (self.y - np.min(self.y))/(np.max(self.y)- np.min(self.y))
+            t = (self.t - np.min(self.t))/(np.max(self.t)- np.min(self.t))
+        else:
+            x = self.x
+            y = self.y
+            t = self.t
+        L_x = np.abs(x[-1] - x[0])
+        L_y = y[-1] - y[0]
+        L_t = t[-1] - t[0]
         return [L_t, L_y, L_x]
     
 

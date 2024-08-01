@@ -70,7 +70,7 @@ class LpLoss(object):
 
         return diff
 
-    def rel(self, x, y):
+    def relative(self, x, y):
         diff = torch.norm(
             torch.flatten(x, start_dim=-self.d) - torch.flatten(y, start_dim=-self.d),
             p=self.p,
@@ -89,7 +89,7 @@ class LpLoss(object):
 
     def __call__(self, y_pred, y, **kwargs):
         if self.rel:
-            return self.rel(y_pred, y)
+            return self.relative(y_pred, y)
         else:
             return self.abs(y_pred,y)
 

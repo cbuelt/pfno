@@ -63,10 +63,12 @@ def extract_samples(
     Returns:
         np.ndarray: _description_
     """
-    precip = data.RR.fillna(0)[:, 90:-105, 135:-85]
+    y_subset = slice(410, -434)
+    x_subset = slice(159, -485)
+
+    precip = data.RR.fillna(0)[:, y_subset, x_subset]
     if resample is not None:
         precip = precip[::resample]
-
     if threshold is not None:
         filtered = xr.where(precip > threshold, 1, 0).mean(dim=["x", "y"])
         final = filtered[(filtered > domain_treshold).compute()]
@@ -133,11 +135,14 @@ def prepare_data(
 
 
 if __name__ == "__main__":
-    train_years = [2018, 2019]
+    train_years = [2015,2016,2017,2018,2019]
     val_years = [2020]
     test_years = [2021]
-    months = [5, 6]  # [5,6,7,8,9]
+    months = [5,6,7,8,9]  # [5,6,7,8,9]
     init_steps = 8
     prediction_steps = 8
 
+
+    prepare_data(val_years, months, init_steps, prediction_steps, "val")
+    prepare_data(test_years, months, init_steps, prediction_steps, "test")
     prepare_data(train_years, months, init_steps, prediction_steps, "train")
