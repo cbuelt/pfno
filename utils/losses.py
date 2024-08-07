@@ -384,15 +384,66 @@ class VariogramScore(object):
 
     def __call__(self, y_pred, y, **kwargs):
         return self.calculate_score(y_pred, y, **kwargs)
+    
+
+class CRPS(object):
+    def __init__(self, reduction="mean", reduce_dims=True, **kwargs):
+        super().__init__()
+
+        self.reduction = reduction
+        self.reduce_dims = reduce_dims
+
+    def reduce(self, x):
+        if self.reduction == "sum":
+            x = torch.sum(x, dim=0, keepdim=True)
+        else:
+            x = torch.mean(x, dim=0, keepdim=True)
+        return x
+
+    def calculate_score(self, x, y):
+        """Calculates the energy score for different metrics
+
+        Args:
+            x (_type_): Model prediction (Batch size, ..., n_samples)
+            y (_type_): Target (Batch size, ..., 1)
+            h (_type_, optional): _description_. Defaults to None.
+
+        Returns:
+            _type_: Energy score
+        """
+        n_samples = x.size()[-1]
+
+        # Add additional dimension if necessary
+        if len(x.size()) != len(y.size()):
+            y = torch.unsqueeze(y, dim=-1)
+
+        # Flatten tensors
+        x_flat = torch.flatten(x, start_dim=1, end_dim=-2)
+        y_flat = torch.flatten(y, start_dim=1, end_dim=-2)
+
+        # Calculate CRPS
+        term_1 = torch.abs(x_flat - y_flat).mean(dim = -1)
+        term_2 = torch.abs(
+            torch.unsqueeze(x_flat, dim=-1) - torch.unsqueeze(x_flat, dim=-2)
+        ).mean(dim = (-2,-1))
+        score = term_1 - 0.5*term_2 
+        # Aggregate CRPS over spatial dimensions
+        score = score.mean(dim = -1)
+
+        # Reduce
+        return self.reduce(score).squeeze() if self.reduce_dims else score
+
+    def __call__(self, y_pred, y, **kwargs):
+        return self.calculate_score(y_pred, y, **kwargs)
 
 
 if __name__ == "__main__":
     # set torch seed
     torch.manual_seed(0)
-    input = torch.rand(32, 1, 10, 25, 5, 3)
-    truth = torch.ones(32, 1, 10, 25, 5)
+    input = torch.rand(4, 1, 2, 3,5)
+    truth = torch.ones(4, 1, 2,3)
 
-    score_func = KernelScore(d=3, L=[1, 2, 5], rel=True)
+    score_func = CRPS()
 
     score = score_func(input, truth)
 
