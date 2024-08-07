@@ -430,15 +430,12 @@ class ERA5Dataset(Dataset):
         data_dir: str,
         var: str = "train",
         normalize: bool = True,
-        downscaling_factor: int = 1,
         init_steps: int = 10,
         prediction_steps: int = 10,
     ):
-        assert isinstance(downscaling_factor, int), "Scaling factor must be Integer"
         self.var = var
         self.data_dir = data_dir
         self.normalize = normalize
-        self.downscaling_factor = downscaling_factor
         self.init_steps = init_steps
         self.prediction_steps = prediction_steps
 
@@ -528,7 +525,7 @@ class ERA5Dataset(Dataset):
 
 if __name__ == "__main__":
     data_dir = "data/era5/"
-    dataset = ERA5Dataset(data_dir, var="test")
+    dataset = ERA5Dataset(data_dir, var="train")
     print(len(dataset))
     train, target = dataset.__getitem__(10)
     print(train.shape)
