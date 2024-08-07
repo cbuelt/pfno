@@ -424,18 +424,29 @@ class KSDataset(Dataset):
         return [L_t, L_x]
 
 
-class RYDLDataset(Dataset):
+class ERA5Dataset(Dataset):
     def __init__(
         self,
         data_dir: str,
         var: str = "train",
-        normalize:bool = True,
+        normalize: bool = True,
         downscaling_factor: int = 1,
+        init_steps: int = 10,
+        prediction_steps: int = 10,
     ):
         assert isinstance(downscaling_factor, int), "Scaling factor must be Integer"
+        self.var = var
         self.data_dir = data_dir
         self.normalize = normalize
         self.downscaling_factor = downscaling_factor
+        self.init_steps = init_steps
+        self.prediction_steps = prediction_steps
+
+        # Date splits
+        self.dates = dict({"train": pd.date_range("2011-01-01", "2020-12-31", freq="6h"),
+                           "val": pd.date_range("2021-01-01", "2021-12-31", freq="6h"),
+                           "test": pd.date_range("2022-01-01", "2022-12-31", freq="6h")})
+        
         # Load datetime index
         self.index = np.load(self.data_dir + f"{var}_index.npy")
         self.dataset = xr.open_dataset(self.data_dir + f"{var}.nc")
@@ -444,7 +455,8 @@ class RYDLDataset(Dataset):
         self.t = self.dataset.coords["t"].values
 
     def __len__(self) -> int:
-        return len(self.index)
+        dates = self.dates[self.var]
+        return len(dates)
 
     def __getitem__(self, idx: int) -> tuple:
         # Min/max normalization
