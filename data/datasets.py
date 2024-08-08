@@ -84,11 +84,11 @@ class DarcyFlowDataset(Dataset):
         y = self.dataset["y-coordinate"][:: self.downscaling_factor]
         # Min/max normalization
         if self.normalize:
-            x = (x - np.min(x)) // (np.max(x) - np.min(x))
-            y = (y - np.min(y)) // (np.max(y) - np.min(y))
+            x = (x - np.min(x)) / (np.max(x) - np.min(x))
+            y = (y - np.min(y)) / (np.max(y) - np.min(y))
         grid = np.stack(np.meshgrid(x, y))
         # Stack input and grid
-        tensor_a = torch.cat([torch.tensor(a).unsqueeze(0), torch.tensor(grid)], dim=0)
+        tensor_a = torch.cat([torch.tensor(a).unsqueeze(0), torch.tensor(grid)], dim=0).float()
         tensor_u = torch.tensor(u).unsqueeze(0)
         return tensor_a, tensor_u
 
@@ -102,8 +102,8 @@ class DarcyFlowDataset(Dataset):
         y = self.dataset["y-coordinate"][:: self.downscaling_factor]
         # Min/max normalization
         if normalize:
-            x = (x - np.min(x)) // (np.max(x) - np.min(x))
-            y = (y - np.min(y)) // (np.max(y) - np.min(y))
+            x = (x - np.min(x)) / (np.max(x) - np.min(x))
+            y = (y - np.min(y)) / (np.max(y) - np.min(y))
         return (x, y)
 
     def get_domain_range(self) -> List[float]:
