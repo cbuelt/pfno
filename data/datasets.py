@@ -313,7 +313,7 @@ class KSDataset(Dataset):
         data_dir: str,
         test: bool = False,
         init_steps: int = 10,
-        mode: str = "single",
+        mode: str = "autoregressive",
         downscaling_factor: int = 1,
         temporal_downscaling_factor: int = 1,
         pred_horizon: int = 10,
@@ -401,26 +401,22 @@ class KSDataset(Dataset):
             Tuple: Tuple containing the x and y coordinates
         """
         x = self.dataset.coords["x"].values
-        t = self.dataset.coords["t"].values
+        t = self.dataset.coords["t"].values[self.a_end : self.u_end]
         # Min/max normalization
         if normalize:
             x = (x - np.min(x)) / (np.max(x) - np.min(x))
             t = (t - np.min(t)) / (np.max(t) - np.min(t))
         return (x, t)
 
-    def get_domain_range(self) -> List[float]:
+    def get_domain_range(self, normalize = True) -> List[float]:
         """Returns the domain range of the dataset.
 
         Returns:
             List[float]: List containing the domain range.
         """
-        x, t = self.get_coordinates()
-        L_x = x[-1] - x[0]
-        if self.mode == "single":
-            L_t = t[self.u_end + 1] - t[self.u_end]
-        elif self.mode == "autoregressive":
-            t = t[self.a_end : self.u_end + 1]
-            L_t = t[-1] - t[0]
+        x, t = self.get_coordinates(normalize = normalize)
+        L_x = x[-1] - x[0]  
+        L_t = t[-1] - t[0]
         return [L_t, L_x]
 
 
@@ -524,12 +520,13 @@ class ERA5Dataset(Dataset):
 
 
 if __name__ == "__main__":
-    data_dir = "data/era5/"
-    dataset = ERA5Dataset(data_dir, var="train")
+    data_dir = "data/KS/processed/"
+    dataset = KSDataset(data_dir, test=True, downscaling_factor=1, temporal_downscaling_factor=1)
     print(len(dataset))
     train, target = dataset.__getitem__(10)
     print(train.shape)
     print(target.shape)
-    x, y, t = dataset.get_coordinates(normalize=True)
+    x, y = dataset.get_coordinates(normalize=True)
     L = dataset.get_domain_range(normalize=False)
     print(L)
+    print(y.shape)

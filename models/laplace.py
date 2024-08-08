@@ -55,6 +55,12 @@ class LA_Wrapper(torch.nn.Module):
         self.hessian_structure = hessian_structure
         self.optimize = optimize
         self.model.eval()
+        self.la = Laplace(
+            self.model,
+            "regression",
+            subset_of_weights=self.method,
+            hessian_structure=self.hessian_structure,
+        )
 
     def fit(self, train_loader: torch.utils.data.DataLoader):
         """Fits the Laplace approximation to the training data.
@@ -62,15 +68,25 @@ class LA_Wrapper(torch.nn.Module):
         Args:
             train_loader (torch.utils.data.DataLoader): The train loader.
         """
-        self.la = Laplace(
-            self.model,
-            "regression",
-            subset_of_weights=self.method,
-            hessian_structure=self.hessian_structure,
-        )
         self.la.fit(train_loader)
         if self.optimize:
             self.optimize_precision()
+
+    def save_state_dict(self, path: str):
+        """Saves the state dictionary.
+
+        Args:
+            path (str): The path to save the state dictionary.
+        """
+        torch.save(self.la.state_dict(), path)
+
+    def load_state_dict(self, path: str):
+        """Loads the state dictionary.
+
+        Args:
+            path (str): The path to load the state dictionary.
+        """
+        self.la.load_state_dict(torch.load(path))
 
     def optimize_precision(self):
         """Optimize prior precision of the laplace approximation."""
