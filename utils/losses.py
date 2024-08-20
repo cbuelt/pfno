@@ -427,8 +427,9 @@ class CRPS(object):
             torch.unsqueeze(x_flat, dim=-1) - torch.unsqueeze(x_flat, dim=-2)
         ).mean(dim = (-2,-1))
         score = term_1 - 0.5*term_2 
-        # Aggregate CRPS over spatial dimensions
-        score = score.mean(dim = -1)
+        if self.reduce_dims:
+            # Aggregate CRPS over spatial dimensions
+            score = score.mean(dim = -1)
 
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score

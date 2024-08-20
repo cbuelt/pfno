@@ -18,6 +18,7 @@ indices_best = results.groupby(
 results[
     [
         "uncertainty_quantification",
+        "dropout",
         "MSETest",
         "EnergyScoreTest",
         "CoverageTest",

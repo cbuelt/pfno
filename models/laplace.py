@@ -92,6 +92,14 @@ class LA_Wrapper(torch.nn.Module):
         """Optimize prior precision of the laplace approximation."""
         self.la.optimize_prior_precision(pred_type="nn", method="marglik")
 
+        # log_prior, log_sigma = torch.ones(1, requires_grad=True), torch.ones(1, requires_grad=True)
+        # hyper_optimizer = torch.optim.Adam([log_prior, log_sigma], lr=5e-2)
+        # for i in range(200):
+        #     hyper_optimizer.zero_grad()
+        #     neg_marglik = - self.la.log_marginal_likelihood(log_prior.exp(), log_sigma.exp())
+        #     neg_marglik.backward()
+        #     hyper_optimizer.step()
+
     def parameter_samples(self) -> torch.Tensor:
         """Generate samples from the weight distribution.
 
