@@ -9,6 +9,7 @@ path = os.path.join("results", dir)
 files = os.listdir(path)
 files.sort()  # alphabetic order, since this is the order corresponding to the entries in test.csv
 results = pd.read_csv(os.path.join(path, "test.csv"), index_col=0).T
+results.iloc[:,-14:] = results.iloc[:,-14:].astype("float32")
 
 
 indices_best = results.groupby(
