@@ -17,8 +17,8 @@ print(f'Using {device}.')
 
 def train(net, optimizer, input, target, criterion, gradient_clipping):
     optimizer.zero_grad(set_to_none=True)
-    
-    out = net(input)
+        
+    out = net(input.float())
     
     loss = criterion(out, target)
     loss.backward()
