@@ -434,7 +434,6 @@ class ERA5Dataset(Dataset):
         self.normalize = normalize
         self.init_steps = init_steps
         self.prediction_steps = prediction_steps
-
         # Date splits
         self.dates = dict(
             {
