@@ -1,16 +1,28 @@
 import pandas as pd
 import os
 
-dir = '20240718_151232_darcy_flow_uno'
+dir = "20240729_113758_ks_fno"
 # metric = 'EnergyScoreValidation'
 
-path = os.path.join('results', dir)
+path = os.path.join("results", dir)
 
 files = os.listdir(path)
 files.sort()  # alphabetic order, since this is the order corresponding to the entries in test.csv
-results = pd.read_csv(os.path.join(path, 'test.csv'), index_col=0).T
+results = pd.read_csv(os.path.join(path, "test.csv"), index_col=0).T
+results.iloc[:,-14:] = results.iloc[:,-14:].astype("float32")
 
 
-indices_best = results.groupby('uncertainty_quantification').EnergyScoreValidation.idxmin()
+indices_best = results.groupby(
+    "uncertainty_quantification"
+).EnergyScoreValidation.idxmin()
 
-# results[['uncertainty_quantification', 'CoverageTrain', 'CoverageValidation', 'CoverageTest']]
+results[
+    [
+        "uncertainty_quantification",
+        "dropout",
+        "MSETest",
+        "EnergyScoreTest",
+        "CoverageTest",
+        "IntervalWidthTest"
+    ]
+].loc[indices_best].to_csv(os.path.join(path, "best_models.csv"), index=False)

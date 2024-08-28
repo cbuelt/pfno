@@ -18,7 +18,7 @@ import configparser
 import ast
 import shutil
 
-from data.datasets import DarcyFlowDataset, SWEDataset, KSDataset
+from data.datasets import DarcyFlowDataset, SWEDataset, KSDataset, ERA5Dataset
 from train import trainer
 from utils import train_utils
 from evaluate import start_evaluation
@@ -142,6 +142,14 @@ if __name__ == '__main__':
             test_data = KSDataset(data_dir, test = True, mode = "autoregressive",
                         pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
                         temporal_downscaling_factor=temporal_downscaling_factor)
+            
+        elif data_parameters["dataset_name"] == "era5":
+            data_dir = f"data/{data_parameters['dataset_name']}/"
+            pred_horizon = data_parameters['pred_horizon']
+            init_steps = data_parameters['init_steps']
+            train_data = ERA5Dataset(data_dir, var = "train", init_steps = init_steps, prediction_steps = pred_horizon)
+            val_data = ERA5Dataset(data_dir, var = "val", init_steps = init_steps, prediction_steps = pred_horizon)
+            test_data = ERA5Dataset(data_dir, var = "test", init_steps = init_steps, prediction_steps = pred_horizon)
 
         domain_range = train_data.get_domain_range()
 
@@ -149,11 +157,8 @@ if __name__ == '__main__':
             # Validation data on full resolution
             train_data, _ = random_split(train_data, lengths = [0.8,0.2], generator = torch.Generator().manual_seed(42))
             _, val_data = random_split(train_data_full_res, lengths = [0.8,0.2], generator = torch.Generator().manual_seed(42))
-        else:
+        elif data_parameters['dataset_name'] != 'ERA5':
             train_data, val_data = random_split(train_data, lengths = [0.8,0.2], generator = torch.Generator().manual_seed(42))
-
-        #train_data, val_data = train_test_split(train_data, test_size=0.20, random_state=42)        
-        #train_data = train_utils.subsample(train_data, data_parameters['max_training_set_size'])
 
         for i, training_parameters in enumerate(training_parameters_dict):
             logging.info(f"###{i + 1} out of {len(training_parameters_dict)} training parameter combinations ###")
@@ -191,7 +196,7 @@ if __name__ == '__main__':
             torch.cuda.empty_cache()
             t_1 = time()
             logging.info(f'Emptying the cuda cache took {np.round(t_1 - t_0, 3)}s.')
-            start_evaluation(model, training_parameters, train_loader, val_loader, test_loader, results_dict, device, domain_range, logging)
+            start_evaluation(model, training_parameters, data_parameters, train_loader, val_loader, test_loader, results_dict, device, domain_range, logging)
             append_results_dict(results_dict, data_parameters, training_parameters, t_training)
             results_pd = pd.DataFrame(results_dict)
             results_pd.T.to_csv(os.path.join(directory, 'test.csv'))

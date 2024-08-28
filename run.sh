@@ -1,2 +1,2 @@
 #!/bin/sh
-python main.py -c swe/uno.ini
+python main.py -c era5/fno.ini

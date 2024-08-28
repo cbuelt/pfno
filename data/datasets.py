@@ -37,7 +37,7 @@ class DarcyFlowDataset(Dataset):
         test: bool = False,
         beta: float = 1.0,
         downscaling_factor: int = 1,
-        normalize = True,
+        normalize=True,
     ) -> None:
         """Initialize Darcy Flow Dataset
 
@@ -84,15 +84,15 @@ class DarcyFlowDataset(Dataset):
         y = self.dataset["y-coordinate"][:: self.downscaling_factor]
         # Min/max normalization
         if self.normalize:
-            x = (x - np.min(x))//(np.max(x) - np.min(x))
-            y = (y - np.min(y))//(np.max(y) - np.min(y))
+            x = (x - np.min(x)) / (np.max(x) - np.min(x))
+            y = (y - np.min(y)) / (np.max(y) - np.min(y))
         grid = np.stack(np.meshgrid(x, y))
         # Stack input and grid
-        tensor_a = torch.cat([torch.tensor(a).unsqueeze(0), torch.tensor(grid)], dim=0)
+        tensor_a = torch.cat([torch.tensor(a).unsqueeze(0), torch.tensor(grid)], dim=0).float()
         tensor_u = torch.tensor(u).unsqueeze(0)
         return tensor_a, tensor_u
 
-    def get_coordinates(self, normalize = True) -> Tuple:
+    def get_coordinates(self, normalize=True) -> Tuple:
         """Returns the x and y coordinates of the dataset
 
         Returns:
@@ -102,8 +102,8 @@ class DarcyFlowDataset(Dataset):
         y = self.dataset["y-coordinate"][:: self.downscaling_factor]
         # Min/max normalization
         if normalize:
-            x = (x - np.min(x))//(np.max(x) - np.min(x))
-            y = (y - np.min(y))//(np.max(y) - np.min(y))
+            x = (x - np.min(x)) / (np.max(x) - np.min(x))
+            y = (y - np.min(y)) / (np.max(y) - np.min(y))
         return (x, y)
 
     def get_domain_range(self) -> List[float]:
@@ -161,7 +161,7 @@ class SWEDataset(Dataset):
         pred_horizon: int = 10,
         t_start: int = 0,
         ood: bool = False,
-        normalize:bool = True,
+        normalize: bool = True,
     ) -> None:
 
         self.filename = "swe"
@@ -233,9 +233,9 @@ class SWEDataset(Dataset):
         t = a.coords["time"]
         # Min/max normalization
         if self.normalize:
-            x = (x - np.min(x))/(np.max(x) - np.min(x))
-            y = (y - np.min(y))/(np.max(y) - np.min(y))
-            t = (t - np.min(t))/(np.max(t) - np.min(t))
+            x = (x - np.min(x)) / (np.max(x) - np.min(x))
+            y = (y - np.min(y)) / (np.max(y) - np.min(y))
+            t = (t - np.min(t)) / (np.max(t) - np.min(t))
         grid = np.stack(np.meshgrid(x, t, y))
         # Stack input and grid
         tensor_a = torch.tensor(a.to_numpy()).float().unsqueeze(0)
@@ -243,7 +243,7 @@ class SWEDataset(Dataset):
         tensor_u = torch.tensor(u.to_numpy()).float().unsqueeze(0)
         return tensor_a, tensor_u
 
-    def get_coordinates(self, normalize = True) -> Tuple:
+    def get_coordinates(self, normalize=True) -> Tuple:
         """Returns the x and y coordinates of the dataset
 
         Returns:
@@ -254,9 +254,9 @@ class SWEDataset(Dataset):
         t = self.dataset.coords["time"].values
         # Min/max normalization
         if normalize:
-            x = (x - np.min(x))/(np.max(x) - np.min(x))
-            y = (y - np.min(y))/(np.max(y) - np.min(y))
-            t = (t - np.min(t))/(np.max(t) - np.min(t))
+            x = (x - np.min(x)) / (np.max(x) - np.min(x))
+            y = (y - np.min(y)) / (np.max(y) - np.min(y))
+            t = (t - np.min(t)) / (np.max(t) - np.min(t))
         return (x, y, t)
 
     def get_domain_range(self) -> List[float]:
@@ -313,12 +313,12 @@ class KSDataset(Dataset):
         data_dir: str,
         test: bool = False,
         init_steps: int = 10,
-        mode: str = "single",
+        mode: str = "autoregressive",
         downscaling_factor: int = 1,
         temporal_downscaling_factor: int = 1,
         pred_horizon: int = 10,
         t_start: int = 0,
-        normalize:bool = True,
+        normalize: bool = True,
     ) -> None:
 
         if test:
@@ -385,8 +385,8 @@ class KSDataset(Dataset):
         t = a.coords["t"]
         # Min/max normalization
         if self.normalize:
-            x = (x - np.min(x))/(np.max(x) - np.min(x))
-            t = (t - np.min(t))/(np.max(t) - np.min(t))
+            x = (x - np.min(x)) / (np.max(x) - np.min(x))
+            t = (t - np.min(t)) / (np.max(t) - np.min(t))
         grid = np.stack(np.meshgrid(x, t))
         # Stack input and grid
         tensor_a = torch.tensor(a.to_numpy()).float().unsqueeze(0)
@@ -394,133 +394,139 @@ class KSDataset(Dataset):
         tensor_u = torch.tensor(u.to_numpy()).float().unsqueeze(0)
         return tensor_a, tensor_u
 
-    def get_coordinates(self, normalize = True) -> Tuple:
+    def get_coordinates(self, normalize=True) -> Tuple:
         """Returns the x and y coordinates of the dataset
 
         Returns:
             Tuple: Tuple containing the x and y coordinates
         """
         x = self.dataset.coords["x"].values
-        t = self.dataset.coords["t"].values
+        t = self.dataset.coords["t"].values[self.a_end : self.u_end]
         # Min/max normalization
         if normalize:
-            x = (x - np.min(x))/(np.max(x) - np.min(x))
-            t = (t - np.min(t))/(np.max(t) - np.min(t))
+            x = (x - np.min(x)) / (np.max(x) - np.min(x))
+            t = (t - np.min(t)) / (np.max(t) - np.min(t))
         return (x, t)
 
-    def get_domain_range(self) -> List[float]:
+    def get_domain_range(self, normalize = True) -> List[float]:
         """Returns the domain range of the dataset.
 
         Returns:
             List[float]: List containing the domain range.
         """
-        x, t = self.get_coordinates()
-        L_x = x[-1] - x[0]
-        if self.mode == "single":
-            L_t = t[self.u_end+1] - t[self.u_end]
-        elif self.mode == "autoregressive":
-            t = t[self.a_end : self.u_end + 1]
-            L_t = t[-1] - t[0]
+        x, t = self.get_coordinates(normalize = normalize)
+        L_x = x[-1] - x[0]  
+        L_t = t[-1] - t[0]
         return [L_t, L_x]
 
 
-class RYDLDataset(Dataset):
+class ERA5Dataset(Dataset):
     def __init__(
         self,
         data_dir: str,
         var: str = "train",
-        init_steps: int = 8,
-        prediction_steps: int = 8,
-        resample: int = 2,
-        normalize:bool = True,
+        normalize: bool = True,
+        init_steps: int = 10,
+        prediction_steps: int = 10,
     ):
+        self.var = var
         self.data_dir = data_dir
+        self.normalize = normalize
         self.init_steps = init_steps
         self.prediction_steps = prediction_steps
-        self.resample = resample
-        self.normalize = normalize
-        # Load datetime index
-        self.index = np.load(self.data_dir + f"{var}.npy")
-        # Prepare domain
-        self.x = None
-        self.y = None
-        self.t = None
+
+        # Date splits
+        self.dates = dict(
+            {
+                "train": pd.date_range("2011-01-01", "2020-12-31", freq="6h"),
+                "val": pd.date_range("2021-01-01", "2021-12-31", freq="6h"),
+                "test": pd.date_range("2022-01-01", "2022-12-31", freq="6h"),
+            }
+        )
+
+        # Load dataset
+        self.dataset = xr.open_dataset(
+            self.data_dir + "era5_2m_temperature_2011-2022.nc"
+        )["2m_temperature"].sel(time=self.dates[self.var])
+        # Get coordinates
+        self.x = self.dataset.coords["latitude"].values
+        # Create y manually
+        self.y = np.append(np.arange(-12.5, 0, 0.25), np.arange(0, 42.5, 0.25))
+        # Create t manually
+        self.t = np.arange(0, (init_steps + prediction_steps) * 6, 6)
+
+        # Normalize grid
+        self.x_norm = (self.x - np.min(self.x)) / (np.max(self.x) - np.min(self.x))
+        self.y_norm = (self.y - np.min(self.y)) / (np.max(self.y) - np.min(self.y))
+        self.t_norm = (self.t - np.min(self.t)) / (np.max(self.t) - np.min(self.t))
+
+        # Get normalization
+        if self.normalize:
+            self.get_normalization()
+    
+
+    def get_normalization(self) -> Tuple:
+        self.mean = self.dataset.mean().to_numpy()
+        self.std = self.dataset.std().to_numpy()
+
 
     def __len__(self) -> int:
-        return len(self.index)
+        length = len(self.dates[self.var]) - (self.init_steps + self.prediction_steps)
+        return length
+    
 
     def __getitem__(self, idx: int) -> tuple:
-        t_init = self.index[idx]
-        t_end = self.index[idx] + np.timedelta64(
-            5 * self.resample * (self.init_steps + self.prediction_steps-1), "m"
-        )
-        t_init = pd.to_datetime(str(t_init))
-        t_end = pd.to_datetime(str(t_end))
-        range = pd.date_range(t_init, t_end, freq=f"{5 *self.resample}min")
-
-        # Compare strings for overlapping days
-        s1 = t_init.strftime("%Y%m%d")
-        s2 = t_end.strftime("%Y%m%d")
-
-        # Load data
-        if s1 == s2:
-            data = xr.open_dataset(
-                f"{self.data_dir}processed/{t_init.year}/{t_init.month:02d}/YW_2017.002_{s1}.nc"
+        # Get data
+        train = self.dataset.isel(time=slice(idx, idx + self.init_steps)).to_numpy()
+        target = self.dataset.isel(
+            time=slice(
+                idx + self.init_steps, idx + self.init_steps + self.prediction_steps
             )
-        else:
-            data = xr.open_mfdataset(
-                [
-                    f"{self.data_dir}processed/{t_init.year}/{t_init.month:02d}/YW_2017.002_{s1}.nc",
-                    f"{self.data_dir}processed/{t_end.year}/{t_end.month:02d}/YW_2017.002_{s2}.nc",
-                ]
-            )
-        # Filter domain
-        data = data.isel(y = slice(88,-100), x = slice(135,-85))
-        # Precipitation data
-        precip = data.RR.fillna(0)
-        self.x = precip.coords["x"].values / 1000
-        self.y = precip.coords["y"].values / 1000
-        self.t =  np.arange(0, 5*self.resample*(self.prediction_steps), 5*self.resample)
-        # Min/max normalization
+        ).to_numpy()
+        # Normalize
         if self.normalize:
-            self.x = (self.x - np.min(self.x))/(np.max(self.x) - np.min(self.x))
-            self.y = (self.y - np.min(self.y))/(np.max(self.y)- np.min(self.y))
-            self.t = (self.t - np.min(self.t))/(np.max(self.t)- np.min(self.t))
-
-        train = precip.sel(time = range[0:self.init_steps])
-        target = precip.sel(time = range[self.init_steps:])
-        # Turn to tensor and log transform
-        train = torch.tensor(train.to_numpy()).float().unsqueeze(0)
-        target = torch.tensor(target.to_numpy()).float().unsqueeze(0)
-        train = torch.log(train + 0.01)
-        target = torch.log(target + 0.01)
-        # Stack grid
-        grid = np.stack(np.meshgrid(self.y, self.t, self.x))
+            train = (train - self.mean) / self.std
+            target = (target - self.mean) / self.std
+        # Turn to tensor
+        train = torch.tensor(train).float().unsqueeze(0)
+        target = torch.tensor(target).float().unsqueeze(0)
+        # Create and stack grid
+        grid = np.stack(np.meshgrid(self.x_norm, self.t_norm[:self.init_steps], self.y_norm))
         train = torch.cat([train, torch.tensor(grid)], dim=0).float()
         return train, target
     
-    def get_date(self, idx: int) -> str:
-        return self.index[idx]
-    
-    def get_coordinates(self) -> Tuple:
-        return self.x, self.y, self.t
-    
-    def get_domain_range(self) -> List[float]:
-        L_x = np.abs(self.x[-1] - self.x[0])
-        L_y = self.y[-1] - self.y[0]
-        L_t = self.t[-1] - self.t[0]
+
+    def get_coordinates(self, normalize=True) -> Tuple:
+        _ = self.__getitem__(0)
+        if normalize:
+            return self.x_norm, self.y_norm, self.t_norm[self.init_steps:]
+        else:
+            return self.x, self.y, self.t[self.init_steps:]
+        
+
+    def get_domain_range(self, normalize=True) -> List[float]:
+        if normalize:
+            x = self.x_norm
+            y = self.y_norm
+            t = self.t_norm[self.init_steps:]
+        else:
+            x = self.x
+            y = self.y
+            t = self.t[self.init_steps:]
+        L_x = np.abs(x[-1] - x[0])
+        L_y = y[-1] - y[0]
+        L_t = t[-1] - t[0]
         return [L_t, L_y, L_x]
-    
+
 
 if __name__ == "__main__":
     data_dir = "data/KS/processed/"
-    dataset = KSDataset(data_dir)
+    dataset = KSDataset(data_dir, test=True, downscaling_factor=1, temporal_downscaling_factor=1)
     print(len(dataset))
     train, target = dataset.__getitem__(10)
-    x,y = dataset.get_coordinates(normalize = True)
     print(train.shape)
-    print(train[1])
-    print(x)
-
-
-
+    print(target.shape)
+    x, y = dataset.get_coordinates(normalize=True)
+    L = dataset.get_domain_range(normalize=False)
+    print(L)
+    print(y.shape)
