@@ -1,6 +1,10 @@
 import math
 import numpy as np
 from typing import List
+import os
+import sys
+sys.path.append(os.getcwd())
+from data.datasets import SSWEDataset
 
 import torch
 
@@ -96,7 +100,7 @@ class LpLoss(object):
 
 
 class SphericalL2Loss(object):
-    def __init__(self, nlon, weights, reduce_dims=[0, 1], reductions="mean", rel = True):
+    def __init__(self, nlon, weights, reduce_dims=[0], reductions="mean", rel = True):
         super().__init__()
 
         self.dlon = 2* torch.pi/nlon
@@ -128,15 +132,14 @@ class SphericalL2Loss(object):
 
     def abs(self, x, y):
         sq_diff = torch.pow(x - y, 2)
-        loss = torch.sum(sq_diff*self.weights*self.dlon, dim=(-2,-1))
+        loss = torch.sqrt(torch.sum(sq_diff*self.weights*self.dlon, dim=(-3,-2,-1)))
         if self.reduce_dims is not None:
             loss = self.reduce_all(loss).squeeze()
-
         return loss
 
     def relative(self, x, y):
         loss = self.abs(x,y)
-        loss = loss / torch.sum(torch.pow(y,2)*self.weights*self.dlon, dim=(-2,-1))
+        loss = loss / torch.sqrt(torch.sum(torch.pow(y,2)*self.weights*self.dlon, dim=(-3,-2,-1)))
 
         if self.reduce_dims is not None:
             loss = self.reduce_all(loss).squeeze()
@@ -149,9 +152,8 @@ class SphericalL2Loss(object):
             return self.abs(y_pred,y)
         
 
-
 def lp_norm(x, y, const, p=2):
-    """Calculates the Lp norm between two tensors
+    """Calculates the Lp norm between two tensors with different sample sizes
 
     Args:
         x (Tensor): First tensor of shape (B, n_samples_x, flatted_dims).
@@ -167,7 +169,7 @@ def lp_norm(x, y, const, p=2):
 
 
 def complex_norm(x, y, **kwargs):
-    """Calculates the complex norm between two tensors
+    """Calculates the complex norm between two tensors with different sample sizes
 
     Args:
         x (Tensor): First tensor of shape (B, n_samples_x, flatted_dims).
@@ -196,6 +198,13 @@ class EnergyScore(object):
         self.rel = kwargs.get("rel", True)
         self.p = kwargs.get("p", 2)
         self.L = kwargs.get("L", 2 * math.pi)
+        # Arguments for spherical score
+        if self.type == "spherical":
+            self.nlon = kwargs.get("nlon", 256)
+            self.weights = kwargs.get("weights", 1)
+            self.dlon = 2* torch.pi/nlon
+            self.p = 2
+            self.d = 2
 
         if isinstance(self.L, float):
             self.L = [self.L] * self.d
@@ -233,7 +242,12 @@ class EnergyScore(object):
 
         # Add additional dimension if necessary
         if len(x.size()) != len(y.size()):
-            y = torch.unsqueeze(y, dim=-1)
+            y = y.unsqueeze(-1)
+
+        if self.type == "spherical":
+            weights = self.weights.unsqueeze(-1)
+            x = x * torch.sqrt(weights*self.dlon)
+            y = y * torch.sqrt(weights*self.dlon)
 
         # Restructure tensors to shape (Batch size, n_samples, flatted dims)
         x_flat = torch.swapaxes(torch.flatten(x, start_dim=1, end_dim=-2), 1, 2)
@@ -498,11 +512,27 @@ if __name__ == "__main__":
     # set torch seed
     torch.manual_seed(0)
     input = torch.rand(4, 1, 2, 3)
-    truth = torch.ones(4, 1, 2,3)
+    truth = torch.ones(4, 1, 2, 3)
 
-    score_func = LpLoss(rel = False, d = 2)
+    data_dir = "data/SSWE/processed/"
+    train_data = SSWEDataset(data_dir, test = False)
+    val_data = SSWEDataset(data_dir, test = True, pred_horizon = 1)
+
+    x,y,t = train_data.get_coordinates()
+    L = train_data.get_domain_range()
+    weights = train_data.weights
+    nlon = train_data.nlon
+    input, truth = train_data[0]
+    input = input.unsqueeze(0)
+    truth = truth.unsqueeze(0)
+
+    score_func = SphericalL2Loss(nlon, weights, rel = True)
 
     score = score_func(input, truth)
 
     print(score.shape)
-    print(score)
+    print(score.item())
+
+    energy_score = EnergyScore(type="spherical", rel = True, nlon = nlon, weights = weights)
+    e_score = energy_score(input.unsqueeze(-1).repeat(1,1,1,1,2), truth)
+    print(e_score.item())
