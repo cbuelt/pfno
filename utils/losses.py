@@ -92,6 +92,62 @@ class LpLoss(object):
             return self.relative(y_pred, y)
         else:
             return self.abs(y_pred,y)
+        
+
+
+class SphericalL2Loss(object):
+    def __init__(self, nlon, weights, reduce_dims=[0, 1], reductions="mean", rel = True):
+        super().__init__()
+
+        self.dlon = 2* torch.pi/nlon
+        self.weights = weights
+        self.rel = rel
+
+        if isinstance(reduce_dims, int):
+            self.reduce_dims = [reduce_dims]
+        else:
+            self.reduce_dims = reduce_dims
+
+        if self.reduce_dims is not None:
+            if isinstance(reductions, str):
+                assert reductions == "sum" or reductions == "mean"
+                self.reductions = [reductions] * len(self.reduce_dims)
+            else:
+                for j in range(len(reductions)):
+                    assert reductions[j] == "sum" or reductions[j] == "mean"
+                self.reductions = reductions
+
+
+    def reduce_all(self, x):
+        for j in range(len(self.reduce_dims)):
+            if self.reductions[j] == "sum":
+                x = torch.sum(x, dim=self.reduce_dims[j], keepdim=True)
+            else:
+                x = torch.mean(x, dim=self.reduce_dims[j], keepdim=True)
+        return x
+
+    def abs(self, x, y):
+        sq_diff = torch.pow(x - y, 2)
+        loss = torch.sum(sq_diff*self.weights*self.dlon, dim=(-2,-1))
+        if self.reduce_dims is not None:
+            loss = self.reduce_all(loss).squeeze()
+
+        return loss
+
+    def relative(self, x, y):
+        loss = self.abs(x,y)
+        loss = loss / torch.sum(torch.pow(y,2)*self.weights*self.dlon, dim=(-2,-1))
+
+        if self.reduce_dims is not None:
+            loss = self.reduce_all(loss).squeeze()
+        return loss
+
+    def __call__(self, y_pred, y, **kwargs):
+        if self.rel:
+            return self.relative(y_pred, y)
+        else:
+            return self.abs(y_pred,y)
+        
 
 
 def lp_norm(x, y, const, p=2):
@@ -441,10 +497,10 @@ class CRPS(object):
 if __name__ == "__main__":
     # set torch seed
     torch.manual_seed(0)
-    input = torch.rand(4, 1, 2, 3,5)
+    input = torch.rand(4, 1, 2, 3)
     truth = torch.ones(4, 1, 2,3)
 
-    score_func = CRPS()
+    score_func = LpLoss(rel = False, d = 2)
 
     score = score_func(input, truth)
 
