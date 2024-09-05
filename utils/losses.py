@@ -202,7 +202,7 @@ class EnergyScore(object):
         if self.type == "spherical":
             self.nlon = kwargs.get("nlon", 256)
             self.weights = kwargs.get("weights", 1)
-            self.dlon = 2* torch.pi/nlon
+            self.dlon = 2* torch.pi/self.nlon
             self.p = 2
             self.d = 2
 
