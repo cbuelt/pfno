@@ -318,6 +318,7 @@ class KSDataset(Dataset):
         temporal_downscaling_factor: int = 1,
         pred_horizon: int = 10,
         t_start: int = 0,
+        normalize_grid: bool = True,
         normalize: bool = True,
     ) -> None:
 
@@ -335,7 +336,9 @@ class KSDataset(Dataset):
         self.t_start = t_start
         self.mode = mode
         self.pred_horizon = pred_horizon
+        self.normalize_grid = normalize_grid
         self.normalize = normalize
+        self.data_dir = data_dir
 
         # Downscaling
         self.dataset = xr.open_dataset(data_dir + self.filename).u[
@@ -348,6 +351,17 @@ class KSDataset(Dataset):
         self.a_start = self.t_start
         self.a_end = self.a_start + self.init_steps
         self.u_end = self.a_end + self.pred_horizon
+
+
+        # Get normalization
+        if self.normalize:
+            self.get_normalization()    
+
+    def get_normalization(self) -> Tuple:
+        train_dataset = xr.open_dataset(self.data_dir + "ks_train.nc").u
+        self.mean = train_dataset.mean().to_numpy()
+        self.std = train_dataset.std().to_numpy()
+
 
     def __len__(self) -> int:
         """Returns the length of the dataset
@@ -383,8 +397,14 @@ class KSDataset(Dataset):
         # Create grid
         x = a.coords["x"]
         t = a.coords["t"]
-        # Min/max normalization
+
+        # Normalize
         if self.normalize:
+            a = (a - self.mean) / self.std
+            u = (u - self.mean) / self.std
+
+        # Min/max normalization of grid
+        if self.normalize_grid:
             x = (x - np.min(x)) / (np.max(x) - np.min(x))
             t = (t - np.min(t)) / (np.max(t) - np.min(t))
         grid = np.stack(np.meshgrid(x, t))
@@ -461,18 +481,18 @@ class ERA5Dataset(Dataset):
 
         # Get normalization
         if self.normalize:
-            self.get_normalization()
-    
+            self.get_normalization()    
 
     def get_normalization(self) -> Tuple:
-        self.mean = self.dataset.mean().to_numpy()
-        self.std = self.dataset.std().to_numpy()
-
+        train_dataset = xr.open_dataset(
+            self.data_dir + "era5_2m_temperature_2011-2022.nc"
+        )["2m_temperature"].sel(time=self.dates["train"])
+        self.mean = train_dataset.mean().to_numpy()
+        self.std = train_dataset.std().to_numpy()
 
     def __len__(self) -> int:
         length = len(self.dates[self.var]) - (self.init_steps + self.prediction_steps)
-        return length
-    
+        return length    
 
     def __getitem__(self, idx: int) -> tuple:
         # Get data
@@ -520,7 +540,7 @@ class ERA5Dataset(Dataset):
 
 if __name__ == "__main__":
     data_dir = "data/KS/processed/"
-    dataset = KSDataset(data_dir, test=True, downscaling_factor=1, temporal_downscaling_factor=1)
+    dataset = KSDataset(data_dir, test=False, downscaling_factor=1, temporal_downscaling_factor=1, normalize = True)
     print(len(dataset))
     train, target = dataset.__getitem__(10)
     print(train.shape)
@@ -529,3 +549,5 @@ if __name__ == "__main__":
     L = dataset.get_domain_range(normalize=False)
     print(L)
     print(y.shape)
+    print(train.mean(), train.std())
+    print(target.mean(), target.std())
