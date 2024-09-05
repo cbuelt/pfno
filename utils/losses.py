@@ -54,7 +54,6 @@ class LpLoss(object):
         else:
             if isinstance(h, float):
                 h = [h] * self.d
-        print(h)
 
         const = torch.tensor(np.array(math.prod(h) ** (1.0 / self.p)), device=x.device)
         diff = const * torch.norm(
@@ -104,7 +103,7 @@ def lp_norm(x, y, const, p=2):
     Returns:
         Tensor: Lp norm
     """
-    norm = const**2 * torch.cdist(x, y, p=p)
+    norm = const * torch.cdist(x, y, p=p)
     return norm
 
 
@@ -188,12 +187,10 @@ class EnergyScore(object):
         x_flat = torch.swapaxes(torch.flatten(x, start_dim=1, end_dim=-2), 1, 2)
         y_flat = torch.swapaxes(torch.flatten(y, start_dim=1, end_dim=-2), 1, 2)
 
-        h = self.uniform_h(x)
-        
+
         # Assume uniform mesh
         if self.type == "lp":
             const = torch.tensor(
-                np.array(math.prod(h) ** (1.0 / self.p)), device=x.device
                 np.array(math.prod(h) ** (1.0 / self.p)), device=x.device
             )
         else:
@@ -603,13 +600,13 @@ class IntervalWidth(object):
 
 if __name__ == "__main__":
     # set torch seed
-    torch.manual_seed(0)
-    input = torch.randn(4, 2, 5, 3, 6)
-    input2 = input.unsqueeze(-1).repeat(1,1,1,1,1,5)
-    truth = torch.randn(4, 2, 5, 3, 6)
+    torch.manual_seed(10)
+    input = torch.randn(4, 2, 5, 3)
+    input2 = input.unsqueeze(-1).repeat(1,1,1,1,5)
+    truth = torch.randn(4, 2, 5, 3)
 
-    es = EnergyScore(d = 3, rel = False, L = [1.0,0.5,0.1])(input2, truth)
-    lp = LpLoss(d = 3, rel = False, L = [1.0,0.5,0.1])(input, truth)
+    es = EnergyScore(d = 2, rel = False, L = [1.0,0.5])(input2, truth)
+    lp = LpLoss(d = 2, rel = False, L = [1.0,0.5])(input, truth)
 
     print(es)
     print(lp)
