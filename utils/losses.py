@@ -425,12 +425,160 @@ class CRPS(object):
         term_1 = torch.abs(x_flat - y_flat).mean(dim = -1)
         term_2 = torch.abs(
             torch.unsqueeze(x_flat, dim=-1) - torch.unsqueeze(x_flat, dim=-2)
-        ).mean(dim = (-2,-1))
-        score = term_1 - 0.5*term_2 
+        ).sum(dim = (-2,-1))
+        score = term_1 - term_2 /(2*n_samples*(n_samples-1))
         if self.reduce_dims:
             # Aggregate CRPS over spatial dimensions
             score = score.mean(dim = -1)
+        # Reduce
+        return self.reduce(score).squeeze() if self.reduce_dims else score
 
+    def __call__(self, y_pred, y, **kwargs):
+        return self.calculate_score(y_pred, y, **kwargs)
+    
+    
+class GaussianNLL(object):
+    def __init__(self, reduction="mean", reduce_dims=True, **kwargs):
+        super().__init__()
+
+        self.reduction = reduction
+        self.reduce_dims = reduce_dims
+
+    def reduce(self, x):
+        if self.reduction == "sum":
+            x = torch.sum(x, dim=0, keepdim=True)
+        else:
+            x = torch.mean(x, dim=0, keepdim=True)
+        return x
+    
+    def calculate_score(self, x, y):
+        """Calculates the Gaussian negative log likelihood
+
+        Args:
+            x (_type_): Model prediction (Batch size, ..., n_samples)
+            y (_type_): Target (Batch size, ..., 1)
+            h (_type_, optional): _description_. Defaults to None.
+
+        Returns:
+            _type_: Energy score
+        """
+        n_samples = x.size()[-1]
+        dims = x.size()[1:-1]
+
+        # Calculate sample mean and standard deviation
+        mu = torch.mean(x, dim=-1)
+        sigma = torch.std(x, dim=-1)
+
+        # Assert dimension
+        assert mu.size() == y.size()
+
+        # Calculate Gaussian NLL
+        gaussian = torch.distributions.Normal(mu, sigma)
+        score = -gaussian.log_prob(y)
+
+        if self.reduce_dims:
+            # Aggregate CRPS over spatial dimensions
+            score = score.mean(dim = dims)
+        # Reduce
+        return self.reduce(score).squeeze() if self.reduce_dims else score
+
+    def __call__(self, y_pred, y, **kwargs):
+        return self.calculate_score(y_pred, y, **kwargs)
+    
+
+class Coverage(object):
+    def __init__(self, alpha:float = 0.05, reduction:str="mean", reduce_dims:bool=True, **kwargs:dict):
+        super().__init__()
+
+        self.alpha = alpha
+        self.reduction = reduction
+        self.reduce_dims = reduce_dims
+
+    def reduce(self, x):
+        if self.reduction == "sum":
+            x = torch.sum(x, dim=0, keepdim=True)
+        else:
+            x = torch.mean(x, dim=0, keepdim=True)
+        return x
+    
+    def calculate_score(self, x, y):
+        """Calculates the Coverage probability
+
+        Args:
+            x (_type_): Model prediction (Batch size, ..., n_samples)
+            y (_type_): Target (Batch size, ..., 1)
+            h (_type_, optional): _description_. Defaults to None.
+
+        Returns:
+            _type_: Energy score
+        """
+        n_samples = x.size()[-1]
+        dims = x.size()[1:-1]
+
+        # Calculate quantiles
+        q_lower = torch.quantile(x, self.alpha/2, dim=-1)
+        q_upper = torch.quantile(x, 1-self.alpha/2, dim=-1)
+
+        # Assert dimension and alpha
+        assert q_lower.size() == y.size()
+        assert 0 < self.alpha < 1
+
+        # Calculate coverage probability
+        score = ((y>q_lower) & (y<q_upper)).float()    
+
+        if self.reduce_dims:
+            # Aggregate CRPS over spatial dimensions
+            score = score.mean(dim = dims)
+        # Reduce
+        return self.reduce(score).squeeze() if self.reduce_dims else score
+
+    def __call__(self, y_pred, y, **kwargs):
+        return self.calculate_score(y_pred, y, **kwargs)
+    
+
+class IntervalWidth(object):
+    def __init__(self, alpha:float = 0.05, reduction:str="mean", reduce_dims:bool=True, **kwargs:dict):
+        super().__init__()
+
+        self.alpha = alpha
+        self.reduction = reduction
+        self.reduce_dims = reduce_dims
+
+    def reduce(self, x):
+        if self.reduction == "sum":
+            x = torch.sum(x, dim=0, keepdim=True)
+        else:
+            x = torch.mean(x, dim=0, keepdim=True)
+        return x
+    
+    def calculate_score(self, x, y):
+        """Calculates the Intervalwidth of a specified quantile
+
+        Args:
+            x (_type_): Model prediction (Batch size, ..., n_samples)
+            y (_type_): Target (Batch size, ..., 1)
+            h (_type_, optional): _description_. Defaults to None.
+
+        Returns:
+            _type_: Energy score
+        """
+        n_samples = x.size()[-1]
+        dims = x.size()[1:-1]
+
+        # Calculate quantiles
+        q_lower = torch.quantile(x, self.alpha/2, dim=-1)
+        q_upper = torch.quantile(x, 1-self.alpha/2, dim=-1)
+
+        # Assert dimension and alpha
+        assert q_lower.size() == y.size()
+        assert 0 < self.alpha < 1
+
+        # Calculate interval width
+        score = torch.abs(q_upper - q_lower)
+
+        if self.reduce_dims:
+            # Aggregate CRPS over spatial dimensions
+            score = score.mean(dim = dims)
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score
 
@@ -441,10 +589,10 @@ class CRPS(object):
 if __name__ == "__main__":
     # set torch seed
     torch.manual_seed(0)
-    input = torch.rand(4, 1, 2, 3,5)
-    truth = torch.ones(4, 1, 2,3)
+    input = torch.randn(4, 1, 2, 3,100)
+    truth = torch.randn(4, 1, 2, 3)
 
-    score_func = CRPS()
+    score_func = IntervalWidth(alpha = 0.05, reduce_dims = False)
 
     score = score_func(input, truth)
 
