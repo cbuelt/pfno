@@ -7,7 +7,7 @@ import torch
 
 # loss function with abs Lp loss
 class LpLoss(object):
-    def __init__(self, d=1, p=2, L=2 * math.pi, reduce_dims=[0, 1], reductions="mean", rel = True):
+    def __init__(self, d=1, p=2, L=2 * math.pi, reduce_dims=[0, 1], reductions="mean", rel = False):
         super().__init__()
 
         self.d = d
@@ -106,7 +106,7 @@ def lp_norm(x, y, const, p=2):
     Returns:
         Tensor: Lp norm
     """
-    norm = const * torch.cdist(x, y, p=p)
+    norm = const**2 * torch.cdist(x, y, p=p)
     return norm
 
 
@@ -137,7 +137,7 @@ class EnergyScore(object):
         self.type = type
         self.reduction = reduction
         self.reduce_dims = reduce_dims
-        self.rel = kwargs.get("rel", True)
+        self.rel = kwargs.get("rel", False)
         self.p = kwargs.get("p", 2)
         self.L = kwargs.get("L", 2 * math.pi)
 
@@ -183,10 +183,12 @@ class EnergyScore(object):
         x_flat = torch.swapaxes(torch.flatten(x, start_dim=1, end_dim=-2), 1, 2)
         y_flat = torch.swapaxes(torch.flatten(y, start_dim=1, end_dim=-2), 1, 2)
 
+        h = self.uniform_h(x)
+        
         # Assume uniform mesh
         if self.type == "lp":
             const = torch.tensor(
-                np.array(math.prod(self.L) ** (1.0 / self.p)), device=x.device
+                np.array(math.prod(h) ** (1.0 / self.p)), device=x.device
             )
         else:
             const = 1.0
@@ -232,7 +234,7 @@ class KernelScore(object):
         self.reduce_dims = reduce_dims
         self.p = kwargs.get("p", 2)
         self.L = kwargs.get("L", 2 * math.pi)
-        self.rel = kwargs.get("rel", True)
+        self.rel = kwargs.get("rel", False)
         self.gamma = kwargs.get("gamma", 1.0)
 
         if isinstance(self.L, float):
@@ -463,7 +465,7 @@ class GaussianNLL(object):
             _type_: Energy score
         """
         n_samples = x.size()[-1]
-        dims = x.size()[1:-1]
+        n_dims = len(x.shape) - 2
 
         # Calculate sample mean and standard deviation
         mu = torch.mean(x, dim=-1)
@@ -478,7 +480,7 @@ class GaussianNLL(object):
 
         if self.reduce_dims:
             # Aggregate CRPS over spatial dimensions
-            score = score.mean(dim = dims)
+            score = score.mean(dim = [d for d in range(1, n_dims+1)])
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score
 
@@ -512,8 +514,7 @@ class Coverage(object):
         Returns:
             _type_: Energy score
         """
-        n_samples = x.size()[-1]
-        dims = x.size()[1:-1]
+        n_dims = len(x.shape) - 2
 
         # Calculate quantiles
         q_lower = torch.quantile(x, self.alpha/2, dim=-1)
@@ -528,7 +529,7 @@ class Coverage(object):
 
         if self.reduce_dims:
             # Aggregate CRPS over spatial dimensions
-            score = score.mean(dim = dims)
+            score = score.mean(dim = [d for d in range(1, n_dims+1)])
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score
 
@@ -562,8 +563,7 @@ class IntervalWidth(object):
         Returns:
             _type_: Energy score
         """
-        n_samples = x.size()[-1]
-        dims = x.size()[1:-1]
+        n_dims = len(x.shape) - 2
 
         # Calculate quantiles
         q_lower = torch.quantile(x, self.alpha/2, dim=-1)
@@ -578,7 +578,9 @@ class IntervalWidth(object):
 
         if self.reduce_dims:
             # Aggregate CRPS over spatial dimensions
-            score = score.mean(dim = dims)
+            score = score.mean(dim = [d for d in range(1, n_dims+1)])
+            
+
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score
 
@@ -589,10 +591,12 @@ class IntervalWidth(object):
 if __name__ == "__main__":
     # set torch seed
     torch.manual_seed(0)
-    input = torch.randn(4, 1, 2, 3,100)
-    truth = torch.randn(4, 1, 2, 3)
+    input = torch.randn(4, 7, 8, 9, 1)
+    input = input.repeat(1,1,1,1,2)
+    truth = torch.randn(4, 7, 8, 9)
 
-    score_func = IntervalWidth(alpha = 0.05, reduce_dims = False)
+    # score_func = IntervalWidth(alpha = 0.05, reduce_dims = True)
+    score_func = EnergyScore(d=2, L=1.0, rel=False)
 
     score = score_func(input, truth)
 
