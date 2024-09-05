@@ -37,7 +37,8 @@ class DarcyFlowDataset(Dataset):
         test: bool = False,
         beta: float = 1.0,
         downscaling_factor: int = 1,
-        normalize=True,
+        normalize_grid=True,
+        normalize = True,
     ) -> None:
         """Initialize Darcy Flow Dataset
 
@@ -47,14 +48,26 @@ class DarcyFlowDataset(Dataset):
             beta (float, optional): Beta coefficient, determining the dataset. Defaults to 1.0.
             downscaling_factor (int, optional): Downscaling for spatial resolution. Defaults to 1.
         """
+        self.beta = beta
         if test:
-            self.filename = f"DarcyFlow_beta{beta}_test.nc"
+            self.filename = f"DarcyFlow_beta{self.beta}_test.nc"
         else:
-            self.filename = f"DarcyFlow_beta{beta}_train.nc"
+            self.filename = f"DarcyFlow_beta{self.beta}_train.nc"
         self.dataset = xr.open_dataset(data_dir + self.filename)
         assert isinstance(downscaling_factor, int), "Scaling factor must be Integer"
         self.downscaling_factor = downscaling_factor
+        self.normalize_grid = normalize_grid
         self.normalize = normalize
+        self.data_dir = data_dir
+
+        # Get normalization
+        if self.normalize:
+            self.get_normalization()    
+
+    def get_normalization(self) -> Tuple:
+        train_dataset = xr.open_dataset(self.data_dir + f"DarcyFlow_beta{self.beta}_train.nc").u
+        self.mean = train_dataset.mean().to_numpy()
+        self.std = train_dataset.std().to_numpy()
 
     def __len__(self) -> int:
         """Returns the length of the dataset
@@ -82,10 +95,16 @@ class DarcyFlowDataset(Dataset):
         # Create grid
         x = self.dataset["x-coordinate"][:: self.downscaling_factor]
         y = self.dataset["y-coordinate"][:: self.downscaling_factor]
-        # Min/max normalization
+
+        # Normalize
         if self.normalize:
+            u = (u - self.mean) / self.std
+
+        # Min/max normalization
+        if self.normalize_grid:
             x = (x - np.min(x)) / (np.max(x) - np.min(x))
             y = (y - np.min(y)) / (np.max(y) - np.min(y))
+
         grid = np.stack(np.meshgrid(x, y))
         # Stack input and grid
         tensor_a = torch.cat([torch.tensor(a).unsqueeze(0), torch.tensor(grid)], dim=0).float()
@@ -98,8 +117,8 @@ class DarcyFlowDataset(Dataset):
         Returns:
             Tuple: Tuple containing the x and y coordinates
         """
-        x = self.dataset["x-coordinate"][:: self.downscaling_factor]
-        y = self.dataset["y-coordinate"][:: self.downscaling_factor]
+        x = self.dataset["x-coordinate"][:: self.downscaling_factor].values
+        y = self.dataset["y-coordinate"][:: self.downscaling_factor].values
         # Min/max normalization
         if normalize:
             x = (x - np.min(x)) / (np.max(x) - np.min(x))
@@ -352,7 +371,6 @@ class KSDataset(Dataset):
         self.a_end = self.a_start + self.init_steps
         self.u_end = self.a_end + self.pred_horizon
 
-
         # Get normalization
         if self.normalize:
             self.get_normalization()    
@@ -361,7 +379,6 @@ class KSDataset(Dataset):
         train_dataset = xr.open_dataset(self.data_dir + "ks_train.nc").u
         self.mean = train_dataset.mean().to_numpy()
         self.std = train_dataset.std().to_numpy()
-
 
     def __len__(self) -> int:
         """Returns the length of the dataset
@@ -407,6 +424,7 @@ class KSDataset(Dataset):
         if self.normalize_grid:
             x = (x - np.min(x)) / (np.max(x) - np.min(x))
             t = (t - np.min(t)) / (np.max(t) - np.min(t))
+
         grid = np.stack(np.meshgrid(x, t))
         # Stack input and grid
         tensor_a = torch.tensor(a.to_numpy()).float().unsqueeze(0)
@@ -539,15 +557,15 @@ class ERA5Dataset(Dataset):
 
 
 if __name__ == "__main__":
-    data_dir = "data/KS/processed/"
-    dataset = KSDataset(data_dir, test=False, downscaling_factor=1, temporal_downscaling_factor=1, normalize = True)
+    data_dir = "data/DarcyFlow/processed/"
+    dataset = DarcyFlowDataset(data_dir, test=False, downscaling_factor=1, normalize = True)
     print(len(dataset))
     train, target = dataset.__getitem__(10)
     print(train.shape)
     print(target.shape)
     x, y = dataset.get_coordinates(normalize=True)
-    L = dataset.get_domain_range(normalize=False)
+    L = dataset.get_domain_range()
     print(L)
     print(y.shape)
-    print(train.mean(), train.std())
-    print(target.mean(), target.std())
+    print(dataset.mean, dataset.std)
+
