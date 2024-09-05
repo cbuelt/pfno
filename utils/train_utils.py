@@ -9,6 +9,7 @@ import numpy as np
 
 import utils.losses as losses
 from models import FNO, PNO_Wrapper, UNO, PFNO, PUNO
+from models import LA_Wrapper
 import random
 
 
@@ -22,10 +23,14 @@ def log_and_save_evaluation(value, key, results_dict, logging):
 
 def checkpoint(model, filename):
     torch.save(model.state_dict(), filename)
+    if isinstance(model, LA_Wrapper):
+        model.save_state_dict(filename[:-3] + "_la_state.pt")
 
 
 def resume(model, filename):
     model.load_state_dict(torch.load(filename))
+    if isinstance(model, LA_Wrapper):
+        model.load_state_dict(torch.load(filename[:-3] + "_la_state.pt"))
 
 
 def get_criterion(training_parameters, domain_range, d):
