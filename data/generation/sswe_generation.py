@@ -70,11 +70,11 @@ class SSWESolver(ShallowWaterSolver):
         inew = 0
         inow = 1
         iold = 2
-        save_index = 1
+        save_index = 0
 
         for iter in range(burn_in_steps + nsteps):
-            if iter == burn_in_steps:
-                save_array[0] = uspec
+            # if iter == burn_in_steps:
+            #     save_array[0] = uspec
 
             dudtspec[inew] = self.dudtspec(uspec)
 
@@ -101,7 +101,7 @@ class SSWESolver(ShallowWaterSolver):
             iold = (iold - 1) % 3
 
             # Save the solution at the specified time steps
-            if iter >= burn_in_steps and (iter - burn_in_steps) % save_steps == 0:
+            if (iter+1) >= burn_in_steps and (iter+1 - burn_in_steps) % save_steps == 0:
                 save_array[save_index] = uspec
                 save_index += 1
         return save_array
