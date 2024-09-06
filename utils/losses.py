@@ -7,9 +7,8 @@ import torch
 
 # loss function with abs Lp loss
 class LpLoss(object):
-    def __init__(self, d=1, p=2, L=2 * math.pi, reduce_dims=[0, 1], reductions="mean", rel = False):
+    def __init__(self, d=1, p=2, L=2 * math.pi, reduce_dims=[0], reductions="mean", rel = True):
         super().__init__()
-
         self.d = d
         self.p = p
         self.rel = rel
@@ -37,7 +36,6 @@ class LpLoss(object):
         h = [0.0] * self.d
         for j in range(self.d, 0, -1):
             h[-j] = self.L[-j] / x.size(-j)
-
         return h
 
     def reduce_all(self, x):
@@ -52,19 +50,18 @@ class LpLoss(object):
     def abs(self, x, y, h=None):
         # Assume uniform mesh
         if h is None:
-            h = self.uniform_h(x)
+            h = self.uniform_h(y)
         else:
             if isinstance(h, float):
                 h = [h] * self.d
 
         const = torch.tensor(np.array(math.prod(h) ** (1.0 / self.p)), device=x.device)
         diff = const * torch.norm(
-            torch.flatten(x, start_dim=-self.d) - torch.flatten(y, start_dim=-self.d),
+            torch.flatten(x, start_dim=1) - torch.flatten(y, start_dim=1),
             p=self.p,
             dim=-1,
             keepdim=False,
         )
-
         if self.reduce_dims is not None:
             diff = self.reduce_all(diff).squeeze()
 
@@ -72,13 +69,13 @@ class LpLoss(object):
 
     def relative(self, x, y):
         diff = torch.norm(
-            torch.flatten(x, start_dim=-self.d) - torch.flatten(y, start_dim=-self.d),
+            torch.flatten(x, start_dim=1) - torch.flatten(y, start_dim=1),
             p=self.p,
             dim=-1,
             keepdim=False,
         )
         ynorm = torch.norm(
-            torch.flatten(y, start_dim=-self.d), p=self.p, dim=-1, keepdim=False
+            torch.flatten(y, start_dim=1), p=self.p, dim=-1, keepdim=False
         )
 
         diff = diff / ynorm
@@ -106,7 +103,7 @@ def lp_norm(x, y, const, p=2):
     Returns:
         Tensor: Lp norm
     """
-    norm = const**2 * torch.cdist(x, y, p=p)
+    norm = const * torch.cdist(x, y, p=p)
     return norm
 
 
@@ -162,7 +159,7 @@ class EnergyScore(object):
             h[-j] = self.L[-j] / x.size(-j - 1)
         return h
 
-    def calculate_score(self, x, y):
+    def calculate_score(self, x, y, h = None):
         """Calculates the energy score for different metrics
 
         Args:
@@ -175,6 +172,13 @@ class EnergyScore(object):
         """
         n_samples = x.size()[-1]
 
+        # Assume uniform mesh
+        if h is None:
+            h = self.uniform_h(x)
+        else:
+            if isinstance(h, float):
+                h = [h] * self.d
+
         # Add additional dimension if necessary
         if len(x.size()) != len(y.size()):
             y = torch.unsqueeze(y, dim=-1)
@@ -183,8 +187,7 @@ class EnergyScore(object):
         x_flat = torch.swapaxes(torch.flatten(x, start_dim=1, end_dim=-2), 1, 2)
         y_flat = torch.swapaxes(torch.flatten(y, start_dim=1, end_dim=-2), 1, 2)
 
-        h = self.uniform_h(x)
-        
+
         # Assume uniform mesh
         if self.type == "lp":
             const = torch.tensor(
@@ -258,7 +261,7 @@ class KernelScore(object):
             h[-j] = self.L[-j] / x.size(-j - 1)
         return h
 
-    def calculate_score(self, x, y):
+    def calculate_score(self, x, y, h = None):
         """Calculates the energy score for different metrics
 
         Args:
@@ -270,6 +273,13 @@ class KernelScore(object):
             _type_: Energy score
         """
         n_samples = x.size()[-1]
+        
+        # Assume uniform mesh
+        if h is None:
+            h = self.uniform_h(x)
+        else:
+            if isinstance(h, float):
+                h = [h] * self.d
 
         # Add additional dimension if necessary
         if len(x.size()) != len(y.size()):
@@ -282,7 +292,7 @@ class KernelScore(object):
         # Assume uniform mesh
         if self.type == "lp":
             const = torch.tensor(
-                np.array(math.prod(self.L) ** (1.0 / self.p)), device=x.device
+                np.array(math.prod(h) ** (1.0 / self.p)), device=x.device
             )
         else:
             const = 1.0
@@ -590,15 +600,13 @@ class IntervalWidth(object):
 
 if __name__ == "__main__":
     # set torch seed
-    torch.manual_seed(0)
-    input = torch.randn(4, 7, 8, 9, 1)
-    input = input.repeat(1,1,1,1,2)
-    truth = torch.randn(4, 7, 8, 9)
+    torch.manual_seed(10)
+    input = torch.randn(4, 2, 5, 3)
+    input2 = input.unsqueeze(-1).repeat(1,1,1,1,5)
+    truth = torch.randn(4, 2, 5, 3)
 
-    # score_func = IntervalWidth(alpha = 0.05, reduce_dims = True)
-    score_func = EnergyScore(d=2, L=1.0, rel=False)
+    es = EnergyScore(d = 2, rel = False, L = [1.0,0.5])(input2, truth)
+    lp = LpLoss(d = 2, rel = False, L = [1.0,0.5])(input, truth)
 
-    score = score_func(input, truth)
-
-    print(score.shape)
-    print(score)
+    print(es)
+    print(lp)
