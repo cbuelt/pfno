@@ -592,7 +592,7 @@ if __name__ == "__main__":
     # set torch seed
     torch.manual_seed(0)
     input = torch.randn(4, 7, 8, 9, 1)
-    input = input.repeat(1,1,1,1,2)
+    input = input.repeat(1, 1, 1, 1, 2)
     truth = torch.randn(4, 7, 8, 9)
 
     # score_func = IntervalWidth(alpha = 0.05, reduce_dims = True)
