@@ -30,8 +30,13 @@ def evaluate(model, training_parameters, loader, device, domain_range):
     alpha = training_parameters['alpha']
     
     d = len(next(iter(loader))[0].shape) - 2
-    l2loss = losses.LpLoss(d=d, p=2, L=domain_range)
-    energy_score = losses.EnergyScore(d = d, p = 2, type = "lp", L=domain_range)
+    if training_parameters["model"] == "SFNO":
+        nlon, weights = domain_range
+        l2loss = losses.SphericalL2Loss(nlon = nlon, weights = weights.to(device))
+        energy_score = losses.EnergyScore(type = "spherical", nlon = nlon, weights = weights.to(device))
+    else:
+        l2loss = losses.LpLoss(d=d, p=2, L=domain_range)
+        energy_score = losses.EnergyScore(d = d, p = 2, type = "lp", L=domain_range)
     crps_loss = losses.CRPS()
     gaussian_nll_loss = losses.GaussianNLL()
     coverage_loss = losses.Coverage(alpha)

@@ -18,7 +18,7 @@ import configparser
 import ast
 import shutil
 
-from data.datasets import DarcyFlowDataset, SWEDataset, KSDataset, ERA5Dataset
+from data.datasets import DarcyFlowDataset, SWEDataset, KSDataset, ERA5Dataset, SSWEDataset
 from train import trainer
 from utils import train_utils
 from evaluate import start_evaluation
@@ -34,7 +34,7 @@ msg = 'Start main'
 # initialize parser
 parser = argparse.ArgumentParser(description=msg)
 default_config = 'debug.ini'
-# default_config = 'ks/uno.ini'
+default_config = 'sswe/sfno.ini'
 
 parser.add_argument('-c', '--config', help='Name of the config file:', default=default_config)
 parser.add_argument('-f', '--results_folder', help='Name of the results folder (only use if you only want to evaluate the models):', default=None)
@@ -127,6 +127,7 @@ if __name__ == '__main__':
             test_data = SWEDataset(data_dir, test = True, mode = "autoregressive",
                         pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
                         temporal_downscaling_factor=temporal_downscaling_factor, ood = ood)
+            
         elif data_parameters["dataset_name"] == "KS":
             downscaling_factor = int(data_parameters['downscaling_factor'])
             temporal_downscaling_factor = int(data_parameters['temporal_downscaling'])
@@ -151,7 +152,16 @@ if __name__ == '__main__':
             val_data = ERA5Dataset(data_dir, var = "val", init_steps = init_steps, prediction_steps = pred_horizon)
             test_data = ERA5Dataset(data_dir, var = "test", init_steps = init_steps, prediction_steps = pred_horizon)
 
-        domain_range = train_data.get_domain_range()
+        elif data_parameters["dataset_name"] == "SSWE":
+            data_dir = f"data/{data_parameters['dataset_name']}/processed/"
+            pred_horizon = data_parameters['pred_horizon']
+            train_data = SSWEDataset(data_dir, test = False, pred_horizon = 1, return_all = False) # Need to change
+            test_data = SSWEDataset(data_dir, test = True, pred_horizon = 1) # Need to change
+
+        if data_parameters["dataset_name"] != "SSWE":
+            domain_range = train_data.get_domain_range()
+        else:
+            domain_range = (train_data.get_nlon(), train_data.get_weights())    
 
         if data_parameters['dataset_name'] == 'DarcyFlow':
             # Validation data on full resolution

@@ -1,0 +1,65 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:############### Starting experiment with config file sswe/sfno.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'SSWE', 'max_training_set_size': 1000, 'pred_horizon': 5}
+INFO:root:###1 out of 2 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 1234, 'model': 'SFNO', 'uncertainty_quantification': 'scoring-rule-reparam', 'batch_size': 32, 'n_epochs': 1, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 64, 'lifting_channels': 64, 'n_modes': (32, 32), 'n_samples': 3}
+INFO:root:NumberParameters: 273318
+INFO:root:Memory allocated: 2097152
+INFO:root:Training starts now.
+INFO:root:[    1] Training loss: 3.37729900, Validation loss: 2.51035777, Gradient norm: 0.66048952
+INFO:root:Training the model took 73.606s.
+INFO:root:Emptying the cuda cache took 0.034s.
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification scoring-rule-reparam
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 3.56024
+INFO:root:EnergyScoreTrain: 2.50556
+INFO:root:CRPSTrain: 0.3103
+INFO:root:Gaussian NLLTrain: 0.86316
+INFO:root:CoverageTrain: 0.93058
+INFO:root:IntervalWidthTrain: 2.13812
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 3.56591
+INFO:root:EnergyScoreValidation: 2.50974
+INFO:root:CRPSValidation: 0.31117
+INFO:root:Gaussian NLLValidation: 0.86678
+INFO:root:CoverageValidation: 0.92954
+INFO:root:IntervalWidthValidation: 2.13437
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 3.62657
+INFO:root:EnergyScoreTest: 2.55359
+INFO:root:CRPSTest: 0.32258
+INFO:root:Gaussian NLLTest: 0.90179
+INFO:root:CoverageTest: 0.92102
+INFO:root:IntervalWidthTest: 2.12568
+INFO:root:###2 out of 2 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 1234, 'model': 'SFNO', 'uncertainty_quantification': 'dropout', 'batch_size': 32, 'n_epochs': 1, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 64, 'lifting_channels': 64, 'n_modes': (32, 32), 'n_samples': 3}
+INFO:root:NumberParameters: 271011
+INFO:root:Memory allocated: 176160768
+INFO:root:Training starts now.
+INFO:root:[    1] Training loss: 4.74791014, Validation loss: 3.53642770, Gradient norm: 0.94817567
+INFO:root:Training the model took 5.371s.
+INFO:root:Emptying the cuda cache took 0.025s.
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 3.50644
+INFO:root:EnergyScoreTrain: 3.24658
+INFO:root:CRPSTrain: 0.39429
+INFO:root:Gaussian NLLTrain: 36.33735
+INFO:root:CoverageTrain: 0.18936
+INFO:root:IntervalWidthTrain: 0.24765
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 3.51244
+INFO:root:EnergyScoreValidation: 3.25113
+INFO:root:CRPSValidation: 0.39543
+INFO:root:Gaussian NLLValidation: 36.23458
+INFO:root:CoverageValidation: 0.18937
+INFO:root:IntervalWidthValidation: 0.24889
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 3.57453
+INFO:root:EnergyScoreTest: 3.31048
+INFO:root:CRPSTest: 0.41246
+INFO:root:Gaussian NLLTest: 39.93439
+INFO:root:CoverageTest: 0.18336
+INFO:root:IntervalWidthTest: 0.25175

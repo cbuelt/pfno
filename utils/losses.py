@@ -374,8 +374,6 @@ class KernelScore(object):
         # Calculate Gram matrix
         K1 = self.norm(x_flat, y_flat, const=const, p=self.p)
         K2 = self.norm(x_flat, x_flat, const=const, p=self.p)
-
-        print(K1.shape)
         
         if self.rel:
             ynorm = const * torch.norm(
@@ -478,6 +476,10 @@ class CRPS(object):
 
         self.reduction = reduction
         self.reduce_dims = reduce_dims
+        # Kwargs for spherical loss
+        self.nlon = kwargs.get("nlon", 256)
+        self.weights = kwargs.get("weights", 1)
+        self.dlon = 2* torch.pi/self.nlon
 
     def reduce(self, x):
         if self.reduction == "sum":
@@ -526,6 +528,10 @@ class GaussianNLL(object):
 
         self.reduction = reduction
         self.reduce_dims = reduce_dims
+        # Kwargs for spherical loss
+        self.nlon = kwargs.get("nlon", 256)
+        self.weights = kwargs.get("weights", 1)
+        self.dlon = 2* torch.pi/self.nlon
 
     def reduce(self, x):
         if self.reduction == "sum":
@@ -576,6 +582,10 @@ class Coverage(object):
         self.alpha = alpha
         self.reduction = reduction
         self.reduce_dims = reduce_dims
+        # Kwargs for spherical loss
+        self.nlon = kwargs.get("nlon", 256)
+        self.weights = kwargs.get("weights", 1)
+        self.dlon = 2* torch.pi/self.nlon
 
     def reduce(self, x):
         if self.reduction == "sum":
@@ -625,6 +635,10 @@ class IntervalWidth(object):
         self.alpha = alpha
         self.reduction = reduction
         self.reduce_dims = reduce_dims
+        # Kwargs for spherical loss
+        self.nlon = kwargs.get("nlon", 256)
+        self.weights = kwargs.get("weights", 1)
+        self.dlon = 2* torch.pi/self.nlon
 
     def reduce(self, x):
         if self.reduction == "sum":

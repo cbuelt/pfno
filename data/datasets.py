@@ -640,6 +640,12 @@ class SSWEDataset(Dataset):
             List[float]: List containing the domain range.
         """
         return [1,1,1]
+    
+    def get_weights(self) -> torch.Tensor:
+        return self.weights
+    
+    def get_nlon(self) -> int:
+        return self.nlon
 
 
 if __name__ == "__main__":

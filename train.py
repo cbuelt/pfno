@@ -62,7 +62,7 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
         assert not training_parameters['data_loader_pin_memory']
     
     d = len(next(iter(train_loader))[0].shape) - 2
-    criterion = train_utils.get_criterion(training_parameters, domain_range, d)
+    criterion = train_utils.get_criterion(training_parameters, domain_range, d, device)
     
     in_channels = next(iter(train_loader))[0].shape[1]
     out_channels = next(iter(train_loader))[1].shape[1]
