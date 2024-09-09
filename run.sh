@@ -1,2 +1,2 @@
 #!/bin/sh
-python main.py -c debug.ini
+python main.py -c darcy_flow/fno.ini

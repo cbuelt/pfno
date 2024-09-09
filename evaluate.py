@@ -60,7 +60,7 @@ def evaluate(model, training_parameters, loader, device, domain_range):
     
     return mse, es, crps, gaussian_nll, coverage, interval_width
     
-def start_evaluation(model, training_parameters, data_parameters,train_loader, validation_loader, test_loader, results_dict, device, domain_range, logging):
+def start_evaluation(model, training_parameters, data_parameters,train_loader, validation_loader, test_loader, results_dict, device, domain_range, logging, filename):
     logging.info(f'Starting evaluation: model {training_parameters["model"]} & uncertainty quantification {training_parameters["uncertainty_quantification"]}')
 
     if data_parameters["dataset_name"] == "era5":
@@ -71,6 +71,7 @@ def start_evaluation(model, training_parameters, data_parameters,train_loader, v
     if training_parameters['uncertainty_quantification'] == 'laplace':
         model = LA_Wrapper(model, n_samples=training_parameters['n_samples'], method = "last_layer", hessian_structure = "full", optimize = True)
         model.fit(train_loader)
+        train_utils.checkpoint(model, filename)
     
     for name, loader in data_loaders.items():
         logging.info(f'Evaluating the model on {name} data.')
