@@ -205,4 +205,4 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
     if training_parameters['distributed_training']:
         dist.destroy_process_group()
         
-    return model
+    return model, filename
