@@ -429,19 +429,16 @@ class CRPS(object):
         if len(x.size()) != len(y.size()):
             y = torch.unsqueeze(y, dim=-1)
 
-        # Flatten tensors
-        x_flat = torch.flatten(x, start_dim=1, end_dim=-2)
-        y_flat = torch.flatten(y, start_dim=1, end_dim=-2)
+        # Restructure tensors to shape (Batch size, n_samples, flatted dims)
+        x_flat = torch.swapaxes(torch.flatten(x, start_dim=1, end_dim=-2), 1, 2)
+        y_flat = torch.swapaxes(torch.flatten(y, start_dim=1, end_dim=-2), 1, 2)
+        d = x_flat.size(-1)
 
-        # Calculate CRPS
-        term_1 = torch.abs(x_flat - y_flat).mean(dim = -1)
-        term_2 = torch.abs(
-            torch.unsqueeze(x_flat, dim=-1) - torch.unsqueeze(x_flat, dim=-2)
-        ).sum(dim = (-2,-1))
+        # Calculate energy score
+        term_1 = torch.mean(torch.cdist(x_flat, y_flat, p = 1), dim=(1, 2))/d
+        term_2 = torch.sum(torch.cdist(x_flat, x_flat, p = 1), dim=(1, 2))/d
+
         score = term_1 - term_2 /(2*n_samples*(n_samples-1))
-        if self.reduce_dims:
-            # Aggregate CRPS over spatial dimensions
-            score = score.mean(dim = -1)
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score
 
@@ -599,14 +596,11 @@ class IntervalWidth(object):
 
 
 if __name__ == "__main__":
-    # set torch seed
-    torch.manual_seed(10)
-    input = torch.randn(4, 2, 5, 3)
-    input2 = input.unsqueeze(-1).repeat(1,1,1,1,5)
-    truth = torch.randn(4, 2, 5, 3)
+    torch.manual_seed(15)
+    n_samples = 100
+    y = torch.randn(4, 1, 10, 50,  3,1)
+    x = torch.randn(4, 1, 10,50, 3, n_samples)
 
-    es = EnergyScore(d = 2, rel = False, L = [1.0,0.5])(input2, truth)
-    lp = LpLoss(d = 2, rel = False, L = [1.0,0.5])(input, truth)
+    crps = CRPS(reduce_dims = False)(x, y)
+    print(crps.shape, crps)
 
-    print(es)
-    print(lp)
