@@ -7,8 +7,10 @@ import os
 import sys
 sys.path.append(os.getcwd())
 from models.layers import FNOBlocks, SpectralConv, MLP
+from models.spherical_layers import SphericalConv
 from neuralop.models.base_model import BaseModel
 from neuralop.layers.padding import DomainPadding
+from neuralop.models.fno import partialclass
 
 class FNO(BaseModel, name='FNO'):
     def __init__(
@@ -44,7 +46,7 @@ class FNO(BaseModel, name='FNO'):
         domain_padding=None,
         domain_padding_mode="one-sided",
         fft_norm="forward",
-        SpectralConv=SpectralConv,
+        conv_module=SpectralConv,
         **kwargs
     ):
         super().__init__()
@@ -124,7 +126,7 @@ class FNO(BaseModel, name='FNO'):
             factorization=factorization,
             decomposition_kwargs=decomposition_kwargs,
             joint_factorization=joint_factorization,
-            SpectralConv=SpectralConv,
+            conv_module=conv_module,
             n_layers=n_layers,
             **kwargs
         )
@@ -199,6 +201,10 @@ class FNO(BaseModel, name='FNO'):
     def n_modes(self, n_modes):
         self.fno_blocks.n_modes = n_modes
         self._n_modes = n_modes
+
+
+# SFNO
+SFNO = partialclass("SFNO", FNO, factorization="dense", conv_module=SphericalConv)
 
 # Main method
 if __name__ == "__main__":
