@@ -479,7 +479,7 @@ class GaussianNLL(object):
 
         # Calculate sample mean and standard deviation
         mu = torch.mean(x, dim=-1)
-        sigma = torch.std(x, dim=-1)
+        sigma = torch.clamp(torch.std(x, dim=-1), min=1e-6, max=1e6)
 
         # Assert dimension
         assert mu.size() == y.size()

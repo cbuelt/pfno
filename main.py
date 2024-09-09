@@ -34,7 +34,7 @@ msg = 'Start main'
 # initialize parser
 parser = argparse.ArgumentParser(description=msg)
 default_config = 'debug.ini'
-# default_config = 'darcy_flow/fno_best_hp_dropout.ini'
+# default_config = 'ks/uno.ini'
 
 parser.add_argument('-c', '--config', help='Name of the config file:', default=default_config)
 parser.add_argument('-f', '--results_folder', help='Name of the results folder (only use if you only want to evaluate the models):', default=None)
@@ -181,7 +181,7 @@ if __name__ == '__main__':
             t_0 = time()
             d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
             if not training_parameters['distributed_training']:
-                model = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters, logging=logging,
+                model, filename = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters, logging=logging,
                               filename_ending=filename, d_time=d_time_train, domain_range=domain_range, results_dict=results_dict)
             else:
                 world_size = torch.cuda.device_count()
@@ -200,7 +200,15 @@ if __name__ == '__main__':
             torch.cuda.empty_cache()
             t_1 = time()
             logging.info(f'Emptying the cuda cache took {np.round(t_1 - t_0, 3)}s.')
-            start_evaluation(model, training_parameters, data_parameters, train_loader, val_loader, test_loader, results_dict, device, domain_range, logging)
+            
+            eval_batch_size = max(batch_size // 4, 1)
+            
+            train_loader = DataLoader(train_data, batch_size=eval_batch_size, shuffle=True)
+            val_loader = DataLoader(val_data, batch_size=eval_batch_size, shuffle=True)
+            test_loader = DataLoader(test_data, batch_size=eval_batch_size, shuffle=True)
+            
+            start_evaluation(model, training_parameters, data_parameters, train_loader, val_loader, 
+                            test_loader, results_dict, device, domain_range, logging, filename)
             append_results_dict(results_dict, data_parameters, training_parameters, t_training)
             results_pd = pd.DataFrame(results_dict)
             results_pd.T.to_csv(os.path.join(directory, 'test.csv'))
