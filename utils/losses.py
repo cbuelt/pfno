@@ -10,7 +10,7 @@ import torch
 
 
 class LpLoss(object):
-    def __init__(self, d=1, p=2, L=2 * math.pi, reduce_dims=[0], reductions="mean", rel = True):
+    def __init__(self, d=1, p=2, L=2 * math.pi, reduce_dims=[0], reductions="mean", rel = False):
         super().__init__()
         self.d = d
         self.p = p
