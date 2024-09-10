@@ -181,7 +181,7 @@ class UNO(nn.Module):
                     mlp_skip=mlp_skip,
                     incremental_n_modes=incremental_n_modes,
                     rank=rank,
-                    SpectralConv=self.integral_operator,
+                    conv_module=self.integral_operator,
                     fft_norm=fft_norm,
                     fixed_rank_modes=fixed_rank_modes,
                     implementation=implementation,

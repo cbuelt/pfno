@@ -4,6 +4,7 @@ import torch
 from torch.utils.data import Dataset
 import xarray as xr
 import pandas as pd
+from torch_harmonics.quadrature import clenshaw_curtiss_weights
 
 
 class DarcyFlowDataset(Dataset):
@@ -554,18 +555,97 @@ class ERA5Dataset(Dataset):
         L_y = y[-1] - y[0]
         L_t = t[-1] - t[0]
         return [L_t, L_y, L_x]
+    
+
+class SSWEDataset(Dataset):
+    def __init__(
+        self,
+        data_dir: str,
+        test: bool = False,
+        pred_horizon: int = 1,
+        return_all: bool = False,
+    ) -> None:
+
+        if test:
+            self.filename = "test.nc"
+        else:
+            self.filename = "train.nc"
+        self.pred_horizon = pred_horizon
+        self.return_all = return_all
+
+        # Load dataset
+        self.dataset = xr.open_dataset(data_dir + self.filename)
+
+        # Assert pred horizon
+        assert self.pred_horizon < len(self.dataset["time"]), "Prediction horizon must be smaller than the dataset"
+
+        # Generate weights 
+        self.nlat = len(self.dataset["latitude"])
+        self.nlon = len(self.dataset["longitude"])
+        _, quad_weights = clenshaw_curtiss_weights(self.nlat, -1, 1)
+        self.weights = quad_weights = torch.as_tensor(quad_weights).reshape(-1, 1)
+
+
+    def __len__(self) -> int:
+        """Returns the length of the dataset
+
+        Returns:
+            int: Length of the dataset
+        """
+        return len(self.dataset["samples"])
+
+    def __getitem__(self, idx: int) -> tuple:
+        """Returns the idx-th element of the dataset
+
+        Args:
+            idx (int): Index of the element to be returned
+
+        Returns:
+            tuple: Tuple containing the input and output tensors
+        """
+        a = self.dataset.u[
+            idx,
+            0,
+        ]
+        if self.return_all:
+            u = self.dataset.u[
+                idx,
+                1 : (self.pred_horizon+1),
+            ]
+        else:
+            u = self.dataset.u[
+                idx,
+                self.pred_horizon,
+            ]
+
+        tensor_a = torch.tensor(a.to_numpy()).float()
+        tensor_u = torch.tensor(u.to_numpy()).float()
+        return tensor_a, tensor_u
+
+    def get_coordinates(self) -> Tuple:
+        """Returns the x and y coordinates of the dataset
+
+        Returns:
+            Tuple: Tuple containing the x and y coordinates
+        """
+        lat = self.dataset["latitude"].values
+        lon = self.dataset["longitude"].values
+        t = self.dataset["time"].values[1:self.pred_horizon+1]
+        return (lat, lon, t)
+
+    def get_domain_range(self) -> List[float]:
+        """Returns the domain range of the dataset.
+
+        Returns:
+            List[float]: List containing the domain range.
+        """
+        return [1,1,1]
 
 
 if __name__ == "__main__":
-    data_dir = "data/DarcyFlow/processed/"
-    dataset = DarcyFlowDataset(data_dir, test=False, downscaling_factor=1, normalize = True)
+    data_dir = "data/SSWE/processed/"
+    dataset = SSWEDataset(data_dir, test=True, pred_horizon=5, return_all=True)
     print(len(dataset))
     train, target = dataset.__getitem__(10)
     print(train.shape)
     print(target.shape)
-    x, y = dataset.get_coordinates(normalize=True)
-    L = dataset.get_domain_range()
-    print(L)
-    print(y.shape)
-    print(dataset.mean, dataset.std)
-

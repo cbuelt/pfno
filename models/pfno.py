@@ -5,10 +5,12 @@ import os
 import sys
 sys.path.append(os.getcwd())
 from models.layers import FNOBlocks, SpectralConv, MLP
+from models.spherical_layers import SphericalConv
 from neuralop.models.base_model import BaseModel
 from neuralop.layers.padding import DomainPadding
 from neuralop.layers.skip_connections import skip_connection
 from neuralop.layers.resample import resample
+from neuralop.models.fno import partialclass
 
 
 class PNO_Wrapper(nn.Module):
@@ -80,7 +82,7 @@ class PFNO(BaseModel, name='PFNO'):
         domain_padding=None,
         domain_padding_mode="one-sided",
         fft_norm="forward",
-        SpectralConv=SpectralConv,
+        conv_module=SpectralConv,
         **kwargs
     ):
         super().__init__()
@@ -161,7 +163,7 @@ class PFNO(BaseModel, name='PFNO'):
             factorization=factorization,
             decomposition_kwargs=decomposition_kwargs,
             joint_factorization=joint_factorization,
-            SpectralConv=SpectralConv,
+            conv_module=conv_module,
             n_layers=n_layers,
             **kwargs
         )
@@ -427,7 +429,7 @@ class PUNO(nn.Module):
                     mlp_skip=mlp_skip,
                     incremental_n_modes=incremental_n_modes,
                     rank=rank,
-                    SpectralConv=self.integral_operator,
+                    conv_module=self.integral_operator,
                     fft_norm=fft_norm,
                     fixed_rank_modes=fixed_rank_modes,
                     implementation=implementation,
@@ -513,6 +515,9 @@ class PUNO(nn.Module):
         x = mu + sigma * torch.randn(*mu.shape[:-1], n_samples).to(x.device)
 
         return x
+    
+# SFNO
+PSFNO = partialclass("PSFNO", PFNO, conv_module=SphericalConv)
 
 
 # Main method
