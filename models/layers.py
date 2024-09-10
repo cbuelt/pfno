@@ -13,10 +13,12 @@ from tltorch.factorized_tensors.core import FactorizedTensor
 from neuralop.layers.base_spectral_conv import BaseSpectralConv
 from neuralop.layers.resample import resample
 from neuralop.layers.spectral_convolution import get_contract_fun
+
 from neuralop.layers.skip_connections import skip_connection
 from neuralop.layers.normalization_layers import AdaIN
 from neuralop.layers.fno_block import SubModule
 from neuralop.layers.spectral_convolution import SubConv
+from neuralop.layers.spherical_convolution import SHT
 Number = Union[int, float]
 
 
@@ -301,7 +303,7 @@ class SpectralConv(BaseSpectralConv):
         if self.order > 1:
             out_fft = torch.fft.fftshift(out_fft, dim=fft_dims[:-1])
 
-        # Apply Dropout in Fourier space
+        # Apply Dropout in Frequency space
         out_fft = out_fft * self.get_dropout_mask(out_fft)
         x = torch.fft.irfftn(out_fft, s=mode_sizes, dim=fft_dims, norm=self.fft_norm)
 
@@ -323,6 +325,7 @@ class SpectralConv(BaseSpectralConv):
     def __getitem__(self, indices):
         return self.get_conv(indices)
     
+
 
 class FNOBlocks(nn.Module):
     def __init__(
@@ -348,7 +351,7 @@ class FNOBlocks(nn.Module):
         separable=False,
         factorization=None,
         rank=1.0,
-        SpectralConv=SpectralConv,
+        conv_module=SpectralConv,
         joint_factorization=False,
         fixed_rank_modes=False,
         implementation="factorized",
@@ -392,7 +395,7 @@ class FNOBlocks(nn.Module):
         #Dropout
         self.dropout_rate = dropout
 
-        self.convs = SpectralConv(
+        self.convs = conv_module(
             self.in_channels,
             self.out_channels,
             self.n_modes,
