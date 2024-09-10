@@ -1,2 +1,2 @@
 #!/bin/sh
-python main.py -c darcy_flow/fno.ini
+python main.py -c darcy_flow/uno.ini
