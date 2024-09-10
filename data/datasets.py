@@ -612,14 +612,15 @@ class SSWEDataset(Dataset):
                 idx,
                 1 : (self.pred_horizon+1),
             ]
+            tensor_u = torch.tensor(u.to_numpy()).float()
+            tensor_u = torch.permute(tensor_u, (1,0,2,3))
         else:
             u = self.dataset.u[
                 idx,
                 self.pred_horizon,
             ]
-
+            tensor_u = torch.tensor(u.to_numpy()).float()
         tensor_a = torch.tensor(a.to_numpy()).float()
-        tensor_u = torch.tensor(u.to_numpy()).float()
         return tensor_a, tensor_u
 
     def get_coordinates(self) -> Tuple:
@@ -646,7 +647,6 @@ class SSWEDataset(Dataset):
     
     def get_nlon(self) -> int:
         return self.nlon
-
 
 if __name__ == "__main__":
     data_dir = "data/SSWE/processed/"

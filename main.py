@@ -155,12 +155,13 @@ if __name__ == '__main__':
         elif data_parameters["dataset_name"] == "SSWE":
             data_dir = f"data/{data_parameters['dataset_name']}/processed/"
             pred_horizon = data_parameters['pred_horizon']
-            train_data = SSWEDataset(data_dir, test = False, pred_horizon = data_parameters["train_horizon"], return_all = False) # Need to change
-            test_data = SSWEDataset(data_dir, test = True, pred_horizon = pred_horizon, return_all = True) # Need to change
+            train_data = SSWEDataset(data_dir, test = False, pred_horizon = data_parameters["train_horizon"], return_all = True)
+            test_data = SSWEDataset(data_dir, test = True, pred_horizon = pred_horizon, return_all = True)
 
         if data_parameters["dataset_name"] != "SSWE":
             domain_range = train_data.get_domain_range()
         else:
+            # Requires Longitude and quadrature weights instead of domain range
             domain_range = (train_data.get_nlon(), train_data.get_weights())    
 
         if data_parameters['dataset_name'] == 'DarcyFlow':
@@ -191,8 +192,9 @@ if __name__ == '__main__':
             t_0 = time()
             d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
             if not training_parameters['distributed_training']:
-                model, filename = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters, logging=logging,
-                              filename_ending=filename, d_time=d_time_train, domain_range=domain_range, results_dict=results_dict)
+                model, filename = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters,
+                                          data_parameters = data_parameters,logging=logging, filename_ending=filename, d_time=d_time_train,
+                                           domain_range=domain_range, results_dict=results_dict)
             else:
                 world_size = torch.cuda.device_count()
                 mp.spawn(trainer, args=(input_training, target_training, target_validation,
