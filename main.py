@@ -155,8 +155,8 @@ if __name__ == '__main__':
         elif data_parameters["dataset_name"] == "SSWE":
             data_dir = f"data/{data_parameters['dataset_name']}/processed/"
             pred_horizon = data_parameters['pred_horizon']
-            train_data = SSWEDataset(data_dir, test = False, pred_horizon = 1, return_all = False) # Need to change
-            test_data = SSWEDataset(data_dir, test = True, pred_horizon = 1) # Need to change
+            train_data = SSWEDataset(data_dir, test = False, pred_horizon = data_parameters["train_horizon"], return_all = False) # Need to change
+            test_data = SSWEDataset(data_dir, test = True, pred_horizon = pred_horizon, return_all = True) # Need to change
 
         if data_parameters["dataset_name"] != "SSWE":
             domain_range = train_data.get_domain_range()
