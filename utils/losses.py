@@ -633,9 +633,8 @@ class Coverage(object):
             weights = self.weights/self.weights.sum()*self.weights.size(0)
             score = score * weights
 
-
         if self.reduce_dims:
-            # Aggregate over spatial dimensions
+            # Aggregate over spatial and channel dimensions
             score = score.mean(dim = [d for d in range(1, n_dims+1)])
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score

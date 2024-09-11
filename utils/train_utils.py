@@ -13,6 +13,20 @@ from models import LA_Wrapper
 import random
 
 
+def autoregressive_step(uncertainty_quantification, model, a): 
+    if uncertainty_quantification == 'laplace':
+        out = model.model(a)
+    elif uncertainty_quantification == "dropout":
+        model.eval()
+        out = model(a)
+    elif uncertainty_quantification == "scoring-rule-reparam":
+        model.eval()
+        out = model(a).mean(axis = -1)
+    else:
+        model.train()
+        out = model(a).mean(axis = -1)
+    return out
+
 def log_and_save_evaluation(value, key, results_dict, logging):
     value = np.round(value, decimals=5)
     logging.info(f"{key}: {value}")

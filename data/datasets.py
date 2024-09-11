@@ -614,6 +614,7 @@ class SSWEDataset(Dataset):
             ]
             tensor_u = torch.tensor(u.to_numpy()).float()
             tensor_u = torch.permute(tensor_u, (1,0,2,3))
+            
         else:
             u = self.dataset.u[
                 idx,
@@ -650,7 +651,7 @@ class SSWEDataset(Dataset):
 
 if __name__ == "__main__":
     data_dir = "data/SSWE/processed/"
-    dataset = SSWEDataset(data_dir, test=True, pred_horizon=5, return_all=True)
+    dataset = SSWEDataset(data_dir, test=False, pred_horizon=2, return_all=True)
     print(len(dataset))
     train, target = dataset.__getitem__(10)
     print(train.shape)
