@@ -2,17 +2,52 @@ from torch.nn.utils import vector_to_parameters
 from laplace import Laplace
 import torch
 
+class LA_Wrapper(torch.nn.Module):
+    """
+    A class used to handle the Laplace approximation.
 
-class LA_Wrapper:
+    Attributes
+    ----------
+    model : torch.nn.Module
+        the underlying model
+    n_samples : int
+        number of samples to generate
+    method : str
+        the method to use for the Laplace approximation
+    hessian_structure : str
+        the structure of the Hessian matrix
+    optimize : bool
+        whether to optimize the prior
+
+    Methods
+    -------
+    fit(train_loader)
+        Fits the Laplace approximation to the training data
+    optimize_precision()
+        Optimizes the prior precision
+    parameter_samples()
+        Generate samples from the weight distribution
+    predictive_samples(x)
+        Generate samples from the predictive distribution
+    """
+
     def __init__(
         self,
         model: torch.nn.Module,
         n_samples: int = 100,
-        method="last_layer",
-        hessian_structure="full",
-        optimize=True,
+        method: str = "last_layer",
+        hessian_structure: str = "full",
+        optimize: bool = True,
     ):
+        """Initializes the Laplace approximation wrapper.
 
+        Args:
+            model (torch.nn.Module): The underlying model.
+            n_samples (int, optional): The number of samples to generate. Defaults to 100.
+            method (str, optional): The type of the approximation. Defaults to "last_layer".
+            hessian_structure (str, optional): The structure of the Hessian. Defaults to "full".
+            optimize (bool, optional): Whether to optimize prior precision. Defaults to True.
+        """
         super().__init__()
         self.model = model
         self.n_samples = n_samples
@@ -20,27 +55,68 @@ class LA_Wrapper:
         self.hessian_structure = hessian_structure
         self.optimize = optimize
         self.model.eval()
-
-
-    def fit(self, train_loader):
         self.la = Laplace(
             self.model,
             "regression",
             subset_of_weights=self.method,
             hessian_structure=self.hessian_structure,
         )
+
+    def fit(self, train_loader: torch.utils.data.DataLoader):
+        """Fits the Laplace approximation to the training data.
+
+        Args:
+            train_loader (torch.utils.data.DataLoader): The train loader.
+        """
         self.la.fit(train_loader)
         if self.optimize:
             self.optimize_precision()
 
-    def optimize_precision(self):
-        # Optimizer 1
-        self.la.optimize_prior_precision(pred_type="nn", method="marglik")
+    def save_state_dict(self, path: str):
+        """Saves the state dictionary.
 
-    def parameter_samples(self):
+        Args:
+            path (str): The path to save the state dictionary.
+        """
+        torch.save(self.la.state_dict(), path)
+
+    def load_state_dict(self, path: str):
+        """Loads the state dictionary.
+
+        Args:
+            path (str): The path to load the state dictionary.
+        """
+        self.la.load_state_dict(torch.load(path))
+
+    def optimize_precision(self):
+        """Optimize prior precision of the laplace approximation."""
+        #self.la.optimize_prior_precision(pred_type="nn", method="marglik")
+
+        log_prior, log_sigma = torch.ones(1, requires_grad=True), torch.ones(1, requires_grad=True)
+        hyper_optimizer = torch.optim.Adam([log_prior, log_sigma], lr=5e-2)
+        for i in range(500):
+            hyper_optimizer.zero_grad()
+            neg_marglik = - self.la.log_marginal_likelihood(log_prior.exp(), log_sigma.exp())
+            neg_marglik.backward()
+            hyper_optimizer.step()
+
+    def parameter_samples(self) -> torch.Tensor:
+        """Generate samples from the weight distribution.
+
+        Returns:
+            torch.Tensor: Output samples.
+        """
         return self.la.sample()
 
-    def predictive_samples(self, x):
+    def predictive_samples(self, x: torch.Tensor) -> torch.Tensor:
+        """Generate samples from the predictive distribution.
+
+        Args:
+            x (torch.Tensor): Input tensor.
+
+        Returns:
+            torch.Tensor: Output tensor.
+        """
         prediction = list()
         feats = None
         for sample in self.la.sample(self.n_samples):

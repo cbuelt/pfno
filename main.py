@@ -2,9 +2,8 @@ import numpy as np
 
 import torch
 import gc
-from sklearn.model_selection import train_test_split
 import torch.multiprocessing as mp
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, random_split
 
 import pandas as pd
 
@@ -19,8 +18,8 @@ import configparser
 import ast
 import shutil
 
-from data.datasets import DarcyFlowDataset, SWEDataset
-from train import trainer
+from data.datasets import DarcyFlowDataset, SWEDataset, KSDataset, ERA5Dataset
+from train import trainer, using
 from utils import train_utils
 from evaluate import start_evaluation
 
@@ -35,6 +34,7 @@ msg = 'Start main'
 # initialize parser
 parser = argparse.ArgumentParser(description=msg)
 default_config = 'debug.ini'
+# default_config = 'ks/uno.ini'
 
 parser.add_argument('-c', '--config', help='Name of the config file:', default=default_config)
 parser.add_argument('-f', '--results_folder', help='Name of the results folder (only use if you only want to evaluate the models):', default=None)
@@ -82,6 +82,8 @@ if __name__ == '__main__':
     logging.debug(f'File: {__file__}')
 
     logging.info(f'Using {device}.')
+    
+    logging.info(using(''))
 
     logging.info(f'############### Starting experiment with config file {config_name} ###############')
 
@@ -109,6 +111,7 @@ if __name__ == '__main__':
         data_dir = f"data/{data_parameters['dataset_name']}/processed/"
         if data_parameters['dataset_name'] == 'DarcyFlow':
             train_data = DarcyFlowDataset(data_dir, test = False, downscaling_factor=int(data_parameters['downscaling_factor']))
+            train_data_full_res = DarcyFlowDataset(data_dir, test = False)
             test_data = DarcyFlowDataset(data_dir, test = True)
         elif data_parameters['dataset_name'] == 'SWE':
             downscaling_factor = int(data_parameters['downscaling_factor'])
@@ -116,39 +119,76 @@ if __name__ == '__main__':
             pred_horizon = data_parameters['pred_horizon']
             t_start = data_parameters['t_start']
             init_steps = data_parameters['init_steps']
+            ood = data_parameters["ood"]
             
             assert 100 > temporal_downscaling_factor * (pred_horizon + t_start + init_steps)
             
             train_data = SWEDataset(data_dir, test = False, downscaling_factor=downscaling_factor, mode = "autoregressive",
                         pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
-                        temporal_downscaling_factor=temporal_downscaling_factor)
+                        temporal_downscaling_factor=temporal_downscaling_factor, ood = ood)
             test_data = SWEDataset(data_dir, test = True, mode = "autoregressive",
                         pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
-                        temporal_downscaling_factor=temporal_downscaling_factor)
+                        temporal_downscaling_factor=temporal_downscaling_factor, ood = ood)
+        elif data_parameters["dataset_name"] == "KS":
+            downscaling_factor = int(data_parameters['downscaling_factor'])
+            temporal_downscaling_factor = int(data_parameters['temporal_downscaling'])
+            pred_horizon = data_parameters['pred_horizon']
+            t_start = data_parameters['t_start']
+            init_steps = data_parameters['init_steps']
 
-        domain_range = train_data.get_domain_range()
-        train_data, val_data = train_test_split(train_data, test_size=0.20, random_state=42)
+            assert 300 > temporal_downscaling_factor * (pred_horizon + t_start + init_steps)
+
+            train_data = KSDataset(data_dir, test = False, downscaling_factor=downscaling_factor, mode = "autoregressive",
+                        pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
+                        temporal_downscaling_factor=temporal_downscaling_factor)
+            test_data = KSDataset(data_dir, test = True, mode = "autoregressive",
+                        pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
+                        temporal_downscaling_factor=temporal_downscaling_factor)
+            
+        elif data_parameters["dataset_name"] == "era5":
+            data_dir = f"data/{data_parameters['dataset_name']}/"
+            pred_horizon = data_parameters['pred_horizon']
+            init_steps = data_parameters['init_steps']
+            train_data = ERA5Dataset(data_dir, var = "train", init_steps = init_steps, prediction_steps = pred_horizon)
+            val_data = ERA5Dataset(data_dir, var = "val", init_steps = init_steps, prediction_steps = pred_horizon)
+            test_data = ERA5Dataset(data_dir, var = "test", init_steps = init_steps, prediction_steps = pred_horizon)
+
+        logging.info(using('After loading the datasets'))
         
-        train_data = train_utils.subsample(train_data, data_parameters['max_training_set_size'])
+        domain_range = train_data.get_domain_range()
+
+        if data_parameters['dataset_name'] == 'DarcyFlow':
+            # Validation data on full resolution
+            train_data, _ = random_split(train_data, lengths = [0.8,0.2], generator = torch.Generator().manual_seed(42))
+            _, val_data = random_split(train_data_full_res, lengths = [0.8,0.2], generator = torch.Generator().manual_seed(42))
+        elif data_parameters['dataset_name'] != 'ERA5':
+            train_data, val_data = random_split(train_data, lengths = [0.8,0.2], generator = torch.Generator().manual_seed(42))
 
         for i, training_parameters in enumerate(training_parameters_dict):
             logging.info(f"###{i + 1} out of {len(training_parameters_dict)} training parameter combinations ###")
             print(f'Training parameters: {training_parameters}')
             logging.info(f'Training parameters: {training_parameters}')
             
-            filename = f"{data_parameters['dataset_name']}_{training_parameters['model']}_dropout_{training_parameters['dropout']}"
+            seed = training_parameters['seed']
+            np.random.seed(seed)
+            torch.manual_seed(seed)
+            
+            filename = f"{data_parameters['dataset_name']}_{training_parameters['model']}_{training_parameters['uncertainty_quantification']}_" + \
+                       f"dropout_{training_parameters['dropout']}"
             
             batch_size = training_parameters['batch_size']
             
             train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
             val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=True)
             test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
+            
+            logging.info(using('After creating the dataloaders'))
                         
             t_0 = time()
             d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
             if not training_parameters['distributed_training']:
-                model = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters, logging=logging,
-                              filename_ending=filename, d_time=d_time_train, domain_range=domain_range)
+                model, filename = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters, logging=logging,
+                              filename_ending=filename, d_time=d_time_train, domain_range=domain_range, results_dict=results_dict)
             else:
                 world_size = torch.cuda.device_count()
                 mp.spawn(trainer, args=(input_training, target_training, target_validation,
@@ -166,11 +206,21 @@ if __name__ == '__main__':
             torch.cuda.empty_cache()
             t_1 = time()
             logging.info(f'Emptying the cuda cache took {np.round(t_1 - t_0, 3)}s.')
-            start_evaluation(model, training_parameters, train_loader, val_loader, test_loader, results_dict, device, domain_range, logging)
+            
+            eval_batch_size = max(batch_size // 4, 1)
+            
+            train_loader = DataLoader(train_data, batch_size=eval_batch_size, shuffle=True)
+            val_loader = DataLoader(val_data, batch_size=eval_batch_size, shuffle=True)
+            test_loader = DataLoader(test_data, batch_size=eval_batch_size, shuffle=True)
+            
+            start_evaluation(model, training_parameters, data_parameters, train_loader, val_loader, 
+                            test_loader, results_dict, device, domain_range, logging, filename)
             append_results_dict(results_dict, data_parameters, training_parameters, t_training)
             results_pd = pd.DataFrame(results_dict)
             results_pd.T.to_csv(os.path.join(directory, 'test.csv'))
-
+            
+            logging.info(using('After validation'))
+            
             del model
             torch.cuda.empty_cache()
             gc.collect()

@@ -8,6 +8,16 @@ import matplotlib.pyplot as plt
 
 from utils import train_utils
 
+import resource
+import psutil
+import copy
+
+def using(point=""):
+    usage=resource.getrusage(resource.RUSAGE_SELF)
+    # you can convert that object to a dictionary 
+    return f'{point}: mem (CPU python)={usage[2]/1024.0}MB; mem (CPU total)={dict(psutil.virtual_memory()._asdict())["used"] / 1024**2}MB'
+
+
 if torch.cuda.is_available():
     device = 'cuda'
 else:
@@ -17,8 +27,8 @@ print(f'Using {device}.')
 
 def train(net, optimizer, input, target, criterion, gradient_clipping):
     optimizer.zero_grad(set_to_none=True)
-    
-    out = net(input)
+        
+    out = net(input.float())
     
     loss = criterion(out, target)
     loss.backward()
@@ -45,10 +55,8 @@ def train(net, optimizer, input, target, criterion, gradient_clipping):
     return loss.item(), gradient_norm
 
 def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, logging, filename_ending,
-            domain_range, d_time, world_size=None):
+            domain_range, d_time, results_dict, world_size=None):
     
-    model_name = training_parameters['model']
-        
     if training_parameters['distributed_training']:
         train_utils.ddp_setup(rank=gpu_id, world_size=world_size)
         print(f'GPU ID: {gpu_id}')
@@ -70,7 +78,7 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
     out_channels = next(iter(train_loader))[1].shape[1]
     
     model = train_utils.setup_model(training_parameters, device, in_channels, out_channels)
-    
+        
     if training_parameters['distributed_training']:
         model = DDP(model, device_ids=[gpu_id])
     
@@ -80,9 +88,11 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
     n_parameters = 0
     for parameter in model.parameters():
         n_parameters += parameter.nelement()
-    logging.info(f'Number parameters: {n_parameters}')
 
-    logging.info(f'Memory allocated: {torch.cuda.memory_reserved(device=device)}')
+    train_utils.log_and_save_evaluation(n_parameters, 'NumberParameters', results_dict, logging)
+    
+    logging.info(f'GPU memory allocated: {torch.cuda.memory_reserved(device=device)}')
+    logging.info(using('After setting up the model'))
     
     # create your optimizer
     if training_parameters['optimizer'] == 'adam':
@@ -109,6 +119,8 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
     logging.info(f'Training starts now.')
 
     for epoch in range(training_parameters['n_epochs']):
+
+        logging.info(using('At the start of the epoch'))
         
         if training_parameters['distributed_training']:
             dist.all_reduce(flag_tensor,op=dist.ReduceOp.SUM)
@@ -120,6 +132,8 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
         model.train()
 
         for input, target in train_loader:
+            input = input.to(device)
+            target = target.to(device)
             batch_loss, batch_grad_norm = train(model, optimizer, input, target, criterion, training_parameters['gradient_clipping'])
             running_loss += batch_loss
             grad_norm += batch_grad_norm
@@ -140,10 +154,12 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
             validation_loss = 0
             with torch.no_grad():
                 for input, target in val_loader:
+                    input = input.to(device)
+                    target = target.to(device)
                     output_target = model(input)
                     validation_loss += criterion(output_target, target).item()
 
-            validation_loss_list.append(validation_loss)
+            validation_loss_list.append(validation_loss / report_every / len(val_loader))
             training_loss_list.append(running_loss / report_every / (len(train_loader)))
             grad_norm_list.append(grad_norm / report_every / (len(train_loader)))
             running_loss = 0.0
@@ -170,6 +186,8 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
         if epoch > report_every - 2:
             logging.info(f'[{epoch + 1:5d}] Training loss: {training_loss_list[-1]:.8f}, Validation loss: '
                          f'{validation_loss_list[-1]:.8f}, Gradient norm: {grad_norm_list[-1]:.8f}')
+
+    logging.info(using('After finishing all epochs'))
 
     # only one GPU has to report everything
     if training_parameters['distributed_training'] and gpu_id != 0:
@@ -202,4 +220,4 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
     if training_parameters['distributed_training']:
         dist.destroy_process_group()
         
-    return model
+    return model, filename

@@ -1,17 +1,15 @@
 import torch
 
 from models import generate_mcd_samples, LA_Wrapper
-from utils import losses
+from utils import losses, train_utils
 import numpy as np
 
-def log_and_save_evaluation(value, key, results_dict, logging):
-    value = np.round(value, decimals=5)
-    logging.info(f'{key}: {value}')
-    if not key in results_dict.keys():
-        results_dict[key] = []
-    results_dict[key].append(value)
-
 def generate_samples(uncertainty_quantification, model, a, u, n_samples):
+    if uncertainty_quantification.endswith('dropout'):
+        model.train()
+    elif uncertainty_quantification == 'scoring-rule-reparam':
+        model.eval()
+    
     if uncertainty_quantification == 'dropout':
         out = generate_mcd_samples(model, a, u.shape, n_samples=n_samples)
     elif uncertainty_quantification == 'laplace':
@@ -22,20 +20,22 @@ def generate_samples(uncertainty_quantification, model, a, u, n_samples):
 
 def evaluate(model, training_parameters, loader, device, domain_range):
     uncertainty_quantification = training_parameters['uncertainty_quantification']
-    if uncertainty_quantification.endswith('dropout'):
-        model.train()
-    elif uncertainty_quantification == 'scoring-rule-mu-std':
-        model.eval()
     
     mse = 0
     es = 0
     coverage = 0
-    int_width = 0
+    interval_width = 0
+    crps = 0
+    gaussian_nll = 0
     alpha = training_parameters['alpha']
     
     d = len(next(iter(loader))[0].shape) - 2
     l2loss = losses.LpLoss(d=d, p=2, L=domain_range)
     energy_score = losses.EnergyScore(d = d, p = 2, type = "lp", L=domain_range)
+    crps_loss = losses.CRPS()
+    gaussian_nll_loss = losses.GaussianNLL()
+    coverage_loss = losses.Coverage(alpha)
+    interval_width_loss = losses.IntervalWidth(alpha)
 
     with torch.no_grad():    
         for sample in loader:
@@ -44,33 +44,45 @@ def evaluate(model, training_parameters, loader, device, domain_range):
             u = u.to(device)
             batch_size = a.shape[0]
             out = generate_samples(uncertainty_quantification, model, a, u, training_parameters['n_samples_uq'])
-            mse += l2loss(out.mean(axis = -1), u).item() / batch_size
-            es += energy_score(out, u).item() / batch_size
+            mse += l2loss(out.mean(axis = -1), u).item() * batch_size / len(loader.dataset)
+            es += energy_score(out, u).item() * batch_size / len(loader.dataset)
+            crps += crps_loss(out, u).item() * batch_size / len(loader.dataset)
+            gaussian_nll += gaussian_nll_loss(out, u).item() * batch_size / len(loader.dataset)
+            coverage += coverage_loss(out, u).item() * batch_size / len(loader.dataset)
+            interval_width += interval_width_loss(out, u).item() * batch_size / len(loader.dataset)
+            
+            
             # Calculate coverage
-            q_lower = torch.quantile(out, alpha/2, axis = -1)
-            q_upper = torch.quantile(out, 1-alpha/2, axis = -1)
-            coverage += ((u>q_lower) & (u<q_upper)).float().mean().item() / batch_size
-            int_width += torch.linalg.norm(q_upper - q_lower).item() / batch_size
+            # q_lower = torch.quantile(out, alpha/2, axis = -1)
+            # q_upper = torch.quantile(out, 1-alpha/2, axis = -1)
+            # coverage += ((u>q_lower) & (u<q_upper)).float().mean().item() * batch_size / len(loader.dataset)
+            # int_width += torch.abs(q_upper - q_lower).mean().item() * batch_size / len(loader.dataset)
     
-    return mse, es, coverage, int_width
+    return mse, es, crps, gaussian_nll, coverage, interval_width
     
-def start_evaluation(model, training_parameters, train_loader, validation_loader, test_loader, results_dict, device, domain_range, logging):
+def start_evaluation(model, training_parameters, data_parameters,train_loader, validation_loader, test_loader, results_dict, device, domain_range, logging, filename):
     logging.info(f'Starting evaluation: model {training_parameters["model"]} & uncertainty quantification {training_parameters["uncertainty_quantification"]}')
-    
-    data_loaders = {'train': train_loader, 'validation': validation_loader, 'test': test_loader}
+
+    if data_parameters["dataset_name"] == "era5":
+        data_loaders = {'Validation': validation_loader, 'Test': test_loader}
+    else:
+        data_loaders = {'Train': train_loader, 'Validation': validation_loader, 'Test': test_loader}
 
     if training_parameters['uncertainty_quantification'] == 'laplace':
         model = LA_Wrapper(model, n_samples=training_parameters['n_samples'], method = "last_layer", hessian_structure = "full", optimize = True)
         model.fit(train_loader)
+        train_utils.checkpoint(model, filename)
     
     for name, loader in data_loaders.items():
         logging.info(f'Evaluating the model on {name} data.')
         
-        mse, es, coverage, int_width = evaluate(model, training_parameters, loader, device, domain_range)
+        mse, es, crps, gaussian_nll, coverage, int_width = evaluate(model, training_parameters, loader, device, domain_range)
         
-        log_and_save_evaluation(mse, 'MSE' + name, results_dict, logging)
-        log_and_save_evaluation(es, 'EnergyScore' + name, results_dict, logging)
-        log_and_save_evaluation(coverage, 'Coverage' + name, results_dict, logging)
-        log_and_save_evaluation(int_width, 'IntervalWidth' + name, results_dict, logging)
+        train_utils.log_and_save_evaluation(mse, 'MSE' + name, results_dict, logging)
+        train_utils.log_and_save_evaluation(es, 'EnergyScore' + name, results_dict, logging)
+        train_utils.log_and_save_evaluation(crps, 'CRPS' + name, results_dict, logging)
+        train_utils.log_and_save_evaluation(gaussian_nll, 'Gaussian NLL' + name, results_dict, logging)
+        train_utils.log_and_save_evaluation(coverage, 'Coverage' + name, results_dict, logging)
+        train_utils.log_and_save_evaluation(int_width, 'IntervalWidth' + name, results_dict, logging)
         
     

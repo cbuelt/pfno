@@ -1,12 +1,16 @@
+# This file provides the implementation of the U-shaped Fourier neural operator.
+# The code is adapted from https://github.com/neuraloperator/neuraloperator.
+
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
+import os
+import sys
+sys.path.append(os.getcwd())
 from models.layers import FNOBlocks, SpectralConv, MLP
 from neuralop.layers.skip_connections import skip_connection
 from neuralop.layers.padding import DomainPadding
 from neuralop.layers.resample import resample
-
-
 
 class UNO(nn.Module):
     def __init__(
@@ -50,18 +54,18 @@ class UNO(nn.Module):
         **kwargs
     ):
         super().__init__()
-        self.n_layers = n_layers
+        self.n_layers = len(uno_out_channels)
         assert uno_out_channels is not None, "uno_out_channels can not be None"
         assert uno_n_modes is not None, "uno_n_modes can not be None"
         assert uno_scalings is not None, "uno_scalings can not be None"
         assert (
-            len(uno_out_channels) == n_layers
+            len(uno_out_channels) == self.n_layers
         ), "Output channels for all layers are not given"
         assert (
-            len(uno_n_modes) == n_layers
+            len(uno_n_modes) == self.n_layers
         ), "number of modes for all layers are not given"
         assert (
-            len(uno_scalings) == n_layers
+            len(uno_scalings) == self.n_layers
         ), "Scaling factor for all layers are not given"
 
         self.n_dim = len(uno_n_modes[0])
@@ -177,7 +181,7 @@ class UNO(nn.Module):
                     mlp_skip=mlp_skip,
                     incremental_n_modes=incremental_n_modes,
                     rank=rank,
-                    SpectralConv=self.integral_operator,
+                    conv_module=self.integral_operator,
                     fft_norm=fft_norm,
                     fixed_rank_modes=fixed_rank_modes,
                     implementation=implementation,
@@ -251,11 +255,14 @@ class UNO(nn.Module):
 
 if __name__ == "__main__":
     # Create a model
-    model = UNO(3,1, hidden_channels=64, projection_channels=64,uno_out_channels = [32,64,64,32],
-                uno_n_modes= [[16],[8],[8],[16]], uno_scalings=  [[1.0],[0.5],[1],[2]],
+    model = UNO(3,1, projection_channels=32, lifting_channels=16, hidden_channels=8, uno_out_channels = [16, 32, 64, 128, 64, 32],
+                uno_n_modes= [[20,20],[14,14],[6,6], [6,6], [6,6], [14,14]], uno_scalings=  [[0.75,0.75], [0.67,0.67], [0.5,0.5], [1.0,1.0], [2.0,2.0], [1.5,1.5]],
                 dropout = 0.2, fourier_dropout=0.4)
-    x = torch.randn(5, 3, 128)
+    x = torch.randn(2, 3, 64, 64)
 
     out = model(x)
     print(out.shape)
     print(out.dtype)
+    from neuralop.utils import count_model_params
+    n_params = count_model_params(model)
+    print(f'\nOur model has {n_params} parameters.')
