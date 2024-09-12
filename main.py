@@ -188,22 +188,19 @@ if __name__ == '__main__':
             train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
             val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=True)
             test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
+
+            # Additional loader for autoregressive laplace
+            if training_parameters["uncertainty_quantification"] == "laplace" and data_parameters["dataset_name"] == "SSWE":
+                laplace_train = SSWEDataset(data_dir, test = False, pred_horizon = 1, return_all = False)
+                laplace_train_loader = DataLoader(laplace_train, batch_size=batch_size, shuffle=True)
+            else:
+                laplace_train_loader = None
                         
             t_0 = time()
             d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
-            if not training_parameters['distributed_training']:
-                model, filename = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters,
-                                          data_parameters = data_parameters,logging=logging, filename_ending=filename, d_time=d_time_train,
-                                           domain_range=domain_range, results_dict=results_dict)
-            else:
-                world_size = torch.cuda.device_count()
-                mp.spawn(trainer, args=(input_training, target_training, target_validation,
-                            input_validation, training_parameters, data_parameters,
-                            data_parameters['num_samples_min'], training_parameters['lr_schedule'], objective, 
-                            directory, d_time_train, world_size), nprocs=world_size)
-
-                model = torch.load(os.path.join(directory,
-                                f'Datetime_{d_time_train}_parameters_{filename}.pt'), map_location=device)
+            model, filename = trainer(train_loader, val_loader, directory=directory, training_parameters=training_parameters,
+                                        data_parameters = data_parameters,logging=logging, filename_ending=filename, d_time=d_time_train,
+                                        domain_range=domain_range, results_dict=results_dict)
                         
             t_1 = time()
             t_training = np.round(t_1 - t_0, 3)
@@ -220,7 +217,7 @@ if __name__ == '__main__':
             test_loader = DataLoader(test_data, batch_size=eval_batch_size, shuffle=True)
             
             start_evaluation(model, training_parameters, data_parameters, train_loader, val_loader, 
-                            test_loader, results_dict, device, domain_range, logging, filename)
+                            test_loader, results_dict, device, domain_range, logging, filename, laplace_train_loader=laplace_train_loader)
             append_results_dict(results_dict, data_parameters, training_parameters, t_training)
             results_pd = pd.DataFrame(results_dict)
             results_pd.T.to_csv(os.path.join(directory, 'test.csv'))

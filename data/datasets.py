@@ -614,6 +614,7 @@ class SSWEDataset(Dataset):
             ]
             tensor_u = torch.tensor(u.to_numpy()).float()
             tensor_u = torch.permute(tensor_u, (1,0,2,3))
+            
         else:
             u = self.dataset.u[
                 idx,

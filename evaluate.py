@@ -17,21 +17,7 @@ def generate_samples(uncertainty_quantification, model, a, u, n_samples):
         out = model(a, n_samples = n_samples)
     return out
 
-def autoregressive_step(uncertainty_quantification, model, a):
-    if uncertainty_quantification.endswith('dropout'):
-        model.train()
-    elif uncertainty_quantification == 'scoring-rule-reparam':
-        model.eval()    
-    if uncertainty_quantification == 'laplace':
-        out = model.model(a)
-    elif uncertainty_quantification == "dropout":
-        out = model(a)
-    else:
-        out = model(a).mean(axis = -1)
-    return out
-
 def evaluate_autoregressive(model, training_parameters, data_parameters, loader, name, device, domain_range):
-
     uncertainty_quantification = training_parameters['uncertainty_quantification']    
     mse = 0
     es = 0
@@ -65,28 +51,27 @@ def evaluate_autoregressive(model, training_parameters, data_parameters, loader,
                 # Autoregressive steps
                 for step in range(pred_horizon):
                     if step == 0:
-                        out = generate_samples(uncertainty_quantification, model, a, u[:,0], training_parameters['n_samples_uq'])
+                        out = generate_samples(uncertainty_quantification, model, a, u[:,:,0], training_parameters['n_samples_uq'])
                     else:
                         out = out.mean(axis = -1)
-                        out = generate_samples(uncertainty_quantification, model, out, u[:,0], training_parameters['n_samples_uq'])
+                        out = generate_samples(uncertainty_quantification, model, out, u[:,:,0], training_parameters['n_samples_uq'])
                     # Losses
-                    mse += l2loss(out.mean(axis = -1), u[:,step]).item() * batch_size / len(loader.dataset) / pred_horizon
-                    es += energy_score(out, u[:,step]).item() * batch_size / len(loader.dataset) / pred_horizon
-                    crps += crps_loss(out, u[:,step]).item() * batch_size / len(loader.dataset) / pred_horizon
-                    gaussian_nll += gaussian_nll_loss(out, u[:,step]).item() * batch_size / len(loader.dataset) / pred_horizon
-                    coverage += coverage_loss(out, u[:,step]).item() * batch_size / len(loader.dataset) / pred_horizon
-                    interval_width += interval_width_loss(out, u[:,step]).item() * batch_size / len(loader.dataset) / pred_horizon
+                    mse += l2loss(out.mean(axis = -1), u[:,:,step]).item() * batch_size / len(loader.dataset) / pred_horizon
+                    es += energy_score(out, u[:,:,step]).item() * batch_size / len(loader.dataset) / pred_horizon
+                    crps += crps_loss(out, u[:,:,step]).item() * batch_size / len(loader.dataset) / pred_horizon
+                    gaussian_nll += gaussian_nll_loss(out, u[:,:,step]).item() * batch_size / len(loader.dataset) / pred_horizon
+                    coverage += coverage_loss(out, u[:,:,step]).item() * batch_size / len(loader.dataset) / pred_horizon
+                    interval_width += interval_width_loss(out, u[:,:,step]).item() * batch_size / len(loader.dataset) / pred_horizon
     else:
         with torch.no_grad():    
             for sample in loader:
                 a, u = sample
                 a = a.to(device)
-                u = u[:,-1].to(device)
+                u = u[:,:,-1].to(device)
                 batch_size = a.shape[0]
-
                 # Autoregressive steps
                 for _ in range(pred_horizon-1):
-                    a = autoregressive_step(uncertainty_quantification, model, a)
+                    a = train_utils.autoregressive_step(uncertainty_quantification, model, a)
                 # Final step
                 out = generate_samples(uncertainty_quantification, model, a, u, training_parameters['n_samples_uq'])
                 # Losses
@@ -135,7 +120,10 @@ def evaluate(model, training_parameters, loader, device, domain_range):
     
     return mse, es, crps, gaussian_nll, coverage, interval_width
     
-def start_evaluation(model, training_parameters, data_parameters,train_loader, validation_loader, test_loader, results_dict, device, domain_range, logging, filename):
+def start_evaluation(model, training_parameters, data_parameters, train_loader, validation_loader, test_loader,
+                      results_dict, device, domain_range, logging, filename, **kwargs):
+    # Need to add additional train loader for autoregressive Laplace
+    laplace_train_loader = kwargs.get("laplace_train_loader", None)
     logging.info(f'Starting evaluation: model {training_parameters["model"]} & uncertainty quantification {training_parameters["uncertainty_quantification"]}')
 
     if data_parameters["dataset_name"] == "era5" or data_parameters["dataset_name"] == "SSWE":
@@ -145,7 +133,10 @@ def start_evaluation(model, training_parameters, data_parameters,train_loader, v
 
     if training_parameters['uncertainty_quantification'] == 'laplace':
         model = LA_Wrapper(model, n_samples=training_parameters['n_samples'], method = "last_layer", hessian_structure = "full", optimize = True)
-        model.fit(train_loader)
+        if laplace_train_loader is not None:
+            model.fit(laplace_train_loader)
+        else:
+            model.fit(train_loader)
         train_utils.checkpoint(model, filename)
     
     for name, loader in data_loaders.items():
