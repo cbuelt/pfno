@@ -6,6 +6,16 @@ import matplotlib.pyplot as plt
 
 from utils import train_utils
 
+import resource
+import psutil
+import gc
+
+def using(point=""):
+    usage=resource.getrusage(resource.RUSAGE_SELF)
+    # you can convert that object to a dictionary 
+    return f'{point}: mem (CPU python)={usage[2]/1024.0}MB; mem (CPU total)={dict(psutil.virtual_memory()._asdict())["used"] / 1024**2}MB'
+
+
 if torch.cuda.is_available():
     device = 'cuda'
 else:
@@ -32,6 +42,7 @@ def train(net, optimizer, input, target, criterion, gradient_clipping, **kwargs)
         loss = multiloss/train_horizon
 
     loss.backward()
+
     gradient_norm = 0
     for p in net.parameters():
         param_norm = p.grad.detach().data.norm(2)
@@ -45,9 +56,13 @@ def train(net, optimizer, input, target, criterion, gradient_clipping, **kwargs)
         gradient_norm_test += param_norm.item() ** 2
     gradient_norm_test = gradient_norm_test ** 0.5    
     assert gradient_norm_test < 1.5 * gradient_clipping
-    optimizer.step()
 
-    return loss.item(), gradient_norm
+    optimizer.step()
+    loss = loss.item()
+
+    del out
+
+    return loss, gradient_norm
 
 def trainer(train_loader, val_loader, directory, training_parameters, data_parameters, logging, filename_ending,
             domain_range, d_time, results_dict, world_size=None):   
@@ -62,7 +77,10 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
     out_channels = next(iter(train_loader))[1].shape[1]
     
     model = train_utils.setup_model(training_parameters, device, in_channels, out_channels)
-       
+        
+    if training_parameters['distributed_training']:
+        model = DDP(model, device_ids=[gpu_id])
+    
     if training_parameters['init'] != 'default':
         train_utils.initialize_weights(model, training_parameters['init'])
 
@@ -70,8 +88,11 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
     for parameter in model.parameters():
         n_parameters += parameter.nelement()
 
-    train_utils.log_and_save_evaluation(n_parameters, 'NumberParameters', results_dict, logging)    
-    logging.info(f'Memory allocated: {torch.cuda.memory_reserved(device=device)}')
+    train_utils.log_and_save_evaluation(n_parameters, 'NumberParameters', results_dict, logging)
+    
+    logging.info(f'GPU memory allocated: {torch.cuda.memory_reserved(device=device)}')
+    logging.info(using('After setting up the model'))
+
     
     # create your optimizer
     if training_parameters['optimizer'] == 'adam':
@@ -120,7 +141,11 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
             scheduler.step()
             logging.info(f'Learning rate reduced to: {scheduler.get_last_lr()}')
 
-        for epoch in range(prev_epochs, training_parameters['n_epochs']+ prev_epochs):              
+        for epoch in range(prev_epochs, training_parameters['n_epochs']+ prev_epochs):
+            gc.collect()
+            logging.info(using('At the start of the epoch'))
+          
+          
             model.train()
             for input, target in train_loader:
                 input = input.to(device)
@@ -181,7 +206,8 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
                 logging.info(f'[{epoch + 1:5d}] Training loss: {training_loss_list[-1]:.8f}, Validation loss: '
                             f'{validation_loss_list[-1]:.8f}, Gradient norm: {grad_norm_list[-1]:.8f}')        
 
-    
+    logging.info(using('After finishing all epochs'))
+
     optimizer.zero_grad(set_to_none=True)
     train_utils.resume(model, filename)
     
@@ -196,6 +222,7 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
     plt.yscale('log')
     plt.tight_layout()
     plt.savefig(os.path.join(directory, f'Datetime_{d_time}_analytics_{filename_ending}.png'))
+    plt.clf()
     plt.close()
     
     train_utils.checkpoint(model, filename)

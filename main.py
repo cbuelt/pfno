@@ -82,6 +82,8 @@ if __name__ == '__main__':
     logging.debug(f'File: {__file__}')
 
     logging.info(f'Using {device}.')
+    
+    logging.info(using(''))
 
     logging.info(f'############### Starting experiment with config file {config_name} ###############')
 
@@ -151,12 +153,14 @@ if __name__ == '__main__':
             train_data = ERA5Dataset(data_dir, var = "train", init_steps = init_steps, prediction_steps = pred_horizon)
             val_data = ERA5Dataset(data_dir, var = "val", init_steps = init_steps, prediction_steps = pred_horizon)
             test_data = ERA5Dataset(data_dir, var = "test", init_steps = init_steps, prediction_steps = pred_horizon)
-
+        
         elif data_parameters["dataset_name"] == "SSWE":
             data_dir = f"data/{data_parameters['dataset_name']}/processed/"
             pred_horizon = data_parameters['pred_horizon']
             train_data = SSWEDataset(data_dir, test = False, pred_horizon = data_parameters["train_horizon"], return_all = True)
             test_data = SSWEDataset(data_dir, test = True, pred_horizon = pred_horizon, return_all = True)
+
+        logging.info(using('After loading the datasets'))
 
         if data_parameters["dataset_name"] != "SSWE":
             domain_range = train_data.get_domain_range()
@@ -188,7 +192,7 @@ if __name__ == '__main__':
             train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
             val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=True)
             test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
-
+            
             # Additional loader for autoregressive laplace
             if training_parameters["uncertainty_quantification"] == "laplace" and data_parameters["dataset_name"] == "SSWE":
                 laplace_train = SSWEDataset(data_dir, test = False, pred_horizon = 1, return_all = False)
@@ -196,6 +200,8 @@ if __name__ == '__main__':
             else:
                 laplace_train_loader = None
                         
+            logging.info(using('After creating the dataloaders'))
+
             t_0 = time()
             d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
             model, filename = trainer(train_loader, val_loader, directory=directory, training_parameters=training_parameters,
@@ -221,7 +227,9 @@ if __name__ == '__main__':
             append_results_dict(results_dict, data_parameters, training_parameters, t_training)
             results_pd = pd.DataFrame(results_dict)
             results_pd.T.to_csv(os.path.join(directory, 'test.csv'))
-
+            
+            logging.info(using('After validation'))
+            
             del model
             torch.cuda.empty_cache()
             gc.collect()
