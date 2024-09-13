@@ -707,7 +707,7 @@ if __name__ == "__main__":
    # weights = torch.ones_like(weights)*1/128
 
     n_samples = 100
-    y = torch.randn(5,1, 10, 160, 220)
-    x = torch.randn(5,1,10, 160, 220, n_samples)
-    crps = VariogramScore()(x, y)
-    print(crps.shape, crps.item())
+    y = torch.randn(4, 1, 10, 50,  3,1)
+    x = torch.randn(4, 1, 10,50, 3, n_samples)
+    crps = CRPS(reduce_dims = False)(x, y)
+    print(crps.shape, crps)
