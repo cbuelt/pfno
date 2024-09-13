@@ -5,9 +5,7 @@ import os
 import sys
 sys.path.append(os.getcwd())
 from data.datasets import SSWEDataset
-
 import torch
-
 
 class LpLoss(object):
     def __init__(self, d=1, p=2, L=1.0, reduce_dims=[0], reductions="mean", rel = False):
@@ -91,8 +89,7 @@ class LpLoss(object):
         if self.rel:
             return self.relative(y_pred, y)
         else:
-            return self.abs(y_pred,y)
-        
+            return self.abs(y_pred,y)        
 
 
 class SphericalL2Loss(object):
@@ -575,7 +572,7 @@ class GaussianNLL(object):
         score = -gaussian.log_prob(y)
         # Weighting
         if self.weights is not None:
-            weights = self.weights/self.weights.sum()*self.weights.size(0)
+            weights = (self.weights/self.weights.sum())*self.weights.size(0)
             score = score * weights
 
         if self.reduce_dims:
@@ -630,7 +627,7 @@ class Coverage(object):
         score = ((y>q_lower) & (y<q_upper)).float()    
         # Weighting
         if self.weights is not None:
-            weights = self.weights/self.weights.sum()*self.weights.size(0)
+            weights = (self.weights/self.weights.sum())*self.weights.size(0)
             score = score * weights
 
         if self.reduce_dims:

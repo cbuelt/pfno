@@ -162,9 +162,11 @@ def simulate(config: dict, var: str = "train"):
     pde_config = config["pde"]
     sim_config = config[var]
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    nlat = pde_config["nlat"]*int(sim_config["scaling_factor"])
+    nlon = pde_config["nlon"]*int(sim_config["scaling_factor"])
     generator = SSWEGenerator(
-        nlat=pde_config["nlat"],
-        nlon=pde_config["nlon"],
+        nlat=nlat,
+        nlon=nlon,
         pred_horizon=sim_config["pred_horizon"],
         burn_in_steps=sim_config["burn_in_steps"],
         save_steps=sim_config["save_steps"],
@@ -195,8 +197,8 @@ def simulate(config: dict, var: str = "train"):
     f.createDimension("samples", None)
     f.createDimension("t", sim_config["pred_horizon"] + 1)
     f.createDimension("c", 3)
-    f.createDimension("lat", pde_config["nlat"])
-    f.createDimension("lon", pde_config["nlon"])
+    f.createDimension("lat", nlat)
+    f.createDimension("lon", nlon)
 
     # Create variables
     lat_dim = f.createVariable("latitude", "f4", ("lat",))

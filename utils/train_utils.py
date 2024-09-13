@@ -60,7 +60,7 @@ def get_criterion(training_parameters, domain_range, d, device):
     """
     if training_parameters["model"] == "SFNO":
         # If Spherical model, nlon and weights are passed
-        nlon, train_weights, _ = domain_range
+        nlon, train_weights, _, _ = domain_range
         if training_parameters["uncertainty_quantification"].startswith("scoring-rule"):
             criterion = losses.EnergyScore(type="spherical", nlon = nlon, weights = train_weights.to(device))
         else:
