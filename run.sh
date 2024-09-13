@@ -1,2 +1,2 @@
 #!/bin/sh
-python main.py -c darcy_flow/uno.ini
+python main.py -c sswe/sfno.ini

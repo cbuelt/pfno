@@ -5,12 +5,10 @@ import os
 import sys
 sys.path.append(os.getcwd())
 from data.datasets import SSWEDataset
-
 import torch
 
-
 class LpLoss(object):
-    def __init__(self, d=1, p=2, L=2 * math.pi, reduce_dims=[0], reductions="mean", rel = False):
+    def __init__(self, d=1, p=2, L=1.0, reduce_dims=[0], reductions="mean", rel = False):
         super().__init__()
         self.d = d
         self.p = p
@@ -91,16 +89,15 @@ class LpLoss(object):
         if self.rel:
             return self.relative(y_pred, y)
         else:
-            return self.abs(y_pred,y)
-        
+            return self.abs(y_pred,y)        
 
 
 class SphericalL2Loss(object):
     def __init__(self, nlon, weights, reduce_dims=[0], reductions="mean", rel = False):
         super().__init__()
 
-        self.dlon = 2* torch.pi/nlon
-        self.weights = weights
+        self.dlon = 1/nlon
+        self.weights = weights/weights.sum()
         self.rel = rel
 
         if isinstance(reduce_dims, int):
@@ -191,12 +188,12 @@ class EnergyScore(object):
         self.reduce_dims = reduce_dims
         self.rel = kwargs.get("rel", False)
         self.p = kwargs.get("p", 2)
-        self.L = kwargs.get("L", 2 * math.pi)
+        self.L = kwargs.get("L", 1.0)
         # Arguments for spherical score
         if self.type == "spherical":
             self.nlon = kwargs.get("nlon", 256)
             self.weights = kwargs.get("weights", 1)
-            self.dlon = 2* torch.pi/self.nlon
+            self.dlon = 1/self.nlon
             self.p = 2
             self.d = 2
 
@@ -246,7 +243,7 @@ class EnergyScore(object):
             y = y.unsqueeze(-1)
 
         if self.type == "spherical":
-            weights = self.weights.unsqueeze(-1)
+            weights = self.weights.unsqueeze(-1)/self.weights.sum()
             x = x * torch.sqrt(weights*self.dlon)
             y = y * torch.sqrt(weights*self.dlon)
 
@@ -303,7 +300,7 @@ class KernelScore(object):
         self.reduction = reduction
         self.reduce_dims = reduce_dims
         self.p = kwargs.get("p", 2)
-        self.L = kwargs.get("L", 2 * math.pi)
+        self.L = kwargs.get("L", 1.0)
         self.rel = kwargs.get("rel", False)
         self.gamma = kwargs.get("gamma", 1.0)
 
@@ -374,8 +371,6 @@ class KernelScore(object):
         # Calculate Gram matrix
         K1 = self.norm(x_flat, y_flat, const=const, p=self.p)
         K2 = self.norm(x_flat, x_flat, const=const, p=self.p)
-
-        print(K1.shape)
         
         if self.rel:
             ynorm = const * torch.norm(
@@ -478,6 +473,11 @@ class CRPS(object):
 
         self.reduction = reduction
         self.reduce_dims = reduce_dims
+        # Kwargs for spherical loss
+        self.nlon = kwargs.get("nlon", 256)
+        self.nlat = self.nlon/2
+        self.weights = kwargs.get("weights", None)
+        self.dlon = 1/self.nlon
 
     def reduce(self, x):
         if self.reduction == "sum":
@@ -503,14 +503,23 @@ class CRPS(object):
         if len(x.size()) != len(y.size()):
             y = torch.unsqueeze(y, dim=-1)
 
+        # Dimensions of the input
+        d = torch.prod(torch.tensor(x.shape[1:-1]))
+        if self.weights is not None:
+            weights = self.weights/self.weights.sum()
+            weights = weights.unsqueeze(-1)*self.dlon / (d / (self.nlon*self.nlat))
+        else:
+            weights = 1/d
+        x = x * weights
+        y = y * weights
+
         # Restructure tensors to shape (Batch size, n_samples, flatted dims)
         x_flat = torch.swapaxes(torch.flatten(x, start_dim=1, end_dim=-2), 1, 2)
         y_flat = torch.swapaxes(torch.flatten(y, start_dim=1, end_dim=-2), 1, 2)
-        d = x_flat.size(-1)
 
         # Calculate energy score
-        term_1 = torch.mean(torch.cdist(x_flat, y_flat, p = 1), dim=(1, 2))/d
-        term_2 = torch.sum(torch.cdist(x_flat, x_flat, p = 1), dim=(1, 2))/d
+        term_1 = torch.mean(torch.cdist(x_flat, y_flat, p = 1), dim=(1, 2))#/d
+        term_2 = torch.sum(torch.cdist(x_flat, x_flat, p = 1), dim=(1, 2))#/d
 
         score = term_1 - term_2 /(2*n_samples*(n_samples-1))
         # Reduce
@@ -526,6 +535,9 @@ class GaussianNLL(object):
 
         self.reduction = reduction
         self.reduce_dims = reduce_dims
+        # Kwargs for spherical loss
+        self.weights = kwargs.get("weights", None)
+
 
     def reduce(self, x):
         if self.reduction == "sum":
@@ -558,6 +570,10 @@ class GaussianNLL(object):
         # Calculate Gaussian NLL
         gaussian = torch.distributions.Normal(mu, sigma)
         score = -gaussian.log_prob(y)
+        # Weighting
+        if self.weights is not None:
+            weights = (self.weights/self.weights.sum())*self.weights.size(0)
+            score = score * weights
 
         if self.reduce_dims:
             # Aggregate CRPS over spatial dimensions
@@ -576,6 +592,8 @@ class Coverage(object):
         self.alpha = alpha
         self.reduction = reduction
         self.reduce_dims = reduce_dims
+        # Kwargs for spherical loss
+        self.weights = kwargs.get("weights", None)
 
     def reduce(self, x):
         if self.reduction == "sum":
@@ -607,9 +625,13 @@ class Coverage(object):
 
         # Calculate coverage probability
         score = ((y>q_lower) & (y<q_upper)).float()    
+        # Weighting
+        if self.weights is not None:
+            weights = (self.weights/self.weights.sum())*self.weights.size(0)
+            score = score * weights
 
         if self.reduce_dims:
-            # Aggregate CRPS over spatial dimensions
+            # Aggregate over spatial and channel dimensions
             score = score.mean(dim = [d for d in range(1, n_dims+1)])
         # Reduce
         return self.reduce(score).squeeze() if self.reduce_dims else score
@@ -625,6 +647,8 @@ class IntervalWidth(object):
         self.alpha = alpha
         self.reduction = reduction
         self.reduce_dims = reduce_dims
+        # Kwargs for spherical loss
+        self.weights = kwargs.get("weights", None)
 
     def reduce(self, x):
         if self.reduction == "sum":
@@ -656,6 +680,10 @@ class IntervalWidth(object):
 
         # Calculate interval width
         score = torch.abs(q_upper - q_lower)
+        # Weighting
+        if self.weights is not None:
+            weights = self.weights/self.weights.sum()*self.weights.size(0)
+            score = score * weights
 
         if self.reduce_dims:
             # Aggregate CRPS over spatial dimensions
@@ -670,7 +698,14 @@ class IntervalWidth(object):
 
 
 if __name__ == "__main__":
-    torch.manual_seed(15)
+    torch.manual_seed(25)
+
+    data_dir = "data/SSWE/processed/"
+    train_data = SSWEDataset(data_dir, test = False, pred_horizon = 1, return_all = True)
+    weights = train_data.eval_weights
+    nlon = train_data.nlon
+   # weights = torch.ones_like(weights)*1/128
+
     n_samples = 100
     y = torch.randn(4, 1, 10, 50,  3,1)
     x = torch.randn(4, 1, 10,50, 3, n_samples)
