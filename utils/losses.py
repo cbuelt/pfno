@@ -705,12 +705,12 @@ if __name__ == "__main__":
 
     data_dir = "data/SSWE/processed/"
     train_data = SSWEDataset(data_dir, test = False, pred_horizon = 1, return_all = True)
-    weights = train_data.weights
+    weights = train_data.eval_weights
     nlon = train_data.nlon
    # weights = torch.ones_like(weights)*1/128
 
-    n_samples = 50
-    y = torch.randn(4, 3, 128, 256)
-    x = torch.randn(4, 3, 128, 256, n_samples)
-    crps = IntervalWidth(alpha = 0.05, weights = weights)(x, y)
+    n_samples = 100
+    y = torch.randn(5,1, 10, 160, 220)
+    x = torch.randn(5,1,10, 160, 220, n_samples)
+    crps = VariogramScore()(x, y)
     print(crps.shape, crps.item())

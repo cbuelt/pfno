@@ -579,12 +579,16 @@ class SSWEDataset(Dataset):
         # Assert pred horizon
         assert self.pred_horizon < len(self.dataset["time"]), "Prediction horizon must be smaller than the dataset"
 
-        # Generate weights 
+        # Generate training quadrature weights 
         self.nlat = len(self.dataset["latitude"])
         self.nlon = len(self.dataset["longitude"])
         _, quad_weights = clenshaw_curtiss_weights(self.nlat, -1, 1)
-        self.weights = quad_weights = torch.as_tensor(quad_weights).reshape(-1, 1)
+        self.train_weights = torch.as_tensor(quad_weights).reshape(-1, 1)
 
+        # Generate evaluation cosine weights
+        lat_weight = np.cos(self.dataset["latitude"].values/360*2*np.pi)
+        lat_weight = np.clip(lat_weight/lat_weight.sum(),0,1)
+        self.eval_weights = torch.tensor(lat_weight).reshape(-1,1)
 
     def __len__(self) -> int:
         """Returns the length of the dataset
@@ -643,8 +647,11 @@ class SSWEDataset(Dataset):
         """
         return [1,1,1]
     
-    def get_weights(self) -> torch.Tensor:
-        return self.weights
+    def get_train_weights(self) -> torch.Tensor:
+        return self.train_weights
+    
+    def get_eval_weights(self) -> torch.Tensor:
+        return self.eval_weights
     
     def get_nlon(self) -> int:
         return self.nlon
@@ -654,5 +661,8 @@ if __name__ == "__main__":
     dataset = SSWEDataset(data_dir, test=False, pred_horizon=2, return_all=True)
     print(len(dataset))
     train, target = dataset.__getitem__(10)
-    print(train.shape)
-    print(target.shape)
+    train_weights = dataset.get_train_weights()
+    eval_weights = dataset.get_eval_weights()
+    print(train_weights.shape, eval_weights.shape)
+    print(train_weights)
+    print(eval_weights)

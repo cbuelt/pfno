@@ -33,7 +33,7 @@ def evaluate_autoregressive(model, training_parameters, data_parameters, loader,
         pred_horizon = data_parameters['train_horizon']
     stepwise_evaluation = data_parameters['stepwise_evaluation']
     
-    nlon, weights = domain_range
+    nlon, _, weights = domain_range
     l2loss = losses.SphericalL2Loss(nlon = nlon, weights = weights.to(device))
     energy_score = losses.EnergyScore(type = "spherical", nlon = nlon, weights = weights.to(device))
     crps_loss = losses.CRPS(nlon = nlon, weights = weights.to(device))

@@ -162,7 +162,7 @@ if __name__ == '__main__':
             domain_range = train_data.get_domain_range()
         else:
             # Requires Longitude and quadrature weights instead of domain range
-            domain_range = (train_data.get_nlon(), train_data.get_weights())    
+            domain_range = (train_data.get_nlon(), train_data.get_train_weights(), train_data.get_eval_weights())    
 
         if data_parameters['dataset_name'] == 'DarcyFlow':
             # Validation data on full resolution
