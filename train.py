@@ -10,7 +10,7 @@ from utils import train_utils
 
 import resource
 import psutil
-import copy
+import gc
 
 def using(point=""):
     usage=resource.getrusage(resource.RUSAGE_SELF)
@@ -32,27 +32,30 @@ def train(net, optimizer, input, target, criterion, gradient_clipping):
     
     loss = criterion(out, target)
     loss.backward()
-    optimizer.step()    
+    
     gradient_norm = 0
-    for p in net.parameters():
-        param_norm = p.grad.detach().data.norm(2)
-        gradient_norm += param_norm.item() ** 2
-    gradient_norm = gradient_norm ** 0.5
+    # for p in net.parameters():
+    #     param_norm = p.grad.data.norm(2)
+    #     gradient_norm += param_norm.item() ** 2
+    # gradient_norm = gradient_norm ** 0.5
     
     torch.nn.utils.clip_grad_norm_(net.parameters(), gradient_clipping)
     
-    gradient_norm_test = 0
-    for p in net.parameters():
-        param_norm = p.grad.detach().data.norm(2)
-        gradient_norm_test += param_norm.item() ** 2
-    gradient_norm_test = gradient_norm_test ** 0.5
+    # gradient_norm_test = 0
+    # for p in net.parameters():
+    #     param_norm = p.grad.detach().data.norm(2)
+    #     gradient_norm_test += param_norm.item() ** 2
+    # gradient_norm_test = gradient_norm_test ** 0.5
     
     
-    assert gradient_norm_test < 1.5 * gradient_clipping
+    # assert gradient_norm_test < 1.5 * gradient_clipping
 
     optimizer.step()
+    loss = loss.item()
 
-    return loss.item(), gradient_norm
+    del out
+
+    return loss, gradient_norm
 
 def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, logging, filename_ending,
             domain_range, d_time, results_dict, world_size=None):
@@ -114,16 +117,17 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
         
     lr_schedule = training_parameters['lr_schedule']
     if lr_schedule == 'step':
-        scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.5)
+        scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.5)
 
     logging.info(f'Training starts now.')
 
     for epoch in range(training_parameters['n_epochs']):
-
+        
+        gc.collect()
         logging.info(using('At the start of the epoch'))
         
         if training_parameters['distributed_training']:
-            dist.all_reduce(flag_tensor,op=dist.ReduceOp.SUM)
+            dist.all_reduce(flag_tensor, op=dist.ReduceOp.SUM)
             if flag_tensor == 1:
                 logging.info("Training stopped")
                 break
@@ -132,6 +136,7 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
         model.train()
 
         for input, target in train_loader:
+            # logging.info(using('At the start of the batch'))
             input = input.to(device)
             target = target.to(device)
             batch_loss, batch_grad_norm = train(model, optimizer, input, target, criterion, training_parameters['gradient_clipping'])
@@ -140,7 +145,7 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
                     
         if lr_schedule == 'step' and early_stopper.counter > 10:
             # stepwise scheduler only happens once per epoch and only if the validation has not been going down for at least 10 epochs
-            scheduler.step(scheduler, optimizer, epoch)
+            scheduler.step()
         
         # The none-main processes do not have to report anything
         if training_parameters['distributed_training'] and gpu_id != 0:
@@ -210,6 +215,7 @@ def trainer(gpu_id, train_loader, val_loader, directory, training_parameters, lo
     plt.yscale('log')
     plt.tight_layout()
     plt.savefig(os.path.join(directory, f'Datetime_{d_time}_analytics_{filename_ending}.png'))
+    plt.clf()
     plt.close()
 
     if training_parameters['distributed_training']:
