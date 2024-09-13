@@ -18,8 +18,8 @@ import configparser
 import ast
 import shutil
 
-from data.datasets import DarcyFlowDataset, SWEDataset, KSDataset, ERA5Dataset
-from train import trainer, using
+from data.datasets import DarcyFlowDataset, SWEDataset, KSDataset, ERA5Dataset, SSWEDataset
+from train import trainer
 from utils import train_utils
 from evaluate import start_evaluation
 
@@ -34,7 +34,7 @@ msg = 'Start main'
 # initialize parser
 parser = argparse.ArgumentParser(description=msg)
 default_config = 'debug.ini'
-# default_config = 'ks/uno.ini'
+default_config = 'sswe/sfno.ini'
 
 parser.add_argument('-c', '--config', help='Name of the config file:', default=default_config)
 parser.add_argument('-f', '--results_folder', help='Name of the results folder (only use if you only want to evaluate the models):', default=None)
@@ -129,6 +129,7 @@ if __name__ == '__main__':
             test_data = SWEDataset(data_dir, test = True, mode = "autoregressive",
                         pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
                         temporal_downscaling_factor=temporal_downscaling_factor, ood = ood)
+            
         elif data_parameters["dataset_name"] == "KS":
             downscaling_factor = int(data_parameters['downscaling_factor'])
             temporal_downscaling_factor = int(data_parameters['temporal_downscaling'])
@@ -152,10 +153,20 @@ if __name__ == '__main__':
             train_data = ERA5Dataset(data_dir, var = "train", init_steps = init_steps, prediction_steps = pred_horizon)
             val_data = ERA5Dataset(data_dir, var = "val", init_steps = init_steps, prediction_steps = pred_horizon)
             test_data = ERA5Dataset(data_dir, var = "test", init_steps = init_steps, prediction_steps = pred_horizon)
+        
+        elif data_parameters["dataset_name"] == "SSWE":
+            data_dir = f"data/{data_parameters['dataset_name']}/processed/"
+            pred_horizon = data_parameters['pred_horizon']
+            train_data = SSWEDataset(data_dir, test = False, pred_horizon = data_parameters["train_horizon"], return_all = True)
+            test_data = SSWEDataset(data_dir, test = True, pred_horizon = pred_horizon, return_all = True)
 
         logging.info(using('After loading the datasets'))
-        
-        domain_range = train_data.get_domain_range()
+
+        if data_parameters["dataset_name"] != "SSWE":
+            domain_range = train_data.get_domain_range()
+        else:
+            # Requires Longitude and quadrature weights instead of domain range
+            domain_range = (train_data.get_nlon(), train_data.get_train_weights(), test_data.get_nlon(), test_data.get_eval_weights())    
 
         if data_parameters['dataset_name'] == 'DarcyFlow':
             # Validation data on full resolution
@@ -182,22 +193,20 @@ if __name__ == '__main__':
             val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=True)
             test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
             
-            logging.info(using('After creating the dataloaders'))
+            # Additional loader for autoregressive laplace
+            if training_parameters["uncertainty_quantification"] == "laplace" and data_parameters["dataset_name"] == "SSWE":
+                laplace_train = SSWEDataset(data_dir, test = False, pred_horizon = 1, return_all = False)
+                laplace_train_loader = DataLoader(laplace_train, batch_size=batch_size, shuffle=True)
+            else:
+                laplace_train_loader = None
                         
+            logging.info(using('After creating the dataloaders'))
+
             t_0 = time()
             d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
-            if not training_parameters['distributed_training']:
-                model, filename = trainer(0, train_loader, val_loader, directory=directory, training_parameters=training_parameters, logging=logging,
-                              filename_ending=filename, d_time=d_time_train, domain_range=domain_range, results_dict=results_dict)
-            else:
-                world_size = torch.cuda.device_count()
-                mp.spawn(trainer, args=(input_training, target_training, target_validation,
-                            input_validation, training_parameters, data_parameters,
-                            data_parameters['num_samples_min'], training_parameters['lr_schedule'], objective, 
-                            directory, d_time_train, world_size), nprocs=world_size)
-
-                model = torch.load(os.path.join(directory,
-                                f'Datetime_{d_time_train}_parameters_{filename}.pt'), map_location=device)
+            model, filename = trainer(train_loader, val_loader, directory=directory, training_parameters=training_parameters,
+                                        data_parameters = data_parameters,logging=logging, filename_ending=filename, d_time=d_time_train,
+                                        domain_range=domain_range, results_dict=results_dict)
                         
             t_1 = time()
             t_training = np.round(t_1 - t_0, 3)
@@ -214,7 +223,7 @@ if __name__ == '__main__':
             test_loader = DataLoader(test_data, batch_size=eval_batch_size, shuffle=True)
             
             start_evaluation(model, training_parameters, data_parameters, train_loader, val_loader, 
-                            test_loader, results_dict, device, domain_range, logging, filename)
+                            test_loader, results_dict, device, domain_range, logging, filename, laplace_train_loader=laplace_train_loader)
             append_results_dict(results_dict, data_parameters, training_parameters, t_training)
             results_pd = pd.DataFrame(results_dict)
             results_pd.T.to_csv(os.path.join(directory, 'test.csv'))
