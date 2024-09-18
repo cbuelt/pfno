@@ -6,6 +6,6 @@ conda install wandb -c conda-forge
 conda install -c conda-forge xarray dask netCDF4 bottleneck
 conda install h5py
 pip install neuraloperator
-pip install git+https://github.com/aleximmer/laplace.git@0.2
+pip install laplace-torch
 pip install torch-harmonics
 conda install -c conda-forge py-pde

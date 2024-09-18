@@ -39,8 +39,8 @@ def process_experiment(experiment: str, model: str) -> pd.DataFrame:
     for i,f in enumerate(subfolders):
         results = pd.read_csv(os.path.join(f"results/{results_dir}/{experiment}/{model}/{f}", "test.csv"), index_col=0)
         results = results.loc[metrics].astype("float32")
-        mean = results.mean(axis = 1).round(2)
-        std = results.std(axis = 1).round(3)
+        mean = results.mean(axis = 1).round(4)
+        std = results.std(axis = 1).round(4)
         # Assign the mean and std to the correct MultiIndex in the DataFrame
 
         results_df[(methods[i], "Mean")] = mean
