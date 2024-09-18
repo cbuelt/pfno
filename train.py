@@ -158,7 +158,7 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
                 running_loss += batch_loss
                 grad_norm += batch_grad_norm
                         
-            if lr_schedule == 'step' and early_stopper.counter > 5:
+            if lr_schedule == 'step' and early_stopper.counter > 5 and scheduler.get_last_lr() > 0.0001:
                 # stepwise scheduler only happens once per epoch and only if the validation has not been going down for at least 10 epochs
                 scheduler.step()
                 logging.info(f'Learning rate reduced to: {scheduler.get_last_lr()}')
