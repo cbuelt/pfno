@@ -159,6 +159,12 @@ class SSWEGenerator:
 
 
 def simulate(config: dict, var: str = "train"):
+    """ Simulation method for generating SSWE data.
+
+    Args:
+        config (dict): The config file for the simulation.
+        var (str, optional): Whether to generate train or test data. Defaults to "train".
+    """
     pde_config = config["pde"]
     sim_config = config[var]
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")

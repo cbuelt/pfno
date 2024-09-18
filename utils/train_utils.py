@@ -2,10 +2,11 @@ from time import time
 from itertools import product
 
 import torch
+import torch.nn as nn
 
-from torch.distributed import destroy_process_group
 import torch.distributed as dist
 import numpy as np
+import os
 
 import utils.losses as losses
 from models import FNO, PNO_Wrapper, UNO, PFNO, PUNO, SFNO, PSFNO
@@ -13,19 +14,20 @@ from models import LA_Wrapper
 import random
 
 
-def autoregressive_step(uncertainty_quantification, model, a): 
-    if uncertainty_quantification == 'laplace':
+def autoregressive_step(uncertainty_quantification, model, a):
+    if uncertainty_quantification == "laplace":
         out = model.model(a)
     elif uncertainty_quantification == "dropout":
         model.eval()
         out = model(a)
     elif uncertainty_quantification == "scoring-rule-reparam":
         model.eval()
-        out = model(a).mean(axis = -1)
+        out = model(a).mean(axis=-1)
     else:
         model.train()
-        out = model(a).mean(axis = -1)
+        out = model(a).mean(axis=-1)
     return out
+
 
 def log_and_save_evaluation(value, key, results_dict, logging):
     value = np.round(value, decimals=5)
@@ -36,19 +38,31 @@ def log_and_save_evaluation(value, key, results_dict, logging):
 
 
 def checkpoint(model, filename):
+    """Save the model state dict to a file.
+
+    Args:
+        model (_type_): The torch model.
+        filename (_type_): The filename including the path to save the model.
+    """
     torch.save(model.state_dict(), filename)
     if isinstance(model, LA_Wrapper):
         model.save_state_dict(filename[:-3] + "_la_state.pt")
 
 
 def resume(model, filename):
+    """Load the model state dict from a file.
+
+    Args:
+        model (_type_): The torch model.
+        filename (_type_): The filename including the path to load the model.
+    """
     model.load_state_dict(torch.load(filename))
     if isinstance(model, LA_Wrapper):
         model.load_state_dict(torch.load(filename[:-3] + "_la_state.pt"))
 
 
 def get_criterion(training_parameters, domain_range, d, device):
-    """ Get the criterion for the training.
+    """Get the criterion for the training.
 
     Args:
         training_parameters (_type_): Dictionary of training parameters
@@ -62,9 +76,13 @@ def get_criterion(training_parameters, domain_range, d, device):
         # If Spherical model, nlon and weights are passed
         nlon, train_weights, _, _ = domain_range
         if training_parameters["uncertainty_quantification"].startswith("scoring-rule"):
-            criterion = losses.EnergyScore(type="spherical", nlon = nlon, weights = train_weights.to(device))
+            criterion = losses.EnergyScore(
+                type="spherical", nlon=nlon, weights=train_weights.to(device)
+            )
         else:
-            criterion = losses.SphericalL2Loss(nlon = nlon, weights = train_weights.to(device))
+            criterion = losses.SphericalL2Loss(
+                nlon=nlon, weights=train_weights.to(device)
+            )
     else:
         if training_parameters["uncertainty_quantification"].startswith("scoring-rule"):
             criterion = losses.EnergyScore(d=d, p=2, type="lp", L=domain_range)
@@ -172,17 +190,6 @@ def setup_model(training_parameters, device, in_channels, out_channels):
         return hidden_model.to(device)
 
 
-def scheduler_step(scheduler, optimizer, epoch):
-    before_lr = optimizer.param_groups[0]["lr"]
-    scheduler.step()
-    after_lr = optimizer.param_groups[0]["lr"]
-    if before_lr != after_lr:
-        print(
-            "[time: %d] Epoch %d: SGD lr %.8f -> %.8f"
-            % (time(), epoch, before_lr, after_lr)
-        )
-
-
 def predict_data_loader(net, dataloader, num_samples_min, device):
     prediction_list = []
     target_list = []
@@ -246,9 +253,3 @@ def get_hyperparameters_combination(hp_dict, except_keys=[]):
     ]
     return combination_dicts
 
-
-def subsample(data, max_size):
-    if max_size < len(data):
-        return random.sample(data, max_size)
-    else:
-        return data
