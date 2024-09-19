@@ -1,0 +1,55 @@
+,0,1,2
+dataset_name,KS,KS,KS
+max_training_set_size,10000,10000,10000
+downscaling_factor,1,1,1
+temporal_downscaling,2,2,2
+init_steps,20,20,20
+t_start,0,0,0
+pred_horizon,20,20,20
+seed,1,12,123
+model,UNO,UNO,UNO
+uncertainty_quantification,dropout,dropout,dropout
+batch_size,32,32,32
+n_epochs,1000,1000,1000
+early_stopping,10,10,10
+init,default,default,default
+learning_rate,0.001,0.001,0.001
+lr_schedule,step,step,step
+optimizer,adam,adam,adam
+gradient_clipping,1,1,1
+layer_normalization,True,True,True
+data_loader_pin_memory,False,False,False
+data_loader_num_workers,0,0,0
+distributed_training,False,False,False
+alpha,0.05,0.05,0.05
+n_samples_uq,100,100,100
+weight_decay,0,0,0
+dropout,0.15,0.15,0.15
+fourier_dropout,,,
+hidden_channels,16,16,16
+projection_channels,32,32,32
+lifting_channels,32,32,32
+n_samples,3,3,3
+uno_out_channels,"[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]"
+uno_scalings,"[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]"
+uno_n_modes,"[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]"
+t_training,8131.183,10305.265,10671.765
+NumberParameters,1687601,1687601,1687601
+MSETrain,0.94195,0.94153,0.94172
+EnergyScoreTrain,0.84577,0.84555,0.84569
+CRPSTrain,0.71344,0.71266,0.7129
+Gaussian NLLTrain,605.18461,432.43654,536.0314
+CoverageTrain,0.2008,0.20125,0.20131
+IntervalWidthTrain,0.41198,0.41259,0.41281
+MSEValidation,0.94432,0.94408,0.94411
+EnergyScoreValidation,0.84859,0.84851,0.84842
+CRPSValidation,0.71592,0.71534,0.71539
+Gaussian NLLValidation,603.40753,433.0139,535.56308
+CoverageValidation,0.19875,0.19906,0.19935
+IntervalWidthValidation,0.41029,0.41088,0.4115
+MSETest,0.94399,0.94358,0.94375
+EnergyScoreTest,0.84816,0.84787,0.84807
+CRPSTest,0.71581,0.71494,0.71524
+Gaussian NLLTest,608.48186,435.50593,540.09484
+CoverageTest,0.19871,0.19936,0.19914
+IntervalWidthTest,0.41027,0.41107,0.41112
