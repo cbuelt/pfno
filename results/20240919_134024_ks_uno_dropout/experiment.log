@@ -1,0 +1,23 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:: mem (CPU python)=576.546875MB; mem (CPU total)=971.71875MB
+INFO:root:############### Starting experiment with config file ks/uno_dropout.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'KS', 'max_training_set_size': 10000, 'downscaling_factor': 1, 'temporal_downscaling': 2, 'init_steps': 20, 't_start': 0, 'pred_horizon': 20}
+INFO:root:After loading the datasets: mem (CPU python)=12456.0859375MB; mem (CPU total)=982.08984375MB
+INFO:root:###1 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 1, 'model': 'UNO', 'uncertainty_quantification': 'dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.15, 'fourier_dropout': None, 'hidden_channels': 16, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'uno_out_channels': [16, 32, 64, 128, 64, 32, 16], 'uno_scalings': [[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]], 'uno_n_modes': [[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=12456.0859375MB; mem (CPU total)=981.59765625MB
+INFO:root:NumberParameters: 1687601
+INFO:root:GPU memory allocated: 23068672
+INFO:root:After setting up the model: mem (CPU python)=12456.0859375MB; mem (CPU total)=2186.09375MB
+INFO:root:Training starts now.
+INFO:root:At the start of the epoch: mem (CPU python)=12456.0859375MB; mem (CPU total)=2195.265625MB
+INFO:root:[    1] Training loss: 1.01177202, Validation loss: 1.00114928, Gradient norm: 0.03093197
+INFO:root:At the start of the epoch: mem (CPU python)=12456.0859375MB; mem (CPU total)=3374.4765625MB
+INFO:root:[    2] Training loss: 0.99409220, Validation loss: 0.99092839, Gradient norm: 0.05182582
+INFO:root:At the start of the epoch: mem (CPU python)=12456.0859375MB; mem (CPU total)=3413.2421875MB
+INFO:root:[    3] Training loss: 0.98779604, Validation loss: 0.98736556, Gradient norm: 0.05582589
+INFO:root:At the start of the epoch: mem (CPU python)=12456.0859375MB; mem (CPU total)=3451.30859375MB
+INFO:root:[    4] Training loss: 0.98510302, Validation loss: 0.98548283, Gradient norm: 0.05712546
+INFO:root:At the start of the epoch: mem (CPU python)=12456.0859375MB; mem (CPU total)=3489.4140625MB
