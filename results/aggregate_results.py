@@ -16,7 +16,7 @@ def get_metrics():
 
 def extract_name(folder_name):
     parts = folder_name.split('_')
-    if len(parts) > 5:
+    if parts[-2] == "sr":
         return parts[-2] + '_' + parts[-1]  # Extract the last two parts (e.g., 'sr_reparam')
     else:
         return parts[-1] 
@@ -56,7 +56,7 @@ def create_latex_table(results_df: pd.DataFrame, experiment: str, model: str) ->
     # Create a new DataFrame with the method as the index and metrics as columns
     for metric in metrics:
         formatted_df[metric] = [
-            f"{results_df.loc[metric, (method, 'Mean')]:.3f}"
+            f"\\makecell{{{results_df.loc[metric, (method, 'Mean')]:.4f} \\\\ ($\\pm$ {results_df.loc[metric, (method, 'Std')]:.4f})}}"
             for method in methods
         ]
     formatted_df.index = methods
