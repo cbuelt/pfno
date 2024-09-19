@@ -1,8 +1,26 @@
+# This file provides the implementation of the probabilistic neural operator.
+# Parts of this code are adapted from https://github.com/neuraloperator/neuraloperator.
+
+# MIT License
+
+# Copyright (c) 2023 NeuralOperator developers
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import os
 import sys
+
 sys.path.append(os.getcwd())
 from models.layers import FNOBlocks, SpectralConv, MLP
 from models.spherical_layers import SphericalConv
@@ -14,8 +32,13 @@ from neuralop.models.fno import partialclass
 
 
 class PNO_Wrapper(nn.Module):
+    """
+    Takes a model and wraps it to generate n_samples from the predictive distribution.
+    The model should be inherently stochastic (e.g. via dropout), otherwise all created samples will be identical.
+    """
+
     def __init__(self, model: nn.Module, n_samples: int = 3):
-        """ Takes a deterministic model and wraps it to generate n_samples from the predictive distribution.
+        """Initiliaze the PNO_Wrapper.
 
         Args:
             model (nn.Module): Neural network.
@@ -25,18 +48,16 @@ class PNO_Wrapper(nn.Module):
         self.model = model
         self.n_samples = n_samples
 
-    def forward(self, input, n_samples: int = None):
-        """
-        Forward pass through the network self.n_samples times
+    def forward(self, input: torch.Tensor, n_samples: int = None) -> torch.Tensor:
+        """_summary_
 
         Args:
-            _input: torch Tensor input to the network
+            input (torch.Tensor): Input to the network.
+            n_samples (int, optional): Number of samples to generate. Defaults to None.
 
         Returns:
-            Outputs of the network, stacked along the last dimension
-            Shape is therefore [batch, out_size, n_samples].
+            torch.Tensor: Samples from the prdictive distribution.
         """
-
         if n_samples is None:
             n_samples = self.n_samples
 
@@ -44,22 +65,26 @@ class PNO_Wrapper(nn.Module):
 
         # stack along the second dimension and add a last dimension if missing.
         return torch.atleast_3d(torch.stack(outputs, dim=-1))
-    
 
 
-class PFNO(BaseModel, name='PFNO'):
+class PFNO(BaseModel, name="PFNO"):
+    """
+    Probabilistic Fourier Neural Operator (PFNO) model.
+    The model is a probabilistic version of the Fourier Neural Operator (FNO) model that utilizes the repametrization
+    in the projection layers to generate samples from the predictive distribution.
+    """
     def __init__(
         self,
         n_modes,
         hidden_channels,
-        n_samples = 3,
+        n_samples=3,
         in_channels=3,
         out_channels=1,
         lifting_channels=256,
         projection_channels=256,
         n_layers=4,
-        dropout = None,
-        fourier_dropout = None,
+        dropout=None,
+        fourier_dropout=None,
         output_scaling_factor=None,
         max_n_modes=None,
         fno_block_precision="full",
@@ -207,7 +232,7 @@ class PFNO(BaseModel, name='PFNO'):
             non_linearity=non_linearity,
         )
 
-    def forward(self, x, output_shape=None, n_samples = None, **kwargs):
+    def forward(self, x, output_shape=None, n_samples=None, **kwargs):
         """TFNO's forward pass
 
         Parameters
@@ -225,9 +250,9 @@ class PFNO(BaseModel, name='PFNO'):
             n_samples = self.n_samples
 
         if output_shape is None:
-            output_shape = [None]*self.n_layers
+            output_shape = [None] * self.n_layers
         elif isinstance(output_shape, tuple):
-            output_shape = [None]*(self.n_layers - 1) + [output_shape]
+            output_shape = [None] * (self.n_layers - 1) + [output_shape]
 
         x = self.lifting(x)
 
@@ -242,7 +267,7 @@ class PFNO(BaseModel, name='PFNO'):
 
         # Reparametrization trick
         mu = self.mu(x).unsqueeze(-1)
-        sigma = F.softplus(self.sigma(x)).unsqueeze(-1) +1e-6
+        sigma = F.softplus(self.sigma(x)).unsqueeze(-1) + 1e-6
         x = mu + sigma * torch.randn(*mu.shape[:-1], n_samples).to(x.device)
 
         return x
@@ -257,19 +282,23 @@ class PFNO(BaseModel, name='PFNO'):
         self._n_modes = n_modes
 
 
-
 class PUNO(nn.Module):
+    """
+    Probabilistic U-shaped Neural Operator (PUNO) model.
+    The model is a probabilistic version of the U-shaped Neural Operator (UNO) model that utilizes the repametrization
+    in the projection layers to generate samples from the predictive distribution.
+    """
     def __init__(
         self,
         in_channels,
         out_channels,
         hidden_channels,
-        n_samples = 3,
+        n_samples=3,
         lifting_channels=256,
         projection_channels=256,
         n_layers=4,
-        dropout = None,
-        fourier_dropout = None,
+        dropout=None,
+        fourier_dropout=None,
         uno_out_channels=None,
         uno_n_modes=None,
         uno_scalings=None,
@@ -355,7 +384,7 @@ class PUNO(nn.Module):
             for i in range(
                 0,
                 n_layers // 2,
-            ):  
+            ):
                 # example, if n_layers = 5, then 4:0, 3:1
                 self.horizontal_skips_map[n_layers - i - 1] = i
         # self.uno_scalings may be a 1d list specifying uniform scaling factor at each layer
@@ -457,7 +486,7 @@ class PUNO(nn.Module):
             out_channels=out_channels,
             hidden_channels=self.projection_channels,
             n_layers=2,
-            dropout_rate = self.dropout,
+            dropout_rate=self.dropout,
             non_linearity=non_linearity,
         )
 
@@ -466,11 +495,11 @@ class PUNO(nn.Module):
             out_channels=out_channels,
             hidden_channels=self.projection_channels,
             n_layers=2,
-            dropout_rate = self.dropout,
+            dropout_rate=self.dropout,
             non_linearity=non_linearity,
         )
 
-    def forward(self, x, n_samples = None,**kwargs):
+    def forward(self, x, n_samples=None, **kwargs):
         if n_samples is None:
             n_samples = self.n_samples
 
@@ -486,7 +515,7 @@ class PUNO(nn.Module):
         skip_outputs = {}
         cur_output = None
         for layer_idx in range(self.n_layers):
-            
+
             if layer_idx in self.horizontal_skips_map.keys():
                 skip_val = skip_outputs[self.horizontal_skips_map[layer_idx]]
                 output_scaling_factors = [
@@ -505,7 +534,6 @@ class PUNO(nn.Module):
             if layer_idx in self.horizontal_skips_map.values():
                 skip_outputs[layer_idx] = self.horizontal_skips[str(layer_idx)](x)
 
-
         if self.domain_padding is not None:
             x = self.domain_padding.unpad(x)
 
@@ -515,26 +543,7 @@ class PUNO(nn.Module):
         x = mu + sigma * torch.randn(*mu.shape[:-1], n_samples).to(x.device)
 
         return x
-    
+
+
 # SFNO
 PSFNO = partialclass("PSFNO", PFNO, conv_module=SphericalConv)
-
-
-# Main method
-if __name__ == '__main__':
-    # Create a model
-    model = PUNO(4,1, projection_channels=32, lifting_channels=16, hidden_channels=8, uno_out_channels = [16, 32, 64, 128, 64, 32],
-                uno_n_modes= [[6,20,20],[6,14,14],[6,6,6], [6,6,6], [6,6,6], [6,14,14]], uno_scalings=  [[1.0,0.5,0.5], [1.0,0.5,0.5], [1.0,1.0,1.0], [1.0,1.0,1.0], [1.0,2.0,2.0], [2.0,2.0,2.0]],
-                dropout = 0.2, fourier_dropout=0.4)
-    x = torch.randn(3, 4, 5, 900, 900)
-    print(f"Memory requirements of x: {x.nelement() * x.element_size()/10e9} Gb")
-
-    out = model(x)
-    print(f"Memory requirements of pred: {out.nelement() * out.element_size()/10e9} Gb")
-    print(out.shape)
-    print(out.dtype)
-    from neuralop.utils import count_model_params
-    n_params = count_model_params(model)
-    print(f'\nOur model has {n_params} parameters.')
-
-

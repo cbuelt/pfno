@@ -1,6 +1,20 @@
 # This file provides the implementation of the U-shaped Fourier neural operator.
 # The code is adapted from https://github.com/neuraloperator/neuraloperator.
 
+# MIT License
+
+# Copyright (c) 2023 NeuralOperator developers
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
@@ -252,17 +266,3 @@ class UNO(nn.Module):
         x = self.projection(x)
         return x
     
-
-if __name__ == "__main__":
-    # Create a model
-    model = UNO(3,1, projection_channels=32, lifting_channels=16, hidden_channels=8, uno_out_channels = [16, 32, 64, 128, 64, 32],
-                uno_n_modes= [[20,20],[14,14],[6,6], [6,6], [6,6], [14,14]], uno_scalings=  [[0.75,0.75], [0.67,0.67], [0.5,0.5], [1.0,1.0], [2.0,2.0], [1.5,1.5]],
-                dropout = 0.2, fourier_dropout=0.4)
-    x = torch.randn(2, 3, 64, 64)
-
-    out = model(x)
-    print(out.shape)
-    print(out.dtype)
-    from neuralop.utils import count_model_params
-    n_params = count_model_params(model)
-    print(f'\nOur model has {n_params} parameters.')

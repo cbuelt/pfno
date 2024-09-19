@@ -1,6 +1,20 @@
 # This file provides the implementation of the Fourier neural operator.
 # The code is adapted from https://github.com/neuraloperator/neuraloperator.
 
+# MIT License
+
+# Copyright (c) 2023 NeuralOperator developers
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
 import torch
 import torch.nn.functional as F
 import os
@@ -202,17 +216,6 @@ class FNO(BaseModel, name='FNO'):
         self.fno_blocks.n_modes = n_modes
         self._n_modes = n_modes
 
-
 # SFNO
 SFNO = partialclass("SFNO", FNO, factorization="dense", conv_module=SphericalConv)
 
-# Main method
-if __name__ == "__main__":
-    # Create a model
-    model = FNO(n_modes = (12,), hidden_channels = 64, in_channels = 2,
-                  out_channels = 2, n_layers = 4, dropout_rate=None, factorization = "tucker", rank = 0.6)
-    x = torch.randn(5, 2, 128)
-
-    out = model(x)
-    print(out.shape)
-    print(out.dtype)

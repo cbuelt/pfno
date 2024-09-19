@@ -1,11 +1,8 @@
 import os
-
 import torch
 from torch import optim
 import matplotlib.pyplot as plt
-
 from utils import train_utils
-
 import resource
 import psutil
 import gc
@@ -76,11 +73,8 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
     in_channels = next(iter(train_loader))[0].shape[1]
     out_channels = next(iter(train_loader))[1].shape[1]
     
-    model = train_utils.setup_model(training_parameters, device, in_channels, out_channels)
-        
-    if training_parameters['distributed_training']:
-        model = DDP(model, device_ids=[gpu_id])
-    
+    model = train_utils.setup_model(training_parameters, device, in_channels, out_channels)        
+   
     if training_parameters['init'] != 'default':
         train_utils.initialize_weights(model, training_parameters['init'])
 
