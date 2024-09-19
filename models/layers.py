@@ -1,6 +1,20 @@
 # This file provides the implementation of the FNOBlocks and SpectralConv classes as layers of the neuraloperator.
 # The code is adapted from https://github.com/neuraloperator/neuraloperator.
 
+# MIT License
+
+# Copyright (c) 2023 NeuralOperator developers
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
 from typing import List, Optional, Tuple, Union
 import torch
 import torch.nn as nn
@@ -590,13 +604,3 @@ class FNOBlocks(nn.Module):
 
     def __getitem__(self, indices):
         return self.get_block(indices)
-
-
-# Create a spectral conv layer
-if __name__ == "__main__":    
-    layer = FNOBlocks(in_channels=32, out_channels=32, n_modes=(16,16), factorization = "tucker", rank = 0.4, n_layers = 4, dropout = 0.4)
-
-    x = torch.rand(5, 32, 64, 64)
-    y = layer(x)
-    print(y.shape)
-    print(y.dtype)

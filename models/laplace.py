@@ -1,3 +1,20 @@
+# This file provides the implementation of the Laplace approximation for the neural network.
+# The code is adapted from https://github.com/aleximmer/Laplace.
+
+# MIT License
+
+# Copyright (c) 2021 Alex Immer
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
 from torch.nn.utils import vector_to_parameters
 from laplace import Laplace
 import torch
@@ -23,8 +40,8 @@ class LA_Wrapper(torch.nn.Module):
     -------
     fit(train_loader)
         Fits the Laplace approximation to the training data
-    optimize_precision()
-        Optimizes the prior precision
+    optimize()
+        Optimizes the prior precision and prior noise sigma
     parameter_samples()
         Generate samples from the weight distribution
     predictive_samples(x)
@@ -70,7 +87,7 @@ class LA_Wrapper(torch.nn.Module):
         """
         self.la.fit(train_loader)
         if self.optimize:
-            self.optimize_precision()
+            self.optimize()
 
     def save_state_dict(self, path: str):
         """Saves the state dictionary.
@@ -88,15 +105,18 @@ class LA_Wrapper(torch.nn.Module):
         """
         self.la.load_state_dict(torch.load(path))
 
-    def optimize_precision(self):
+    def optimize(self):
         """Optimize prior precision of the laplace approximation."""
-        #self.la.optimize_prior_precision(pred_type="nn", method="marglik")
 
-        log_prior, log_sigma = torch.ones(1, requires_grad=True), torch.ones(1, requires_grad=True)
+        log_prior, log_sigma = torch.ones(1, requires_grad=True), torch.ones(
+            1, requires_grad=True
+        )
         hyper_optimizer = torch.optim.Adam([log_prior, log_sigma], lr=5e-2)
         for i in range(500):
             hyper_optimizer.zero_grad()
-            neg_marglik = - self.la.log_marginal_likelihood(log_prior.exp(), log_sigma.exp())
+            neg_marglik = -self.la.log_marginal_likelihood(
+                log_prior.exp(), log_sigma.exp()
+            )
             neg_marglik.backward()
             hyper_optimizer.step()
 

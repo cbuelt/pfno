@@ -1,11 +1,8 @@
 import os
-
 import torch
 from torch import optim
 import matplotlib.pyplot as plt
-
 from utils import train_utils
-
 import resource
 import psutil
 import gc

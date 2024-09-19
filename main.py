@@ -19,7 +19,7 @@ import ast
 import shutil
 
 from data.datasets import DarcyFlowDataset, SWEDataset, KSDataset, ERA5Dataset, SSWEDataset
-from train import trainer
+from train import trainer, using
 from utils import train_utils
 from evaluate import start_evaluation
 

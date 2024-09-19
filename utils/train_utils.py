@@ -1,20 +1,24 @@
-from time import time
 from itertools import product
-
 import torch
 import torch.nn as nn
-
 import torch.distributed as dist
 import numpy as np
 import os
-
 import utils.losses as losses
 from models import FNO, PNO_Wrapper, UNO, PFNO, PUNO, SFNO, PSFNO
 from models import LA_Wrapper
-import random
 
 
-def autoregressive_step(uncertainty_quantification, model, a):
+def autoregressive_step(uncertainty_quantification:str, model:any, a:torch.Tensor)->torch.Tensor:
+    """ Method to perform an autoregressive step for the given model and input.
+    Args:
+        uncertainty_quantification (str): UQ method
+        model (any): Underlying neural network model
+        a (torch.Tensor): Input to the network
+
+    Returns:
+        torch.Tensor: Autoregressive step output
+    """
     if uncertainty_quantification == "laplace":
         out = model.model(a)
     elif uncertainty_quantification == "dropout":
@@ -29,7 +33,15 @@ def autoregressive_step(uncertainty_quantification, model, a):
     return out
 
 
-def log_and_save_evaluation(value, key, results_dict, logging):
+def log_and_save_evaluation(value:float, key:str, results_dict:dict, logging):
+    """ Method to log and save evaluation results.
+
+    Args:
+        value (float): Value to save
+        key (str): Results key
+        results_dict (dict): Results dictionary
+        logging (_type_): Logging object
+    """
     value = np.round(value, decimals=5)
     logging.info(f"{key}: {value}")
     if not key in results_dict.keys():
@@ -62,12 +74,13 @@ def resume(model, filename):
 
 
 def get_criterion(training_parameters, domain_range, d, device):
-    """Get the criterion for the training.
+    """ Get the criterion for the model training.
 
     Args:
         training_parameters (_type_): Dictionary of training parameters
         domain_range (_type_): Either list of domain range for LP based loss or nlon and weights for spherical loss
         d (_type_): Dimension of data
+        device (_type_): Device to run the model on.
 
     Returns:
         _type_: Loss criterion
@@ -104,7 +117,18 @@ def initialize_weights(model, init):
                 )
 
 
-def setup_model(training_parameters, device, in_channels, out_channels):
+def setup_model(training_parameters:dict, device, in_channels:int, out_channels:int):
+    """ Return the model specified by the training parameters.
+
+    Args:
+        training_parameters (dict): Dictionary of training parameters
+        device (_type_): Device to run the model on.
+        in_channels (int): Number of input channels.
+        out_channels (int): Number of output channels.
+
+    Returns:
+        _type_: Specified model
+    """
     if training_parameters["model"] == "FNO":
         if training_parameters["uncertainty_quantification"] == "scoring-rule-reparam":
             hidden_model = PFNO(
@@ -190,19 +214,10 @@ def setup_model(training_parameters, device, in_channels, out_channels):
         return hidden_model.to(device)
 
 
-def predict_data_loader(net, dataloader, num_samples_min, device):
-    prediction_list = []
-    target_list = []
-    with torch.no_grad():
-        for input, target in dataloader:
-            input = input.to(device)
-            target = target.to(device)
-            prediction_list.append(net(input))
-            target_list.append(target)
-    return torch.cat(prediction_list, dim=0), torch.cat(target_list, dim=0)
-
-
 class EarlyStopper:
+    """
+    Class for early stopping in training.
+    """
     def __init__(self, patience=1, min_delta=0):
         self.patience = patience
         self.min_delta = min_delta
@@ -220,21 +235,19 @@ class EarlyStopper:
         return False
 
 
-def ddp_setup(rank: int, world_size: int):
-    """
-    Args:
-        rank: Unique identifier of each process
-        world_size: Total number of processes
-    """
-    os.environ["MASTER_ADDR"] = "localhost"
-    os.environ["MASTER_PORT"] = "12355"
-    torch.cuda.set_device(rank)
-    dist.init_process_group(backend="nccl", rank=rank, world_size=world_size)
 
-
-# Gets all combinations of hyperparameters given in hp_dict and return a list,
-# leaves the list of the keys of except_keys untouched though
 def get_hyperparameters_combination(hp_dict, except_keys=[]):
+    """
+    Gets all combinations of hyperparameters given in hp_dict and return a list,
+    leaves the list of the keys of except_keys untouched though
+
+    Args:
+        hp_dict (_type_): Dictionary of hyperparameters
+        except_keys (list, optional): Key to except. Defaults to [].
+
+    Returns:
+        _type_: Dictionary of hyperparameter combinations.
+    """
     except_dict = {}
     for except_key in except_keys:
         if except_key in hp_dict.keys():
@@ -252,4 +265,3 @@ def get_hyperparameters_combination(hp_dict, except_keys=[]):
         for combination in all_combinations
     ]
     return combination_dicts
-

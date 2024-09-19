@@ -1,6 +1,5 @@
 import torch
 
-
 def generate_mcd_samples(
     model: torch.nn.Module, x: torch.Tensor, shape: tuple, n_samples: int = 100
 ) -> torch.Tensor:
