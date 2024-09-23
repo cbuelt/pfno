@@ -768,11 +768,6 @@ class SSWEDataset(Dataset):
 
 if __name__ == "__main__":
     data_dir = "data/SSWE/processed/"
-    dataset = SSWEDataset(data_dir, test=False, pred_horizon=2, return_all=True)
+    dataset = SSWEDataset(data_dir, test=True, pred_horizon=2, return_all=True)
     print(len(dataset))
-    train, target = dataset.__getitem__(10)
-    train_weights = dataset.get_train_weights()
-    eval_weights = dataset.get_eval_weights()
-    print(train_weights.shape, eval_weights.shape)
-    print(train_weights)
-    print(eval_weights)
+

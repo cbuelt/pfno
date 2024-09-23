@@ -70,7 +70,7 @@ class LA_Wrapper(torch.nn.Module):
         self.n_samples = n_samples
         self.method = method
         self.hessian_structure = hessian_structure
-        self.optimize = optimize
+        self.optimize= optimize
         self.model.eval()
         self.la = Laplace(
             self.model,
@@ -87,7 +87,7 @@ class LA_Wrapper(torch.nn.Module):
         """
         self.la.fit(train_loader)
         if self.optimize:
-            self.optimize()
+            self.optimize_parameters()
 
     def save_state_dict(self, path: str):
         """Saves the state dictionary.
@@ -105,14 +105,14 @@ class LA_Wrapper(torch.nn.Module):
         """
         self.la.load_state_dict(torch.load(path))
 
-    def optimize(self):
+    def optimize_parameters(self):
         """Optimize prior precision of the laplace approximation."""
 
         log_prior, log_sigma = torch.ones(1, requires_grad=True), torch.ones(
             1, requires_grad=True
         )
         hyper_optimizer = torch.optim.Adam([log_prior, log_sigma], lr=5e-2)
-        for i in range(500):
+        for _ in range(500):
             hyper_optimizer.zero_grad()
             neg_marglik = -self.la.log_marginal_likelihood(
                 log_prior.exp(), log_sigma.exp()
