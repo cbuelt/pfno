@@ -1,2 +1,2 @@
 #!/bin/sh
-python main.py -c ks/uno_dropout.ini
+python main.py -c era5/fno_sr_reparam2.ini
