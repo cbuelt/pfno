@@ -1,0 +1,45 @@
+,0,1,2,3,4,5,6,7,8,9,10,11,12
+dataset_name,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE
+max_training_set_size,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000
+pred_horizon,1,1,1,1,1,1,1,1,1,1,1,1,1
+train_horizon,1,1,1,1,1,1,1,1,1,2,2,2,2
+stepwise_evaluation,False,False,False,False,False,False,False,False,False,False,False,False,False
+seed,1234,1234,1234,1234,1234,1234,1234,1234,1234,1234,1234,1234,1234
+model,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO
+uncertainty_quantification,scoring-rule-reparam,scoring-rule-reparam,scoring-rule-reparam,scoring-rule-reparam,scoring-rule-reparam,scoring-rule-reparam,scoring-rule-reparam,scoring-rule-reparam,scoring-rule-reparam,scoring-rule-reparam,scoring-rule-reparam,scoring-rule-reparam,scoring-rule-reparam
+batch_size,32,32,32,32,32,32,32,32,32,32,32,32,32
+n_epochs,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000
+early_stopping,10,10,10,10,10,10,10,10,10,10,10,10,10
+init,default,default,default,default,default,default,default,default,default,default,default,default,default
+learning_rate,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
+lr_schedule,step,step,step,step,step,step,step,step,step,step,step,step,step
+optimizer,adam,adam,adam,adam,adam,adam,adam,adam,adam,adam,adam,adam,adam
+gradient_clipping,1,1,1,1,1,1,1,1,1,1,1,1,1
+layer_normalization,True,True,True,True,True,True,True,True,True,True,True,True,True
+data_loader_pin_memory,False,False,False,False,False,False,False,False,False,False,False,False,False
+data_loader_num_workers,0,0,0,0,0,0,0,0,0,0,0,0,0
+distributed_training,False,False,False,False,False,False,False,False,False,False,False,False,False
+alpha,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05
+n_samples_uq,100,100,100,100,100,100,100,100,100,100,100,100,100
+weight_decay,0,0,0,0,0,0,0,0,0,0,0,0,0
+dropout,0.001,0.005,0.01,0.02,0.05,0.1,0.15,0.2,0.3,0.001,0.005,0.01,0.02
+fourier_dropout,,,,,,,,,,,,,
+hidden_channels,32,32,32,32,32,32,32,32,32,32,32,32,32
+projection_channels,256,256,256,256,256,256,256,256,256,256,256,256,256
+lifting_channels,256,256,256,256,256,256,256,256,256,256,256,256,256
+n_modes,"(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)"
+n_samples,3,3,3,3,3,3,3,3,3,3,3,3,3
+t_training,4999.649,11966.352,8150.733,17231.233,8171.471,9737.773,10080.667,10709.014,9990.699,20131.633,35628.459,53060.764,44148.868
+NumberParameters,294054,294054,294054,294054,294054,294054,294054,294054,294054,294054,294054,294054,294054
+MSEValidation,0.27112,0.25361,0.34566,0.33547,0.36107,0.39514,0.40909,0.44055,0.49847,0.38435,0.37604,0.47038,0.48186
+EnergyScoreValidation,0.19081,0.17849,0.24326,0.23606,0.25408,0.27809,0.28788,0.31024,0.35157,0.27121,0.26531,0.33132,0.33955
+CRPSValidation,0.08851,0.08726,0.10455,0.0996,0.10938,0.1179,0.12735,0.13562,0.17109,0.151,0.15061,0.18622,0.18969
+Gaussian NLLValidation,7586612.33666,379489.74819,0.70272,0.22707,0.04074,0.06694,22805.32135,4.55731,74.4231,169269515.05854,43811241.68205,6840236569.45541,468172952.19184
+CoverageValidation,0.67841,0.65761,0.88084,0.8771,0.88822,0.90363,0.82767,0.82438,0.75118,0.10325,0.07403,0.02021,0.03429
+IntervalWidthValidation,0.4289,0.41167,0.68642,0.65268,0.74267,0.80945,0.78279,0.8222,0.87439,0.14835,0.1259,0.09186,0.11918
+MSETest,0.30554,0.28602,0.36376,0.354,0.37583,0.4061,0.41904,0.44762,0.50624,0.3024,0.29501,0.35979,0.36835
+EnergyScoreTest,0.2159,0.20171,0.25605,0.24915,0.26445,0.28585,0.29485,0.3153,0.35731,0.2159,0.20919,0.25399,0.25972
+CRPSTest,0.10016,0.09768,0.11083,0.10611,0.11462,0.12171,0.1308,0.13818,0.1742,0.11253,0.11279,0.13863,0.14162
+Gaussian NLLTest,4581020.41138,394635.71411,0.99073,0.76299,0.15477,0.09575,15611.7828,4.29383,64.72498,44470583.28,11885854.376,3632973312.0,580178469.888
+CoverageTest,0.66198,0.63694,0.87112,0.86476,0.87694,0.89915,0.82625,0.82109,0.74551,0.13868,0.09388,0.01727,0.0287
+IntervalWidthTest,0.43736,0.4207,0.6974,0.66178,0.7499,0.81712,0.79464,0.82514,0.87248,0.11781,0.09759,0.05555,0.07611
