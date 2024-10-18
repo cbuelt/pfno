@@ -34,7 +34,7 @@ msg = 'Start main'
 # initialize parser
 parser = argparse.ArgumentParser(description=msg)
 default_config = 'debug.ini'
-default_config = 'sswe/sfno.ini'
+default_config = 'era5/fno_sr_dropout.ini'
 
 parser.add_argument('-c', '--config', help='Name of the config file:', default=default_config)
 parser.add_argument('-f', '--results_folder', help='Name of the results folder (only use if you only want to evaluate the models):', default=None)
@@ -184,7 +184,7 @@ if __name__ == '__main__':
             np.random.seed(seed)
             torch.manual_seed(seed)
             
-            filename = f"{data_parameters['dataset_name']}_{training_parameters['model']}_{training_parameters['uncertainty_quantification']}_" + \
+            filename_ending = f"{data_parameters['dataset_name']}_{training_parameters['model']}_{training_parameters['uncertainty_quantification']}_" + \
                        f"dropout_{training_parameters['dropout']}"
             
             batch_size = training_parameters['batch_size']
@@ -201,20 +201,28 @@ if __name__ == '__main__':
                 laplace_train_loader = None
                         
             logging.info(using('After creating the dataloaders'))
-
-            t_0 = time()
-            d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
-            model, filename = trainer(train_loader, val_loader, directory=directory, training_parameters=training_parameters,
-                                        data_parameters = data_parameters,logging=logging, filename_ending=filename, d_time=d_time_train,
-                                        domain_range=domain_range, results_dict=results_dict)
-                        
-            t_1 = time()
-            t_training = np.round(t_1 - t_0, 3)
-            logging.info(f'Training the model took {t_training}s.')
-            t_0 = time()
-            torch.cuda.empty_cache()
-            t_1 = time()
-            logging.info(f'Emptying the cuda cache took {np.round(t_1 - t_0, 3)}s.')
+            if config['META'].get('only_validate', None):
+                in_channels = next(iter(train_loader))[0].shape[1]
+                out_channels = next(iter(train_loader))[1].shape[1]
+                
+                model = train_utils.setup_model(training_parameters, device, in_channels, out_channels)
+                filename = config['META']['only_validate']
+                train_utils.resume(model, os.path.join(results_path, filename))
+                t_training = -1
+            else:
+                t_0 = time()
+                d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+                model, filename = trainer(train_loader, val_loader, directory=directory, training_parameters=training_parameters,
+                                            data_parameters = data_parameters,logging=logging, filename_ending=filename_ending, d_time=d_time_train,
+                                            domain_range=domain_range, results_dict=results_dict)
+                            
+                t_1 = time()
+                t_training = np.round(t_1 - t_0, 3)
+                logging.info(f'Training the model took {t_training}s.')
+                t_0 = time()
+                torch.cuda.empty_cache()
+                t_1 = time()
+                logging.info(f'Emptying the cuda cache took {np.round(t_1 - t_0, 3)}s.')
             
             eval_batch_size = max(batch_size // 4, 1)
             
