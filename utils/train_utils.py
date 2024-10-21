@@ -70,7 +70,7 @@ def resume(model, filename):
     """
     model.load_state_dict(torch.load(filename))
     if isinstance(model, LA_Wrapper):
-        model.load_state_dict(torch.load(filename[:-3] + "_la_state.pt"))
+        model.load_la_state_dict(torch.load(filename[:-3] + "_la_state.pt"))
 
 
 def get_criterion(training_parameters, domain_range, d, device):
