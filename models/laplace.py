@@ -25,8 +25,6 @@ class LA_Wrapper(torch.nn.Module):
 
     Attributes
     ----------
-    model : torch.nn.Module
-        the underlying model
     n_samples : int
         number of samples to generate
     method : str
@@ -66,14 +64,13 @@ class LA_Wrapper(torch.nn.Module):
             optimize (bool, optional): Whether to optimize prior precision. Defaults to True.
         """
         super().__init__()
-        self.model = model
         self.n_samples = n_samples
         self.method = method
         self.hessian_structure = hessian_structure
         self.optimize= optimize
-        self.model.eval()
+        model.eval()
         self.la = Laplace(
-            self.model,
+            model,
             "regression",
             subset_of_weights=self.method,
             hessian_structure=self.hessian_structure,
@@ -97,13 +94,23 @@ class LA_Wrapper(torch.nn.Module):
         """
         torch.save(self.la.state_dict(), path)
 
-    def load_state_dict(self, path: str):
-        """Loads the state dictionary.
+    def load_state_dict(self, state_dict):
+        """Loads the model state dictionary.
 
         Args:
-            path (str): The path to load the state dictionary.
+            state_dict (str): The path to load the state dictionary.
         """
-        self.la.load_state_dict(torch.load(path))
+        self.la.model.load_state_dict(state_dict)
+
+    def load_la_state_dict(self, state_dict: dict):
+        """Loads the laplace state dictionary.
+
+        Args:
+            state_dict (str): The path to load the state dictionary.
+        """
+        self.la.load_state_dict(state_dict)
+
+
 
     def optimize_parameters(self):
         """Optimize prior precision of the laplace approximation."""
