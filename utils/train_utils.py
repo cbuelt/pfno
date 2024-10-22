@@ -20,7 +20,7 @@ def autoregressive_step(uncertainty_quantification:str, model:any, a:torch.Tenso
         torch.Tensor: Autoregressive step output
     """
     if uncertainty_quantification == "laplace":
-        out = model.model(a)
+        out = model.la.model(a)
     elif uncertainty_quantification == "dropout":
         model.eval()
         out = model(a)
