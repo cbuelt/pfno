@@ -240,7 +240,7 @@ def load_config(path: str) -> dict:
 if __name__ == "__main__":
     config_path = "data/generation/sswe_config.yaml"
     output_dir = "data/SSWE/processed"
-    torch.manual.seed(0)
+    torch.manual_seed(0)
     
     config = load_config(path = config_path)
     # Generate training data
