@@ -135,7 +135,7 @@ class LA_Wrapper(torch.nn.Module):
         """
         return self.la.sample()
 
-    def predictive_samples(self, x: torch.Tensor) -> torch.Tensor:
+    def predictive_samples(self, x: torch.Tensor, n_samples = None) -> torch.Tensor:
         """Generate samples from the predictive distribution.
 
         Args:
@@ -144,9 +144,12 @@ class LA_Wrapper(torch.nn.Module):
         Returns:
             torch.Tensor: Output tensor.
         """
+        if not n_samples:
+            n_samples = self.n_samples
+        
         prediction = list()
         feats = None
-        for sample in self.la.sample(self.n_samples):
+        for sample in self.la.sample(n_samples):
             vector_to_parameters(sample, self.la.model.last_layer.parameters())
 
             if feats is None:

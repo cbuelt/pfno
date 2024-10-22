@@ -31,7 +31,7 @@ def generate_samples(
     if uncertainty_quantification == "dropout":
         out = generate_mcd_samples(model, a, u.shape, n_samples=n_samples)
     elif uncertainty_quantification == "laplace":
-        out = model.predictive_samples(a)
+        out = model.predictive_samples(a, n_samples=n_samples)
     elif uncertainty_quantification.startswith("scoring-rule"):
         out = model(a, n_samples=n_samples)
     return out
@@ -297,10 +297,10 @@ def start_evaluation(
             "Test": test_loader,
         }
 
-    if training_parameters["uncertainty_quantification"] == "laplace":
+    if training_parameters["uncertainty_quantification"] == "laplace" and (not isinstance(model, LA_Wrapper)):
         model = LA_Wrapper(
             model,
-            n_samples=training_parameters["n_samples"],
+            n_samples=training_parameters["n_samples_uq"],
             method="last_layer",
             hessian_structure="full",
             optimize=True,
