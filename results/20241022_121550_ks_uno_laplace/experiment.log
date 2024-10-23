@@ -1,0 +1,241 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:: mem (CPU python)=577.546875MB; mem (CPU total)=1176.8359375MB
+INFO:root:############### Starting experiment with config file ks/uno_laplace.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'KS', 'max_training_set_size': 10000, 'downscaling_factor': 1, 'temporal_downscaling': 2, 'init_steps': 20, 't_start': 0, 'pred_horizon': 20}
+INFO:root:After loading the datasets: mem (CPU python)=12456.48046875MB; mem (CPU total)=1203.47265625MB
+INFO:root:###1 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'UNO', 'uncertainty_quantification': 'laplace', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.001, 'fourier_dropout': None, 'hidden_channels': 16, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240915_182949_Loss_KS_UNO_laplace_dropout_0.001.pt', 'uno_out_channels': [16, 32, 64, 128, 64, 32, 16], 'uno_scalings': [[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]], 'uno_n_modes': [[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=12456.48046875MB; mem (CPU total)=1203.2265625MB
+INFO:root:Starting evaluation: model UNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.93622
+INFO:root:EnergyScoreTrain: 0.82003
+INFO:root:CRPSTrain: 0.65981
+INFO:root:Gaussian NLLTrain: 22.42532
+INFO:root:CoverageTrain: 0.33493
+INFO:root:IntervalWidthTrain: 0.77395
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.94044
+INFO:root:EnergyScoreValidation: 0.82364
+INFO:root:CRPSValidation: 0.66306
+INFO:root:Gaussian NLLValidation: 22.4638
+INFO:root:CoverageValidation: 0.3352
+INFO:root:IntervalWidthValidation: 0.78108
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.93961
+INFO:root:EnergyScoreTest: 0.82224
+INFO:root:CRPSTest: 0.66205
+INFO:root:Gaussian NLLTest: 22.26873
+INFO:root:CoverageTest: 0.33642
+INFO:root:IntervalWidthTest: 0.78361
+INFO:root:After validation: mem (CPU python)=12456.48046875MB; mem (CPU total)=4360.0078125MB
+INFO:root:###2 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'UNO', 'uncertainty_quantification': 'laplace', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.001, 'fourier_dropout': None, 'hidden_channels': 16, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240915_200247_Loss_KS_UNO_laplace_dropout_0.001.pt', 'uno_out_channels': [16, 32, 64, 128, 64, 32, 16], 'uno_scalings': [[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]], 'uno_n_modes': [[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=12456.48046875MB; mem (CPU total)=4359.75390625MB
+INFO:root:Starting evaluation: model UNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.93262
+INFO:root:EnergyScoreTrain: 0.85397
+INFO:root:CRPSTrain: 0.68845
+INFO:root:Gaussian NLLTrain: 60.0738
+INFO:root:CoverageTrain: 0.21567
+INFO:root:IntervalWidthTrain: 0.45716
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.93807
+INFO:root:EnergyScoreValidation: 0.85905
+INFO:root:CRPSValidation: 0.69317
+INFO:root:Gaussian NLLValidation: 60.36408
+INFO:root:CoverageValidation: 0.21484
+INFO:root:IntervalWidthValidation: 0.46034
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.9373
+INFO:root:EnergyScoreTest: 0.85836
+INFO:root:CRPSTest: 0.69266
+INFO:root:Gaussian NLLTest: 59.9319
+INFO:root:CoverageTest: 0.21442
+INFO:root:IntervalWidthTest: 0.45927
+INFO:root:After validation: mem (CPU python)=12456.48046875MB; mem (CPU total)=4406.9140625MB
+INFO:root:###3 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'UNO', 'uncertainty_quantification': 'laplace', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.001, 'fourier_dropout': None, 'hidden_channels': 16, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240915_224148_Loss_KS_UNO_laplace_dropout_0.001.pt', 'uno_out_channels': [16, 32, 64, 128, 64, 32, 16], 'uno_scalings': [[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]], 'uno_n_modes': [[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=12456.48046875MB; mem (CPU total)=4406.9140625MB
+INFO:root:Starting evaluation: model UNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.9376
+INFO:root:EnergyScoreTrain: 0.83332
+INFO:root:CRPSTrain: 0.67222
+INFO:root:Gaussian NLLTrain: 26.46103
+INFO:root:CoverageTrain: 0.29556
+INFO:root:IntervalWidthTrain: 0.66179
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.94291
+INFO:root:EnergyScoreValidation: 0.83845
+INFO:root:CRPSValidation: 0.67676
+INFO:root:Gaussian NLLValidation: 26.73958
+INFO:root:CoverageValidation: 0.29381
+INFO:root:IntervalWidthValidation: 0.66323
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.94238
+INFO:root:EnergyScoreTest: 0.83746
+INFO:root:CRPSTest: 0.67615
+INFO:root:Gaussian NLLTest: 26.28768
+INFO:root:CoverageTest: 0.29512
+INFO:root:IntervalWidthTest: 0.66943
+INFO:root:After validation: mem (CPU python)=12456.48046875MB; mem (CPU total)=4448.90234375MB
+INFO:root:###4 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'UNO', 'uncertainty_quantification': 'laplace', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.001, 'fourier_dropout': None, 'hidden_channels': 16, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240916_021248_Loss_KS_UNO_laplace_dropout_0.001.pt', 'uno_out_channels': [16, 32, 64, 128, 64, 32, 16], 'uno_scalings': [[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]], 'uno_n_modes': [[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=12456.48046875MB; mem (CPU total)=4448.90234375MB
+INFO:root:Starting evaluation: model UNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.93826
+INFO:root:EnergyScoreTrain: 0.84866
+INFO:root:CRPSTrain: 0.68752
+INFO:root:Gaussian NLLTrain: 51.62348
+INFO:root:CoverageTrain: 0.24623
+INFO:root:IntervalWidthTrain: 0.53579
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.94338
+INFO:root:EnergyScoreValidation: 0.85324
+INFO:root:CRPSValidation: 0.69168
+INFO:root:Gaussian NLLValidation: 51.43205
+INFO:root:CoverageValidation: 0.24556
+INFO:root:IntervalWidthValidation: 0.53955
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.94229
+INFO:root:EnergyScoreTest: 0.85207
+INFO:root:CRPSTest: 0.6907
+INFO:root:Gaussian NLLTest: 50.99715
+INFO:root:CoverageTest: 0.24689
+INFO:root:IntervalWidthTest: 0.54133
+INFO:root:After validation: mem (CPU python)=12456.48046875MB; mem (CPU total)=4489.62890625MB
+INFO:root:###5 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'UNO', 'uncertainty_quantification': 'laplace', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.001, 'fourier_dropout': None, 'hidden_channels': 16, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240916_045804_Loss_KS_UNO_laplace_dropout_0.001.pt', 'uno_out_channels': [16, 32, 64, 128, 64, 32, 16], 'uno_scalings': [[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]], 'uno_n_modes': [[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=12456.48046875MB; mem (CPU total)=4489.62890625MB
+INFO:root:Starting evaluation: model UNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 1.01158
+INFO:root:EnergyScoreTrain: 0.90931
+INFO:root:CRPSTrain: 0.74463
+INFO:root:Gaussian NLLTrain: 34.06848
+INFO:root:CoverageTrain: 0.23815
+INFO:root:IntervalWidthTrain: 0.62207
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 1.01467
+INFO:root:EnergyScoreValidation: 0.91228
+INFO:root:CRPSValidation: 0.74734
+INFO:root:Gaussian NLLValidation: 34.1132
+INFO:root:CoverageValidation: 0.23709
+INFO:root:IntervalWidthValidation: 0.62201
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 1.01436
+INFO:root:EnergyScoreTest: 0.91115
+INFO:root:CRPSTest: 0.7463
+INFO:root:Gaussian NLLTest: 33.41231
+INFO:root:CoverageTest: 0.23953
+INFO:root:IntervalWidthTest: 0.62976
+INFO:root:After validation: mem (CPU python)=12456.48046875MB; mem (CPU total)=4532.23828125MB
+INFO:root:###6 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'UNO', 'uncertainty_quantification': 'laplace', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.001, 'fourier_dropout': None, 'hidden_channels': 16, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240916_075940_Loss_KS_UNO_laplace_dropout_0.001.pt', 'uno_out_channels': [16, 32, 64, 128, 64, 32, 16], 'uno_scalings': [[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]], 'uno_n_modes': [[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=12456.48046875MB; mem (CPU total)=4532.23828125MB
+INFO:root:Starting evaluation: model UNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.92945
+INFO:root:EnergyScoreTrain: 0.83598
+INFO:root:CRPSTrain: 0.6793
+INFO:root:Gaussian NLLTrain: 81.31654
+INFO:root:CoverageTrain: 0.25877
+INFO:root:IntervalWidthTrain: 0.53466
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.93476
+INFO:root:EnergyScoreValidation: 0.84135
+INFO:root:CRPSValidation: 0.68434
+INFO:root:Gaussian NLLValidation: 82.4033
+INFO:root:CoverageValidation: 0.25557
+INFO:root:IntervalWidthValidation: 0.53311
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.93396
+INFO:root:EnergyScoreTest: 0.84035
+INFO:root:CRPSTest: 0.68351
+INFO:root:Gaussian NLLTest: 82.13793
+INFO:root:CoverageTest: 0.25661
+INFO:root:IntervalWidthTest: 0.53563
+INFO:root:After validation: mem (CPU python)=12456.48046875MB; mem (CPU total)=4574.7109375MB
+INFO:root:###7 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'UNO', 'uncertainty_quantification': 'laplace', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.001, 'fourier_dropout': None, 'hidden_channels': 16, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240916_114837_Loss_KS_UNO_laplace_dropout_0.001.pt', 'uno_out_channels': [16, 32, 64, 128, 64, 32, 16], 'uno_scalings': [[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]], 'uno_n_modes': [[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=12456.48046875MB; mem (CPU total)=4574.7109375MB
+INFO:root:Starting evaluation: model UNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.93182
+INFO:root:EnergyScoreTrain: 0.84552
+INFO:root:CRPSTrain: 0.68244
+INFO:root:Gaussian NLLTrain: 43.36681
+INFO:root:CoverageTrain: 0.24305
+INFO:root:IntervalWidthTrain: 0.51232
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.93711
+INFO:root:EnergyScoreValidation: 0.85057
+INFO:root:CRPSValidation: 0.68723
+INFO:root:Gaussian NLLValidation: 43.80302
+INFO:root:CoverageValidation: 0.24115
+INFO:root:IntervalWidthValidation: 0.51338
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.93639
+INFO:root:EnergyScoreTest: 0.84958
+INFO:root:CRPSTest: 0.68629
+INFO:root:Gaussian NLLTest: 43.33706
+INFO:root:CoverageTest: 0.24175
+INFO:root:IntervalWidthTest: 0.51499
+INFO:root:After validation: mem (CPU python)=12456.48046875MB; mem (CPU total)=4617.53125MB
+INFO:root:###8 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'UNO', 'uncertainty_quantification': 'laplace', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.001, 'fourier_dropout': None, 'hidden_channels': 16, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240916_155504_Loss_KS_UNO_laplace_dropout_0.001.pt', 'uno_out_channels': [16, 32, 64, 128, 64, 32, 16], 'uno_scalings': [[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]], 'uno_n_modes': [[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=12456.48046875MB; mem (CPU total)=4617.53125MB
+INFO:root:Starting evaluation: model UNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.94381
+INFO:root:EnergyScoreTrain: 0.8373
+INFO:root:CRPSTrain: 0.67726
+INFO:root:Gaussian NLLTrain: 31.38571
+INFO:root:CoverageTrain: 0.29562
+INFO:root:IntervalWidthTrain: 0.67619
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.94762
+INFO:root:EnergyScoreValidation: 0.84086
+INFO:root:CRPSValidation: 0.68055
+INFO:root:Gaussian NLLValidation: 31.51709
+INFO:root:CoverageValidation: 0.29383
+INFO:root:IntervalWidthValidation: 0.67599
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.947
+INFO:root:EnergyScoreTest: 0.83991
+INFO:root:CRPSTest: 0.68005
+INFO:root:Gaussian NLLTest: 31.37069
+INFO:root:CoverageTest: 0.29557
+INFO:root:IntervalWidthTest: 0.68145
+INFO:root:After validation: mem (CPU python)=12456.48046875MB; mem (CPU total)=4659.14453125MB
+INFO:root:###9 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'UNO', 'uncertainty_quantification': 'laplace', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'no', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.001, 'fourier_dropout': None, 'hidden_channels': 16, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240916_193359_Loss_KS_UNO_laplace_dropout_0.001.pt', 'uno_out_channels': [16, 32, 64, 128, 64, 32, 16], 'uno_scalings': [[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]], 'uno_n_modes': [[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=12456.48046875MB; mem (CPU total)=4659.14453125MB
+INFO:root:Starting evaluation: model UNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.94669
+INFO:root:EnergyScoreTrain: 0.87445
+INFO:root:CRPSTrain: 0.71304
+INFO:root:Gaussian NLLTrain: 139.42304
+INFO:root:CoverageTrain: 0.17917
+INFO:root:IntervalWidthTrain: 0.37773
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.95215
+INFO:root:EnergyScoreValidation: 0.87966
+INFO:root:CRPSValidation: 0.71777
+INFO:root:Gaussian NLLValidation: 139.61191
+INFO:root:CoverageValidation: 0.17793
+INFO:root:IntervalWidthValidation: 0.37893
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.95123
+INFO:root:EnergyScoreTest: 0.87892
+INFO:root:CRPSTest: 0.71704
+INFO:root:Gaussian NLLTest: 139.68433
+INFO:root:CoverageTest: 0.17813
+INFO:root:IntervalWidthTest: 0.37822
+INFO:root:After validation: mem (CPU python)=12456.48046875MB; mem (CPU total)=4701.609375MB

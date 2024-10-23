@@ -1,0 +1,241 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:: mem (CPU python)=581.05078125MB; mem (CPU total)=1168.74609375MB
+INFO:root:############### Starting experiment with config file ks/fno_laplace.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'KS', 'max_training_set_size': 10000, 'downscaling_factor': 1, 'temporal_downscaling': 2, 'init_steps': 20, 't_start': 0, 'pred_horizon': 20}
+INFO:root:After loading the datasets: mem (CPU python)=12460.359375MB; mem (CPU total)=1204.49609375MB
+INFO:root:###1 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_142933_Loss_KS_FNO_laplace_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=12460.359375MB; mem (CPU total)=1204.49609375MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.88788
+INFO:root:EnergyScoreTrain: 0.75554
+INFO:root:CRPSTrain: 0.62999
+INFO:root:Gaussian NLLTrain: 43.06006
+INFO:root:CoverageTrain: 0.35086
+INFO:root:IntervalWidthTrain: 0.73344
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.90396
+INFO:root:EnergyScoreValidation: 0.77029
+INFO:root:CRPSValidation: 0.64224
+INFO:root:Gaussian NLLValidation: 43.62062
+INFO:root:CoverageValidation: 0.34718
+INFO:root:IntervalWidthValidation: 0.7387
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.90576
+INFO:root:EnergyScoreTest: 0.77224
+INFO:root:CRPSTest: 0.64429
+INFO:root:Gaussian NLLTest: 44.04672
+INFO:root:CoverageTest: 0.34481
+INFO:root:IntervalWidthTest: 0.73775
+INFO:root:After validation: mem (CPU python)=12460.359375MB; mem (CPU total)=4364.71875MB
+INFO:root:###2 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_151907_Loss_KS_FNO_laplace_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=12460.359375MB; mem (CPU total)=4364.71484375MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.86924
+INFO:root:EnergyScoreTrain: 0.72097
+INFO:root:CRPSTrain: 0.60159
+INFO:root:Gaussian NLLTrain: 33.86997
+INFO:root:CoverageTrain: 0.40633
+INFO:root:IntervalWidthTrain: 0.86343
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.89231
+INFO:root:EnergyScoreValidation: 0.74304
+INFO:root:CRPSValidation: 0.61978
+INFO:root:Gaussian NLLValidation: 34.53051
+INFO:root:CoverageValidation: 0.39721
+INFO:root:IntervalWidthValidation: 0.86449
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.89219
+INFO:root:EnergyScoreTest: 0.74281
+INFO:root:CRPSTest: 0.61971
+INFO:root:Gaussian NLLTest: 34.71306
+INFO:root:CoverageTest: 0.39617
+INFO:root:IntervalWidthTest: 0.86015
+INFO:root:After validation: mem (CPU python)=12460.359375MB; mem (CPU total)=4410.6015625MB
+INFO:root:###3 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_161423_Loss_KS_FNO_laplace_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=12460.359375MB; mem (CPU total)=4410.6015625MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.88138
+INFO:root:EnergyScoreTrain: 0.74374
+INFO:root:CRPSTrain: 0.61997
+INFO:root:Gaussian NLLTrain: 42.44893
+INFO:root:CoverageTrain: 0.36775
+INFO:root:IntervalWidthTrain: 0.77009
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.90174
+INFO:root:EnergyScoreValidation: 0.76299
+INFO:root:CRPSValidation: 0.6358
+INFO:root:Gaussian NLLValidation: 42.88203
+INFO:root:CoverageValidation: 0.36084
+INFO:root:IntervalWidthValidation: 0.77248
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.90264
+INFO:root:EnergyScoreTest: 0.76428
+INFO:root:CRPSTest: 0.6371
+INFO:root:Gaussian NLLTest: 43.58004
+INFO:root:CoverageTest: 0.35846
+INFO:root:IntervalWidthTest: 0.76825
+INFO:root:After validation: mem (CPU python)=12460.359375MB; mem (CPU total)=4453.2421875MB
+INFO:root:###4 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_170642_Loss_KS_FNO_laplace_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=12460.359375MB; mem (CPU total)=4453.2421875MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.87716
+INFO:root:EnergyScoreTrain: 0.74883
+INFO:root:CRPSTrain: 0.61778
+INFO:root:Gaussian NLLTrain: 45.31393
+INFO:root:CoverageTrain: 0.35499
+INFO:root:IntervalWidthTrain: 0.70377
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.89558
+INFO:root:EnergyScoreValidation: 0.76661
+INFO:root:CRPSValidation: 0.63246
+INFO:root:Gaussian NLLValidation: 46.29849
+INFO:root:CoverageValidation: 0.34804
+INFO:root:IntervalWidthValidation: 0.70412
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.89595
+INFO:root:EnergyScoreTest: 0.76691
+INFO:root:CRPSTest: 0.63311
+INFO:root:Gaussian NLLTest: 45.83266
+INFO:root:CoverageTest: 0.34708
+INFO:root:IntervalWidthTest: 0.70421
+INFO:root:After validation: mem (CPU python)=12460.359375MB; mem (CPU total)=4495.1875MB
+INFO:root:###5 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_180044_Loss_KS_FNO_laplace_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=12460.359375MB; mem (CPU total)=4495.1875MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.89235
+INFO:root:EnergyScoreTrain: 0.75705
+INFO:root:CRPSTrain: 0.63488
+INFO:root:Gaussian NLLTrain: 58.82581
+INFO:root:CoverageTrain: 0.34234
+INFO:root:IntervalWidthTrain: 0.72591
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.91052
+INFO:root:EnergyScoreValidation: 0.77418
+INFO:root:CRPSValidation: 0.64883
+INFO:root:Gaussian NLLValidation: 59.19559
+INFO:root:CoverageValidation: 0.33726
+INFO:root:IntervalWidthValidation: 0.73002
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.91045
+INFO:root:EnergyScoreTest: 0.7746
+INFO:root:CRPSTest: 0.64927
+INFO:root:Gaussian NLLTest: 59.2734
+INFO:root:CoverageTest: 0.33552
+INFO:root:IntervalWidthTest: 0.7257
+INFO:root:After validation: mem (CPU python)=12460.359375MB; mem (CPU total)=4537.52734375MB
+INFO:root:###6 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_190715_Loss_KS_FNO_laplace_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=12460.359375MB; mem (CPU total)=4537.52734375MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.88491
+INFO:root:EnergyScoreTrain: 0.76536
+INFO:root:CRPSTrain: 0.62977
+INFO:root:Gaussian NLLTrain: 46.71748
+INFO:root:CoverageTrain: 0.33444
+INFO:root:IntervalWidthTrain: 0.66553
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.90333
+INFO:root:EnergyScoreValidation: 0.78326
+INFO:root:CRPSValidation: 0.64433
+INFO:root:Gaussian NLLValidation: 47.21636
+INFO:root:CoverageValidation: 0.32799
+INFO:root:IntervalWidthValidation: 0.66561
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.90618
+INFO:root:EnergyScoreTest: 0.78704
+INFO:root:CRPSTest: 0.64782
+INFO:root:Gaussian NLLTest: 48.06923
+INFO:root:CoverageTest: 0.32343
+INFO:root:IntervalWidthTest: 0.65849
+INFO:root:After validation: mem (CPU python)=12460.359375MB; mem (CPU total)=4578.68359375MB
+INFO:root:###7 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_202421_Loss_KS_FNO_laplace_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=12460.359375MB; mem (CPU total)=4578.68359375MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.88677
+INFO:root:EnergyScoreTrain: 0.75475
+INFO:root:CRPSTrain: 0.62278
+INFO:root:Gaussian NLLTrain: 40.12502
+INFO:root:CoverageTrain: 0.36462
+INFO:root:IntervalWidthTrain: 0.75112
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.90476
+INFO:root:EnergyScoreValidation: 0.7715
+INFO:root:CRPSValidation: 0.63623
+INFO:root:Gaussian NLLValidation: 40.54247
+INFO:root:CoverageValidation: 0.36024
+INFO:root:IntervalWidthValidation: 0.75605
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.90609
+INFO:root:EnergyScoreTest: 0.77338
+INFO:root:CRPSTest: 0.63803
+INFO:root:Gaussian NLLTest: 40.72593
+INFO:root:CoverageTest: 0.35772
+INFO:root:IntervalWidthTest: 0.75228
+INFO:root:After validation: mem (CPU python)=12460.359375MB; mem (CPU total)=4621.74609375MB
+INFO:root:###8 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_214915_Loss_KS_FNO_laplace_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=12460.359375MB; mem (CPU total)=4621.74609375MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.86365
+INFO:root:EnergyScoreTrain: 0.72552
+INFO:root:CRPSTrain: 0.60233
+INFO:root:Gaussian NLLTrain: 38.5161
+INFO:root:CoverageTrain: 0.38553
+INFO:root:IntervalWidthTrain: 0.78396
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.8899
+INFO:root:EnergyScoreValidation: 0.75081
+INFO:root:CRPSValidation: 0.62322
+INFO:root:Gaussian NLLValidation: 39.21889
+INFO:root:CoverageValidation: 0.37425
+INFO:root:IntervalWidthValidation: 0.78325
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.89178
+INFO:root:EnergyScoreTest: 0.7524
+INFO:root:CRPSTest: 0.62513
+INFO:root:Gaussian NLLTest: 39.53631
+INFO:root:CoverageTest: 0.37331
+INFO:root:IntervalWidthTest: 0.78298
+INFO:root:After validation: mem (CPU python)=12460.359375MB; mem (CPU total)=4664.31640625MB
+INFO:root:###9 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_231941_Loss_KS_FNO_laplace_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=12460.359375MB; mem (CPU total)=4664.31640625MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.90295
+INFO:root:EnergyScoreTrain: 0.78992
+INFO:root:CRPSTrain: 0.65147
+INFO:root:Gaussian NLLTrain: 71.28706
+INFO:root:CoverageTrain: 0.2996
+INFO:root:IntervalWidthTrain: 0.59787
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.91595
+INFO:root:EnergyScoreValidation: 0.80222
+INFO:root:CRPSValidation: 0.66169
+INFO:root:Gaussian NLLValidation: 72.1497
+INFO:root:CoverageValidation: 0.2965
+INFO:root:IntervalWidthValidation: 0.60004
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.91727
+INFO:root:EnergyScoreTest: 0.80507
+INFO:root:CRPSTest: 0.66414
+INFO:root:Gaussian NLLTest: 72.91031
+INFO:root:CoverageTest: 0.29161
+INFO:root:IntervalWidthTest: 0.59075
+INFO:root:After validation: mem (CPU python)=12460.359375MB; mem (CPU total)=4706.21484375MB

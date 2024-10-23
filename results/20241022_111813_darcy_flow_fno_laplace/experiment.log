@@ -1,0 +1,241 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:: mem (CPU python)=577.30078125MB; mem (CPU total)=1168.5234375MB
+INFO:root:############### Starting experiment with config file darcy_flow/fno_laplace.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'DarcyFlow', 'max_training_set_size': 10000, 'downscaling_factor': 2}
+INFO:root:After loading the datasets: mem (CPU python)=1997.296875MB; mem (CPU total)=1195.6875MB
+INFO:root:###1 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.02, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (12, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/darcy_flow/fno/20240915_013209_darcy_flow_fno_laplace/Datetime_20240915_013216_Loss_DarcyFlow_FNO_laplace_dropout_0.02.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=1997.296875MB; mem (CPU total)=1194.77734375MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.0388
+INFO:root:EnergyScoreTrain: 0.04962
+INFO:root:CRPSTrain: 0.04045
+INFO:root:Gaussian NLLTrain: -1.09326
+INFO:root:CoverageTrain: 0.99968
+INFO:root:IntervalWidthTrain: 0.58774
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.10671
+INFO:root:EnergyScoreValidation: 0.0811
+INFO:root:CRPSValidation: 0.06554
+INFO:root:Gaussian NLLValidation: -0.85517
+INFO:root:CoverageValidation: 0.96916
+INFO:root:IntervalWidthValidation: 0.56213
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.10798
+INFO:root:EnergyScoreTest: 0.08232
+INFO:root:CRPSTest: 0.06651
+INFO:root:Gaussian NLLTest: -0.84394
+INFO:root:CoverageTest: 0.96637
+INFO:root:IntervalWidthTest: 0.56264
+INFO:root:After validation: mem (CPU python)=4583.64453125MB; mem (CPU total)=4424.5234375MB
+INFO:root:###2 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.02, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (12, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/darcy_flow/fno/20240915_013209_darcy_flow_fno_laplace/Datetime_20240915_023029_Loss_DarcyFlow_FNO_laplace_dropout_0.02.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4583.6484375MB; mem (CPU total)=4424.5234375MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.06017
+INFO:root:EnergyScoreTrain: 0.05737
+INFO:root:CRPSTrain: 0.04664
+INFO:root:Gaussian NLLTrain: -1.03386
+INFO:root:CoverageTrain: 0.99769
+INFO:root:IntervalWidthTrain: 0.58071
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.09643
+INFO:root:EnergyScoreValidation: 0.07501
+INFO:root:CRPSValidation: 0.06135
+INFO:root:Gaussian NLLValidation: -0.86681
+INFO:root:CoverageValidation: 0.97909
+INFO:root:IntervalWidthValidation: 0.57097
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.09825
+INFO:root:EnergyScoreTest: 0.07618
+INFO:root:CRPSTest: 0.06235
+INFO:root:Gaussian NLLTest: -0.85682
+INFO:root:CoverageTest: 0.97634
+INFO:root:IntervalWidthTest: 0.56592
+INFO:root:After validation: mem (CPU python)=4670.06640625MB; mem (CPU total)=4509.8359375MB
+INFO:root:###3 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.02, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (12, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/darcy_flow/fno/20240915_013209_darcy_flow_fno_laplace/Datetime_20240915_032150_Loss_DarcyFlow_FNO_laplace_dropout_0.02.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4670.06640625MB; mem (CPU total)=4509.8359375MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.04627
+INFO:root:EnergyScoreTrain: 0.05214
+INFO:root:CRPSTrain: 0.04211
+INFO:root:Gaussian NLLTrain: -1.07988
+INFO:root:CoverageTrain: 0.99936
+INFO:root:IntervalWidthTrain: 0.58508
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.10771
+INFO:root:EnergyScoreValidation: 0.08116
+INFO:root:CRPSValidation: 0.06582
+INFO:root:Gaussian NLLValidation: -0.82706
+INFO:root:CoverageValidation: 0.96624
+INFO:root:IntervalWidthValidation: 0.56567
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.10978
+INFO:root:EnergyScoreTest: 0.0822
+INFO:root:CRPSTest: 0.06666
+INFO:root:Gaussian NLLTest: -0.81281
+INFO:root:CoverageTest: 0.96356
+INFO:root:IntervalWidthTest: 0.56388
+INFO:root:After validation: mem (CPU python)=4757.24609375MB; mem (CPU total)=4596.62109375MB
+INFO:root:###4 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.02, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (12, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/darcy_flow/fno/20240915_013209_darcy_flow_fno_laplace/Datetime_20240915_041702_Loss_DarcyFlow_FNO_laplace_dropout_0.02.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4757.24609375MB; mem (CPU total)=4598.375MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.03661
+INFO:root:EnergyScoreTrain: 0.04899
+INFO:root:CRPSTrain: 0.03967
+INFO:root:Gaussian NLLTrain: -1.12448
+INFO:root:CoverageTrain: 0.99961
+INFO:root:IntervalWidthTrain: 0.57881
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.10554
+INFO:root:EnergyScoreValidation: 0.07929
+INFO:root:CRPSValidation: 0.06511
+INFO:root:Gaussian NLLValidation: -0.82697
+INFO:root:CoverageValidation: 0.96603
+INFO:root:IntervalWidthValidation: 0.56511
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.10432
+INFO:root:EnergyScoreTest: 0.07857
+INFO:root:CRPSTest: 0.06445
+INFO:root:Gaussian NLLTest: -0.82984
+INFO:root:CoverageTest: 0.96735
+INFO:root:IntervalWidthTest: 0.56722
+INFO:root:After validation: mem (CPU python)=4843.390625MB; mem (CPU total)=4681.22265625MB
+INFO:root:###5 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.02, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (12, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/darcy_flow/fno/20240915_013209_darcy_flow_fno_laplace/Datetime_20240915_053201_Loss_DarcyFlow_FNO_laplace_dropout_0.02.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4843.390625MB; mem (CPU total)=4681.19140625MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.03081
+INFO:root:EnergyScoreTrain: 0.04918
+INFO:root:CRPSTrain: 0.03974
+INFO:root:Gaussian NLLTrain: -1.088
+INFO:root:CoverageTrain: 0.99973
+INFO:root:IntervalWidthTrain: 0.5979
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.09622
+INFO:root:EnergyScoreValidation: 0.07718
+INFO:root:CRPSValidation: 0.06184
+INFO:root:Gaussian NLLValidation: -0.8989
+INFO:root:CoverageValidation: 0.98251
+INFO:root:IntervalWidthValidation: 0.59017
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.0967
+INFO:root:EnergyScoreTest: 0.07728
+INFO:root:CRPSTest: 0.06187
+INFO:root:Gaussian NLLTest: -0.89927
+INFO:root:CoverageTest: 0.98001
+INFO:root:IntervalWidthTest: 0.5836
+INFO:root:After validation: mem (CPU python)=4929.56640625MB; mem (CPU total)=4766.32421875MB
+INFO:root:###6 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.02, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (12, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/darcy_flow/fno/20240915_013209_darcy_flow_fno_laplace/Datetime_20240915_073130_Loss_DarcyFlow_FNO_laplace_dropout_0.02.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4929.56640625MB; mem (CPU total)=4766.26171875MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.05174
+INFO:root:EnergyScoreTrain: 0.05382
+INFO:root:CRPSTrain: 0.04366
+INFO:root:Gaussian NLLTrain: -1.08243
+INFO:root:CoverageTrain: 0.99911
+INFO:root:IntervalWidthTrain: 0.58934
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.08973
+INFO:root:EnergyScoreValidation: 0.07096
+INFO:root:CRPSValidation: 0.0576
+INFO:root:Gaussian NLLValidation: -0.96947
+INFO:root:CoverageValidation: 0.98808
+INFO:root:IntervalWidthValidation: 0.56877
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.08871
+INFO:root:EnergyScoreTest: 0.07021
+INFO:root:CRPSTest: 0.05694
+INFO:root:Gaussian NLLTest: -0.95924
+INFO:root:CoverageTest: 0.98799
+INFO:root:IntervalWidthTest: 0.57145
+INFO:root:After validation: mem (CPU python)=5015.71875MB; mem (CPU total)=4850.51953125MB
+INFO:root:###7 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.02, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (12, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/darcy_flow/fno/20240915_013209_darcy_flow_fno_laplace/Datetime_20240915_085223_Loss_DarcyFlow_FNO_laplace_dropout_0.02.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=5015.71875MB; mem (CPU total)=4850.515625MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.03616
+INFO:root:EnergyScoreTrain: 0.04889
+INFO:root:CRPSTrain: 0.03962
+INFO:root:Gaussian NLLTrain: -1.1173
+INFO:root:CoverageTrain: 0.99959
+INFO:root:IntervalWidthTrain: 0.5798
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.09059
+INFO:root:EnergyScoreValidation: 0.07241
+INFO:root:CRPSValidation: 0.05846
+INFO:root:Gaussian NLLValidation: -0.95602
+INFO:root:CoverageValidation: 0.98413
+INFO:root:IntervalWidthValidation: 0.57018
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.09129
+INFO:root:EnergyScoreTest: 0.07303
+INFO:root:CRPSTest: 0.05892
+INFO:root:Gaussian NLLTest: -0.95118
+INFO:root:CoverageTest: 0.98149
+INFO:root:IntervalWidthTest: 0.56585
+INFO:root:After validation: mem (CPU python)=5104.6328125MB; mem (CPU total)=4938.90234375MB
+INFO:root:###8 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.02, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (12, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/darcy_flow/fno/20240915_013209_darcy_flow_fno_laplace/Datetime_20240915_103137_Loss_DarcyFlow_FNO_laplace_dropout_0.02.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=5104.6328125MB; mem (CPU total)=4938.87109375MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.03733
+INFO:root:EnergyScoreTrain: 0.0499
+INFO:root:CRPSTrain: 0.0405
+INFO:root:Gaussian NLLTrain: -1.08624
+INFO:root:CoverageTrain: 0.99955
+INFO:root:IntervalWidthTrain: 0.58835
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.10165
+INFO:root:EnergyScoreValidation: 0.07913
+INFO:root:CRPSValidation: 0.06369
+INFO:root:Gaussian NLLValidation: -0.8836
+INFO:root:CoverageValidation: 0.97549
+INFO:root:IntervalWidthValidation: 0.57217
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.10187
+INFO:root:EnergyScoreTest: 0.07894
+INFO:root:CRPSTest: 0.06345
+INFO:root:Gaussian NLLTest: -0.87886
+INFO:root:CoverageTest: 0.97504
+INFO:root:IntervalWidthTest: 0.57241
+INFO:root:After validation: mem (CPU python)=5190.94140625MB; mem (CPU total)=5023.3046875MB
+INFO:root:###9 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.02, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (12, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/darcy_flow/fno/20240915_013209_darcy_flow_fno_laplace/Datetime_20240915_122224_Loss_DarcyFlow_FNO_laplace_dropout_0.02.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=5190.94140625MB; mem (CPU total)=5023.265625MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.04259
+INFO:root:EnergyScoreTrain: 0.05116
+INFO:root:CRPSTrain: 0.04157
+INFO:root:Gaussian NLLTrain: -1.07242
+INFO:root:CoverageTrain: 0.99942
+INFO:root:IntervalWidthTrain: 0.58854
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.09219
+INFO:root:EnergyScoreValidation: 0.07376
+INFO:root:CRPSValidation: 0.05961
+INFO:root:Gaussian NLLValidation: -0.93654
+INFO:root:CoverageValidation: 0.98576
+INFO:root:IntervalWidthValidation: 0.578
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.0916
+INFO:root:EnergyScoreTest: 0.0737
+INFO:root:CRPSTest: 0.05951
+INFO:root:Gaussian NLLTest: -0.92546
+INFO:root:CoverageTest: 0.98439
+INFO:root:IntervalWidthTest: 0.57976
+INFO:root:After validation: mem (CPU python)=5277.1015625MB; mem (CPU total)=5109.875MB

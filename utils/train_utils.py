@@ -56,9 +56,11 @@ def checkpoint(model, filename):
         model (_type_): The torch model.
         filename (_type_): The filename including the path to save the model.
     """
-    torch.save(model.state_dict(), filename)
     if isinstance(model, LA_Wrapper):
-        model.save_state_dict(filename[:-3] + "_la_state.pt")
+        model.save_state_dict(filename)
+    else:
+        torch.save(model.state_dict(), filename)
+        
 
 
 def resume(model, filename):
@@ -68,9 +70,11 @@ def resume(model, filename):
         model (_type_): The torch model.
         filename (_type_): The filename including the path to load the model.
     """
-    model.load_state_dict(torch.load(filename))
+    
     if isinstance(model, LA_Wrapper):
-        model.load_la_state_dict(torch.load(filename[:-3] + "_la_state.pt"))
+        model.load_state_dict(filename)
+    else:
+        model.load_state_dict(torch.load(filename))
 
 
 def get_criterion(training_parameters, domain_range, d, device):

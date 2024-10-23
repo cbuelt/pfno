@@ -22,6 +22,7 @@ from data.datasets import DarcyFlowDataset, SWEDataset, KSDataset, ERA5Dataset, 
 from train import trainer, using
 from utils import train_utils
 from evaluate import start_evaluation
+from models import LA_Wrapper
 
 print(os.getcwd())
 sys.path[0] = os.getcwd()
@@ -34,7 +35,7 @@ msg = 'Start main'
 # initialize parser
 parser = argparse.ArgumentParser(description=msg)
 default_config = 'debug.ini'
-default_config = 'sswe/sfno.ini'
+default_config = 'darcy_flow/uno_laplace.ini'
 
 parser.add_argument('-c', '--config', help='Name of the config file:', default=default_config)
 parser.add_argument('-f', '--results_folder', help='Name of the results folder (only use if you only want to evaluate the models):', default=None)
@@ -68,6 +69,10 @@ def append_results_dict(results_dict, data_parameters, training_parameters, t_tr
         results_dict[key].append(training_parameters[key])
     results_dict['t_training'].append(t_training)
     
+def get_weigth_filenames_directory(directory):
+    filenames = [os.path.join(directory, filename) for filename in os.listdir(directory) if filename.endswith('.pt')]
+    filenames = [filename for filename in filenames if (not filename[:-3].endswith('la_state'))]
+    return filenames
     
 if __name__ == '__main__':
     d_time = datetime.datetime.now().strftime('%Y%m%d_%H%M%S_')
@@ -90,6 +95,15 @@ if __name__ == '__main__':
     training_parameters_dict = dict(config.items("TRAININGPARAMETERS"))
     training_parameters_dict = {key: ast.literal_eval(training_parameters_dict[key]) for key in
                                 training_parameters_dict.keys()}
+    
+    if config['META'].get('only_validate', None):
+        filename_to_validate = config['META']['only_validate']
+        if not filename_to_validate.endswith('.pt'):
+            filename_to_validate = get_weigth_filenames_directory(os.path.join(results_path, filename_to_validate))
+        else:
+            filename_to_validate = os.path.join(results_path, filename_to_validate)
+        training_parameters_dict['filename_to_validate'] = filename_to_validate
+                
     # except_keys for keys that are coming as a list for each training process
     training_parameters_dict = train_utils.get_hyperparameters_combination(training_parameters_dict, 
                                                                            except_keys=['uno_out_channels', 'uno_scalings', 'uno_n_modes'])
@@ -184,7 +198,7 @@ if __name__ == '__main__':
             np.random.seed(seed)
             torch.manual_seed(seed)
             
-            filename = f"{data_parameters['dataset_name']}_{training_parameters['model']}_{training_parameters['uncertainty_quantification']}_" + \
+            filename_ending = f"{data_parameters['dataset_name']}_{training_parameters['model']}_{training_parameters['uncertainty_quantification']}_" + \
                        f"dropout_{training_parameters['dropout']}"
             
             batch_size = training_parameters['batch_size']
@@ -201,20 +215,36 @@ if __name__ == '__main__':
                 laplace_train_loader = None
                         
             logging.info(using('After creating the dataloaders'))
-
-            t_0 = time()
-            d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
-            model, filename = trainer(train_loader, val_loader, directory=directory, training_parameters=training_parameters,
-                                        data_parameters = data_parameters,logging=logging, filename_ending=filename, d_time=d_time_train,
-                                        domain_range=domain_range, results_dict=results_dict)
-                        
-            t_1 = time()
-            t_training = np.round(t_1 - t_0, 3)
-            logging.info(f'Training the model took {t_training}s.')
-            t_0 = time()
-            torch.cuda.empty_cache()
-            t_1 = time()
-            logging.info(f'Emptying the cuda cache took {np.round(t_1 - t_0, 3)}s.')
+            if training_parameters.get('filename_to_validate', None):
+                in_channels = next(iter(train_loader))[0].shape[1]
+                out_channels = next(iter(train_loader))[1].shape[1]
+                
+                model = train_utils.setup_model(training_parameters, device, in_channels, out_channels)
+                filename = training_parameters['filename_to_validate']
+                if training_parameters['uncertainty_quantification'] == 'laplace':
+                    model = LA_Wrapper(
+                                model,
+                                n_samples=training_parameters["n_samples_uq"],
+                                method="last_layer",
+                                hessian_structure="full",
+                                optimize=True,
+                            )
+                train_utils.resume(model, filename)
+                t_training = -1
+            else:
+                t_0 = time()
+                d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+                model, filename = trainer(train_loader, val_loader, directory=directory, training_parameters=training_parameters,
+                                            data_parameters = data_parameters,logging=logging, filename_ending=filename_ending, d_time=d_time_train,
+                                            domain_range=domain_range, results_dict=results_dict)
+                            
+                t_1 = time()
+                t_training = np.round(t_1 - t_0, 3)
+                logging.info(f'Training the model took {t_training}s.')
+                t_0 = time()
+                torch.cuda.empty_cache()
+                t_1 = time()
+                logging.info(f'Emptying the cuda cache took {np.round(t_1 - t_0, 3)}s.')
             
             eval_batch_size = max(batch_size // 4, 1)
             
