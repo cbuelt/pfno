@@ -103,10 +103,10 @@ def get_spatial_metrics(out, u, alpha = 0.05):
 
 if __name__ == "__main__":
     checkpoint_path = "/home/groups/ai/scholl/pfno/weights/era5/fno/"
-    output_path = ""
+    output_path = "evaluation/spatial_metrics/"
 
     # Test data
-    batch_size = 8
+    batch_size = 12
     n_samples = 100 # Samples to create from predictive distributions
     alpha = 0.05 # Parameter for confidence interval
     data_dir = "data/era5/"
@@ -118,18 +118,20 @@ if __name__ == "__main__":
     data_std = test_data.std
     n_test = len(test_data)
 
-    uq_methods = ["dropout", "scoring-rule-dropout"]
+    # Lead time
+    t = 3 # 24h
+
+    uq_methods = ["dropout", "scoring-rule-dropout", "scoring-rule-reparam"]
 
     # Iterate across uq_methods
     for uq_method in uq_methods:
+        torch.cuda.empty_cache()
         # Get model
         model = get_model(uq_method, checkpoint_path)
 
         # Create results arrays
-        coverage_results = np.zeros((len(t), len(lat), len(lon)))
-        crps_results = np.zeros((len(t), len(lat), len(lon)))
-
-        t0 = time.time()
+        coverage_results = np.zeros((len(lat), len(lon)))
+        crps_results = np.zeros((len(lat), len(lon)))
 
         with torch.no_grad():
             for sample in test_loader:
@@ -145,19 +147,15 @@ if __name__ == "__main__":
                     n_samples,
                 )
 
-                crps, coverage = get_spatial_metrics(out.cpu(), u.cpu())
+                crps, coverage = get_spatial_metrics(out[:,0,t], u[:,0,t])
                 coverage_results += coverage
                 crps_results += crps
-                print(f"{uq_method}: {(coverage_results/batch_size).mean()}")
-                print(f" {uq_method}: {(crps_results/batch_size).mean()}")
-                break
-        t1 = time.time()
-        print(f"Time: {t1-t0}")
+
 
         # Save results
-        # coverage_results = coverage_results / n_test
-        # crps_results = crps_results / n_test
-        # np.save(output_path + f"{uq_method}_coverage.npy", coverage_results)
-        # np.save(output_path + f"{uq_method}_crps.npy", crps_results)
+        coverage_results = coverage_results / n_test
+        crps_results = crps_results / n_test
+        np.save(output_path + f"era5_{uq_method}_{(t+1)*6}h_coverage.npy", coverage_results)
+        np.save(output_path + f"era5_{uq_method}_{(t+1)*6}h_crps.npy", crps_results)
 
 
