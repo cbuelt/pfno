@@ -92,25 +92,17 @@ class LA_Wrapper(torch.nn.Module):
         Args:
             path (str): The path to save the state dictionary.
         """
-        torch.save(self.la.state_dict(), path)
+        torch.save(self.la.model.model.state_dict(), path)
+        torch.save(self.la.state_dict(), path[:-3] + "_la_state.pt")
 
-    def load_state_dict(self, state_dict):
+    def load_state_dict(self, path):
         """Loads the model state dictionary.
 
         Args:
-            state_dict (str): The path to load the state dictionary.
+            path (str): The path to load the state dictionary.
         """
-        self.la.model.load_state_dict(state_dict)
-
-    def load_la_state_dict(self, state_dict: dict):
-        """Loads the laplace state dictionary.
-
-        Args:
-            state_dict (str): The path to load the state dictionary.
-        """
-        self.la.load_state_dict(state_dict)
-
-
+        self.la.model.model.load_state_dict(torch.load(path))
+        self.la.load_state_dict(torch.load(path[:-3] + "_la_state.pt"))
 
     def optimize_parameters(self):
         """Optimize prior precision of the laplace approximation."""
