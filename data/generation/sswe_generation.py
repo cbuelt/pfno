@@ -158,7 +158,7 @@ class SSWEGenerator:
         return res
 
 
-def simulate(config: dict, var: str = "train"):
+def simulate(config: dict, output_dir:str, var: str = "train"):
     """ Simulation method for generating SSWE data.
 
     Args:
@@ -187,7 +187,6 @@ def simulate(config: dict, var: str = "train"):
     Lats = Lats * 180 / np.pi
 
     # Check for and create data directory
-    output_dir = "data/SSWE/processed"
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -223,7 +222,7 @@ def simulate(config: dict, var: str = "train"):
     f.close()
 
 
-def load_config(path: str = "data/generation/sswe_config.yaml") -> dict:
+def load_config(path: str) -> dict:
     """Load the configuration file for the simulation.
 
     Args:
@@ -239,8 +238,12 @@ def load_config(path: str = "data/generation/sswe_config.yaml") -> dict:
 
 # Main method
 if __name__ == "__main__":
-    config = load_config()
+    config_path = "data/generation/sswe_config.yaml"
+    output_dir = "data/SSWE/processed"
+    torch.manual_seed(0)
+    
+    config = load_config(path = config_path)
     # Generate training data
-    simulate(config, "train")
+    simulate(config, output_dir, "train")
     # Generate test data
-    simulate(config, "test")
+    simulate(config, output_dir, "test")
