@@ -20,7 +20,7 @@ data_loader_pin_memory,False,False,False,False,False,False,False,False,False
 data_loader_num_workers,0,0,0,0,0,0,0,0,0
 distributed_training,False,False,False,False,False,False,False,False,False
 alpha,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05
-n_samples_uq,3,3,3,3,3,3,3,3,3
+n_samples_uq,100,100,100,100,100,100,100,100,100
 weight_decay,0,0,0,0,0,0,0,0,0
 dropout,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 fourier_dropout,,,,,,,,,
@@ -31,15 +31,15 @@ n_modes,"(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 
 n_samples,3,3,3,3,3,3,3,3,3
 filename_to_validate,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241002_140512_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241002_163841_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241002_181221_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241002_203505_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241002_231721_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241003_014615_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241003_043035_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241003_081416_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241003_122834_Loss_SSWE_SFNO_laplace_dropout_0.001.pt
 t_training,-1,-1,-1,-1,-1,-1,-1,-1,-1
-MSEValidation,0.6385,0.66746,0.7562,0.69335,0.62079,0.58076,0.61496,0.65149,0.73066
-EnergyScoreValidation,0.37716,0.38698,0.52426,0.54083,0.36245,0.39466,0.37732,0.46999,0.50678
-CRPSValidation,0.168,0.17089,0.22669,0.22864,0.16089,0.16572,0.1679,0.20761,0.21615
-Gaussian NLLValidation,10.51224,7.36669,31.67044,87.49081,7.93429,41.4321,29.94926,48.4837,25.4256
-CoverageValidation,0.5645,0.59406,0.4135,0.31061,0.58833,0.44853,0.51975,0.35171,0.41826
-IntervalWidthValidation,0.59604,0.69088,0.41569,0.24015,0.61766,0.34111,0.50035,0.30712,0.39586
-MSETest,0.52802,0.55417,0.56123,0.49521,0.53532,0.44803,0.49392,0.49389,0.55879
-EnergyScoreTest,0.28911,0.30024,0.35982,0.33971,0.29167,0.27952,0.27991,0.32673,0.34895
-CRPSTest,0.12941,0.13459,0.15733,0.14592,0.13218,0.12026,0.12591,0.1467,0.14936
-Gaussian NLLTest,5.57437,3.40551,19.89172,23.00081,4.39519,30.49621,6.82818,23.61547,19.90694
-CoverageTest,0.63384,0.66638,0.48739,0.43229,0.64598,0.5238,0.59796,0.42779,0.51886
-IntervalWidthTest,0.60858,0.70222,0.39301,0.28006,0.64852,0.34236,0.50827,0.31275,0.42132
+MSEValidation,0.51845,0.51626,0.71062,0.677,0.48975,0.53889,0.52646,0.62144,0.68849
+EnergyScoreValidation,0.37556,0.38304,0.52457,0.53965,0.36024,0.39318,0.37406,0.46983,0.5076
+CRPSValidation,0.16754,0.17072,0.22693,0.22864,0.16063,0.16548,0.16604,0.20732,0.2168
+Gaussian NLLValidation,0.30389,0.32268,1.0464,3.10157,0.27784,0.49952,0.2872,1.45212,0.90607
+CoverageValidation,0.94552,0.96919,0.77941,0.62443,0.95729,0.82468,0.91559,0.70232,0.78114
+IntervalWidthValidation,1.41136,1.60309,0.96572,0.5697,1.45358,0.79532,1.17935,0.71524,0.92772
+MSETest,0.37913,0.38783,0.50827,0.4657,0.3769,0.39667,0.38091,0.4531,0.48752
+EnergyScoreTest,0.29381,0.31021,0.3636,0.3418,0.29912,0.28126,0.28117,0.32679,0.34554
+CRPSTest,0.1328,0.14116,0.15895,0.14718,0.13627,0.1211,0.12656,0.14729,0.14881
+Gaussian NLLTest,0.11364,0.19468,0.38557,0.68997,0.16363,-0.02996,0.03278,0.41226,0.17376
+CoverageTest,0.97984,0.98941,0.85661,0.79025,0.98224,0.90608,0.96665,0.81211,0.90315
+IntervalWidthTest,1.40755,1.58559,0.90256,0.65511,1.49746,0.81157,1.19379,0.72779,0.99824

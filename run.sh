@@ -1,3 +1,3 @@
 #!/bin/sh
-python main.py -c sswe/sfno_sr_dropout_1.ini
+python main.py -c darcy_flow/uno_laplace.ini
 

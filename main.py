@@ -252,6 +252,10 @@ if __name__ == '__main__':
             val_loader = DataLoader(val_data, batch_size=eval_batch_size, shuffle=True)
             test_loader = DataLoader(test_data, batch_size=eval_batch_size, shuffle=True)
             
+            # Fix the seed again just that the evaluation without training yields the same results as training + evaluation
+            np.random.seed(seed)
+            torch.manual_seed(seed)
+            
             start_evaluation(model, training_parameters, data_parameters, train_loader, val_loader, 
                             test_loader, results_dict, device, domain_range, logging, filename, laplace_train_loader=laplace_train_loader)
             append_results_dict(results_dict, data_parameters, training_parameters, t_training)
