@@ -114,8 +114,8 @@ if __name__ == "__main__":
     lat,lon,t = test_data.get_coordinates(normalize = False)
     L = test_data.get_domain_range()
     test_loader = torch.utils.data.DataLoader(test_data, batch_size=batch_size, shuffle=False)
-    data_mean = test_data.mean
-    data_std = test_data.std
+    data_mean = torch.tensor(test_data.mean, device = device)
+    data_std = torch.tensor(test_data.std, device = device)
     n_test = len(test_data)
 
     # Lead time
@@ -146,8 +146,11 @@ if __name__ == "__main__":
                     u,
                     n_samples,
                 )
+                # Renormalize and extract time
+                out = out[:,0,t] * data_std + data_mean
+                u = u[:,0,t] * data_std + data_mean
 
-                crps, coverage = get_spatial_metrics(out[:,0,t], u[:,0,t])
+                crps, coverage = get_spatial_metrics(out, u)
                 coverage_results += coverage
                 crps_results += crps
 
