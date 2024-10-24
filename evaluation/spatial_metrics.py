@@ -147,8 +147,8 @@ if __name__ == "__main__":
                     n_samples,
                 )
                 # Renormalize and extract time
-                out = out[:,0,t] * data_std + data_mean
-                u = u[:,0,t] * data_std + data_mean
+                out = out[:,0,t] * data_std + data_mean -273.15 # Transform to Celsius
+                u = u[:,0,t] * data_std + data_mean -273.15 # Transform to Celsius
 
                 crps, coverage = get_spatial_metrics(out, u)
                 coverage_results += coverage
