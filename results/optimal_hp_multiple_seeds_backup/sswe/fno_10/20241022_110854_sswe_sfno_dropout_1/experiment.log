@@ -1,0 +1,356 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:: mem (CPU python)=574.29296875MB; mem (CPU total)=1412.9453125MB
+INFO:root:############### Starting experiment with config file sswe/sfno_dropout_1.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'SSWE', 'max_training_set_size': 5000, 'pred_horizon': 10, 'train_horizon': 1, 'stepwise_evaluation': False}
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:: mem (CPU python)=575.61328125MB; mem (CPU total)=1412.9296875MB
+INFO:root:############### Starting experiment with config file sswe/sfno_sr_dropout_1.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'SSWE', 'max_training_set_size': 5000, 'pred_horizon': 10, 'train_horizon': 1, 'stepwise_evaluation': False}
+INFO:root:After loading the datasets: mem (CPU python)=586.19140625MB; mem (CPU total)=1418.19140625MB
+INFO:root:After loading the datasets: mem (CPU python)=585.46875MB; mem (CPU total)=1418.19140625MB
+INFO:root:###1 out of 9 training parameter combinations ###
+INFO:root:###1 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20240925_134205_sswe_sfno_dropout_1/Datetime_20240925_134206_Loss_SSWE_SFNO_dropout_dropout_0.01.pt'}
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 16, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20241002_140510_sswe_sfno_sr_dropout_1/Datetime_20241002_140512_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=586.7890625MB; mem (CPU total)=1419.1328125MB
+INFO:root:After creating the dataloaders: mem (CPU python)=587.64453125MB; mem (CPU total)=1419.1328125MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.26241
+INFO:root:EnergyScoreValidation: 0.20035
+INFO:root:CRPSValidation: 0.08043
+INFO:root:Gaussian NLLValidation: -0.54601
+INFO:root:CoverageValidation: 0.9896
+INFO:root:IntervalWidthValidation: 0.8649
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSEValidation: 0.34249
+INFO:root:EnergyScoreValidation: 0.25998
+INFO:root:CRPSValidation: 0.10346
+INFO:root:Gaussian NLLValidation: -0.02421
+INFO:root:CoverageValidation: 0.75349
+INFO:root:IntervalWidthValidation: 0.37445
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 1.25926
+INFO:root:EnergyScoreTest: 1.13671
+INFO:root:CRPSTest: 0.4808
+INFO:root:Gaussian NLLTest: 23.95584
+INFO:root:CoverageTest: 0.24809
+INFO:root:IntervalWidthTest: 0.39713
+INFO:root:After validation: mem (CPU python)=4636.94921875MB; mem (CPU total)=7517.546875MB
+INFO:root:MSETest: 1.37317
+INFO:root:EnergyScoreTest: 1.11076
+INFO:root:CRPSTest: 0.48233
+INFO:root:Gaussian NLLTest: 6.50806
+INFO:root:CoverageTest: 0.46018
+INFO:root:IntervalWidthTest: 0.93569
+INFO:root:After validation: mem (CPU python)=4272.3046875MB; mem (CPU total)=7517.546875MB
+INFO:root:###2 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 16, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20241002_140510_sswe_sfno_sr_dropout_1/Datetime_20241002_161453_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4272.3046875MB; mem (CPU total)=7517.96875MB
+INFO:root:###2 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20240925_134205_sswe_sfno_dropout_1/Datetime_20240925_144604_Loss_SSWE_SFNO_dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4636.94921875MB; mem (CPU total)=7517.96875MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.28237
+INFO:root:EnergyScoreValidation: 0.21271
+INFO:root:CRPSValidation: 0.08523
+INFO:root:Gaussian NLLValidation: -0.49051
+INFO:root:CoverageValidation: 0.99142
+INFO:root:IntervalWidthValidation: 0.89686
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSEValidation: 0.3501
+INFO:root:EnergyScoreValidation: 0.26682
+INFO:root:CRPSValidation: 0.10512
+INFO:root:Gaussian NLLValidation: 0.0166
+INFO:root:CoverageValidation: 0.74639
+INFO:root:IntervalWidthValidation: 0.37465
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 1.38891
+INFO:root:EnergyScoreTest: 1.26051
+INFO:root:CRPSTest: 0.52454
+INFO:root:Gaussian NLLTest: 27.47654
+INFO:root:CoverageTest: 0.25061
+INFO:root:IntervalWidthTest: 0.41848
+INFO:root:After validation: mem (CPU python)=4677.15625MB; mem (CPU total)=7493.8671875MB
+INFO:root:###3 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20240925_134205_sswe_sfno_dropout_1/Datetime_20240925_154407_Loss_SSWE_SFNO_dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4677.15625MB; mem (CPU total)=7493.86328125MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSETest: 1.33401
+INFO:root:EnergyScoreTest: 1.07935
+INFO:root:CRPSTest: 0.46633
+INFO:root:Gaussian NLLTest: 5.59974
+INFO:root:CoverageTest: 0.46715
+INFO:root:IntervalWidthTest: 0.91437
+INFO:root:After validation: mem (CPU python)=4277.453125MB; mem (CPU total)=7494.9765625MB
+INFO:root:###3 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 16, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20241002_140510_sswe_sfno_sr_dropout_1/Datetime_20241002_180617_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4277.453125MB; mem (CPU total)=7494.9765625MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.40803
+INFO:root:EnergyScoreValidation: 0.32056
+INFO:root:CRPSValidation: 0.13682
+INFO:root:Gaussian NLLValidation: 1.57369
+INFO:root:CoverageValidation: 0.59896
+INFO:root:IntervalWidthValidation: 0.36506
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSEValidation: 0.30015
+INFO:root:EnergyScoreValidation: 0.22758
+INFO:root:CRPSValidation: 0.09136
+INFO:root:Gaussian NLLValidation: -0.42253
+INFO:root:CoverageValidation: 0.99311
+INFO:root:IntervalWidthValidation: 0.97247
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 1.89691
+INFO:root:EnergyScoreTest: 1.74673
+INFO:root:CRPSTest: 0.68399
+INFO:root:Gaussian NLLTest: 33.28945
+INFO:root:CoverageTest: 0.24802
+INFO:root:IntervalWidthTest: 0.47865
+INFO:root:After validation: mem (CPU python)=4677.15625MB; mem (CPU total)=7550.37109375MB
+INFO:root:###4 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20240925_134205_sswe_sfno_dropout_1/Datetime_20240925_164114_Loss_SSWE_SFNO_dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4677.15625MB; mem (CPU total)=7550.37109375MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSETest: 1.37028
+INFO:root:EnergyScoreTest: 1.08662
+INFO:root:CRPSTest: 0.4739
+INFO:root:Gaussian NLLTest: 4.3958
+INFO:root:CoverageTest: 0.51042
+INFO:root:IntervalWidthTest: 1.06405
+INFO:root:After validation: mem (CPU python)=4288.49609375MB; mem (CPU total)=7852.75390625MB
+INFO:root:###4 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 16, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20241002_140510_sswe_sfno_sr_dropout_1/Datetime_20241002_200641_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4288.49609375MB; mem (CPU total)=7552.26171875MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.36683
+INFO:root:EnergyScoreValidation: 0.28027
+INFO:root:CRPSValidation: 0.10948
+INFO:root:Gaussian NLLValidation: 0.0524
+INFO:root:CoverageValidation: 0.75285
+INFO:root:IntervalWidthValidation: 0.38812
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSEValidation: 0.24552
+INFO:root:EnergyScoreValidation: 0.19115
+INFO:root:CRPSValidation: 0.07674
+INFO:root:Gaussian NLLValidation: -0.55297
+INFO:root:CoverageValidation: 0.99186
+INFO:root:IntervalWidthValidation: 0.8539
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 1.39233
+INFO:root:EnergyScoreTest: 1.25964
+INFO:root:CRPSTest: 0.53126
+INFO:root:Gaussian NLLTest: 25.62213
+INFO:root:CoverageTest: 0.24429
+INFO:root:IntervalWidthTest: 0.42846
+INFO:root:After validation: mem (CPU python)=4691.29296875MB; mem (CPU total)=7522.23828125MB
+INFO:root:###5 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20240925_134205_sswe_sfno_dropout_1/Datetime_20240925_174147_Loss_SSWE_SFNO_dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4691.29296875MB; mem (CPU total)=7522.23828125MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSETest: 1.33548
+INFO:root:EnergyScoreTest: 1.09524
+INFO:root:CRPSTest: 0.47249
+INFO:root:Gaussian NLLTest: 6.80292
+INFO:root:CoverageTest: 0.44385
+INFO:root:IntervalWidthTest: 0.84113
+INFO:root:After validation: mem (CPU python)=4292.83203125MB; mem (CPU total)=7524.9375MB
+INFO:root:###5 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 16, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20241002_140510_sswe_sfno_sr_dropout_1/Datetime_20241002_222448_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4292.83203125MB; mem (CPU total)=7524.9375MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.34684
+INFO:root:EnergyScoreValidation: 0.26127
+INFO:root:CRPSValidation: 0.10397
+INFO:root:Gaussian NLLValidation: -0.09742
+INFO:root:CoverageValidation: 0.77126
+INFO:root:IntervalWidthValidation: 0.40049
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSEValidation: 0.22699
+INFO:root:EnergyScoreValidation: 0.18263
+INFO:root:CRPSValidation: 0.07372
+INFO:root:Gaussian NLLValidation: -0.57907
+INFO:root:CoverageValidation: 0.99205
+INFO:root:IntervalWidthValidation: 0.84888
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 1.11958
+INFO:root:EnergyScoreTest: 1.00412
+INFO:root:CRPSTest: 0.4315
+INFO:root:Gaussian NLLTest: 22.14653
+INFO:root:CoverageTest: 0.2569
+INFO:root:IntervalWidthTest: 0.3847
+INFO:root:After validation: mem (CPU python)=4691.29296875MB; mem (CPU total)=7562.95703125MB
+INFO:root:###6 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20240925_134205_sswe_sfno_dropout_1/Datetime_20240925_183712_Loss_SSWE_SFNO_dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4691.29296875MB; mem (CPU total)=7562.95703125MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSETest: 1.26923
+INFO:root:EnergyScoreTest: 1.02492
+INFO:root:CRPSTest: 0.4455
+INFO:root:Gaussian NLLTest: 6.20822
+INFO:root:CoverageTest: 0.45845
+INFO:root:IntervalWidthTest: 0.86488
+INFO:root:After validation: mem (CPU python)=4298.83984375MB; mem (CPU total)=7566.3359375MB
+INFO:root:###6 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 16, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20241002_140510_sswe_sfno_sr_dropout_1/Datetime_20241003_011110_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4298.84375MB; mem (CPU total)=7566.3359375MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.34756
+INFO:root:EnergyScoreValidation: 0.26424
+INFO:root:CRPSValidation: 0.10423
+INFO:root:Gaussian NLLValidation: -0.0214
+INFO:root:CoverageValidation: 0.75935
+INFO:root:IntervalWidthValidation: 0.38011
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSEValidation: 0.26912
+INFO:root:EnergyScoreValidation: 0.20442
+INFO:root:CRPSValidation: 0.08245
+INFO:root:Gaussian NLLValidation: -0.51539
+INFO:root:CoverageValidation: 0.9931
+INFO:root:IntervalWidthValidation: 0.88276
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 1.20477
+INFO:root:EnergyScoreTest: 1.08882
+INFO:root:CRPSTest: 0.46191
+INFO:root:Gaussian NLLTest: 24.32334
+INFO:root:CoverageTest: 0.25328
+INFO:root:IntervalWidthTest: 0.38322
+INFO:root:After validation: mem (CPU python)=4704.7421875MB; mem (CPU total)=7549.9609375MB
+INFO:root:###7 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20240925_134205_sswe_sfno_dropout_1/Datetime_20240925_195834_Loss_SSWE_SFNO_dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4704.7421875MB; mem (CPU total)=7549.9609375MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSETest: 1.2721
+INFO:root:EnergyScoreTest: 1.0383
+INFO:root:CRPSTest: 0.45238
+INFO:root:Gaussian NLLTest: 6.31525
+INFO:root:CoverageTest: 0.45216
+INFO:root:IntervalWidthTest: 0.83917
+INFO:root:After validation: mem (CPU python)=4310.58203125MB; mem (CPU total)=7554.1796875MB
+INFO:root:###7 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 16, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20241002_140510_sswe_sfno_sr_dropout_1/Datetime_20241003_032025_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4310.5859375MB; mem (CPU total)=7554.42578125MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.3843
+INFO:root:EnergyScoreValidation: 0.29641
+INFO:root:CRPSValidation: 0.11549
+INFO:root:Gaussian NLLValidation: 0.21187
+INFO:root:CoverageValidation: 0.74308
+INFO:root:IntervalWidthValidation: 0.39014
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSEValidation: 0.25088
+INFO:root:EnergyScoreValidation: 0.19959
+INFO:root:CRPSValidation: 0.08111
+INFO:root:Gaussian NLLValidation: -0.50094
+INFO:root:CoverageValidation: 0.98899
+INFO:root:IntervalWidthValidation: 0.91273
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 1.26004
+INFO:root:EnergyScoreTest: 1.13906
+INFO:root:CRPSTest: 0.47641
+INFO:root:Gaussian NLLTest: 22.57316
+INFO:root:CoverageTest: 0.25925
+INFO:root:IntervalWidthTest: 0.39881
+INFO:root:After validation: mem (CPU python)=4711.43359375MB; mem (CPU total)=7562.2578125MB
+INFO:root:###8 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20240925_134205_sswe_sfno_dropout_1/Datetime_20240925_211432_Loss_SSWE_SFNO_dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4711.43359375MB; mem (CPU total)=7562.25390625MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSETest: 1.2932
+INFO:root:EnergyScoreTest: 1.02644
+INFO:root:CRPSTest: 0.45438
+INFO:root:Gaussian NLLTest: 6.02162
+INFO:root:CoverageTest: 0.48349
+INFO:root:IntervalWidthTest: 0.9751
+INFO:root:After validation: mem (CPU python)=4316.69921875MB; mem (CPU total)=7566.49609375MB
+INFO:root:###8 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 16, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20241002_140510_sswe_sfno_sr_dropout_1/Datetime_20241003_055643_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4316.70703125MB; mem (CPU total)=7566.7421875MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.35569
+INFO:root:EnergyScoreValidation: 0.27048
+INFO:root:CRPSValidation: 0.10591
+INFO:root:Gaussian NLLValidation: -0.03791
+INFO:root:CoverageValidation: 0.76562
+INFO:root:IntervalWidthValidation: 0.38953
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 1.22713
+INFO:root:EnergyScoreTest: 1.10878
+INFO:root:CRPSTest: 0.46992
+INFO:root:Gaussian NLLTest: 25.73325
+INFO:root:CoverageTest: 0.2487
+INFO:root:IntervalWidthTest: 0.38786
+INFO:root:After validation: mem (CPU python)=4717.9609375MB; mem (CPU total)=7575.1015625MB
+INFO:root:###9 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'dropout', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20240925_134205_sswe_sfno_dropout_1/Datetime_20240925_222558_Loss_SSWE_SFNO_dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4717.9609375MB; mem (CPU total)=7575.1015625MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.23933
+INFO:root:EnergyScoreValidation: 0.1866
+INFO:root:CRPSValidation: 0.07519
+INFO:root:Gaussian NLLValidation: -0.57842
+INFO:root:CoverageValidation: 0.9939
+INFO:root:IntervalWidthValidation: 0.84225
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 24990.27374
+INFO:root:EnergyScoreTest: 24142.35049
+INFO:root:CRPSTest: 197.2058
+INFO:root:Gaussian NLLTest: 6.98162
+INFO:root:CoverageTest: 0.46214
+INFO:root:IntervalWidthTest: 386.39098
+INFO:root:After validation: mem (CPU python)=4323.19140625MB; mem (CPU total)=7580.15625MB
+INFO:root:###9 out of 9 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'SFNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 16, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/sswe/fno_1/20241002_140510_sswe_sfno_sr_dropout_1/Datetime_20241003_083929_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=4323.19140625MB; mem (CPU total)=7580.15625MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.35789
+INFO:root:EnergyScoreValidation: 0.27153
+INFO:root:CRPSValidation: 0.10668
+INFO:root:Gaussian NLLValidation: -0.04303
+INFO:root:CoverageValidation: 0.76955
+INFO:root:IntervalWidthValidation: 0.39809
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 1.24239
+INFO:root:EnergyScoreTest: 1.1159
+INFO:root:CRPSTest: 0.47893
+INFO:root:Gaussian NLLTest: 23.63126
+INFO:root:CoverageTest: 0.24936
+INFO:root:IntervalWidthTest: 0.4137
+INFO:root:After validation: mem (CPU python)=4724.734375MB; mem (CPU total)=7535.03125MB
+INFO:root:MSEValidation: 0.26451
+INFO:root:EnergyScoreValidation: 0.21044
+INFO:root:CRPSValidation: 0.08385
+INFO:root:Gaussian NLLValidation: -0.48609
+INFO:root:CoverageValidation: 0.99223
+INFO:root:IntervalWidthValidation: 0.95099
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 1.32094
+INFO:root:EnergyScoreTest: 1.05656
+INFO:root:CRPSTest: 0.45877
+INFO:root:Gaussian NLLTest: 5.66447
+INFO:root:CoverageTest: 0.48757
+INFO:root:IntervalWidthTest: 0.95706
+INFO:root:After validation: mem (CPU python)=4328.1640625MB; mem (CPU total)=7436.46484375MB
