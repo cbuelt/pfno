@@ -1,3 +1,4 @@
 #!/bin/sh
-python main.py -c sswe/sfno_dropout_1.ini
+python main.py -c era5/fno_timing.ini
+python main.py -c era5/fno_timing2.ini
 

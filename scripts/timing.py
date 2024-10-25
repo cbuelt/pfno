@@ -1,6 +1,10 @@
 import os
+import ast 
+import configparser
 
 import pandas as pd
+
+from utils import train_utils
 
 
 def get_log_filenames_directory(directory):
@@ -29,12 +33,14 @@ def get_ini_file(filename):
 def get_time_per_epoch(path):
     result_list = []
     directories = [os.path.join(path, directory) for directory in os.listdir(path)]
-    for directory in os.walk(directories):
-        result_list.append(pd.read_csv(os.path.join(directory, 'test.csv')))
+    for directory in directories:
+        result_list.append(pd.read_csv(os.path.join(directory, 'test.csv'), index_col=0).T)
     return pd.concat(result_list)
 
 if __name__=='__main__':
     results = get_time_per_epoch('results/timing')
+    results = results[['dataset_name', 'uncertainty_quantification', 'model', 't_training']]
+    results['t_training'] = results['t_training'] / 2
     
     filenames = get_log_filenames_directory('results/optimal_hp_multiple_seeds')
     for filename in filenames:
@@ -47,5 +53,27 @@ if __name__=='__main__':
         number_training_runs = get_number_training_runs(log)
         number_epochs = get_number_epochs(log)
         print(f'Average number of epochs: {number_epochs / number_training_runs:.2f}')
+        
+        # Get the current model, uncertainty_quantification and dataset
+        ini_file = get_ini_file(filename)
+        config = configparser.ConfigParser()
+        config.read(ini_file)    
+        training_parameters_dict = dict(config.items("TRAININGPARAMETERS"))
+        training_parameters_dict = {key: ast.literal_eval(training_parameters_dict[key]) for key in
+                                    training_parameters_dict.keys()}
+        training_parameters = train_utils.get_hyperparameters_combination(training_parameters_dict, 
+                                                                           except_keys=['uno_out_channels', 'uno_scalings', 'uno_n_modes'])[0]
+            
+        data_parameters_dict = dict(config.items("DATAPARAMETERS"))
+        data_parameters_dict = {key: ast.literal_eval(data_parameters_dict[key]) for key in
+                                    data_parameters_dict.keys()}
+        data_parameters = train_utils.get_hyperparameters_combination(data_parameters_dict)[0] # except_keys for keys that are coming as a list for each training process
+
+        model = data_parameters['model']
+        uncertainty_quantification = data_parameters['uncertainty_quantification']
+        
+        
+        
+        
         
         
