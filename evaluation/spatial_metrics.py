@@ -29,8 +29,7 @@ def get_model(name, checkpoint_path):
     elif name == "laplace":
         la_model = FNO(n_modes=(10,12, 12), hidden_channels=20, in_channels = 4, dropout=0.01, lifting_channels = 128, projection_channels=128).to(device)
         model = LA_Wrapper(la_model)
-        model.load_state_dict(torch.load(laplace_path))
-        model.load_la_state_dict(torch.load(laplace_path[:-3] + "_la_state.pt"))
+        model.load_state_dict(laplace_path)
     elif name == "scoring-rule-dropout":
         sr_model = FNO(n_modes=(10,12, 12), hidden_channels=20, in_channels = 4, dropout=0.2, lifting_channels = 128, projection_channels=128).to(device)
         sr_dropout_cp = torch.load(sr_dropout_path, map_location=torch.device(device))
@@ -106,7 +105,7 @@ if __name__ == "__main__":
     output_path = "evaluation/spatial_metrics/"
 
     # Test data
-    batch_size = 12
+    batch_size = 8
     n_samples = 100 # Samples to create from predictive distributions
     alpha = 0.05 # Parameter for confidence interval
     data_dir = "data/era5/"
@@ -121,7 +120,7 @@ if __name__ == "__main__":
     # Lead time
     t = 3 # 24h
 
-    uq_methods = ["dropout", "scoring-rule-dropout", "scoring-rule-reparam"]
+    uq_methods = ["dropout", "laplace", "scoring-rule-dropout", "scoring-rule-reparam"]
 
     # Iterate across uq_methods
     for uq_method in uq_methods:
@@ -153,7 +152,6 @@ if __name__ == "__main__":
                 crps, coverage = get_spatial_metrics(out, u)
                 coverage_results += coverage
                 crps_results += crps
-
 
         # Save results
         coverage_results = coverage_results / n_test
