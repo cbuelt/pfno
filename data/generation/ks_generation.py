@@ -105,6 +105,7 @@ def aggregate(config:dict)-> None:
 
 
 def main(config, sim = True):
+    np.random.seed(config["sim"]["seed"])
     # Simulate data
     if sim:
         simulate(config)
