@@ -35,7 +35,7 @@ msg = 'Start main'
 # initialize parser
 parser = argparse.ArgumentParser(description=msg)
 default_config = 'debug.ini'
-default_config = 'darcy_flow/uno_laplace.ini'
+default_config = 'ks/fno_laplace.ini'
 
 parser.add_argument('-c', '--config', help='Name of the config file:', default=default_config)
 parser.add_argument('-f', '--results_folder', help='Name of the results folder (only use if you only want to evaluate the models):', default=None)
@@ -251,6 +251,10 @@ if __name__ == '__main__':
             train_loader = DataLoader(train_data, batch_size=eval_batch_size, shuffle=True)
             val_loader = DataLoader(val_data, batch_size=eval_batch_size, shuffle=True)
             test_loader = DataLoader(test_data, batch_size=eval_batch_size, shuffle=True)
+            
+            # Fix the seed again just that the evaluation without training yields the same results as training + evaluation
+            np.random.seed(seed)
+            torch.manual_seed(seed)
             
             start_evaluation(model, training_parameters, data_parameters, train_loader, val_loader, 
                             test_loader, results_dict, device, domain_range, logging, filename, laplace_train_loader=laplace_train_loader)

@@ -1,0 +1,45 @@
+,0,1,2,3,4,5,6,7,8
+dataset_name,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE
+max_training_set_size,5000,5000,5000,5000,5000,5000,5000,5000,5000
+pred_horizon,1,1,1,1,1,1,1,1,1
+train_horizon,1,1,1,1,1,1,1,1,1
+stepwise_evaluation,False,False,False,False,False,False,False,False,False
+seed,1,12,123,1234,12345,123456,1234567,12345678,123456789
+model,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO
+uncertainty_quantification,dropout,dropout,dropout,dropout,dropout,dropout,dropout,dropout,dropout
+batch_size,32,32,32,32,32,32,32,32,32
+n_epochs,1000,1000,1000,1000,1000,1000,1000,1000,1000
+early_stopping,10,10,10,10,10,10,10,10,10
+init,default,default,default,default,default,default,default,default,default
+learning_rate,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
+lr_schedule,step,step,step,step,step,step,step,step,step
+optimizer,adam,adam,adam,adam,adam,adam,adam,adam,adam
+gradient_clipping,1,1,1,1,1,1,1,1,1
+layer_normalization,True,True,True,True,True,True,True,True,True
+data_loader_pin_memory,False,False,False,False,False,False,False,False,False
+data_loader_num_workers,0,0,0,0,0,0,0,0,0
+distributed_training,False,False,False,False,False,False,False,False,False
+alpha,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05
+n_samples_uq,100,100,100,100,100,100,100,100,100
+weight_decay,0,0,0,0,0,0,0,0,0
+dropout,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+fourier_dropout,,,,,,,,,
+hidden_channels,32,32,32,32,32,32,32,32,32
+projection_channels,256,256,256,256,256,256,256,256,256
+lifting_channels,256,256,256,256,256,256,256,256,256
+n_modes,"(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)"
+n_samples,3,3,3,3,3,3,3,3,3
+t_training,3542.032,3223.626,3165.271,3368.618,3059.463,4614.226,4286.4,4013.845,3826.025
+NumberParameters,284835,284835,284835,284835,284835,284835,284835,284835,284835
+MSEValidation,0.34251,0.35012,0.40802,0.36683,0.34686,0.34753,0.3843,0.35568,0.358
+EnergyScoreValidation,0.25994,0.26682,0.32062,0.28027,0.26127,0.26413,0.2964,0.27054,0.27159
+CRPSValidation,0.10345,0.10512,0.13684,0.10948,0.10397,0.10419,0.11548,0.10594,0.10669
+Gaussian NLLValidation,-0.02648,0.01529,1.57654,0.05133,-0.09861,-0.02554,0.21121,-0.03417,-0.04347
+CoverageValidation,0.754,0.74661,0.5985,0.75308,0.77144,0.76029,0.74327,0.76534,0.76946
+IntervalWidthValidation,0.37485,0.3748,0.36466,0.38823,0.40064,0.38102,0.39015,0.38912,0.39829
+MSETest,0.36347,0.37319,0.42872,0.38867,0.37125,0.36852,0.40418,0.37999,0.38288
+EnergyScoreTest,0.27894,0.28791,0.34023,0.30008,0.28324,0.28327,0.31476,0.29244,0.29359
+CRPSTest,0.11115,0.1147,0.14476,0.11844,0.11539,0.11259,0.12416,0.11655,0.11623
+Gaussian NLLTest,0.18581,0.31417,1.85867,0.30477,0.24337,0.22891,0.4592,0.27136,0.1978
+CoverageTest,0.73078,0.70938,0.5762,0.72007,0.71899,0.72889,0.71139,0.72296,0.73768
+IntervalWidthTest,0.37285,0.371,0.36083,0.38646,0.3971,0.37784,0.38762,0.38602,0.39769
