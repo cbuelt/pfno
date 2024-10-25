@@ -1,5 +1,8 @@
 import os
 
+import pandas as pd
+
+
 def get_log_filenames_directory(directory):
     filenames = []
     for path, subdirs, files in os.walk(directory):
@@ -23,7 +26,16 @@ def get_ini_file(filename):
     ini_file = [file for file in os.listdir(directory) if file.endswith('.ini')][0]
     return os.path.join(directory, ini_file)
 
+def get_time_per_epoch(path):
+    result_list = []
+    directories = [os.path.join(path, directory) for directory in os.listdir(path)]
+    for directory in os.walk(directories):
+        result_list.append(pd.read_csv(os.path.join(directory, 'test.csv')))
+    return pd.concat(result_list)
+
 if __name__=='__main__':
+    results = get_time_per_epoch('results/timing')
+    
     filenames = get_log_filenames_directory('results/optimal_hp_multiple_seeds')
     for filename in filenames:
         print(filename)
@@ -35,3 +47,5 @@ if __name__=='__main__':
         number_training_runs = get_number_training_runs(log)
         number_epochs = get_number_epochs(log)
         print(f'Average number of epochs: {number_epochs / number_training_runs:.2f}')
+        
+        
