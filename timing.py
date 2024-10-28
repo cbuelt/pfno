@@ -4,6 +4,11 @@ import configparser
 
 import pandas as pd
 
+import sys
+# print(f'Current working directory: {os.getcwd()}')
+# print(f'System path: {sys.path}')
+# sys.path[0] = os.getcwd()
+# print(f'System path: {sys.path}')
 from utils import train_utils
 
 
@@ -38,13 +43,12 @@ def get_time_per_epoch(path):
     return pd.concat(result_list)
 
 if __name__=='__main__':
-    results = get_time_per_epoch('results/timing')
-    results = results[['dataset_name', 'uncertainty_quantification', 'model', 't_training']]
-    results['t_training'] = results['t_training'] / 2
+    results = get_time_per_epoch('results/timing/new')
+    # results = results[['dataset_name', 'uncertainty_quantification', 'model', 't_training']]
     
     filenames = get_log_filenames_directory('results/optimal_hp_multiple_seeds')
     for filename in filenames:
-        print(filename)
+        # print(filename)
         if filename == 'results/optimal_hp_multiple_seeds/ks/uno/20240919_134024_ks_uno_dropout/experiment.log':
             print('This data is corrupted (the log file seems to have broken down.)')   
         
@@ -52,7 +56,6 @@ if __name__=='__main__':
             log = file.readlines()
         number_training_runs = get_number_training_runs(log)
         number_epochs = get_number_epochs(log)
-        print(f'Average number of epochs: {number_epochs / number_training_runs:.2f}')
         
         # Get the current model, uncertainty_quantification and dataset
         ini_file = get_ini_file(filename)
@@ -69,10 +72,26 @@ if __name__=='__main__':
                                     data_parameters_dict.keys()}
         data_parameters = train_utils.get_hyperparameters_combination(data_parameters_dict)[0] # except_keys for keys that are coming as a list for each training process
 
-        model = data_parameters['model']
-        uncertainty_quantification = data_parameters['uncertainty_quantification']
+        model = training_parameters['model']
+        uncertainty_quantification = training_parameters['uncertainty_quantification']
+        dataset_name = data_parameters['dataset_name']
+        try:
+            entry = results[(results['model'] == model) & (results['uncertainty_quantification'] == uncertainty_quantification) & (results['dataset_name'] == dataset_name)]
+            if dataset_name == 'SSWE':
+                train_horizon = data_parameters['train_horizon']
+                entry = entry[entry['train_horizon']==str(train_horizon)]
+            time_per_epoch = float(entry['t_training'].iloc[0]) / int(entry['n_epochs'])
+        except Exception as e:
+            print(f'Caught exception {e}')
+            continue
         
-        
+        if dataset_name != 'SSWE':
+            continue
+            # print(f'{model} + {uncertainty_quantification} on {dataset_name} took on average:'
+                # f'{number_epochs / number_training_runs:.2f} epochs, {time_per_epoch}s per epoch, and {number_epochs * time_per_epoch:.0f}s in total.')
+        else:
+            print(f'{model} + {uncertainty_quantification} on {dataset_name} (train_horizon={train_horizon}) took on average:'
+                f'{number_epochs / number_training_runs:.2f} epochs, {time_per_epoch}s per epoch, and {number_epochs * time_per_epoch:.0f}s in total.')
         
         
         
