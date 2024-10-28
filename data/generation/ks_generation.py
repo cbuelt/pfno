@@ -1,3 +1,5 @@
+# Description: Script to generate data for the Kuramoto-Sivashinsky equation.
+
 import pde
 from pde.grids import GridBase
 import numpy as np

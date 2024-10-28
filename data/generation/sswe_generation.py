@@ -1,3 +1,5 @@
+# Implementation of the SSWE data generation using the torch-harmonics library.
+
 # coding=utf-8
 
 # SPDX-FileCopyrightText: Copyright (c) 2022 The torch-harmonics Authors. All rights reserved.

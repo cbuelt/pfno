@@ -1,7 +1,8 @@
+# Description: Calculate spatial metrics for the UQ methods for plotting
+
 import torch
 import sys
 import os
-import time
 sys.path.append(os.getcwd())
 import numpy as np
 from models.fno import FNO
@@ -9,7 +10,7 @@ from models.pfno import PNO_Wrapper, PFNO
 from models.laplace import LA_Wrapper
 from data.datasets import ERA5Dataset
 from evaluate import generate_samples
-from utils.losses import CRPS, Coverage
+from utils.losses import Coverage
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 torch.cuda.empty_cache()
