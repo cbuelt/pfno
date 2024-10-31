@@ -1,4 +1,2 @@
 #!/bin/sh
-python main.py -c era5/fno_timing.ini
-python main.py -c era5/fno_timing2.ini
-
+python main.py -c ks/fno_sr_dropout_fourier_dropout3.ini
