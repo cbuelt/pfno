@@ -43,10 +43,19 @@ def get_time_per_epoch(path):
     return pd.concat(result_list)
 
 if __name__=='__main__':
-    results = get_time_per_epoch('results/timing/new')
-    # results = results[['dataset_name', 'uncertainty_quantification', 'model', 't_training']]
+    standard_experiments = False
+    if standard_experiments:
+        results = get_time_per_epoch('results/timing/new')
+    else:
+        results = get_time_per_epoch('results/influence_of_n_samples/timing')
     
-    filenames = get_log_filenames_directory('results/optimal_hp_multiple_seeds')
+    results = results[['dataset_name', 'uncertainty_quantification', 'model', 't_training', 'n_samples', 'n_epochs']]
+    
+    if standard_experiments:
+        filenames = get_log_filenames_directory('results/optimal_hp_multiple_seeds')
+    else:
+        filenames = get_log_filenames_directory('results/influence_of_n_samples/performance')
+    
     for filename in filenames:
         # print(filename)
         if filename == 'results/optimal_hp_multiple_seeds/ks/uno/20240919_134024_ks_uno_dropout/experiment.log':
@@ -73,10 +82,12 @@ if __name__=='__main__':
         data_parameters = train_utils.get_hyperparameters_combination(data_parameters_dict)[0] # except_keys for keys that are coming as a list for each training process
 
         model = training_parameters['model']
+        n_samples = str(training_parameters['n_samples'])
         uncertainty_quantification = training_parameters['uncertainty_quantification']
         dataset_name = data_parameters['dataset_name']
         try:
-            entry = results[(results['model'] == model) & (results['uncertainty_quantification'] == uncertainty_quantification) & (results['dataset_name'] == dataset_name)]
+            entry = results[(results['model'] == model) & (results['uncertainty_quantification'] == uncertainty_quantification) & 
+                            (results['dataset_name'] == dataset_name) & (results['n_samples'] == n_samples)]
             if dataset_name == 'SSWE':
                 train_horizon = data_parameters['train_horizon']
                 entry = entry[entry['train_horizon']==str(train_horizon)]
@@ -85,14 +96,17 @@ if __name__=='__main__':
             print(f'Caught exception {e}')
             continue
         
-        if dataset_name != 'SSWE':
-            continue
-            # print(f'{model} + {uncertainty_quantification} on {dataset_name} took on average:'
-                # f'{number_epochs / number_training_runs:.2f} epochs, {time_per_epoch}s per epoch, and {number_epochs * time_per_epoch:.0f}s in total.')
+        if standard_experiments:
+            if dataset_name != 'SSWE':
+                # continue
+                print(f'{model} + {uncertainty_quantification} on {dataset_name} took on average:'
+                    f'{number_epochs / number_training_runs:.2f} epochs, {time_per_epoch}s per epoch, and {number_epochs * time_per_epoch / number_training_runs:.0f}s in total.')
+            else:
+                print(f'{model} + {uncertainty_quantification} on {dataset_name} (train_horizon={train_horizon}) took on average:'
+                    f'{number_epochs / number_training_runs:.2f} epochs, {time_per_epoch}s per epoch, and {number_epochs * time_per_epoch / number_training_runs:.0f}s in total.')
         else:
-            print(f'{model} + {uncertainty_quantification} on {dataset_name} (train_horizon={train_horizon}) took on average:'
-                f'{number_epochs / number_training_runs:.2f} epochs, {time_per_epoch}s per epoch, and {number_epochs * time_per_epoch:.0f}s in total.')
-        
-        
+                print(f'{model} + {uncertainty_quantification} using {n_samples} samples took on average:'
+                    f'{number_epochs / number_training_runs:.2f} epochs, {time_per_epoch}s per epoch, and {number_epochs * time_per_epoch / number_training_runs:.0f}s in total.')
+
         
         
