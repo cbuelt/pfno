@@ -1,0 +1,2012 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:: mem (CPU python)=575.2421875MB; mem (CPU total)=1009.71875MB
+INFO:root:############### Starting experiment with config file ks/fno_sr_dropout_fourier_dropout5.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'KS', 'max_training_set_size': 10000, 'downscaling_factor': 1, 'temporal_downscaling': 2, 'init_steps': 20, 't_start': 0, 'pred_horizon': 20}
+INFO:root:After loading the datasets: mem (CPU python)=12454.5859375MB; mem (CPU total)=1019.93359375MB
+INFO:root:###1 out of 5 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': 0.2, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3}
+INFO:root:After creating the dataloaders: mem (CPU python)=12454.5859375MB; mem (CPU total)=1019.93359375MB
+INFO:root:NumberParameters: 231589
+INFO:root:GPU memory allocated: 2097152
+INFO:root:After setting up the model: mem (CPU python)=12454.5859375MB; mem (CPU total)=2387.30078125MB
+INFO:root:Training starts now.
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=2401.10546875MB
+INFO:root:[    1] Training loss: 0.79432794, Validation loss: 0.73423535, Gradient norm: 0.70206142
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4124.48046875MB
+INFO:root:[    2] Training loss: 0.73111320, Validation loss: 0.73126593, Gradient norm: 0.38930106
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4163.4140625MB
+INFO:root:[    3] Training loss: 0.72925278, Validation loss: 0.72870272, Gradient norm: 0.30420568
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4200.96484375MB
+INFO:root:[    4] Training loss: 0.72791789, Validation loss: 0.72614355, Gradient norm: 0.30977084
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4239.72265625MB
+INFO:root:[    5] Training loss: 0.72602091, Validation loss: 0.72602482, Gradient norm: 0.25478979
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4277.69140625MB
+INFO:root:[    6] Training loss: 0.72584466, Validation loss: 0.72437838, Gradient norm: 0.23623289
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4315.7265625MB
+INFO:root:[    7] Training loss: 0.72504988, Validation loss: 0.72653292, Gradient norm: 0.23080744
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4353.6484375MB
+INFO:root:[    8] Training loss: 0.72476911, Validation loss: 0.72618464, Gradient norm: 0.21929384
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4391.2890625MB
+INFO:root:[    9] Training loss: 0.72568656, Validation loss: 0.72631920, Gradient norm: 0.19668307
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4430.0234375MB
+INFO:root:[   10] Training loss: 0.72394196, Validation loss: 0.72467021, Gradient norm: 0.20264189
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4468.3046875MB
+INFO:root:[   11] Training loss: 0.72432003, Validation loss: 0.72533330, Gradient norm: 0.21860092
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4506.125MB
+INFO:root:[   12] Training loss: 0.72405041, Validation loss: 0.72445412, Gradient norm: 0.18045546
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4544.75390625MB
+INFO:root:[   13] Training loss: 0.72401641, Validation loss: 0.72535143, Gradient norm: 0.17058908
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4582.6875MB
+INFO:root:[   14] Training loss: 0.72327969, Validation loss: 0.72511771, Gradient norm: 0.15976336
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4620.4140625MB
+INFO:root:[   15] Training loss: 0.72338736, Validation loss: 0.72420480, Gradient norm: 0.16236283
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4658.921875MB
+INFO:root:[   16] Training loss: 0.72309300, Validation loss: 0.72451296, Gradient norm: 0.14461739
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4696.953125MB
+INFO:root:[   17] Training loss: 0.72340310, Validation loss: 0.72552444, Gradient norm: 0.13801358
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4734.87109375MB
+INFO:root:[   18] Training loss: 0.72320297, Validation loss: 0.72419258, Gradient norm: 0.14833428
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4773.41015625MB
+INFO:root:[   19] Training loss: 0.72367475, Validation loss: 0.72647219, Gradient norm: 0.13222564
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4811.34765625MB
+INFO:root:[   20] Training loss: 0.72371564, Validation loss: 0.72186347, Gradient norm: 0.13780365
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4849.76171875MB
+INFO:root:[   21] Training loss: 0.72215614, Validation loss: 0.72406239, Gradient norm: 0.13392688
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4887.62109375MB
+INFO:root:[   22] Training loss: 0.72231569, Validation loss: 0.72408769, Gradient norm: 0.12819278
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4925.84765625MB
+INFO:root:[   23] Training loss: 0.72270310, Validation loss: 0.72286150, Gradient norm: 0.14703369
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=4963.98046875MB
+INFO:root:[   24] Training loss: 0.72178419, Validation loss: 0.72231235, Gradient norm: 0.12621286
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5002.11328125MB
+INFO:root:[   25] Training loss: 0.72204347, Validation loss: 0.72435316, Gradient norm: 0.12884846
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5040.8984375MB
+INFO:root:[   26] Training loss: 0.72219314, Validation loss: 0.72298891, Gradient norm: 0.13268399
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5078.98828125MB
+INFO:root:[   27] Training loss: 0.72185837, Validation loss: 0.72500061, Gradient norm: 0.12226151
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5117.1171875MB
+INFO:root:[   28] Training loss: 0.72192039, Validation loss: 0.72300718, Gradient norm: 0.13177721
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5155.1953125MB
+INFO:root:[   29] Training loss: 0.72075389, Validation loss: 0.72330360, Gradient norm: 0.12006553
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5193.31640625MB
+INFO:root:[   30] Training loss: 0.72229097, Validation loss: 0.72320975, Gradient norm: 0.12305306
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5231.43359375MB
+INFO:root:[   31] Training loss: 0.72191009, Validation loss: 0.72483261, Gradient norm: 0.12946616
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5269.8125MB
+INFO:root:[   32] Training loss: 0.72158807, Validation loss: 0.72267625, Gradient norm: 0.12616769
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5307.69921875MB
+INFO:root:[   33] Training loss: 0.72192315, Validation loss: 0.72222121, Gradient norm: 0.11663218
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5345.82421875MB
+INFO:root:[   34] Training loss: 0.72137606, Validation loss: 0.72245999, Gradient norm: 0.13448612
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5383.953125MB
+INFO:root:[   35] Training loss: 0.72129567, Validation loss: 0.72274868, Gradient norm: 0.12584294
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5422.0703125MB
+INFO:root:[   36] Training loss: 0.72108965, Validation loss: 0.72256104, Gradient norm: 0.10547591
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5460.18359375MB
+INFO:root:[   37] Training loss: 0.72068566, Validation loss: 0.72204989, Gradient norm: 0.09661528
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5498.29296875MB
+INFO:root:[   38] Training loss: 0.72063062, Validation loss: 0.72090504, Gradient norm: 0.11619879
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5536.9296875MB
+INFO:root:[   39] Training loss: 0.72026990, Validation loss: 0.72106538, Gradient norm: 0.12711869
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5574.82421875MB
+INFO:root:[   40] Training loss: 0.71952915, Validation loss: 0.71922620, Gradient norm: 0.11051239
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5612.96484375MB
+INFO:root:[   41] Training loss: 0.71778914, Validation loss: 0.71882206, Gradient norm: 0.09208737
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5651.171875MB
+INFO:root:[   42] Training loss: 0.71745504, Validation loss: 0.71787959, Gradient norm: 0.11282455
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5689.32421875MB
+INFO:root:[   43] Training loss: 0.71505766, Validation loss: 0.71637889, Gradient norm: 0.10757806
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5727.43359375MB
+INFO:root:[   44] Training loss: 0.71383499, Validation loss: 0.71392895, Gradient norm: 0.12080076
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5765.546875MB
+INFO:root:[   45] Training loss: 0.71172424, Validation loss: 0.71134584, Gradient norm: 0.12870625
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5803.90625MB
+INFO:root:[   46] Training loss: 0.71007907, Validation loss: 0.71043819, Gradient norm: 0.12054255
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5842.265625MB
+INFO:root:[   47] Training loss: 0.70871977, Validation loss: 0.71033405, Gradient norm: 0.15714942
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5880.41015625MB
+INFO:root:[   48] Training loss: 0.70654482, Validation loss: 0.70746643, Gradient norm: 0.16486587
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5918.45703125MB
+INFO:root:[   49] Training loss: 0.70475093, Validation loss: 0.70406541, Gradient norm: 0.13475310
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5956.35546875MB
+INFO:root:[   50] Training loss: 0.70332935, Validation loss: 0.70342295, Gradient norm: 0.15074707
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=5994.5MB
+INFO:root:[   51] Training loss: 0.70105982, Validation loss: 0.70002187, Gradient norm: 0.14036820
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6032.64453125MB
+INFO:root:[   52] Training loss: 0.69928920, Validation loss: 0.69832339, Gradient norm: 0.19898400
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6070.29296875MB
+INFO:root:[   53] Training loss: 0.69682591, Validation loss: 0.69677497, Gradient norm: 0.18371864
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6107.9140625MB
+INFO:root:[   54] Training loss: 0.69491534, Validation loss: 0.69420562, Gradient norm: 0.22488508
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6146.04296875MB
+INFO:root:[   55] Training loss: 0.69260448, Validation loss: 0.69146767, Gradient norm: 0.25875622
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6184.2109375MB
+INFO:root:[   56] Training loss: 0.69068136, Validation loss: 0.68959692, Gradient norm: 0.33026332
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6222.33203125MB
+INFO:root:[   57] Training loss: 0.68819908, Validation loss: 0.68636978, Gradient norm: 0.32930627
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6260.453125MB
+INFO:root:[   58] Training loss: 0.68611134, Validation loss: 0.68557821, Gradient norm: 0.26972229
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6298.8125MB
+INFO:root:[   59] Training loss: 0.68443681, Validation loss: 0.68363304, Gradient norm: 0.33185983
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6336.92578125MB
+INFO:root:[   60] Training loss: 0.68247860, Validation loss: 0.68332347, Gradient norm: 0.29039358
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6375.02734375MB
+INFO:root:[   61] Training loss: 0.68012395, Validation loss: 0.68148905, Gradient norm: 0.34926536
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6413.14453125MB
+INFO:root:[   62] Training loss: 0.67946313, Validation loss: 0.67952101, Gradient norm: 0.42277315
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6455.14453125MB
+INFO:root:[   63] Training loss: 0.67822531, Validation loss: 0.67844351, Gradient norm: 0.31305432
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6494.73828125MB
+INFO:root:[   64] Training loss: 0.67629041, Validation loss: 0.67793700, Gradient norm: 0.32614059
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6532.609375MB
+INFO:root:[   65] Training loss: 0.67500135, Validation loss: 0.67569648, Gradient norm: 0.39637046
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6568.2109375MB
+INFO:root:[   66] Training loss: 0.67356643, Validation loss: 0.67347312, Gradient norm: 0.34592601
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6606.59375MB
+INFO:root:[   67] Training loss: 0.67230747, Validation loss: 0.67357812, Gradient norm: 0.29602880
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6644.73828125MB
+INFO:root:[   68] Training loss: 0.67081256, Validation loss: 0.67139788, Gradient norm: 0.39560993
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6684.578125MB
+INFO:root:[   69] Training loss: 0.66933183, Validation loss: 0.66977883, Gradient norm: 0.37854841
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6722.52734375MB
+INFO:root:[   70] Training loss: 0.66875975, Validation loss: 0.67006139, Gradient norm: 0.39488346
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6760.19140625MB
+INFO:root:[   71] Training loss: 0.66787955, Validation loss: 0.66924018, Gradient norm: 0.34632003
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6798.4609375MB
+INFO:root:[   72] Training loss: 0.66684458, Validation loss: 0.66900547, Gradient norm: 0.30398826
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6836.265625MB
+INFO:root:[   73] Training loss: 0.66564967, Validation loss: 0.66664421, Gradient norm: 0.33724198
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6874.51171875MB
+INFO:root:[   74] Training loss: 0.66456139, Validation loss: 0.66622727, Gradient norm: 0.35105350
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6912.44921875MB
+INFO:root:[   75] Training loss: 0.66329397, Validation loss: 0.66481727, Gradient norm: 0.40253842
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6950.94921875MB
+INFO:root:[   76] Training loss: 0.66296350, Validation loss: 0.66355788, Gradient norm: 0.32757119
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=6988.80078125MB
+INFO:root:[   77] Training loss: 0.66192359, Validation loss: 0.66446411, Gradient norm: 0.35556164
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7027.13671875MB
+INFO:root:[   78] Training loss: 0.66066974, Validation loss: 0.66182985, Gradient norm: 0.29094971
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7065.609375MB
+INFO:root:[   79] Training loss: 0.66039062, Validation loss: 0.66172568, Gradient norm: 0.44541969
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7103.8828125MB
+INFO:root:[   80] Training loss: 0.65889861, Validation loss: 0.66090404, Gradient norm: 0.32721499
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7141.37890625MB
+INFO:root:[   81] Training loss: 0.65793523, Validation loss: 0.65990146, Gradient norm: 0.37544414
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7179.625MB
+INFO:root:[   82] Training loss: 0.65710802, Validation loss: 0.65876016, Gradient norm: 0.34501499
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7218.265625MB
+INFO:root:[   83] Training loss: 0.65677991, Validation loss: 0.65868494, Gradient norm: 0.37928703
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7255.9296875MB
+INFO:root:[   84] Training loss: 0.65572545, Validation loss: 0.65850392, Gradient norm: 0.41795983
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7294.6171875MB
+INFO:root:[   85] Training loss: 0.65486453, Validation loss: 0.65704073, Gradient norm: 0.41578605
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7332.5MB
+INFO:root:[   86] Training loss: 0.65433302, Validation loss: 0.65679796, Gradient norm: 0.44709762
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7370.625MB
+INFO:root:[   87] Training loss: 0.65337691, Validation loss: 0.65569221, Gradient norm: 0.34756084
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7409.29296875MB
+INFO:root:[   88] Training loss: 0.65229463, Validation loss: 0.65451414, Gradient norm: 0.38022966
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7447.03125MB
+INFO:root:[   89] Training loss: 0.65239587, Validation loss: 0.65343284, Gradient norm: 0.34278630
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7485.171875MB
+INFO:root:[   90] Training loss: 0.65177816, Validation loss: 0.65382458, Gradient norm: 0.40904107
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7523.3125MB
+INFO:root:[   91] Training loss: 0.65095772, Validation loss: 0.65295490, Gradient norm: 0.29722333
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7561.45703125MB
+INFO:root:[   92] Training loss: 0.65046078, Validation loss: 0.65118558, Gradient norm: 0.41528452
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7599.83203125MB
+INFO:root:[   93] Training loss: 0.64965724, Validation loss: 0.65236654, Gradient norm: 0.44282800
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7637.95703125MB
+INFO:root:[   94] Training loss: 0.64913735, Validation loss: 0.65190762, Gradient norm: 0.41529281
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7675.8515625MB
+INFO:root:[   95] Training loss: 0.64881445, Validation loss: 0.65171044, Gradient norm: 0.40896197
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7714.21875MB
+INFO:root:[   96] Training loss: 0.64778034, Validation loss: 0.65046007, Gradient norm: 0.34990765
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7752.34765625MB
+INFO:root:[   97] Training loss: 0.64745814, Validation loss: 0.65029782, Gradient norm: 0.39467549
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7790.91015625MB
+INFO:root:[   98] Training loss: 0.64642107, Validation loss: 0.64773659, Gradient norm: 0.45218942
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7828.84375MB
+INFO:root:[   99] Training loss: 0.64587572, Validation loss: 0.64930003, Gradient norm: 0.42672249
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7866.96484375MB
+INFO:root:[  100] Training loss: 0.64515944, Validation loss: 0.64796414, Gradient norm: 0.45649033
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7904.8359375MB
+INFO:root:[  101] Training loss: 0.64547693, Validation loss: 0.64727570, Gradient norm: 0.42470698
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7942.9609375MB
+INFO:root:[  102] Training loss: 0.64495667, Validation loss: 0.64721248, Gradient norm: 0.45339711
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=7981.14453125MB
+INFO:root:[  103] Training loss: 0.64407288, Validation loss: 0.64615303, Gradient norm: 0.40325113
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8019.51171875MB
+INFO:root:[  104] Training loss: 0.64328772, Validation loss: 0.64481391, Gradient norm: 0.39825286
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8057.3828125MB
+INFO:root:[  105] Training loss: 0.64320850, Validation loss: 0.64588729, Gradient norm: 0.37371992
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8095.51171875MB
+INFO:root:[  106] Training loss: 0.64230406, Validation loss: 0.64490201, Gradient norm: 0.37263027
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8133.8828125MB
+INFO:root:[  107] Training loss: 0.64171958, Validation loss: 0.64451803, Gradient norm: 0.36802564
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8172.03515625MB
+INFO:root:[  108] Training loss: 0.64137638, Validation loss: 0.64480298, Gradient norm: 0.35067048
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8210.3984375MB
+INFO:root:[  109] Training loss: 0.64118327, Validation loss: 0.64331454, Gradient norm: 0.55345908
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8248.765625MB
+INFO:root:[  110] Training loss: 0.64036641, Validation loss: 0.64346133, Gradient norm: 0.43974851
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8286.640625MB
+INFO:root:[  111] Training loss: 0.63982111, Validation loss: 0.64397993, Gradient norm: 0.47056787
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8324.7734375MB
+INFO:root:[  112] Training loss: 0.64003935, Validation loss: 0.64451322, Gradient norm: 0.38811798
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8362.91796875MB
+INFO:root:[  113] Training loss: 0.63869224, Validation loss: 0.64261944, Gradient norm: 0.46247690
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8400.78125MB
+INFO:root:[  114] Training loss: 0.63869721, Validation loss: 0.64159272, Gradient norm: 0.55449520
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8438.7109375MB
+INFO:root:[  115] Training loss: 0.63815233, Validation loss: 0.64092925, Gradient norm: 0.40174766
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8476.55078125MB
+INFO:root:[  116] Training loss: 0.63759047, Validation loss: 0.64013384, Gradient norm: 0.50104183
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8513.7109375MB
+INFO:root:[  117] Training loss: 0.63718097, Validation loss: 0.64140608, Gradient norm: 0.42077495
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8551.828125MB
+INFO:root:[  118] Training loss: 0.63614474, Validation loss: 0.64084652, Gradient norm: 0.57467569
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8589.9375MB
+INFO:root:[  119] Training loss: 0.63606303, Validation loss: 0.63903580, Gradient norm: 0.33206361
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8627.97265625MB
+INFO:root:[  120] Training loss: 0.63563044, Validation loss: 0.63947578, Gradient norm: 0.37692862
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8666.32421875MB
+INFO:root:[  121] Training loss: 0.63529664, Validation loss: 0.63826682, Gradient norm: 0.43460352
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8704.43359375MB
+INFO:root:[  122] Training loss: 0.63480649, Validation loss: 0.63738165, Gradient norm: 0.38831269
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8742.54296875MB
+INFO:root:[  123] Training loss: 0.63425601, Validation loss: 0.63771902, Gradient norm: 0.39837008
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8780.8984375MB
+INFO:root:[  124] Training loss: 0.63403873, Validation loss: 0.63639321, Gradient norm: 0.43370865
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8821.9453125MB
+INFO:root:[  125] Training loss: 0.63390182, Validation loss: 0.63814295, Gradient norm: 0.59654274
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8860.0625MB
+INFO:root:[  126] Training loss: 0.63301415, Validation loss: 0.63834355, Gradient norm: 0.32330044
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8898.359375MB
+INFO:root:[  127] Training loss: 0.63272427, Validation loss: 0.63686778, Gradient norm: 0.44492349
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8936.46875MB
+INFO:root:[  128] Training loss: 0.63219488, Validation loss: 0.63791248, Gradient norm: 0.45377058
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=8974.58203125MB
+INFO:root:[  129] Training loss: 0.63262164, Validation loss: 0.63562717, Gradient norm: 0.56764281
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9012.41796875MB
+INFO:root:[  130] Training loss: 0.63104253, Validation loss: 0.63514786, Gradient norm: 0.36411199
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9050.55078125MB
+INFO:root:[  131] Training loss: 0.63135720, Validation loss: 0.63459766, Gradient norm: 0.50524606
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9088.47265625MB
+INFO:root:[  132] Training loss: 0.63054779, Validation loss: 0.63435597, Gradient norm: 0.36605603
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9126.8359375MB
+INFO:root:[  133] Training loss: 0.63030039, Validation loss: 0.63393295, Gradient norm: 0.45904493
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9164.953125MB
+INFO:root:[  134] Training loss: 0.62964175, Validation loss: 0.63465577, Gradient norm: 0.46743341
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9203.0625MB
+INFO:root:[  135] Training loss: 0.62925689, Validation loss: 0.63386573, Gradient norm: 0.47736690
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9241.16796875MB
+INFO:root:[  136] Training loss: 0.62894546, Validation loss: 0.63257626, Gradient norm: 0.39478415
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9279.234375MB
+INFO:root:[  137] Training loss: 0.62923019, Validation loss: 0.63186393, Gradient norm: 0.49372941
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9317.59375MB
+INFO:root:[  138] Training loss: 0.62878617, Validation loss: 0.63200021, Gradient norm: 0.46268221
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9355.44921875MB
+INFO:root:[  139] Training loss: 0.62837555, Validation loss: 0.63251612, Gradient norm: 0.47206514
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9393.31640625MB
+INFO:root:[  140] Training loss: 0.62791175, Validation loss: 0.63049109, Gradient norm: 0.37281926
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9431.578125MB
+INFO:root:[  141] Training loss: 0.62733560, Validation loss: 0.63144327, Gradient norm: 0.39485601
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9469.68359375MB
+INFO:root:[  142] Training loss: 0.62724086, Validation loss: 0.63271082, Gradient norm: 0.55810025
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9507.796875MB
+INFO:root:[  143] Training loss: 0.62721906, Validation loss: 0.63115406, Gradient norm: 0.64163018
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9546.16015625MB
+INFO:root:[  144] Training loss: 0.62618701, Validation loss: 0.63108545, Gradient norm: 0.63551164
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9584.0MB
+INFO:root:[  145] Training loss: 0.62627687, Validation loss: 0.63057928, Gradient norm: 0.39300156
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9622.1171875MB
+INFO:root:[  146] Training loss: 0.62583141, Validation loss: 0.63081549, Gradient norm: 0.46382659
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9660.48828125MB
+INFO:root:Learning rate reduced to: 0.0005
+INFO:root:[  147] Training loss: 0.62551764, Validation loss: 0.62975308, Gradient norm: 0.49876421
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9698.55078125MB
+INFO:root:[  148] Training loss: 0.62396192, Validation loss: 0.62969889, Gradient norm: 0.26231527
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9737.0MB
+INFO:root:[  149] Training loss: 0.62354439, Validation loss: 0.62886015, Gradient norm: 0.27582794
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9775.17578125MB
+INFO:root:[  150] Training loss: 0.62349337, Validation loss: 0.62948482, Gradient norm: 0.31213530
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9813.09765625MB
+INFO:root:[  151] Training loss: 0.62350580, Validation loss: 0.62970015, Gradient norm: 0.26735155
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9850.97265625MB
+INFO:root:[  152] Training loss: 0.62336977, Validation loss: 0.62871939, Gradient norm: 0.33434656
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9889.31640625MB
+INFO:root:[  153] Training loss: 0.62297046, Validation loss: 0.62831609, Gradient norm: 0.36546395
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9927.3359375MB
+INFO:root:[  154] Training loss: 0.62252234, Validation loss: 0.62765789, Gradient norm: 0.32334097
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=9965.953125MB
+INFO:root:[  155] Training loss: 0.62242411, Validation loss: 0.62743790, Gradient norm: 0.38224949
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10004.2890625MB
+INFO:root:[  156] Training loss: 0.62281090, Validation loss: 0.62699014, Gradient norm: 0.30483209
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10041.97265625MB
+INFO:root:[  157] Training loss: 0.62222968, Validation loss: 0.62757763, Gradient norm: 0.43099326
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10080.36328125MB
+INFO:root:[  158] Training loss: 0.62237083, Validation loss: 0.62763707, Gradient norm: 0.33611132
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10118.5078125MB
+INFO:root:[  159] Training loss: 0.62208514, Validation loss: 0.62762594, Gradient norm: 0.44379139
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10156.65234375MB
+INFO:root:[  160] Training loss: 0.62174809, Validation loss: 0.62807097, Gradient norm: 0.35504054
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10194.99609375MB
+INFO:root:[  161] Training loss: 0.62142760, Validation loss: 0.62696649, Gradient norm: 0.37411717
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10233.1328125MB
+INFO:root:[  162] Training loss: 0.62158210, Validation loss: 0.62661665, Gradient norm: 0.38847559
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10272.87890625MB
+INFO:root:[  163] Training loss: 0.62126749, Validation loss: 0.62752145, Gradient norm: 0.28338954
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10310.54296875MB
+INFO:root:[  164] Training loss: 0.62126395, Validation loss: 0.62570528, Gradient norm: 0.33622279
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10348.4453125MB
+INFO:root:[  165] Training loss: 0.62080967, Validation loss: 0.62777812, Gradient norm: 0.40062045
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10386.5625MB
+INFO:root:[  166] Training loss: 0.62107196, Validation loss: 0.62639536, Gradient norm: 0.37400478
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10424.7265625MB
+INFO:root:[  167] Training loss: 0.62079737, Validation loss: 0.62690839, Gradient norm: 0.47083563
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10462.87890625MB
+INFO:root:[  168] Training loss: 0.62027554, Validation loss: 0.62522378, Gradient norm: 0.31321735
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10500.79296875MB
+INFO:root:[  169] Training loss: 0.62007628, Validation loss: 0.62589033, Gradient norm: 0.36846884
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10538.75390625MB
+INFO:root:[  170] Training loss: 0.62030606, Validation loss: 0.62608058, Gradient norm: 0.31307827
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10576.88671875MB
+INFO:root:[  171] Training loss: 0.61997288, Validation loss: 0.62623240, Gradient norm: 0.36347445
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10615.046875MB
+INFO:root:[  172] Training loss: 0.61983243, Validation loss: 0.62527107, Gradient norm: 0.35937216
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10653.453125MB
+INFO:root:[  173] Training loss: 0.61938649, Validation loss: 0.62596054, Gradient norm: 0.38087955
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10691.37109375MB
+INFO:root:[  174] Training loss: 0.61964359, Validation loss: 0.62570430, Gradient norm: 0.41317364
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10729.28515625MB
+INFO:root:Learning rate reduced to: 0.00025
+INFO:root:[  175] Training loss: 0.61958060, Validation loss: 0.62511782, Gradient norm: 0.41832530
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10767.96484375MB
+INFO:root:[  176] Training loss: 0.61890798, Validation loss: 0.62522767, Gradient norm: 0.29542845
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10806.08984375MB
+INFO:root:[  177] Training loss: 0.61837785, Validation loss: 0.62487387, Gradient norm: 0.27521644
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10844.70703125MB
+INFO:root:[  178] Training loss: 0.61840704, Validation loss: 0.62483328, Gradient norm: 0.26534377
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10882.4609375MB
+INFO:root:[  179] Training loss: 0.61856201, Validation loss: 0.62525015, Gradient norm: 0.27599245
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10920.078125MB
+INFO:root:[  180] Training loss: 0.61815912, Validation loss: 0.62407886, Gradient norm: 0.26460042
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10958.24609375MB
+INFO:root:[  181] Training loss: 0.61833396, Validation loss: 0.62555826, Gradient norm: 0.29814947
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=10996.640625MB
+INFO:root:[  182] Training loss: 0.61805694, Validation loss: 0.62388174, Gradient norm: 0.25359201
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11034.53515625MB
+INFO:root:[  183] Training loss: 0.61773941, Validation loss: 0.62502902, Gradient norm: 0.29624156
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11072.4296875MB
+INFO:root:[  184] Training loss: 0.61786759, Validation loss: 0.62424855, Gradient norm: 0.28711446
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11110.82421875MB
+INFO:root:[  185] Training loss: 0.61767143, Validation loss: 0.62451482, Gradient norm: 0.27437362
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11149.1484375MB
+INFO:root:[  186] Training loss: 0.61804964, Validation loss: 0.62398007, Gradient norm: 0.28636978
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11187.046875MB
+INFO:root:[  187] Training loss: 0.61811011, Validation loss: 0.62456324, Gradient norm: 0.29499354
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11225.4375MB
+INFO:root:[  188] Training loss: 0.61779745, Validation loss: 0.62347759, Gradient norm: 0.35326448
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11263.56640625MB
+INFO:root:[  189] Training loss: 0.61755158, Validation loss: 0.62362022, Gradient norm: 0.29872677
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11301.4765625MB
+INFO:root:[  190] Training loss: 0.61729775, Validation loss: 0.62403210, Gradient norm: 0.32746172
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11340.12109375MB
+INFO:root:[  191] Training loss: 0.61760945, Validation loss: 0.62445208, Gradient norm: 0.31551196
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11378.26171875MB
+INFO:root:[  192] Training loss: 0.61750411, Validation loss: 0.62396996, Gradient norm: 0.36251129
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11416.6328125MB
+INFO:root:[  193] Training loss: 0.61731368, Validation loss: 0.62434964, Gradient norm: 0.29093075
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11454.77734375MB
+INFO:root:[  194] Training loss: 0.61761630, Validation loss: 0.62411565, Gradient norm: 0.30735957
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11492.93359375MB
+INFO:root:Learning rate reduced to: 0.000125
+INFO:root:[  195] Training loss: 0.61757441, Validation loss: 0.62491187, Gradient norm: 0.29168564
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11531.0078125MB
+INFO:root:Learning rate reduced to: 6.25e-05
+INFO:root:[  196] Training loss: 0.61655581, Validation loss: 0.62342816, Gradient norm: 0.22994661
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11569.640625MB
+INFO:root:[  197] Training loss: 0.61687050, Validation loss: 0.62328324, Gradient norm: 0.19912386
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11607.828125MB
+INFO:root:[  198] Training loss: 0.61651514, Validation loss: 0.62375499, Gradient norm: 0.19472727
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11645.2265625MB
+INFO:root:[  199] Training loss: 0.61678531, Validation loss: 0.62337585, Gradient norm: 0.23508619
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11683.61328125MB
+INFO:root:[  200] Training loss: 0.61637569, Validation loss: 0.62416234, Gradient norm: 0.21019599
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11721.73046875MB
+INFO:root:[  201] Training loss: 0.61652260, Validation loss: 0.62311708, Gradient norm: 0.21290063
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11759.90234375MB
+INFO:root:[  202] Training loss: 0.61639903, Validation loss: 0.62544398, Gradient norm: 0.21013260
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11798.046875MB
+INFO:root:[  203] Training loss: 0.61660795, Validation loss: 0.62460542, Gradient norm: 0.21341677
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11836.328125MB
+INFO:root:[  204] Training loss: 0.61627073, Validation loss: 0.62318267, Gradient norm: 0.20836587
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11874.43359375MB
+INFO:root:[  205] Training loss: 0.61646642, Validation loss: 0.62338474, Gradient norm: 0.20459963
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11912.43359375MB
+INFO:root:[  206] Training loss: 0.61672798, Validation loss: 0.62355457, Gradient norm: 0.21416600
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11950.8203125MB
+INFO:root:[  207] Training loss: 0.61655373, Validation loss: 0.62257816, Gradient norm: 0.22375270
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=11989.19921875MB
+INFO:root:[  208] Training loss: 0.61584779, Validation loss: 0.62374146, Gradient norm: 0.21799413
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=12027.0703125MB
+INFO:root:[  209] Training loss: 0.61596144, Validation loss: 0.62281685, Gradient norm: 0.21079390
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=12065.43359375MB
+INFO:root:[  210] Training loss: 0.61618350, Validation loss: 0.62213514, Gradient norm: 0.21059627
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=12103.57421875MB
+INFO:root:[  211] Training loss: 0.61652269, Validation loss: 0.62329211, Gradient norm: 0.20478782
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=12141.43359375MB
+INFO:root:[  212] Training loss: 0.61644322, Validation loss: 0.62354273, Gradient norm: 0.21278060
+INFO:root:At the start of the epoch: mem (CPU python)=12454.5859375MB; mem (CPU total)=12180.0390625MB
+INFO:root:[  213] Training loss: 0.61630785, Validation loss: 0.62357153, Gradient norm: 0.20768566
+INFO:root:At the start of the epoch: mem (CPU python)=12472.42578125MB; mem (CPU total)=12218.1484375MB
+INFO:root:[  214] Training loss: 0.61646391, Validation loss: 0.62286953, Gradient norm: 0.22110984
+INFO:root:At the start of the epoch: mem (CPU python)=12510.515625MB; mem (CPU total)=12256.2734375MB
+INFO:root:[  215] Training loss: 0.61623156, Validation loss: 0.62326714, Gradient norm: 0.21188410
+INFO:root:At the start of the epoch: mem (CPU python)=12548.61328125MB; mem (CPU total)=12294.375MB
+INFO:root:[  216] Training loss: 0.61653300, Validation loss: 0.62254873, Gradient norm: 0.24374248
+INFO:root:At the start of the epoch: mem (CPU python)=12586.70703125MB; mem (CPU total)=12332.73828125MB
+INFO:root:[  217] Training loss: 0.61617324, Validation loss: 0.62376361, Gradient norm: 0.24546915
+INFO:root:At the start of the epoch: mem (CPU python)=12624.80078125MB; mem (CPU total)=12370.5MB
+INFO:root:[  218] Training loss: 0.61623948, Validation loss: 0.62153383, Gradient norm: 0.21959908
+INFO:root:At the start of the epoch: mem (CPU python)=12662.89453125MB; mem (CPU total)=12408.921875MB
+INFO:root:[  219] Training loss: 0.61647964, Validation loss: 0.62396801, Gradient norm: 0.21607433
+INFO:root:At the start of the epoch: mem (CPU python)=12700.9921875MB; mem (CPU total)=12446.37890625MB
+INFO:root:[  220] Training loss: 0.61608856, Validation loss: 0.62392733, Gradient norm: 0.21731453
+INFO:root:At the start of the epoch: mem (CPU python)=12739.0859375MB; mem (CPU total)=12484.25390625MB
+INFO:root:[  221] Training loss: 0.61620897, Validation loss: 0.62298831, Gradient norm: 0.25530726
+INFO:root:At the start of the epoch: mem (CPU python)=12777.41796875MB; mem (CPU total)=12522.8828125MB
+INFO:root:[  222] Training loss: 0.61629090, Validation loss: 0.62328900, Gradient norm: 0.20749299
+INFO:root:At the start of the epoch: mem (CPU python)=12815.5078125MB; mem (CPU total)=12561.0078125MB
+INFO:root:[  223] Training loss: 0.61576890, Validation loss: 0.62230890, Gradient norm: 0.20669689
+INFO:root:At the start of the epoch: mem (CPU python)=12853.609375MB; mem (CPU total)=12599.15234375MB
+INFO:root:[  224] Training loss: 0.61574232, Validation loss: 0.62275766, Gradient norm: 0.22628145
+INFO:root:At the start of the epoch: mem (CPU python)=12891.703125MB; mem (CPU total)=12637.03125MB
+INFO:root:[  225] Training loss: 0.61594376, Validation loss: 0.62364035, Gradient norm: 0.21629737
+INFO:root:At the start of the epoch: mem (CPU python)=12929.796875MB; mem (CPU total)=12675.12890625MB
+INFO:root:[  226] Training loss: 0.61574430, Validation loss: 0.62309412, Gradient norm: 0.21398095
+INFO:root:At the start of the epoch: mem (CPU python)=12967.89453125MB; mem (CPU total)=12713.265625MB
+INFO:root:[  227] Training loss: 0.61605001, Validation loss: 0.62296277, Gradient norm: 0.21913493
+INFO:root:At the start of the epoch: mem (CPU python)=13005.98828125MB; mem (CPU total)=12751.390625MB
+INFO:root:EP 227: Early stopping
+INFO:root:After finishing all epochs: mem (CPU python)=13044.08203125MB; mem (CPU total)=12790.01171875MB
+INFO:root:Training the model took 9872.233s.
+INFO:root:Emptying the cuda cache took 0.048s.
+INFO:root:Starting evaluation: model FNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.87476
+INFO:root:EnergyScoreTrain: 0.61599
+INFO:root:CRPSTrain: 0.52019
+INFO:root:Gaussian NLLTrain: 1.60117
+INFO:root:CoverageTrain: 0.83247
+INFO:root:IntervalWidthTrain: 3.25046
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.88483
+INFO:root:EnergyScoreValidation: 0.62301
+INFO:root:CRPSValidation: 0.52576
+INFO:root:Gaussian NLLValidation: 1.61103
+INFO:root:CoverageValidation: 0.83017
+INFO:root:IntervalWidthValidation: 3.25126
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.88582
+INFO:root:EnergyScoreTest: 0.62371
+INFO:root:CRPSTest: 0.52634
+INFO:root:Gaussian NLLTest: 1.61291
+INFO:root:CoverageTest: 0.82943
+INFO:root:IntervalWidthTest: 3.24273
+INFO:root:After validation: mem (CPU python)=13094.1484375MB; mem (CPU total)=12841.0234375MB
+INFO:root:###2 out of 5 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.02, 'fourier_dropout': 0.2, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3}
+INFO:root:After creating the dataloaders: mem (CPU python)=13094.1484375MB; mem (CPU total)=12840.40234375MB
+INFO:root:NumberParameters: 231589
+INFO:root:GPU memory allocated: 157286400
+INFO:root:After setting up the model: mem (CPU python)=13095.953125MB; mem (CPU total)=12841.87890625MB
+INFO:root:Training starts now.
+INFO:root:At the start of the epoch: mem (CPU python)=13096.15234375MB; mem (CPU total)=12842.12109375MB
+INFO:root:[    1] Training loss: 0.79454600, Validation loss: 0.73418466, Gradient norm: 0.75414019
+INFO:root:At the start of the epoch: mem (CPU python)=13135.6796875MB; mem (CPU total)=12881.64453125MB
+INFO:root:[    2] Training loss: 0.73129157, Validation loss: 0.73166331, Gradient norm: 0.42754615
+INFO:root:At the start of the epoch: mem (CPU python)=13173.74609375MB; mem (CPU total)=12919.80078125MB
+INFO:root:[    3] Training loss: 0.72920504, Validation loss: 0.72935383, Gradient norm: 0.32774831
+INFO:root:At the start of the epoch: mem (CPU python)=13211.85546875MB; mem (CPU total)=12957.69921875MB
+INFO:root:[    4] Training loss: 0.72783027, Validation loss: 0.72647472, Gradient norm: 0.33857813
+INFO:root:At the start of the epoch: mem (CPU python)=13249.96484375MB; mem (CPU total)=12995.83984375MB
+INFO:root:[    5] Training loss: 0.72623927, Validation loss: 0.72611196, Gradient norm: 0.27814701
+INFO:root:At the start of the epoch: mem (CPU python)=13288.08203125MB; mem (CPU total)=13034.20703125MB
+INFO:root:[    6] Training loss: 0.72572613, Validation loss: 0.72440504, Gradient norm: 0.25021724
+INFO:root:At the start of the epoch: mem (CPU python)=13326.19140625MB; mem (CPU total)=13072.28125MB
+INFO:root:[    7] Training loss: 0.72513109, Validation loss: 0.72663056, Gradient norm: 0.24493644
+INFO:root:At the start of the epoch: mem (CPU python)=13364.30078125MB; mem (CPU total)=13110.44140625MB
+INFO:root:[    8] Training loss: 0.72489151, Validation loss: 0.72644297, Gradient norm: 0.23849816
+INFO:root:At the start of the epoch: mem (CPU python)=13402.41015625MB; mem (CPU total)=13148.31640625MB
+INFO:root:[    9] Training loss: 0.72566901, Validation loss: 0.72597652, Gradient norm: 0.20756839
+INFO:root:At the start of the epoch: mem (CPU python)=13440.51953125MB; mem (CPU total)=13186.46875MB
+INFO:root:[   10] Training loss: 0.72392570, Validation loss: 0.72443329, Gradient norm: 0.21408001
+INFO:root:At the start of the epoch: mem (CPU python)=13478.6171875MB; mem (CPU total)=13224.7109375MB
+INFO:root:[   11] Training loss: 0.72421005, Validation loss: 0.72589089, Gradient norm: 0.23290951
+INFO:root:At the start of the epoch: mem (CPU python)=13516.74609375MB; mem (CPU total)=13263.01953125MB
+INFO:root:[   12] Training loss: 0.72421195, Validation loss: 0.72448762, Gradient norm: 0.19341389
+INFO:root:At the start of the epoch: mem (CPU python)=13554.84765625MB; mem (CPU total)=13301.15625MB
+INFO:root:[   13] Training loss: 0.72395790, Validation loss: 0.72491746, Gradient norm: 0.18351777
+INFO:root:At the start of the epoch: mem (CPU python)=13592.9453125MB; mem (CPU total)=13338.95703125MB
+INFO:root:[   14] Training loss: 0.72327591, Validation loss: 0.72540289, Gradient norm: 0.16895329
+INFO:root:At the start of the epoch: mem (CPU python)=13631.0390625MB; mem (CPU total)=13377.34375MB
+INFO:root:[   15] Training loss: 0.72342864, Validation loss: 0.72383889, Gradient norm: 0.17491404
+INFO:root:At the start of the epoch: mem (CPU python)=13669.1328125MB; mem (CPU total)=13415.234375MB
+INFO:root:[   16] Training loss: 0.72302724, Validation loss: 0.72415974, Gradient norm: 0.14968296
+INFO:root:At the start of the epoch: mem (CPU python)=13707.38671875MB; mem (CPU total)=13453.8515625MB
+INFO:root:[   17] Training loss: 0.72341037, Validation loss: 0.72537107, Gradient norm: 0.14656620
+INFO:root:At the start of the epoch: mem (CPU python)=13745.48046875MB; mem (CPU total)=13492.609375MB
+INFO:root:[   18] Training loss: 0.72320969, Validation loss: 0.72400336, Gradient norm: 0.15944083
+INFO:root:At the start of the epoch: mem (CPU python)=13783.58203125MB; mem (CPU total)=13529.82421875MB
+INFO:root:[   19] Training loss: 0.72359909, Validation loss: 0.72623980, Gradient norm: 0.13657853
+INFO:root:At the start of the epoch: mem (CPU python)=13822.03515625MB; mem (CPU total)=13567.84765625MB
+INFO:root:[   20] Training loss: 0.72353758, Validation loss: 0.72187599, Gradient norm: 0.14275982
+INFO:root:At the start of the epoch: mem (CPU python)=13860.83984375MB; mem (CPU total)=13607.48828125MB
+INFO:root:[   21] Training loss: 0.72213835, Validation loss: 0.72363997, Gradient norm: 0.14181474
+INFO:root:At the start of the epoch: mem (CPU python)=13899.21484375MB; mem (CPU total)=13645.62890625MB
+INFO:root:[   22] Training loss: 0.72226519, Validation loss: 0.72409854, Gradient norm: 0.13305716
+INFO:root:At the start of the epoch: mem (CPU python)=13937.4375MB; mem (CPU total)=13683.86328125MB
+INFO:root:[   23] Training loss: 0.72262722, Validation loss: 0.72291829, Gradient norm: 0.15828939
+INFO:root:At the start of the epoch: mem (CPU python)=13975.53125MB; mem (CPU total)=13721.9765625MB
+INFO:root:[   24] Training loss: 0.72159845, Validation loss: 0.72253341, Gradient norm: 0.13240159
+INFO:root:At the start of the epoch: mem (CPU python)=14013.625MB; mem (CPU total)=13760.09765625MB
+INFO:root:[   25] Training loss: 0.72198651, Validation loss: 0.72473868, Gradient norm: 0.13789640
+INFO:root:At the start of the epoch: mem (CPU python)=14051.71875MB; mem (CPU total)=13798.45703125MB
+INFO:root:[   26] Training loss: 0.72196462, Validation loss: 0.72314972, Gradient norm: 0.13730849
+INFO:root:At the start of the epoch: mem (CPU python)=14089.81640625MB; mem (CPU total)=13836.57421875MB
+INFO:root:[   27] Training loss: 0.72181211, Validation loss: 0.72512805, Gradient norm: 0.12805102
+INFO:root:At the start of the epoch: mem (CPU python)=14127.91015625MB; mem (CPU total)=13874.375MB
+INFO:root:[   28] Training loss: 0.72186221, Validation loss: 0.72257006, Gradient norm: 0.14598151
+INFO:root:At the start of the epoch: mem (CPU python)=14166.0078125MB; mem (CPU total)=13912.02734375MB
+INFO:root:[   29] Training loss: 0.72057924, Validation loss: 0.72298527, Gradient norm: 0.12545298
+INFO:root:At the start of the epoch: mem (CPU python)=14204.10546875MB; mem (CPU total)=13949.953125MB
+INFO:root:[   30] Training loss: 0.72222737, Validation loss: 0.72294102, Gradient norm: 0.13296304
+INFO:root:At the start of the epoch: mem (CPU python)=14242.19921875MB; mem (CPU total)=13987.56640625MB
+INFO:root:[   31] Training loss: 0.72161962, Validation loss: 0.72382936, Gradient norm: 0.14112622
+INFO:root:At the start of the epoch: mem (CPU python)=14280.29296875MB; mem (CPU total)=14025.6953125MB
+INFO:root:[   32] Training loss: 0.72144344, Validation loss: 0.72224485, Gradient norm: 0.13872722
+INFO:root:At the start of the epoch: mem (CPU python)=14318.38671875MB; mem (CPU total)=14063.8359375MB
+INFO:root:[   33] Training loss: 0.72150583, Validation loss: 0.72239358, Gradient norm: 0.12411118
+INFO:root:At the start of the epoch: mem (CPU python)=14356.484375MB; mem (CPU total)=14101.99609375MB
+INFO:root:[   34] Training loss: 0.72103464, Validation loss: 0.72210221, Gradient norm: 0.14799765
+INFO:root:At the start of the epoch: mem (CPU python)=14394.578125MB; mem (CPU total)=14140.12890625MB
+INFO:root:[   35] Training loss: 0.72080392, Validation loss: 0.72247020, Gradient norm: 0.13987296
+INFO:root:At the start of the epoch: mem (CPU python)=14432.67578125MB; mem (CPU total)=14178.25390625MB
+INFO:root:[   36] Training loss: 0.72047811, Validation loss: 0.72104755, Gradient norm: 0.11371718
+INFO:root:At the start of the epoch: mem (CPU python)=14470.7734375MB; mem (CPU total)=14216.9140625MB
+INFO:root:[   37] Training loss: 0.71892492, Validation loss: 0.72005076, Gradient norm: 0.10564678
+INFO:root:At the start of the epoch: mem (CPU python)=14508.8671875MB; mem (CPU total)=14255.11328125MB
+INFO:root:[   38] Training loss: 0.71758046, Validation loss: 0.71773699, Gradient norm: 0.12282652
+INFO:root:At the start of the epoch: mem (CPU python)=14546.9609375MB; mem (CPU total)=14293.48046875MB
+INFO:root:[   39] Training loss: 0.71614777, Validation loss: 0.71651082, Gradient norm: 0.14299780
+INFO:root:At the start of the epoch: mem (CPU python)=14585.05859375MB; mem (CPU total)=14331.34765625MB
+INFO:root:[   40] Training loss: 0.71394839, Validation loss: 0.71322912, Gradient norm: 0.12740610
+INFO:root:At the start of the epoch: mem (CPU python)=14623.15234375MB; mem (CPU total)=14369.45703125MB
+INFO:root:[   41] Training loss: 0.71171641, Validation loss: 0.71194338, Gradient norm: 0.11820622
+INFO:root:At the start of the epoch: mem (CPU python)=14661.24609375MB; mem (CPU total)=14410.0390625MB
+INFO:root:[   42] Training loss: 0.71071223, Validation loss: 0.71052502, Gradient norm: 0.15532217
+INFO:root:At the start of the epoch: mem (CPU python)=14699.33984375MB; mem (CPU total)=14448.1796875MB
+INFO:root:[   43] Training loss: 0.70834205, Validation loss: 0.71064140, Gradient norm: 0.13430366
+INFO:root:At the start of the epoch: mem (CPU python)=14737.4375MB; mem (CPU total)=14486.3046875MB
+INFO:root:[   44] Training loss: 0.70712628, Validation loss: 0.70770293, Gradient norm: 0.12867310
+INFO:root:At the start of the epoch: mem (CPU python)=14775.53125MB; mem (CPU total)=14524.4296875MB
+INFO:root:[   45] Training loss: 0.70545730, Validation loss: 0.70446698, Gradient norm: 0.13592215
+INFO:root:At the start of the epoch: mem (CPU python)=14813.625MB; mem (CPU total)=14562.828125MB
+INFO:root:[   46] Training loss: 0.70332317, Validation loss: 0.70178516, Gradient norm: 0.18414885
+INFO:root:At the start of the epoch: mem (CPU python)=14851.7265625MB; mem (CPU total)=14601.0MB
+INFO:root:[   47] Training loss: 0.70147507, Validation loss: 0.70083120, Gradient norm: 0.20974036
+INFO:root:At the start of the epoch: mem (CPU python)=14889.8203125MB; mem (CPU total)=14639.10546875MB
+INFO:root:[   48] Training loss: 0.69897832, Validation loss: 0.70033486, Gradient norm: 0.21483368
+INFO:root:At the start of the epoch: mem (CPU python)=14927.91796875MB; mem (CPU total)=14677.1953125MB
+INFO:root:[   49] Training loss: 0.69709392, Validation loss: 0.69705685, Gradient norm: 0.23004623
+INFO:root:At the start of the epoch: mem (CPU python)=14966.01171875MB; mem (CPU total)=14715.31640625MB
+INFO:root:[   50] Training loss: 0.69531425, Validation loss: 0.69586594, Gradient norm: 0.19601405
+INFO:root:At the start of the epoch: mem (CPU python)=15004.109375MB; mem (CPU total)=14753.47265625MB
+INFO:root:[   51] Training loss: 0.69318844, Validation loss: 0.69255054, Gradient norm: 0.23814988
+INFO:root:At the start of the epoch: mem (CPU python)=15042.203125MB; mem (CPU total)=14791.84375MB
+INFO:root:[   52] Training loss: 0.69191006, Validation loss: 0.69124753, Gradient norm: 0.27074185
+INFO:root:At the start of the epoch: mem (CPU python)=15080.30078125MB; mem (CPU total)=14829.96875MB
+INFO:root:[   53] Training loss: 0.69004408, Validation loss: 0.68970068, Gradient norm: 0.23079596
+INFO:root:At the start of the epoch: mem (CPU python)=15118.3984375MB; mem (CPU total)=14867.84375MB
+INFO:root:[   54] Training loss: 0.68795126, Validation loss: 0.68778748, Gradient norm: 0.30624090
+INFO:root:At the start of the epoch: mem (CPU python)=15156.4921875MB; mem (CPU total)=14906.21484375MB
+INFO:root:[   55] Training loss: 0.68606476, Validation loss: 0.68629698, Gradient norm: 0.29181986
+INFO:root:At the start of the epoch: mem (CPU python)=15194.5859375MB; mem (CPU total)=14944.33984375MB
+INFO:root:[   56] Training loss: 0.68403427, Validation loss: 0.68440744, Gradient norm: 0.28779073
+INFO:root:At the start of the epoch: mem (CPU python)=15232.68359375MB; mem (CPU total)=14982.6953125MB
+INFO:root:[   57] Training loss: 0.68237258, Validation loss: 0.68197457, Gradient norm: 0.32341930
+INFO:root:At the start of the epoch: mem (CPU python)=15270.77734375MB; mem (CPU total)=15020.8359375MB
+INFO:root:[   58] Training loss: 0.68071963, Validation loss: 0.68020980, Gradient norm: 0.32795156
+INFO:root:At the start of the epoch: mem (CPU python)=15308.87109375MB; mem (CPU total)=15058.96875MB
+INFO:root:[   59] Training loss: 0.67938378, Validation loss: 0.67993967, Gradient norm: 0.30143230
+INFO:root:At the start of the epoch: mem (CPU python)=15346.96484375MB; mem (CPU total)=15097.09375MB
+INFO:root:[   60] Training loss: 0.67803678, Validation loss: 0.67835872, Gradient norm: 0.24763747
+INFO:root:At the start of the epoch: mem (CPU python)=15385.06640625MB; mem (CPU total)=15135.203125MB
+INFO:root:[   61] Training loss: 0.67585926, Validation loss: 0.67831468, Gradient norm: 0.32272438
+INFO:root:At the start of the epoch: mem (CPU python)=15423.16015625MB; mem (CPU total)=15173.56640625MB
+INFO:root:[   62] Training loss: 0.67526503, Validation loss: 0.67599241, Gradient norm: 0.25699102
+INFO:root:At the start of the epoch: mem (CPU python)=15461.25390625MB; mem (CPU total)=15211.66015625MB
+INFO:root:[   63] Training loss: 0.67449006, Validation loss: 0.67434692, Gradient norm: 0.26053246
+INFO:root:At the start of the epoch: mem (CPU python)=15499.3515625MB; mem (CPU total)=15249.796875MB
+INFO:root:[   64] Training loss: 0.67320929, Validation loss: 0.67279696, Gradient norm: 0.28394944
+INFO:root:At the start of the epoch: mem (CPU python)=15537.4453125MB; mem (CPU total)=15287.6953125MB
+INFO:root:[   65] Training loss: 0.67171056, Validation loss: 0.67317649, Gradient norm: 0.34300804
+INFO:root:At the start of the epoch: mem (CPU python)=15575.5390625MB; mem (CPU total)=15327.26953125MB
+INFO:root:[   66] Training loss: 0.67096964, Validation loss: 0.67169178, Gradient norm: 0.32507241
+INFO:root:At the start of the epoch: mem (CPU python)=15613.6328125MB; mem (CPU total)=15365.4140625MB
+INFO:root:[   67] Training loss: 0.66987134, Validation loss: 0.67154151, Gradient norm: 0.29209740
+INFO:root:At the start of the epoch: mem (CPU python)=15651.73046875MB; mem (CPU total)=15403.796875MB
+INFO:root:[   68] Training loss: 0.66792758, Validation loss: 0.67038894, Gradient norm: 0.28933742
+INFO:root:At the start of the epoch: mem (CPU python)=15689.82421875MB; mem (CPU total)=15441.95703125MB
+INFO:root:[   69] Training loss: 0.66751474, Validation loss: 0.66777171, Gradient norm: 0.33334654
+INFO:root:At the start of the epoch: mem (CPU python)=15727.921875MB; mem (CPU total)=15479.70703125MB
+INFO:root:[   70] Training loss: 0.66628833, Validation loss: 0.66841253, Gradient norm: 0.25923267
+INFO:root:At the start of the epoch: mem (CPU python)=15766.01953125MB; mem (CPU total)=15517.83984375MB
+INFO:root:[   71] Training loss: 0.66597870, Validation loss: 0.66756855, Gradient norm: 0.36284455
+INFO:root:At the start of the epoch: mem (CPU python)=15804.11328125MB; mem (CPU total)=15555.74609375MB
+INFO:root:[   72] Training loss: 0.66501289, Validation loss: 0.66652448, Gradient norm: 0.25628709
+INFO:root:At the start of the epoch: mem (CPU python)=15842.20703125MB; mem (CPU total)=15594.16796875MB
+INFO:root:[   73] Training loss: 0.66347557, Validation loss: 0.66476819, Gradient norm: 0.27655530
+INFO:root:At the start of the epoch: mem (CPU python)=15880.3046875MB; mem (CPU total)=15632.0625MB
+INFO:root:[   74] Training loss: 0.66330321, Validation loss: 0.66483810, Gradient norm: 0.31024515
+INFO:root:At the start of the epoch: mem (CPU python)=15918.3984375MB; mem (CPU total)=15669.94921875MB
+INFO:root:[   75] Training loss: 0.66198754, Validation loss: 0.66395738, Gradient norm: 0.34874667
+INFO:root:At the start of the epoch: mem (CPU python)=15956.4921875MB; mem (CPU total)=15708.31640625MB
+INFO:root:[   76] Training loss: 0.66138338, Validation loss: 0.66331188, Gradient norm: 0.27199076
+INFO:root:At the start of the epoch: mem (CPU python)=15994.5859375MB; mem (CPU total)=15746.19140625MB
+INFO:root:[   77] Training loss: 0.66056105, Validation loss: 0.66343479, Gradient norm: 0.34011627
+INFO:root:At the start of the epoch: mem (CPU python)=16032.6875MB; mem (CPU total)=15784.30859375MB
+INFO:root:[   78] Training loss: 0.65967018, Validation loss: 0.66127971, Gradient norm: 0.27776412
+INFO:root:At the start of the epoch: mem (CPU python)=16070.78125MB; mem (CPU total)=15822.65234375MB
+INFO:root:[   79] Training loss: 0.65911737, Validation loss: 0.66045124, Gradient norm: 0.28857849
+INFO:root:At the start of the epoch: mem (CPU python)=16108.875MB; mem (CPU total)=15860.3125MB
+INFO:root:[   80] Training loss: 0.65830725, Validation loss: 0.66062088, Gradient norm: 0.30248834
+INFO:root:At the start of the epoch: mem (CPU python)=16146.97265625MB; mem (CPU total)=15898.734375MB
+INFO:root:[   81] Training loss: 0.65781366, Validation loss: 0.65885008, Gradient norm: 0.32891317
+INFO:root:At the start of the epoch: mem (CPU python)=16185.06640625MB; mem (CPU total)=15936.890625MB
+INFO:root:[   82] Training loss: 0.65652155, Validation loss: 0.65857535, Gradient norm: 0.27949447
+INFO:root:At the start of the epoch: mem (CPU python)=16223.16015625MB; mem (CPU total)=15975.1875MB
+INFO:root:[   83] Training loss: 0.65606014, Validation loss: 0.65789157, Gradient norm: 0.27479412
+INFO:root:At the start of the epoch: mem (CPU python)=16261.25390625MB; mem (CPU total)=16013.83203125MB
+INFO:root:[   84] Training loss: 0.65556280, Validation loss: 0.65851244, Gradient norm: 0.30879364
+INFO:root:At the start of the epoch: mem (CPU python)=16299.35546875MB; mem (CPU total)=16051.30859375MB
+INFO:root:[   85] Training loss: 0.65439321, Validation loss: 0.65565178, Gradient norm: 0.27642165
+INFO:root:At the start of the epoch: mem (CPU python)=16337.44921875MB; mem (CPU total)=16089.68359375MB
+INFO:root:[   86] Training loss: 0.65428033, Validation loss: 0.65677989, Gradient norm: 0.26457577
+INFO:root:At the start of the epoch: mem (CPU python)=16375.54296875MB; mem (CPU total)=16127.80859375MB
+INFO:root:[   87] Training loss: 0.65347719, Validation loss: 0.65594120, Gradient norm: 0.28524814
+INFO:root:At the start of the epoch: mem (CPU python)=16413.640625MB; mem (CPU total)=16165.66796875MB
+INFO:root:[   88] Training loss: 0.65213742, Validation loss: 0.65536570, Gradient norm: 0.26892243
+INFO:root:At the start of the epoch: mem (CPU python)=16451.71875MB; mem (CPU total)=16204.03125MB
+INFO:root:[   89] Training loss: 0.65238795, Validation loss: 0.65308049, Gradient norm: 0.32098048
+INFO:root:At the start of the epoch: mem (CPU python)=16489.859375MB; mem (CPU total)=16241.9140625MB
+INFO:root:[   90] Training loss: 0.65174244, Validation loss: 0.65285382, Gradient norm: 0.32846364
+INFO:root:At the start of the epoch: mem (CPU python)=16527.95703125MB; mem (CPU total)=16280.17578125MB
+INFO:root:[   91] Training loss: 0.65104236, Validation loss: 0.65307170, Gradient norm: 0.28137223
+INFO:root:At the start of the epoch: mem (CPU python)=16566.05078125MB; mem (CPU total)=16318.3203125MB
+INFO:root:[   92] Training loss: 0.65005586, Validation loss: 0.65246356, Gradient norm: 0.31094053
+INFO:root:At the start of the epoch: mem (CPU python)=16604.14453125MB; mem (CPU total)=16356.71875MB
+INFO:root:[   93] Training loss: 0.64954097, Validation loss: 0.65235790, Gradient norm: 0.31619239
+INFO:root:At the start of the epoch: mem (CPU python)=16642.2421875MB; mem (CPU total)=16394.87109375MB
+INFO:root:[   94] Training loss: 0.64908060, Validation loss: 0.65166578, Gradient norm: 0.28134815
+INFO:root:At the start of the epoch: mem (CPU python)=16680.33984375MB; mem (CPU total)=16432.78515625MB
+INFO:root:[   95] Training loss: 0.64881539, Validation loss: 0.65164708, Gradient norm: 0.31437763
+INFO:root:At the start of the epoch: mem (CPU python)=16718.43359375MB; mem (CPU total)=16470.90234375MB
+INFO:root:[   96] Training loss: 0.64783231, Validation loss: 0.65157990, Gradient norm: 0.32897527
+INFO:root:At the start of the epoch: mem (CPU python)=16756.52734375MB; mem (CPU total)=16509.296875MB
+INFO:root:[   97] Training loss: 0.64769496, Validation loss: 0.65007324, Gradient norm: 0.33899325
+INFO:root:At the start of the epoch: mem (CPU python)=16794.62890625MB; mem (CPU total)=16547.56640625MB
+INFO:root:[   98] Training loss: 0.64635402, Validation loss: 0.64900828, Gradient norm: 0.28735253
+INFO:root:At the start of the epoch: mem (CPU python)=16832.72265625MB; mem (CPU total)=16586.21875MB
+INFO:root:[   99] Training loss: 0.64619149, Validation loss: 0.64944407, Gradient norm: 0.31243114
+INFO:root:At the start of the epoch: mem (CPU python)=16870.81640625MB; mem (CPU total)=16624.13671875MB
+INFO:root:[  100] Training loss: 0.64548713, Validation loss: 0.64863431, Gradient norm: 0.29461824
+INFO:root:At the start of the epoch: mem (CPU python)=16908.91015625MB; mem (CPU total)=16662.296875MB
+INFO:root:[  101] Training loss: 0.64529889, Validation loss: 0.64712529, Gradient norm: 0.28118609
+INFO:root:At the start of the epoch: mem (CPU python)=16947.0078125MB; mem (CPU total)=16700.703125MB
+INFO:root:[  102] Training loss: 0.64478915, Validation loss: 0.64760007, Gradient norm: 0.29898928
+INFO:root:At the start of the epoch: mem (CPU python)=16985.1015625MB; mem (CPU total)=16738.83984375MB
+INFO:root:[  103] Training loss: 0.64402593, Validation loss: 0.64690246, Gradient norm: 0.32385415
+INFO:root:At the start of the epoch: mem (CPU python)=17023.19921875MB; mem (CPU total)=16779.0390625MB
+INFO:root:[  104] Training loss: 0.64345233, Validation loss: 0.64628178, Gradient norm: 0.39779847
+INFO:root:At the start of the epoch: mem (CPU python)=17061.296875MB; mem (CPU total)=16816.6953125MB
+INFO:root:[  105] Training loss: 0.64304894, Validation loss: 0.64567851, Gradient norm: 0.33948774
+INFO:root:At the start of the epoch: mem (CPU python)=17099.390625MB; mem (CPU total)=16854.77734375MB
+INFO:root:[  106] Training loss: 0.64234566, Validation loss: 0.64537221, Gradient norm: 0.25352489
+INFO:root:At the start of the epoch: mem (CPU python)=17137.484375MB; mem (CPU total)=16892.8828125MB
+INFO:root:[  107] Training loss: 0.64199161, Validation loss: 0.64491872, Gradient norm: 0.29853065
+INFO:root:At the start of the epoch: mem (CPU python)=17175.58203125MB; mem (CPU total)=16931.24609375MB
+INFO:root:[  108] Training loss: 0.64170302, Validation loss: 0.64538648, Gradient norm: 0.29167850
+INFO:root:At the start of the epoch: mem (CPU python)=17213.67578125MB; mem (CPU total)=16969.8046875MB
+INFO:root:[  109] Training loss: 0.64093018, Validation loss: 0.64324233, Gradient norm: 0.28194751
+INFO:root:At the start of the epoch: mem (CPU python)=17251.76953125MB; mem (CPU total)=17007.578125MB
+INFO:root:[  110] Training loss: 0.64045098, Validation loss: 0.64284592, Gradient norm: 0.36868899
+INFO:root:At the start of the epoch: mem (CPU python)=17289.86328125MB; mem (CPU total)=17045.46484375MB
+INFO:root:[  111] Training loss: 0.63934609, Validation loss: 0.64380128, Gradient norm: 0.33938123
+INFO:root:At the start of the epoch: mem (CPU python)=17327.9609375MB; mem (CPU total)=17083.30078125MB
+INFO:root:[  112] Training loss: 0.63916840, Validation loss: 0.64330132, Gradient norm: 0.29037373
+INFO:root:At the start of the epoch: mem (CPU python)=17366.05859375MB; mem (CPU total)=17121.6953125MB
+INFO:root:[  113] Training loss: 0.63833376, Validation loss: 0.64194601, Gradient norm: 0.32959912
+INFO:root:At the start of the epoch: mem (CPU python)=17404.15234375MB; mem (CPU total)=17159.859375MB
+INFO:root:[  114] Training loss: 0.63867886, Validation loss: 0.64101354, Gradient norm: 0.29297295
+INFO:root:At the start of the epoch: mem (CPU python)=17442.25MB; mem (CPU total)=17197.78125MB
+INFO:root:[  115] Training loss: 0.63771853, Validation loss: 0.64091650, Gradient norm: 0.31339681
+INFO:root:At the start of the epoch: mem (CPU python)=17480.34375MB; mem (CPU total)=17236.03515625MB
+INFO:root:[  116] Training loss: 0.63731065, Validation loss: 0.64218909, Gradient norm: 0.35173910
+INFO:root:At the start of the epoch: mem (CPU python)=17518.4375MB; mem (CPU total)=17274.12109375MB
+INFO:root:[  117] Training loss: 0.63662970, Validation loss: 0.64090249, Gradient norm: 0.35888359
+INFO:root:At the start of the epoch: mem (CPU python)=17556.53125MB; mem (CPU total)=17312.515625MB
+INFO:root:[  118] Training loss: 0.63619558, Validation loss: 0.64027742, Gradient norm: 0.42484959
+INFO:root:At the start of the epoch: mem (CPU python)=17594.62890625MB; mem (CPU total)=17350.85546875MB
+INFO:root:[  119] Training loss: 0.63591036, Validation loss: 0.63979116, Gradient norm: 0.29187316
+INFO:root:At the start of the epoch: mem (CPU python)=17632.72265625MB; mem (CPU total)=17388.484375MB
+INFO:root:[  120] Training loss: 0.63531267, Validation loss: 0.63950351, Gradient norm: 0.34866753
+INFO:root:At the start of the epoch: mem (CPU python)=17670.8203125MB; mem (CPU total)=17426.87109375MB
+INFO:root:[  121] Training loss: 0.63450182, Validation loss: 0.63797506, Gradient norm: 0.33568315
+INFO:root:At the start of the epoch: mem (CPU python)=17708.91796875MB; mem (CPU total)=17464.94921875MB
+INFO:root:[  122] Training loss: 0.63402363, Validation loss: 0.63666465, Gradient norm: 0.32769099
+INFO:root:At the start of the epoch: mem (CPU python)=17747.01171875MB; mem (CPU total)=17503.03515625MB
+INFO:root:[  123] Training loss: 0.63409424, Validation loss: 0.63845282, Gradient norm: 0.30801333
+INFO:root:At the start of the epoch: mem (CPU python)=17785.10546875MB; mem (CPU total)=17541.42578125MB
+INFO:root:[  124] Training loss: 0.63331070, Validation loss: 0.63707578, Gradient norm: 0.33618146
+INFO:root:At the start of the epoch: mem (CPU python)=17823.203125MB; mem (CPU total)=17579.171875MB
+INFO:root:[  125] Training loss: 0.63315692, Validation loss: 0.63782785, Gradient norm: 0.37293230
+INFO:root:At the start of the epoch: mem (CPU python)=17861.296875MB; mem (CPU total)=17617.27734375MB
+INFO:root:[  126] Training loss: 0.63247339, Validation loss: 0.63772383, Gradient norm: 0.29996914
+INFO:root:At the start of the epoch: mem (CPU python)=17899.390625MB; mem (CPU total)=17655.625MB
+INFO:root:[  127] Training loss: 0.63220374, Validation loss: 0.63652174, Gradient norm: 0.32128872
+INFO:root:At the start of the epoch: mem (CPU python)=17937.48828125MB; mem (CPU total)=17693.75390625MB
+INFO:root:[  128] Training loss: 0.63177242, Validation loss: 0.63759425, Gradient norm: 0.35685387
+INFO:root:At the start of the epoch: mem (CPU python)=17975.5859375MB; mem (CPU total)=17731.890625MB
+INFO:root:[  129] Training loss: 0.63239072, Validation loss: 0.63638889, Gradient norm: 0.36687891
+INFO:root:At the start of the epoch: mem (CPU python)=18013.68359375MB; mem (CPU total)=17769.80078125MB
+INFO:root:[  130] Training loss: 0.63086752, Validation loss: 0.63533662, Gradient norm: 0.33341235
+INFO:root:At the start of the epoch: mem (CPU python)=18051.77734375MB; mem (CPU total)=17808.21875MB
+INFO:root:[  131] Training loss: 0.63101979, Validation loss: 0.63522306, Gradient norm: 0.40715240
+INFO:root:At the start of the epoch: mem (CPU python)=18089.875MB; mem (CPU total)=17846.58984375MB
+INFO:root:[  132] Training loss: 0.63017911, Validation loss: 0.63447527, Gradient norm: 0.37322419
+INFO:root:At the start of the epoch: mem (CPU python)=18127.96875MB; mem (CPU total)=17884.7578125MB
+INFO:root:[  133] Training loss: 0.63024172, Validation loss: 0.63377396, Gradient norm: 0.31426065
+INFO:root:At the start of the epoch: mem (CPU python)=18166.0625MB; mem (CPU total)=17922.921875MB
+INFO:root:[  134] Training loss: 0.62914299, Validation loss: 0.63434829, Gradient norm: 0.32209275
+INFO:root:At the start of the epoch: mem (CPU python)=18204.15625MB; mem (CPU total)=17961.06640625MB
+INFO:root:[  135] Training loss: 0.62953942, Validation loss: 0.63383223, Gradient norm: 0.38275278
+INFO:root:At the start of the epoch: mem (CPU python)=18242.25390625MB; mem (CPU total)=17999.1875MB
+INFO:root:[  136] Training loss: 0.62910650, Validation loss: 0.63308958, Gradient norm: 0.39005937
+INFO:root:At the start of the epoch: mem (CPU python)=18280.34765625MB; mem (CPU total)=18037.0625MB
+INFO:root:[  137] Training loss: 0.62882961, Validation loss: 0.63345235, Gradient norm: 0.38747798
+INFO:root:At the start of the epoch: mem (CPU python)=18318.4453125MB; mem (CPU total)=18075.421875MB
+INFO:root:[  138] Training loss: 0.62829234, Validation loss: 0.63336734, Gradient norm: 0.32051160
+INFO:root:At the start of the epoch: mem (CPU python)=18356.54296875MB; mem (CPU total)=18113.47265625MB
+INFO:root:[  139] Training loss: 0.62806210, Validation loss: 0.63239259, Gradient norm: 0.40607521
+INFO:root:At the start of the epoch: mem (CPU python)=18394.63671875MB; mem (CPU total)=18151.578125MB
+INFO:root:[  140] Training loss: 0.62786679, Validation loss: 0.63167160, Gradient norm: 0.40684919
+INFO:root:At the start of the epoch: mem (CPU python)=18432.73046875MB; mem (CPU total)=18189.78515625MB
+INFO:root:[  141] Training loss: 0.62714103, Validation loss: 0.63120424, Gradient norm: 0.32742622
+INFO:root:At the start of the epoch: mem (CPU python)=18470.828125MB; mem (CPU total)=18227.9609375MB
+INFO:root:[  142] Training loss: 0.62652176, Validation loss: 0.63228417, Gradient norm: 0.34458366
+INFO:root:At the start of the epoch: mem (CPU python)=18508.921875MB; mem (CPU total)=18266.3515625MB
+INFO:root:[  143] Training loss: 0.62659498, Validation loss: 0.63153580, Gradient norm: 0.32263284
+INFO:root:At the start of the epoch: mem (CPU python)=18547.015625MB; mem (CPU total)=18304.484375MB
+INFO:root:[  144] Training loss: 0.62606920, Validation loss: 0.63014572, Gradient norm: 0.29654488
+INFO:root:At the start of the epoch: mem (CPU python)=18585.11328125MB; mem (CPU total)=18342.3671875MB
+INFO:root:[  145] Training loss: 0.62599515, Validation loss: 0.63081307, Gradient norm: 0.38020401
+INFO:root:At the start of the epoch: mem (CPU python)=18623.2109375MB; mem (CPU total)=18380.72265625MB
+INFO:root:[  146] Training loss: 0.62548828, Validation loss: 0.63152541, Gradient norm: 0.31781549
+INFO:root:At the start of the epoch: mem (CPU python)=18661.3046875MB; mem (CPU total)=18418.79296875MB
+INFO:root:[  147] Training loss: 0.62517949, Validation loss: 0.63093845, Gradient norm: 0.31143513
+INFO:root:At the start of the epoch: mem (CPU python)=18699.3984375MB; mem (CPU total)=18456.91015625MB
+INFO:root:[  148] Training loss: 0.62492824, Validation loss: 0.63006193, Gradient norm: 0.35002861
+INFO:root:At the start of the epoch: mem (CPU python)=18737.49609375MB; mem (CPU total)=18495.53125MB
+INFO:root:[  149] Training loss: 0.62446868, Validation loss: 0.62936572, Gradient norm: 0.30329515
+INFO:root:At the start of the epoch: mem (CPU python)=18775.58984375MB; mem (CPU total)=18533.265625MB
+INFO:root:[  150] Training loss: 0.62384477, Validation loss: 0.62961228, Gradient norm: 0.46035911
+INFO:root:At the start of the epoch: mem (CPU python)=18813.68359375MB; mem (CPU total)=18571.65625MB
+INFO:root:[  151] Training loss: 0.62402847, Validation loss: 0.63023915, Gradient norm: 0.49657893
+INFO:root:At the start of the epoch: mem (CPU python)=18851.77734375MB; mem (CPU total)=18609.51171875MB
+INFO:root:[  152] Training loss: 0.62401659, Validation loss: 0.62863404, Gradient norm: 0.35493565
+INFO:root:At the start of the epoch: mem (CPU python)=18889.87890625MB; mem (CPU total)=18647.3828125MB
+INFO:root:[  153] Training loss: 0.62345745, Validation loss: 0.62919538, Gradient norm: 0.39141102
+INFO:root:At the start of the epoch: mem (CPU python)=18927.97265625MB; mem (CPU total)=18685.25390625MB
+INFO:root:[  154] Training loss: 0.62275528, Validation loss: 0.62722092, Gradient norm: 0.35183289
+INFO:root:At the start of the epoch: mem (CPU python)=18966.06640625MB; mem (CPU total)=18722.85546875MB
+INFO:root:[  155] Training loss: 0.62272833, Validation loss: 0.62820064, Gradient norm: 0.30096235
+INFO:root:At the start of the epoch: mem (CPU python)=19004.1640625MB; mem (CPU total)=18761.20703125MB
+INFO:root:[  156] Training loss: 0.62254605, Validation loss: 0.62732132, Gradient norm: 0.34046295
+INFO:root:At the start of the epoch: mem (CPU python)=19042.2578125MB; mem (CPU total)=18799.30078125MB
+INFO:root:[  157] Training loss: 0.62245138, Validation loss: 0.62742926, Gradient norm: 0.52956270
+INFO:root:At the start of the epoch: mem (CPU python)=19080.3515625MB; mem (CPU total)=18837.12890625MB
+INFO:root:[  158] Training loss: 0.62197944, Validation loss: 0.62753384, Gradient norm: 0.35437488
+INFO:root:At the start of the epoch: mem (CPU python)=19118.44921875MB; mem (CPU total)=18875.2109375MB
+INFO:root:[  159] Training loss: 0.62142790, Validation loss: 0.62731444, Gradient norm: 0.32180379
+INFO:root:At the start of the epoch: mem (CPU python)=19156.54296875MB; mem (CPU total)=18913.5234375MB
+INFO:root:[  160] Training loss: 0.62124460, Validation loss: 0.62733012, Gradient norm: 0.40452322
+INFO:root:At the start of the epoch: mem (CPU python)=19194.63671875MB; mem (CPU total)=18951.23828125MB
+INFO:root:Learning rate reduced to: 0.0005
+INFO:root:[  161] Training loss: 0.62090899, Validation loss: 0.62661943, Gradient norm: 0.40934237
+INFO:root:At the start of the epoch: mem (CPU python)=19232.73828125MB; mem (CPU total)=18989.62890625MB
+INFO:root:[  162] Training loss: 0.61998857, Validation loss: 0.62563670, Gradient norm: 0.22955710
+INFO:root:At the start of the epoch: mem (CPU python)=19270.8359375MB; mem (CPU total)=19027.296875MB
+INFO:root:[  163] Training loss: 0.61949251, Validation loss: 0.62550881, Gradient norm: 0.23967995
+INFO:root:At the start of the epoch: mem (CPU python)=19308.9296875MB; mem (CPU total)=19065.4765625MB
+INFO:root:[  164] Training loss: 0.61974085, Validation loss: 0.62569191, Gradient norm: 0.26137681
+INFO:root:At the start of the epoch: mem (CPU python)=19347.0234375MB; mem (CPU total)=19103.328125MB
+INFO:root:[  165] Training loss: 0.61900268, Validation loss: 0.62599411, Gradient norm: 0.26678591
+INFO:root:At the start of the epoch: mem (CPU python)=19385.12109375MB; mem (CPU total)=19141.71875MB
+INFO:root:[  166] Training loss: 0.61922323, Validation loss: 0.62612388, Gradient norm: 0.27407527
+INFO:root:At the start of the epoch: mem (CPU python)=19423.21484375MB; mem (CPU total)=19180.359375MB
+INFO:root:[  167] Training loss: 0.61899389, Validation loss: 0.62528184, Gradient norm: 0.26100510
+INFO:root:At the start of the epoch: mem (CPU python)=19461.3125MB; mem (CPU total)=19218.28125MB
+INFO:root:[  168] Training loss: 0.61858995, Validation loss: 0.62418880, Gradient norm: 0.28829919
+INFO:root:At the start of the epoch: mem (CPU python)=19499.40234375MB; mem (CPU total)=19256.421875MB
+INFO:root:[  169] Training loss: 0.61825162, Validation loss: 0.62558229, Gradient norm: 0.26829588
+INFO:root:At the start of the epoch: mem (CPU python)=19537.50390625MB; mem (CPU total)=19294.33203125MB
+INFO:root:[  170] Training loss: 0.61846040, Validation loss: 0.62524400, Gradient norm: 0.25229528
+INFO:root:At the start of the epoch: mem (CPU python)=19575.59765625MB; mem (CPU total)=19332.47265625MB
+INFO:root:[  171] Training loss: 0.61837316, Validation loss: 0.62476734, Gradient norm: 0.24983128
+INFO:root:At the start of the epoch: mem (CPU python)=19613.6953125MB; mem (CPU total)=19370.609375MB
+INFO:root:[  172] Training loss: 0.61823522, Validation loss: 0.62443357, Gradient norm: 0.28119563
+INFO:root:At the start of the epoch: mem (CPU python)=19651.79296875MB; mem (CPU total)=19408.5MB
+INFO:root:[  173] Training loss: 0.61805198, Validation loss: 0.62392901, Gradient norm: 0.37458456
+INFO:root:At the start of the epoch: mem (CPU python)=19689.88671875MB; mem (CPU total)=19445.8203125MB
+INFO:root:[  174] Training loss: 0.61816790, Validation loss: 0.62509887, Gradient norm: 0.28771421
+INFO:root:At the start of the epoch: mem (CPU python)=19727.98046875MB; mem (CPU total)=19483.9453125MB
+INFO:root:[  175] Training loss: 0.61787513, Validation loss: 0.62450549, Gradient norm: 0.28953786
+INFO:root:At the start of the epoch: mem (CPU python)=19766.078125MB; mem (CPU total)=19521.8359375MB
+INFO:root:[  176] Training loss: 0.61781482, Validation loss: 0.62520182, Gradient norm: 0.29253929
+INFO:root:At the start of the epoch: mem (CPU python)=19804.171875MB; mem (CPU total)=19559.98046875MB
+INFO:root:[  177] Training loss: 0.61733919, Validation loss: 0.62517302, Gradient norm: 0.25154610
+INFO:root:At the start of the epoch: mem (CPU python)=19842.26953125MB; mem (CPU total)=19598.1171875MB
+INFO:root:[  178] Training loss: 0.61738856, Validation loss: 0.62482625, Gradient norm: 0.32254687
+INFO:root:At the start of the epoch: mem (CPU python)=19880.36328125MB; mem (CPU total)=19636.265625MB
+INFO:root:[  179] Training loss: 0.61737756, Validation loss: 0.62439391, Gradient norm: 0.33187679
+INFO:root:At the start of the epoch: mem (CPU python)=19918.4609375MB; mem (CPU total)=19674.13671875MB
+INFO:root:Learning rate reduced to: 0.00025
+INFO:root:[  180] Training loss: 0.61656562, Validation loss: 0.62358118, Gradient norm: 0.30817792
+INFO:root:At the start of the epoch: mem (CPU python)=19956.5546875MB; mem (CPU total)=19713.05078125MB
+INFO:root:[  181] Training loss: 0.61639329, Validation loss: 0.62394936, Gradient norm: 0.26289687
+INFO:root:At the start of the epoch: mem (CPU python)=19994.6484375MB; mem (CPU total)=19751.21875MB
+INFO:root:[  182] Training loss: 0.61627269, Validation loss: 0.62239687, Gradient norm: 0.21913946
+INFO:root:At the start of the epoch: mem (CPU python)=20032.75MB; mem (CPU total)=19789.40625MB
+INFO:root:[  183] Training loss: 0.61612623, Validation loss: 0.62343296, Gradient norm: 0.21696934
+INFO:root:At the start of the epoch: mem (CPU python)=20070.84375MB; mem (CPU total)=19827.359375MB
+INFO:root:[  184] Training loss: 0.61651795, Validation loss: 0.62371012, Gradient norm: 0.21053497
+INFO:root:At the start of the epoch: mem (CPU python)=20108.9375MB; mem (CPU total)=19865.3828125MB
+INFO:root:[  185] Training loss: 0.61564725, Validation loss: 0.62249890, Gradient norm: 0.20897308
+INFO:root:At the start of the epoch: mem (CPU python)=20147.03515625MB; mem (CPU total)=19903.296875MB
+INFO:root:[  186] Training loss: 0.61614968, Validation loss: 0.62330211, Gradient norm: 0.21715963
+INFO:root:At the start of the epoch: mem (CPU python)=20185.1328125MB; mem (CPU total)=19941.8203125MB
+INFO:root:[  187] Training loss: 0.61591291, Validation loss: 0.62333157, Gradient norm: 0.23573357
+INFO:root:At the start of the epoch: mem (CPU python)=20223.2265625MB; mem (CPU total)=19979.54296875MB
+INFO:root:[  188] Training loss: 0.61594185, Validation loss: 0.62226329, Gradient norm: 0.22100170
+INFO:root:At the start of the epoch: mem (CPU python)=20261.3203125MB; mem (CPU total)=20017.3671875MB
+INFO:root:[  189] Training loss: 0.61543009, Validation loss: 0.62294115, Gradient norm: 0.21747811
+INFO:root:At the start of the epoch: mem (CPU python)=20299.41796875MB; mem (CPU total)=20055.5078125MB
+INFO:root:[  190] Training loss: 0.61546660, Validation loss: 0.62294276, Gradient norm: 0.23037545
+INFO:root:At the start of the epoch: mem (CPU python)=20337.51171875MB; mem (CPU total)=20093.6640625MB
+INFO:root:[  191] Training loss: 0.61529863, Validation loss: 0.62365964, Gradient norm: 0.25386229
+INFO:root:At the start of the epoch: mem (CPU python)=20375.60546875MB; mem (CPU total)=20131.56640625MB
+INFO:root:[  192] Training loss: 0.61552232, Validation loss: 0.62308552, Gradient norm: 0.24195800
+INFO:root:At the start of the epoch: mem (CPU python)=20413.703125MB; mem (CPU total)=20169.7265625MB
+INFO:root:[  193] Training loss: 0.61533814, Validation loss: 0.62374089, Gradient norm: 0.21534471
+INFO:root:At the start of the epoch: mem (CPU python)=20451.80078125MB; mem (CPU total)=20207.84765625MB
+INFO:root:[  194] Training loss: 0.61542720, Validation loss: 0.62224195, Gradient norm: 0.22959270
+INFO:root:At the start of the epoch: mem (CPU python)=20489.89453125MB; mem (CPU total)=20245.8984375MB
+INFO:root:[  195] Training loss: 0.61534300, Validation loss: 0.62421399, Gradient norm: 0.22675986
+INFO:root:At the start of the epoch: mem (CPU python)=20527.98828125MB; mem (CPU total)=20283.78125MB
+INFO:root:[  196] Training loss: 0.61488113, Validation loss: 0.62266185, Gradient norm: 0.19695022
+INFO:root:At the start of the epoch: mem (CPU python)=20566.0859375MB; mem (CPU total)=20321.67578125MB
+INFO:root:[  197] Training loss: 0.61549088, Validation loss: 0.62279317, Gradient norm: 0.22729177
+INFO:root:At the start of the epoch: mem (CPU python)=20604.1796875MB; mem (CPU total)=20359.64453125MB
+INFO:root:[  198] Training loss: 0.61487777, Validation loss: 0.62316783, Gradient norm: 0.23772934
+INFO:root:At the start of the epoch: mem (CPU python)=20644.7734375MB; mem (CPU total)=20400.51953125MB
+INFO:root:[  199] Training loss: 0.61471874, Validation loss: 0.62253881, Gradient norm: 0.24492190
+INFO:root:At the start of the epoch: mem (CPU python)=20682.87109375MB; mem (CPU total)=20438.609375MB
+INFO:root:[  200] Training loss: 0.61485116, Validation loss: 0.62285090, Gradient norm: 0.25181153
+INFO:root:At the start of the epoch: mem (CPU python)=20720.96484375MB; mem (CPU total)=20476.453125MB
+INFO:root:Learning rate reduced to: 0.000125
+INFO:root:[  201] Training loss: 0.61494123, Validation loss: 0.62278660, Gradient norm: 0.22521823
+INFO:root:At the start of the epoch: mem (CPU python)=20759.05859375MB; mem (CPU total)=20515.07421875MB
+INFO:root:Learning rate reduced to: 6.25e-05
+INFO:root:[  202] Training loss: 0.61440561, Validation loss: 0.62325691, Gradient norm: 0.18467044
+INFO:root:At the start of the epoch: mem (CPU python)=20797.15234375MB; mem (CPU total)=20552.7109375MB
+INFO:root:[  203] Training loss: 0.61429451, Validation loss: 0.62216459, Gradient norm: 0.16734832
+INFO:root:At the start of the epoch: mem (CPU python)=20835.25MB; mem (CPU total)=20590.86328125MB
+INFO:root:[  204] Training loss: 0.61396706, Validation loss: 0.62119002, Gradient norm: 0.16155793
+INFO:root:At the start of the epoch: mem (CPU python)=20873.34765625MB; mem (CPU total)=20629.2265625MB
+INFO:root:[  205] Training loss: 0.61386644, Validation loss: 0.62293855, Gradient norm: 0.17072129
+INFO:root:At the start of the epoch: mem (CPU python)=20911.44140625MB; mem (CPU total)=20667.359375MB
+INFO:root:[  206] Training loss: 0.61423043, Validation loss: 0.62279381, Gradient norm: 0.17546531
+INFO:root:At the start of the epoch: mem (CPU python)=20949.5390625MB; mem (CPU total)=20705.45703125MB
+INFO:root:[  207] Training loss: 0.61442908, Validation loss: 0.62212455, Gradient norm: 0.17797708
+INFO:root:At the start of the epoch: mem (CPU python)=20987.6328125MB; mem (CPU total)=20743.57421875MB
+INFO:root:[  208] Training loss: 0.61378800, Validation loss: 0.62170799, Gradient norm: 0.17603928
+INFO:root:At the start of the epoch: mem (CPU python)=21025.7265625MB; mem (CPU total)=20781.94140625MB
+INFO:root:[  209] Training loss: 0.61378021, Validation loss: 0.62154935, Gradient norm: 0.17498154
+INFO:root:At the start of the epoch: mem (CPU python)=21063.82421875MB; mem (CPU total)=20820.05078125MB
+INFO:root:[  210] Training loss: 0.61420570, Validation loss: 0.62170407, Gradient norm: 0.18400768
+INFO:root:At the start of the epoch: mem (CPU python)=21101.91796875MB; mem (CPU total)=20858.1640625MB
+INFO:root:[  211] Training loss: 0.61417149, Validation loss: 0.62180310, Gradient norm: 0.17735139
+INFO:root:At the start of the epoch: mem (CPU python)=21140.01171875MB; mem (CPU total)=20896.55078125MB
+INFO:root:[  212] Training loss: 0.61411331, Validation loss: 0.62156125, Gradient norm: 0.18156990
+INFO:root:At the start of the epoch: mem (CPU python)=21178.109375MB; mem (CPU total)=20934.20703125MB
+INFO:root:[  213] Training loss: 0.61414130, Validation loss: 0.62147428, Gradient norm: 0.17408572
+INFO:root:At the start of the epoch: mem (CPU python)=21216.20703125MB; mem (CPU total)=20972.08984375MB
+INFO:root:EP 213: Early stopping
+INFO:root:After finishing all epochs: mem (CPU python)=21254.30078125MB; mem (CPU total)=21010.734375MB
+INFO:root:Training the model took 11350.744s.
+INFO:root:Emptying the cuda cache took 0.046s.
+INFO:root:Starting evaluation: model FNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.87201
+INFO:root:EnergyScoreTrain: 0.61414
+INFO:root:CRPSTrain: 0.52037
+INFO:root:Gaussian NLLTrain: 1.6042
+INFO:root:CoverageTrain: 0.83168
+INFO:root:IntervalWidthTrain: 3.26546
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.88329
+INFO:root:EnergyScoreValidation: 0.62201
+INFO:root:CRPSValidation: 0.52668
+INFO:root:Gaussian NLLValidation: 1.61643
+INFO:root:CoverageValidation: 0.82908
+INFO:root:IntervalWidthValidation: 3.26669
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.88477
+INFO:root:EnergyScoreTest: 0.62307
+INFO:root:CRPSTest: 0.52761
+INFO:root:Gaussian NLLTest: 1.61909
+INFO:root:CoverageTest: 0.82786
+INFO:root:IntervalWidthTest: 3.25778
+INFO:root:After validation: mem (CPU python)=21297.1328125MB; mem (CPU total)=21054.41796875MB
+INFO:root:###3 out of 5 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.05, 'fourier_dropout': 0.2, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3}
+INFO:root:After creating the dataloaders: mem (CPU python)=21297.1328125MB; mem (CPU total)=21054.41796875MB
+INFO:root:NumberParameters: 231589
+INFO:root:GPU memory allocated: 157286400
+INFO:root:After setting up the model: mem (CPU python)=21297.54296875MB; mem (CPU total)=21055.15234375MB
+INFO:root:Training starts now.
+INFO:root:At the start of the epoch: mem (CPU python)=21297.73828125MB; mem (CPU total)=21055.15234375MB
+INFO:root:[    1] Training loss: 0.79309120, Validation loss: 0.73890197, Gradient norm: 0.97570400
+INFO:root:At the start of the epoch: mem (CPU python)=21335.77734375MB; mem (CPU total)=21093.38671875MB
+INFO:root:[    2] Training loss: 0.73253620, Validation loss: 0.73248246, Gradient norm: 0.76076426
+INFO:root:At the start of the epoch: mem (CPU python)=21373.875MB; mem (CPU total)=21131.28515625MB
+INFO:root:[    3] Training loss: 0.72860610, Validation loss: 0.72944433, Gradient norm: 0.53305202
+INFO:root:At the start of the epoch: mem (CPU python)=21411.984375MB; mem (CPU total)=21169.16796875MB
+INFO:root:[    4] Training loss: 0.72774769, Validation loss: 0.72657115, Gradient norm: 0.55976281
+INFO:root:At the start of the epoch: mem (CPU python)=21450.078125MB; mem (CPU total)=21207.5625MB
+INFO:root:[    5] Training loss: 0.72641687, Validation loss: 0.72626704, Gradient norm: 0.46362986
+INFO:root:At the start of the epoch: mem (CPU python)=21488.1875MB; mem (CPU total)=21245.69140625MB
+INFO:root:[    6] Training loss: 0.72541100, Validation loss: 0.72429611, Gradient norm: 0.45310964
+INFO:root:At the start of the epoch: mem (CPU python)=21526.30078125MB; mem (CPU total)=21283.828125MB
+INFO:root:[    7] Training loss: 0.72501915, Validation loss: 0.72643549, Gradient norm: 0.45516983
+INFO:root:At the start of the epoch: mem (CPU python)=21564.41015625MB; mem (CPU total)=21322.1953125MB
+INFO:root:[    8] Training loss: 0.72444963, Validation loss: 0.72717934, Gradient norm: 0.40195987
+INFO:root:At the start of the epoch: mem (CPU python)=21602.515625MB; mem (CPU total)=21360.28125MB
+INFO:root:[    9] Training loss: 0.72562919, Validation loss: 0.72610992, Gradient norm: 0.41758007
+INFO:root:At the start of the epoch: mem (CPU python)=21640.6171875MB; mem (CPU total)=21398.37109375MB
+INFO:root:[   10] Training loss: 0.72394905, Validation loss: 0.72398872, Gradient norm: 0.45837356
+INFO:root:At the start of the epoch: mem (CPU python)=21678.7109375MB; mem (CPU total)=21436.984375MB
+INFO:root:[   11] Training loss: 0.72398855, Validation loss: 0.72569408, Gradient norm: 0.39139077
+INFO:root:At the start of the epoch: mem (CPU python)=21716.8046875MB; mem (CPU total)=21475.10546875MB
+INFO:root:[   12] Training loss: 0.72391674, Validation loss: 0.72503777, Gradient norm: 0.39683871
+INFO:root:At the start of the epoch: mem (CPU python)=21754.90234375MB; mem (CPU total)=21512.984375MB
+INFO:root:[   13] Training loss: 0.72388193, Validation loss: 0.72581077, Gradient norm: 0.42639597
+INFO:root:At the start of the epoch: mem (CPU python)=21792.99609375MB; mem (CPU total)=21551.3359375MB
+INFO:root:[   14] Training loss: 0.72353496, Validation loss: 0.72561736, Gradient norm: 0.42843607
+INFO:root:At the start of the epoch: mem (CPU python)=21831.08984375MB; mem (CPU total)=21589.44921875MB
+INFO:root:[   15] Training loss: 0.72312089, Validation loss: 0.72302447, Gradient norm: 0.32367682
+INFO:root:At the start of the epoch: mem (CPU python)=21869.18359375MB; mem (CPU total)=21627.5703125MB
+INFO:root:[   16] Training loss: 0.72334125, Validation loss: 0.72393894, Gradient norm: 0.34518014
+INFO:root:At the start of the epoch: mem (CPU python)=21907.28125MB; mem (CPU total)=21665.9453125MB
+INFO:root:[   17] Training loss: 0.72323796, Validation loss: 0.72633942, Gradient norm: 0.33866504
+INFO:root:At the start of the epoch: mem (CPU python)=21945.37890625MB; mem (CPU total)=21704.08984375MB
+INFO:root:[   18] Training loss: 0.72278486, Validation loss: 0.72526589, Gradient norm: 0.43065672
+INFO:root:At the start of the epoch: mem (CPU python)=21983.47265625MB; mem (CPU total)=21742.0MB
+INFO:root:[   19] Training loss: 0.72290926, Validation loss: 0.72400786, Gradient norm: 0.44400302
+INFO:root:At the start of the epoch: mem (CPU python)=22021.57421875MB; mem (CPU total)=21779.8671875MB
+INFO:root:[   20] Training loss: 0.72224535, Validation loss: 0.72264700, Gradient norm: 0.40509843
+INFO:root:At the start of the epoch: mem (CPU python)=22059.66796875MB; mem (CPU total)=21818.0MB
+INFO:root:[   21] Training loss: 0.72200213, Validation loss: 0.72274573, Gradient norm: 0.45660540
+INFO:root:At the start of the epoch: mem (CPU python)=22097.76171875MB; mem (CPU total)=21855.96484375MB
+INFO:root:[   22] Training loss: 0.72154004, Validation loss: 0.72375848, Gradient norm: 0.35936628
+INFO:root:At the start of the epoch: mem (CPU python)=22135.85546875MB; mem (CPU total)=21894.33984375MB
+INFO:root:[   23] Training loss: 0.72184088, Validation loss: 0.72295551, Gradient norm: 0.45488528
+INFO:root:At the start of the epoch: mem (CPU python)=22173.953125MB; mem (CPU total)=21932.45703125MB
+INFO:root:[   24] Training loss: 0.72069893, Validation loss: 0.72266671, Gradient norm: 0.42125353
+INFO:root:At the start of the epoch: mem (CPU python)=22212.05078125MB; mem (CPU total)=21970.33984375MB
+INFO:root:[   25] Training loss: 0.72087121, Validation loss: 0.72318083, Gradient norm: 0.39688143
+INFO:root:At the start of the epoch: mem (CPU python)=22250.14453125MB; mem (CPU total)=22008.6328125MB
+INFO:root:[   26] Training loss: 0.72115436, Validation loss: 0.72143894, Gradient norm: 0.44085554
+INFO:root:At the start of the epoch: mem (CPU python)=22288.2421875MB; mem (CPU total)=22047.32421875MB
+INFO:root:[   27] Training loss: 0.72101989, Validation loss: 0.72509740, Gradient norm: 0.42036567
+INFO:root:At the start of the epoch: mem (CPU python)=22326.3359375MB; mem (CPU total)=22085.46484375MB
+INFO:root:[   28] Training loss: 0.72079557, Validation loss: 0.72056492, Gradient norm: 0.47961394
+INFO:root:At the start of the epoch: mem (CPU python)=22364.4296875MB; mem (CPU total)=22123.59765625MB
+INFO:root:[   29] Training loss: 0.71912079, Validation loss: 0.72085063, Gradient norm: 0.41551596
+INFO:root:At the start of the epoch: mem (CPU python)=22402.52734375MB; mem (CPU total)=22161.73046875MB
+INFO:root:[   30] Training loss: 0.71931740, Validation loss: 0.71780984, Gradient norm: 0.59753408
+INFO:root:At the start of the epoch: mem (CPU python)=22440.62109375MB; mem (CPU total)=22199.90234375MB
+INFO:root:[   31] Training loss: 0.71707050, Validation loss: 0.72107650, Gradient norm: 0.69949445
+INFO:root:At the start of the epoch: mem (CPU python)=22478.71484375MB; mem (CPU total)=22238.2734375MB
+INFO:root:[   32] Training loss: 0.71407149, Validation loss: 0.71303352, Gradient norm: 0.69288883
+INFO:root:At the start of the epoch: mem (CPU python)=22516.8125MB; mem (CPU total)=22276.40625MB
+INFO:root:[   33] Training loss: 0.71087522, Validation loss: 0.70997674, Gradient norm: 0.63412852
+INFO:root:At the start of the epoch: mem (CPU python)=22554.91015625MB; mem (CPU total)=22314.51953125MB
+INFO:root:[   34] Training loss: 0.70750163, Validation loss: 0.70731704, Gradient norm: 0.58362123
+INFO:root:At the start of the epoch: mem (CPU python)=22593.00390625MB; mem (CPU total)=22353.39453125MB
+INFO:root:[   35] Training loss: 0.70491704, Validation loss: 0.70316206, Gradient norm: 0.62944350
+INFO:root:At the start of the epoch: mem (CPU python)=22631.09765625MB; mem (CPU total)=22391.51953125MB
+INFO:root:[   36] Training loss: 0.70172153, Validation loss: 0.69999579, Gradient norm: 0.52560893
+INFO:root:At the start of the epoch: mem (CPU python)=22669.1953125MB; mem (CPU total)=22429.9140625MB
+INFO:root:[   37] Training loss: 0.69832804, Validation loss: 0.69754648, Gradient norm: 0.48281512
+INFO:root:At the start of the epoch: mem (CPU python)=22707.2890625MB; mem (CPU total)=22468.015625MB
+INFO:root:[   38] Training loss: 0.69581599, Validation loss: 0.69498319, Gradient norm: 0.66978612
+INFO:root:At the start of the epoch: mem (CPU python)=22745.3828125MB; mem (CPU total)=22506.140625MB
+INFO:root:[   39] Training loss: 0.69321418, Validation loss: 0.69361059, Gradient norm: 0.45164943
+INFO:root:At the start of the epoch: mem (CPU python)=22783.4765625MB; mem (CPU total)=22544.5234375MB
+INFO:root:[   40] Training loss: 0.69074610, Validation loss: 0.69017925, Gradient norm: 0.48595992
+INFO:root:At the start of the epoch: mem (CPU python)=22821.578125MB; mem (CPU total)=22582.390625MB
+INFO:root:[   41] Training loss: 0.68806253, Validation loss: 0.68774741, Gradient norm: 0.42888315
+INFO:root:At the start of the epoch: mem (CPU python)=22859.671875MB; mem (CPU total)=22620.734375MB
+INFO:root:[   42] Training loss: 0.68639975, Validation loss: 0.68609923, Gradient norm: 0.46108261
+INFO:root:At the start of the epoch: mem (CPU python)=22897.765625MB; mem (CPU total)=22658.8515625MB
+INFO:root:[   43] Training loss: 0.68368972, Validation loss: 0.68399006, Gradient norm: 0.42617222
+INFO:root:At the start of the epoch: mem (CPU python)=22935.86328125MB; mem (CPU total)=22696.9765625MB
+INFO:root:[   44] Training loss: 0.68132282, Validation loss: 0.68236698, Gradient norm: 0.29621421
+INFO:root:At the start of the epoch: mem (CPU python)=22973.95703125MB; mem (CPU total)=22734.97265625MB
+INFO:root:[   45] Training loss: 0.67980114, Validation loss: 0.67922626, Gradient norm: 0.32024957
+INFO:root:At the start of the epoch: mem (CPU python)=23012.05078125MB; mem (CPU total)=22773.078125MB
+INFO:root:[   46] Training loss: 0.67787725, Validation loss: 0.67804253, Gradient norm: 0.33661163
+INFO:root:At the start of the epoch: mem (CPU python)=23050.1484375MB; mem (CPU total)=22811.43359375MB
+INFO:root:[   47] Training loss: 0.67605450, Validation loss: 0.67709817, Gradient norm: 0.29653663
+INFO:root:At the start of the epoch: mem (CPU python)=23088.24609375MB; mem (CPU total)=22849.80078125MB
+INFO:root:[   48] Training loss: 0.67465398, Validation loss: 0.67569427, Gradient norm: 0.31852945
+INFO:root:At the start of the epoch: mem (CPU python)=23126.33984375MB; mem (CPU total)=22887.65625MB
+INFO:root:[   49] Training loss: 0.67291330, Validation loss: 0.67373806, Gradient norm: 0.37955024
+INFO:root:At the start of the epoch: mem (CPU python)=23164.43359375MB; mem (CPU total)=22925.78515625MB
+INFO:root:[   50] Training loss: 0.67192969, Validation loss: 0.67198123, Gradient norm: 0.42524637
+INFO:root:At the start of the epoch: mem (CPU python)=23202.53125MB; mem (CPU total)=22963.91015625MB
+INFO:root:[   51] Training loss: 0.67070909, Validation loss: 0.67135174, Gradient norm: 0.41408426
+INFO:root:At the start of the epoch: mem (CPU python)=23240.625MB; mem (CPU total)=23002.30078125MB
+INFO:root:[   52] Training loss: 0.66946225, Validation loss: 0.67015462, Gradient norm: 0.39674154
+INFO:root:At the start of the epoch: mem (CPU python)=23278.71875MB; mem (CPU total)=23040.171875MB
+INFO:root:[   53] Training loss: 0.66816359, Validation loss: 0.66896248, Gradient norm: 0.36200310
+INFO:root:At the start of the epoch: mem (CPU python)=23316.81640625MB; mem (CPU total)=23078.3125MB
+INFO:root:[   54] Training loss: 0.66708565, Validation loss: 0.66717156, Gradient norm: 0.33871971
+INFO:root:At the start of the epoch: mem (CPU python)=23354.91015625MB; mem (CPU total)=23116.4296875MB
+INFO:root:[   55] Training loss: 0.66599837, Validation loss: 0.66660639, Gradient norm: 0.46932287
+INFO:root:At the start of the epoch: mem (CPU python)=23393.00390625MB; mem (CPU total)=23154.55078125MB
+INFO:root:[   56] Training loss: 0.66448929, Validation loss: 0.66564040, Gradient norm: 0.30016270
+INFO:root:At the start of the epoch: mem (CPU python)=23431.09765625MB; mem (CPU total)=23192.9453125MB
+INFO:root:[   57] Training loss: 0.66314951, Validation loss: 0.66456079, Gradient norm: 0.26687774
+INFO:root:At the start of the epoch: mem (CPU python)=23469.1953125MB; mem (CPU total)=23230.71875MB
+INFO:root:[   58] Training loss: 0.66222790, Validation loss: 0.66295318, Gradient norm: 0.33876736
+INFO:root:At the start of the epoch: mem (CPU python)=23507.2890625MB; mem (CPU total)=23268.828125MB
+INFO:root:[   59] Training loss: 0.66084246, Validation loss: 0.66347432, Gradient norm: 0.34739792
+INFO:root:At the start of the epoch: mem (CPU python)=23545.38671875MB; mem (CPU total)=23306.91015625MB
+INFO:root:[   60] Training loss: 0.65975000, Validation loss: 0.66104256, Gradient norm: 0.33639602
+INFO:root:At the start of the epoch: mem (CPU python)=23583.484375MB; mem (CPU total)=23345.296875MB
+INFO:root:[   61] Training loss: 0.65862430, Validation loss: 0.66114588, Gradient norm: 0.41223848
+INFO:root:At the start of the epoch: mem (CPU python)=23621.578125MB; mem (CPU total)=23383.13671875MB
+INFO:root:[   62] Training loss: 0.65791933, Validation loss: 0.65920656, Gradient norm: 0.36727814
+INFO:root:At the start of the epoch: mem (CPU python)=23659.671875MB; mem (CPU total)=23421.47265625MB
+INFO:root:[   63] Training loss: 0.65751209, Validation loss: 0.66008933, Gradient norm: 0.34722973
+INFO:root:At the start of the epoch: mem (CPU python)=23697.76953125MB; mem (CPU total)=23458.390625MB
+INFO:root:[   64] Training loss: 0.65630719, Validation loss: 0.65795356, Gradient norm: 0.36990458
+INFO:root:At the start of the epoch: mem (CPU python)=23735.8671875MB; mem (CPU total)=23496.7734375MB
+INFO:root:[   65] Training loss: 0.65540987, Validation loss: 0.65801371, Gradient norm: 0.40666903
+INFO:root:At the start of the epoch: mem (CPU python)=23773.9609375MB; mem (CPU total)=23535.10546875MB
+INFO:root:[   66] Training loss: 0.65484651, Validation loss: 0.65781322, Gradient norm: 0.34852329
+INFO:root:At the start of the epoch: mem (CPU python)=23812.0546875MB; mem (CPU total)=23573.21875MB
+INFO:root:[   67] Training loss: 0.65393813, Validation loss: 0.65569292, Gradient norm: 0.28190442
+INFO:root:At the start of the epoch: mem (CPU python)=23850.15234375MB; mem (CPU total)=23611.59765625MB
+INFO:root:[   68] Training loss: 0.65282322, Validation loss: 0.65555764, Gradient norm: 0.33596927
+INFO:root:At the start of the epoch: mem (CPU python)=23888.24609375MB; mem (CPU total)=23649.73046875MB
+INFO:root:[   69] Training loss: 0.65194302, Validation loss: 0.65490640, Gradient norm: 0.29704839
+INFO:root:At the start of the epoch: mem (CPU python)=23926.33984375MB; mem (CPU total)=23686.0859375MB
+INFO:root:[   70] Training loss: 0.65139130, Validation loss: 0.65241379, Gradient norm: 0.32213991
+INFO:root:At the start of the epoch: mem (CPU python)=23964.4375MB; mem (CPU total)=23724.19921875MB
+INFO:root:[   71] Training loss: 0.65080200, Validation loss: 0.65269534, Gradient norm: 0.32131799
+INFO:root:At the start of the epoch: mem (CPU python)=24002.53515625MB; mem (CPU total)=23762.3125MB
+INFO:root:[   72] Training loss: 0.64993193, Validation loss: 0.65252343, Gradient norm: 0.28888072
+INFO:root:At the start of the epoch: mem (CPU python)=24040.6328125MB; mem (CPU total)=23800.40625MB
+INFO:root:[   73] Training loss: 0.64939216, Validation loss: 0.65294562, Gradient norm: 0.30614820
+INFO:root:At the start of the epoch: mem (CPU python)=24078.7265625MB; mem (CPU total)=23839.01171875MB
+INFO:root:[   74] Training loss: 0.64880309, Validation loss: 0.65138793, Gradient norm: 0.43142200
+INFO:root:At the start of the epoch: mem (CPU python)=24116.82421875MB; mem (CPU total)=23876.87109375MB
+INFO:root:[   75] Training loss: 0.64794582, Validation loss: 0.65089294, Gradient norm: 0.41055542
+INFO:root:At the start of the epoch: mem (CPU python)=24154.91796875MB; mem (CPU total)=23914.76171875MB
+INFO:root:[   76] Training loss: 0.64715915, Validation loss: 0.64976181, Gradient norm: 0.32187818
+INFO:root:At the start of the epoch: mem (CPU python)=24193.01171875MB; mem (CPU total)=23953.13671875MB
+INFO:root:[   77] Training loss: 0.64656572, Validation loss: 0.65002266, Gradient norm: 0.38356098
+INFO:root:At the start of the epoch: mem (CPU python)=24231.109375MB; mem (CPU total)=23991.25390625MB
+INFO:root:[   78] Training loss: 0.64582198, Validation loss: 0.64855000, Gradient norm: 0.29417250
+INFO:root:At the start of the epoch: mem (CPU python)=24269.203125MB; mem (CPU total)=24029.38671875MB
+INFO:root:[   79] Training loss: 0.64496863, Validation loss: 0.64877028, Gradient norm: 0.30316296
+INFO:root:At the start of the epoch: mem (CPU python)=24307.296875MB; mem (CPU total)=24067.52734375MB
+INFO:root:[   80] Training loss: 0.64500608, Validation loss: 0.64783379, Gradient norm: 0.37143796
+INFO:root:At the start of the epoch: mem (CPU python)=24345.39453125MB; mem (CPU total)=24105.5859375MB
+INFO:root:[   81] Training loss: 0.64414943, Validation loss: 0.64639847, Gradient norm: 0.38732665
+INFO:root:At the start of the epoch: mem (CPU python)=24383.48828125MB; mem (CPU total)=24143.98046875MB
+INFO:root:[   82] Training loss: 0.64370106, Validation loss: 0.64617998, Gradient norm: 0.30149438
+INFO:root:At the start of the epoch: mem (CPU python)=24421.58984375MB; mem (CPU total)=24182.10546875MB
+INFO:root:[   83] Training loss: 0.64304796, Validation loss: 0.64539088, Gradient norm: 0.34443181
+INFO:root:At the start of the epoch: mem (CPU python)=24459.68359375MB; mem (CPU total)=24220.5MB
+INFO:root:[   84] Training loss: 0.64249804, Validation loss: 0.64509221, Gradient norm: 0.48482111
+INFO:root:At the start of the epoch: mem (CPU python)=24497.78125MB; mem (CPU total)=24258.8671875MB
+INFO:root:[   85] Training loss: 0.64152696, Validation loss: 0.64388242, Gradient norm: 0.35782669
+INFO:root:At the start of the epoch: mem (CPU python)=24535.875MB; mem (CPU total)=24296.23828125MB
+INFO:root:[   86] Training loss: 0.64129928, Validation loss: 0.64461093, Gradient norm: 0.45545748
+INFO:root:At the start of the epoch: mem (CPU python)=24573.96875MB; mem (CPU total)=24334.3671875MB
+INFO:root:[   87] Training loss: 0.64052859, Validation loss: 0.64253185, Gradient norm: 0.42676342
+INFO:root:At the start of the epoch: mem (CPU python)=24612.06640625MB; mem (CPU total)=24371.9140625MB
+INFO:root:[   88] Training loss: 0.63973121, Validation loss: 0.64282584, Gradient norm: 0.33485594
+INFO:root:At the start of the epoch: mem (CPU python)=24650.16015625MB; mem (CPU total)=24410.0078125MB
+INFO:root:[   89] Training loss: 0.63950738, Validation loss: 0.64297492, Gradient norm: 0.34926264
+INFO:root:At the start of the epoch: mem (CPU python)=24688.2578125MB; mem (CPU total)=24447.90625MB
+INFO:root:[   90] Training loss: 0.63918990, Validation loss: 0.64135483, Gradient norm: 0.32781921
+INFO:root:At the start of the epoch: mem (CPU python)=24726.3515625MB; mem (CPU total)=24486.0546875MB
+INFO:root:[   91] Training loss: 0.63866785, Validation loss: 0.64204941, Gradient norm: 0.31932993
+INFO:root:At the start of the epoch: mem (CPU python)=24764.4453125MB; mem (CPU total)=24525.2265625MB
+INFO:root:[   92] Training loss: 0.63778659, Validation loss: 0.64062825, Gradient norm: 0.29472600
+INFO:root:At the start of the epoch: mem (CPU python)=24802.54296875MB; mem (CPU total)=24563.359375MB
+INFO:root:[   93] Training loss: 0.63734115, Validation loss: 0.64129925, Gradient norm: 0.37977552
+INFO:root:At the start of the epoch: mem (CPU python)=24840.63671875MB; mem (CPU total)=24601.921875MB
+INFO:root:[   94] Training loss: 0.63675335, Validation loss: 0.63976255, Gradient norm: 0.31986667
+INFO:root:At the start of the epoch: mem (CPU python)=24878.734375MB; mem (CPU total)=24640.10546875MB
+INFO:root:[   95] Training loss: 0.63648645, Validation loss: 0.64001867, Gradient norm: 0.33892613
+INFO:root:At the start of the epoch: mem (CPU python)=24916.828125MB; mem (CPU total)=24678.3359375MB
+INFO:root:[   96] Training loss: 0.63572409, Validation loss: 0.64040021, Gradient norm: 0.33813558
+INFO:root:At the start of the epoch: mem (CPU python)=24954.921875MB; mem (CPU total)=24716.30859375MB
+INFO:root:[   97] Training loss: 0.63593800, Validation loss: 0.63878692, Gradient norm: 0.31693249
+INFO:root:At the start of the epoch: mem (CPU python)=24993.01953125MB; mem (CPU total)=24754.359375MB
+INFO:root:[   98] Training loss: 0.63484151, Validation loss: 0.63893643, Gradient norm: 0.35708231
+INFO:root:At the start of the epoch: mem (CPU python)=25031.1171875MB; mem (CPU total)=24792.46875MB
+INFO:root:[   99] Training loss: 0.63471071, Validation loss: 0.63879249, Gradient norm: 0.42094476
+INFO:root:At the start of the epoch: mem (CPU python)=25069.21875MB; mem (CPU total)=24830.66015625MB
+INFO:root:[  100] Training loss: 0.63425188, Validation loss: 0.63814930, Gradient norm: 0.34582434
+INFO:root:At the start of the epoch: mem (CPU python)=25107.3125MB; mem (CPU total)=24869.1640625MB
+INFO:root:[  101] Training loss: 0.63389077, Validation loss: 0.63664204, Gradient norm: 0.33663571
+INFO:root:At the start of the epoch: mem (CPU python)=25145.41015625MB; mem (CPU total)=24907.3125MB
+INFO:root:[  102] Training loss: 0.63318114, Validation loss: 0.63739007, Gradient norm: 0.35515911
+INFO:root:At the start of the epoch: mem (CPU python)=25183.50390625MB; mem (CPU total)=24945.41015625MB
+INFO:root:[  103] Training loss: 0.63257464, Validation loss: 0.63607786, Gradient norm: 0.31909729
+INFO:root:At the start of the epoch: mem (CPU python)=25221.59765625MB; mem (CPU total)=24983.51171875MB
+INFO:root:[  104] Training loss: 0.63206905, Validation loss: 0.63586111, Gradient norm: 0.32987643
+INFO:root:At the start of the epoch: mem (CPU python)=25259.69921875MB; mem (CPU total)=25021.65234375MB
+INFO:root:[  105] Training loss: 0.63157995, Validation loss: 0.63657428, Gradient norm: 0.28742877
+INFO:root:At the start of the epoch: mem (CPU python)=25297.79296875MB; mem (CPU total)=25059.75MB
+INFO:root:[  106] Training loss: 0.63103599, Validation loss: 0.63665104, Gradient norm: 0.38209139
+INFO:root:At the start of the epoch: mem (CPU python)=25335.88671875MB; mem (CPU total)=25098.1015625MB
+INFO:root:[  107] Training loss: 0.63117656, Validation loss: 0.63503525, Gradient norm: 0.29414162
+INFO:root:At the start of the epoch: mem (CPU python)=25373.984375MB; mem (CPU total)=25136.19140625MB
+INFO:root:[  108] Training loss: 0.63093635, Validation loss: 0.63497982, Gradient norm: 0.35590270
+INFO:root:At the start of the epoch: mem (CPU python)=25412.078125MB; mem (CPU total)=25174.109375MB
+INFO:root:[  109] Training loss: 0.63009158, Validation loss: 0.63447386, Gradient norm: 0.35055965
+INFO:root:At the start of the epoch: mem (CPU python)=25450.17578125MB; mem (CPU total)=25212.7421875MB
+INFO:root:[  110] Training loss: 0.62978594, Validation loss: 0.63470631, Gradient norm: 0.43456878
+INFO:root:At the start of the epoch: mem (CPU python)=25488.26953125MB; mem (CPU total)=25250.8671875MB
+INFO:root:[  111] Training loss: 0.62899298, Validation loss: 0.63444225, Gradient norm: 0.28647219
+INFO:root:At the start of the epoch: mem (CPU python)=25526.3671875MB; mem (CPU total)=25289.09375MB
+INFO:root:[  112] Training loss: 0.62884035, Validation loss: 0.63447553, Gradient norm: 0.33728589
+INFO:root:At the start of the epoch: mem (CPU python)=25564.4609375MB; mem (CPU total)=25327.67578125MB
+INFO:root:[  113] Training loss: 0.62876329, Validation loss: 0.63424394, Gradient norm: 0.30951860
+INFO:root:At the start of the epoch: mem (CPU python)=25602.5546875MB; mem (CPU total)=25365.24609375MB
+INFO:root:[  114] Training loss: 0.62848333, Validation loss: 0.63296109, Gradient norm: 0.33795805
+INFO:root:At the start of the epoch: mem (CPU python)=25640.65234375MB; mem (CPU total)=25403.5859375MB
+INFO:root:[  115] Training loss: 0.62797435, Validation loss: 0.63232417, Gradient norm: 0.37337037
+INFO:root:At the start of the epoch: mem (CPU python)=25678.74609375MB; mem (CPU total)=25441.7109375MB
+INFO:root:[  116] Training loss: 0.62748433, Validation loss: 0.63397888, Gradient norm: 0.34010122
+INFO:root:At the start of the epoch: mem (CPU python)=25716.84375MB; mem (CPU total)=25479.82421875MB
+INFO:root:[  117] Training loss: 0.62694638, Validation loss: 0.63324898, Gradient norm: 0.33777704
+INFO:root:At the start of the epoch: mem (CPU python)=25754.9375MB; mem (CPU total)=25518.1953125MB
+INFO:root:[  118] Training loss: 0.62670831, Validation loss: 0.63283465, Gradient norm: 0.40320628
+INFO:root:At the start of the epoch: mem (CPU python)=25793.03515625MB; mem (CPU total)=25556.2890625MB
+INFO:root:[  119] Training loss: 0.62666258, Validation loss: 0.63206879, Gradient norm: 0.36212786
+INFO:root:At the start of the epoch: mem (CPU python)=25831.12890625MB; mem (CPU total)=25594.62890625MB
+INFO:root:[  120] Training loss: 0.62590429, Validation loss: 0.63064487, Gradient norm: 0.30828445
+INFO:root:At the start of the epoch: mem (CPU python)=25869.22265625MB; mem (CPU total)=25633.0078125MB
+INFO:root:[  121] Training loss: 0.62547951, Validation loss: 0.63097517, Gradient norm: 0.28070282
+INFO:root:At the start of the epoch: mem (CPU python)=25907.3203125MB; mem (CPU total)=25671.125MB
+INFO:root:[  122] Training loss: 0.62502850, Validation loss: 0.62993015, Gradient norm: 0.35641262
+INFO:root:At the start of the epoch: mem (CPU python)=25945.4140625MB; mem (CPU total)=25709.234375MB
+INFO:root:[  123] Training loss: 0.62471635, Validation loss: 0.63064797, Gradient norm: 0.32891851
+INFO:root:At the start of the epoch: mem (CPU python)=25983.51171875MB; mem (CPU total)=25746.98046875MB
+INFO:root:[  124] Training loss: 0.62442048, Validation loss: 0.62956380, Gradient norm: 0.34330232
+INFO:root:At the start of the epoch: mem (CPU python)=26021.60546875MB; mem (CPU total)=25785.29296875MB
+INFO:root:[  125] Training loss: 0.62418714, Validation loss: 0.63139944, Gradient norm: 0.38151228
+INFO:root:At the start of the epoch: mem (CPU python)=26059.703125MB; mem (CPU total)=25823.66015625MB
+INFO:root:[  126] Training loss: 0.62382432, Validation loss: 0.63062190, Gradient norm: 0.30500127
+INFO:root:At the start of the epoch: mem (CPU python)=26097.796875MB; mem (CPU total)=25861.55078125MB
+INFO:root:[  127] Training loss: 0.62368647, Validation loss: 0.62897246, Gradient norm: 0.32595511
+INFO:root:At the start of the epoch: mem (CPU python)=26135.890625MB; mem (CPU total)=25899.46484375MB
+INFO:root:[  128] Training loss: 0.62336460, Validation loss: 0.62996544, Gradient norm: 0.33388877
+INFO:root:At the start of the epoch: mem (CPU python)=26173.98828125MB; mem (CPU total)=25936.84375MB
+INFO:root:[  129] Training loss: 0.62332544, Validation loss: 0.62904283, Gradient norm: 0.33290472
+INFO:root:At the start of the epoch: mem (CPU python)=26212.08203125MB; mem (CPU total)=25974.95703125MB
+INFO:root:[  130] Training loss: 0.62285118, Validation loss: 0.63023658, Gradient norm: 0.32820464
+INFO:root:At the start of the epoch: mem (CPU python)=26250.17578125MB; mem (CPU total)=26013.0625MB
+INFO:root:[  131] Training loss: 0.62272415, Validation loss: 0.62889494, Gradient norm: 0.35817394
+INFO:root:At the start of the epoch: mem (CPU python)=26288.27734375MB; mem (CPU total)=26051.19921875MB
+INFO:root:[  132] Training loss: 0.62216081, Validation loss: 0.62874108, Gradient norm: 0.28499058
+INFO:root:At the start of the epoch: mem (CPU python)=26326.37109375MB; mem (CPU total)=26089.6171875MB
+INFO:root:[  133] Training loss: 0.62195814, Validation loss: 0.62702278, Gradient norm: 0.34601017
+INFO:root:At the start of the epoch: mem (CPU python)=26364.46484375MB; mem (CPU total)=26127.2734375MB
+INFO:root:[  134] Training loss: 0.62145663, Validation loss: 0.62718254, Gradient norm: 0.34910554
+INFO:root:At the start of the epoch: mem (CPU python)=26402.55859375MB; mem (CPU total)=26165.6015625MB
+INFO:root:[  135] Training loss: 0.62116584, Validation loss: 0.62812474, Gradient norm: 0.33996578
+INFO:root:At the start of the epoch: mem (CPU python)=26440.65625MB; mem (CPU total)=26203.96875MB
+INFO:root:[  136] Training loss: 0.62082575, Validation loss: 0.62666676, Gradient norm: 0.34947141
+INFO:root:At the start of the epoch: mem (CPU python)=26478.75MB; mem (CPU total)=26241.9921875MB
+INFO:root:[  137] Training loss: 0.62052464, Validation loss: 0.62660487, Gradient norm: 0.27880921
+INFO:root:At the start of the epoch: mem (CPU python)=26517.60546875MB; mem (CPU total)=26281.7890625MB
+INFO:root:[  138] Training loss: 0.62024328, Validation loss: 0.62721202, Gradient norm: 0.35330054
+INFO:root:At the start of the epoch: mem (CPU python)=26554.94140625MB; mem (CPU total)=26319.14453125MB
+INFO:root:[  139] Training loss: 0.62040838, Validation loss: 0.62623338, Gradient norm: 0.39933764
+INFO:root:At the start of the epoch: mem (CPU python)=26593.03515625MB; mem (CPU total)=26357.12109375MB
+INFO:root:[  140] Training loss: 0.61986247, Validation loss: 0.62689859, Gradient norm: 0.35578490
+INFO:root:At the start of the epoch: mem (CPU python)=26631.12890625MB; mem (CPU total)=26396.22265625MB
+INFO:root:[  141] Training loss: 0.61934904, Validation loss: 0.62627271, Gradient norm: 0.26869285
+INFO:root:At the start of the epoch: mem (CPU python)=26669.2265625MB; mem (CPU total)=26433.85546875MB
+INFO:root:[  142] Training loss: 0.61921804, Validation loss: 0.62600998, Gradient norm: 0.33334784
+INFO:root:At the start of the epoch: mem (CPU python)=26707.32421875MB; mem (CPU total)=26471.76171875MB
+INFO:root:[  143] Training loss: 0.61957066, Validation loss: 0.62494757, Gradient norm: 0.36059619
+INFO:root:At the start of the epoch: mem (CPU python)=26745.41796875MB; mem (CPU total)=26509.9140625MB
+INFO:root:[  144] Training loss: 0.61859327, Validation loss: 0.62534492, Gradient norm: 0.33361555
+INFO:root:At the start of the epoch: mem (CPU python)=26783.51171875MB; mem (CPU total)=26548.05078125MB
+INFO:root:[  145] Training loss: 0.61865284, Validation loss: 0.62546644, Gradient norm: 0.35378956
+INFO:root:At the start of the epoch: mem (CPU python)=26821.609375MB; mem (CPU total)=26585.94921875MB
+INFO:root:[  146] Training loss: 0.61793758, Validation loss: 0.62449849, Gradient norm: 0.32138013
+INFO:root:At the start of the epoch: mem (CPU python)=26859.70703125MB; mem (CPU total)=26624.09765625MB
+INFO:root:[  147] Training loss: 0.61812373, Validation loss: 0.62560504, Gradient norm: 0.32647273
+INFO:root:At the start of the epoch: mem (CPU python)=26897.80078125MB; mem (CPU total)=26661.9765625MB
+INFO:root:[  148] Training loss: 0.61795060, Validation loss: 0.62507890, Gradient norm: 0.33118811
+INFO:root:At the start of the epoch: mem (CPU python)=26935.8984375MB; mem (CPU total)=26700.609375MB
+INFO:root:[  149] Training loss: 0.61745145, Validation loss: 0.62408831, Gradient norm: 0.39023999
+INFO:root:At the start of the epoch: mem (CPU python)=26973.99609375MB; mem (CPU total)=26738.73046875MB
+INFO:root:[  150] Training loss: 0.61696709, Validation loss: 0.62488085, Gradient norm: 0.33919319
+INFO:root:At the start of the epoch: mem (CPU python)=27012.08984375MB; mem (CPU total)=26776.87890625MB
+INFO:root:[  151] Training loss: 0.61715585, Validation loss: 0.62489517, Gradient norm: 0.52477966
+INFO:root:At the start of the epoch: mem (CPU python)=27050.18359375MB; mem (CPU total)=26815.25MB
+INFO:root:[  152] Training loss: 0.61672213, Validation loss: 0.62447085, Gradient norm: 0.38396123
+INFO:root:At the start of the epoch: mem (CPU python)=27088.28125MB; mem (CPU total)=26853.3828125MB
+INFO:root:[  153] Training loss: 0.61654860, Validation loss: 0.62354793, Gradient norm: 0.35444876
+INFO:root:At the start of the epoch: mem (CPU python)=27126.375MB; mem (CPU total)=26891.55859375MB
+INFO:root:[  154] Training loss: 0.61629821, Validation loss: 0.62223484, Gradient norm: 0.33472206
+INFO:root:At the start of the epoch: mem (CPU python)=27164.46875MB; mem (CPU total)=26929.96875MB
+INFO:root:[  155] Training loss: 0.61562439, Validation loss: 0.62447979, Gradient norm: 0.29273523
+INFO:root:At the start of the epoch: mem (CPU python)=27202.56640625MB; mem (CPU total)=26968.34375MB
+INFO:root:[  156] Training loss: 0.61604744, Validation loss: 0.62383723, Gradient norm: 0.36131708
+INFO:root:At the start of the epoch: mem (CPU python)=27240.66015625MB; mem (CPU total)=27006.49609375MB
+INFO:root:[  157] Training loss: 0.61572706, Validation loss: 0.62294300, Gradient norm: 0.44351778
+INFO:root:At the start of the epoch: mem (CPU python)=27278.75390625MB; mem (CPU total)=27044.50390625MB
+INFO:root:[  158] Training loss: 0.61559338, Validation loss: 0.62416488, Gradient norm: 0.35214224
+INFO:root:At the start of the epoch: mem (CPU python)=27316.8515625MB; mem (CPU total)=27082.8984375MB
+INFO:root:[  159] Training loss: 0.61494701, Validation loss: 0.62220578, Gradient norm: 0.40131391
+INFO:root:At the start of the epoch: mem (CPU python)=27354.94921875MB; mem (CPU total)=27120.953125MB
+INFO:root:[  160] Training loss: 0.61491588, Validation loss: 0.62197253, Gradient norm: 0.36257957
+INFO:root:At the start of the epoch: mem (CPU python)=27393.046875MB; mem (CPU total)=27159.1328125MB
+INFO:root:[  161] Training loss: 0.61406852, Validation loss: 0.62249915, Gradient norm: 0.25870977
+INFO:root:At the start of the epoch: mem (CPU python)=27431.140625MB; mem (CPU total)=27197.28125MB
+INFO:root:[  162] Training loss: 0.61431186, Validation loss: 0.62292798, Gradient norm: 0.36853562
+INFO:root:At the start of the epoch: mem (CPU python)=27469.23828125MB; mem (CPU total)=27235.18359375MB
+INFO:root:[  163] Training loss: 0.61435694, Validation loss: 0.62377341, Gradient norm: 0.39373725
+INFO:root:At the start of the epoch: mem (CPU python)=27507.33203125MB; mem (CPU total)=27273.25390625MB
+INFO:root:[  164] Training loss: 0.61401598, Validation loss: 0.62225089, Gradient norm: 0.30343554
+INFO:root:At the start of the epoch: mem (CPU python)=27545.42578125MB; mem (CPU total)=27311.25MB
+INFO:root:[  165] Training loss: 0.61420820, Validation loss: 0.62174369, Gradient norm: 0.35098584
+INFO:root:At the start of the epoch: mem (CPU python)=27583.5234375MB; mem (CPU total)=27349.54296875MB
+INFO:root:[  166] Training loss: 0.61367608, Validation loss: 0.62244940, Gradient norm: 0.30131588
+INFO:root:At the start of the epoch: mem (CPU python)=27621.62109375MB; mem (CPU total)=27387.80078125MB
+INFO:root:[  167] Training loss: 0.61348876, Validation loss: 0.62152655, Gradient norm: 0.39388199
+INFO:root:At the start of the epoch: mem (CPU python)=27659.71484375MB; mem (CPU total)=27425.87109375MB
+INFO:root:[  168] Training loss: 0.61293097, Validation loss: 0.62117114, Gradient norm: 0.39827614
+INFO:root:At the start of the epoch: mem (CPU python)=27697.80859375MB; mem (CPU total)=27464.28515625MB
+INFO:root:[  169] Training loss: 0.61277838, Validation loss: 0.62140712, Gradient norm: 0.36054058
+INFO:root:At the start of the epoch: mem (CPU python)=27735.90625MB; mem (CPU total)=27502.41015625MB
+INFO:root:[  170] Training loss: 0.61264800, Validation loss: 0.62327539, Gradient norm: 0.43708188
+INFO:root:At the start of the epoch: mem (CPU python)=27774.0MB; mem (CPU total)=27540.58203125MB
+INFO:root:[  171] Training loss: 0.61241837, Validation loss: 0.62191522, Gradient norm: 0.40591331
+INFO:root:At the start of the epoch: mem (CPU python)=27812.09375MB; mem (CPU total)=27578.59375MB
+INFO:root:[  172] Training loss: 0.61202458, Validation loss: 0.62220458, Gradient norm: 0.32906800
+INFO:root:At the start of the epoch: mem (CPU python)=27850.19140625MB; mem (CPU total)=27616.703125MB
+INFO:root:[  173] Training loss: 0.61195074, Validation loss: 0.62174061, Gradient norm: 0.36754860
+INFO:root:At the start of the epoch: mem (CPU python)=27888.28515625MB; mem (CPU total)=27654.97265625MB
+INFO:root:[  174] Training loss: 0.61239282, Validation loss: 0.62128410, Gradient norm: 0.40434789
+INFO:root:At the start of the epoch: mem (CPU python)=27926.37890625MB; mem (CPU total)=27692.86328125MB
+INFO:root:Learning rate reduced to: 0.0005
+INFO:root:[  175] Training loss: 0.61141973, Validation loss: 0.62169183, Gradient norm: 0.35916185
+INFO:root:At the start of the epoch: mem (CPU python)=27964.4765625MB; mem (CPU total)=27731.51953125MB
+INFO:root:Learning rate reduced to: 0.00025
+INFO:root:[  176] Training loss: 0.61058465, Validation loss: 0.62101908, Gradient norm: 0.26478750
+INFO:root:At the start of the epoch: mem (CPU python)=28002.57421875MB; mem (CPU total)=27769.9140625MB
+INFO:root:[  177] Training loss: 0.60953019, Validation loss: 0.61923359, Gradient norm: 0.20546885
+INFO:root:At the start of the epoch: mem (CPU python)=28040.66796875MB; mem (CPU total)=27807.828125MB
+INFO:root:[  178] Training loss: 0.60954170, Validation loss: 0.62032438, Gradient norm: 0.18675052
+INFO:root:At the start of the epoch: mem (CPU python)=28078.76171875MB; mem (CPU total)=27845.75MB
+INFO:root:[  179] Training loss: 0.60994899, Validation loss: 0.61952840, Gradient norm: 0.20131496
+INFO:root:At the start of the epoch: mem (CPU python)=28116.859375MB; mem (CPU total)=27883.921875MB
+INFO:root:[  180] Training loss: 0.60935759, Validation loss: 0.61972540, Gradient norm: 0.18655748
+INFO:root:At the start of the epoch: mem (CPU python)=28154.953125MB; mem (CPU total)=27922.09375MB
+INFO:root:[  181] Training loss: 0.60942010, Validation loss: 0.62022453, Gradient norm: 0.22870968
+INFO:root:At the start of the epoch: mem (CPU python)=28193.046875MB; mem (CPU total)=27960.859375MB
+INFO:root:[  182] Training loss: 0.60939314, Validation loss: 0.61866982, Gradient norm: 0.18778586
+INFO:root:At the start of the epoch: mem (CPU python)=28231.1484375MB; mem (CPU total)=27998.29296875MB
+INFO:root:[  183] Training loss: 0.60898982, Validation loss: 0.61897211, Gradient norm: 0.19061813
+INFO:root:At the start of the epoch: mem (CPU python)=28269.2421875MB; mem (CPU total)=28036.44921875MB
+INFO:root:[  184] Training loss: 0.60922839, Validation loss: 0.61858825, Gradient norm: 0.20479966
+INFO:root:At the start of the epoch: mem (CPU python)=28307.3359375MB; mem (CPU total)=28075.20703125MB
+INFO:root:[  185] Training loss: 0.60897554, Validation loss: 0.61861516, Gradient norm: 0.22755778
+INFO:root:At the start of the epoch: mem (CPU python)=28345.4375MB; mem (CPU total)=28115.5390625MB
+INFO:root:[  186] Training loss: 0.60859825, Validation loss: 0.61933707, Gradient norm: 0.19138440
+INFO:root:At the start of the epoch: mem (CPU python)=28383.53515625MB; mem (CPU total)=28153.41796875MB
+INFO:root:[  187] Training loss: 0.60883436, Validation loss: 0.61979108, Gradient norm: 0.22818538
+INFO:root:At the start of the epoch: mem (CPU python)=28421.62890625MB; mem (CPU total)=28191.3125MB
+INFO:root:[  188] Training loss: 0.60901224, Validation loss: 0.61819088, Gradient norm: 0.18777855
+INFO:root:At the start of the epoch: mem (CPU python)=28459.72265625MB; mem (CPU total)=28229.4921875MB
+INFO:root:[  189] Training loss: 0.60868169, Validation loss: 0.61910657, Gradient norm: 0.24714190
+INFO:root:At the start of the epoch: mem (CPU python)=28497.8203125MB; mem (CPU total)=28267.30859375MB
+INFO:root:[  190] Training loss: 0.60862713, Validation loss: 0.61952483, Gradient norm: 0.20027454
+INFO:root:At the start of the epoch: mem (CPU python)=28535.9140625MB; mem (CPU total)=28305.4375MB
+INFO:root:[  191] Training loss: 0.60877245, Validation loss: 0.61976114, Gradient norm: 0.22106909
+INFO:root:At the start of the epoch: mem (CPU python)=28574.0078125MB; mem (CPU total)=28343.8359375MB
+INFO:root:[  192] Training loss: 0.60836723, Validation loss: 0.61895322, Gradient norm: 0.24167400
+INFO:root:At the start of the epoch: mem (CPU python)=28612.10546875MB; mem (CPU total)=28381.9609375MB
+INFO:root:[  193] Training loss: 0.60874949, Validation loss: 0.61917611, Gradient norm: 0.19763249
+INFO:root:At the start of the epoch: mem (CPU python)=28650.203125MB; mem (CPU total)=28420.08984375MB
+INFO:root:[  194] Training loss: 0.60815366, Validation loss: 0.61901854, Gradient norm: 0.20083572
+INFO:root:At the start of the epoch: mem (CPU python)=28688.296875MB; mem (CPU total)=28458.4765625MB
+INFO:root:Learning rate reduced to: 0.000125
+INFO:root:[  195] Training loss: 0.60831943, Validation loss: 0.61920560, Gradient norm: 0.24386527
+INFO:root:At the start of the epoch: mem (CPU python)=28726.39453125MB; mem (CPU total)=28497.3515625MB
+INFO:root:Learning rate reduced to: 6.25e-05
+INFO:root:[  196] Training loss: 0.60786998, Validation loss: 0.61876401, Gradient norm: 0.19303625
+INFO:root:At the start of the epoch: mem (CPU python)=28764.4921875MB; mem (CPU total)=28534.75390625MB
+INFO:root:[  197] Training loss: 0.60764649, Validation loss: 0.61952384, Gradient norm: 0.15176893
+INFO:root:At the start of the epoch: mem (CPU python)=28802.5859375MB; mem (CPU total)=28572.6640625MB
+INFO:root:EP 197: Early stopping
+INFO:root:After finishing all epochs: mem (CPU python)=28840.67578125MB; mem (CPU total)=28610.5625MB
+INFO:root:Training the model took 12544.306s.
+INFO:root:Emptying the cuda cache took 0.05s.
+INFO:root:Starting evaluation: model FNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.86435
+INFO:root:EnergyScoreTrain: 0.60881
+INFO:root:CRPSTrain: 0.52368
+INFO:root:Gaussian NLLTrain: 1.77376
+INFO:root:CoverageTrain: 0.81283
+INFO:root:IntervalWidthTrain: 3.21994
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.87962
+INFO:root:EnergyScoreValidation: 0.61942
+INFO:root:CRPSValidation: 0.53216
+INFO:root:Gaussian NLLValidation: 1.7928
+INFO:root:CoverageValidation: 0.80901
+INFO:root:IntervalWidthValidation: 3.21998
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.88058
+INFO:root:EnergyScoreTest: 0.62009
+INFO:root:CRPSTest: 0.53272
+INFO:root:Gaussian NLLTest: 1.79492
+INFO:root:CoverageTest: 0.80783
+INFO:root:IntervalWidthTest: 3.21223
+INFO:root:After validation: mem (CPU python)=28883.95703125MB; mem (CPU total)=28655.296875MB
+INFO:root:###4 out of 5 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.1, 'fourier_dropout': 0.2, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3}
+INFO:root:After creating the dataloaders: mem (CPU python)=28883.95703125MB; mem (CPU total)=28655.5703125MB
+INFO:root:NumberParameters: 231589
+INFO:root:GPU memory allocated: 163577856
+INFO:root:After setting up the model: mem (CPU python)=28884.1171875MB; mem (CPU total)=28655.56640625MB
+INFO:root:Training starts now.
+INFO:root:At the start of the epoch: mem (CPU python)=28884.1484375MB; mem (CPU total)=28655.80078125MB
+INFO:root:[    1] Training loss: 0.78123085, Validation loss: 0.73369216, Gradient norm: 1.55020933
+INFO:root:At the start of the epoch: mem (CPU python)=28922.046875MB; mem (CPU total)=28694.046875MB
+INFO:root:[    2] Training loss: 0.72943490, Validation loss: 0.72362723, Gradient norm: 2.49155958
+INFO:root:At the start of the epoch: mem (CPU python)=28960.140625MB; mem (CPU total)=28732.23828125MB
+INFO:root:[    3] Training loss: 0.72193450, Validation loss: 0.72210706, Gradient norm: 0.95360046
+INFO:root:At the start of the epoch: mem (CPU python)=28998.25390625MB; mem (CPU total)=28770.40234375MB
+INFO:root:[    4] Training loss: 0.72095463, Validation loss: 0.72054292, Gradient norm: 0.92002164
+INFO:root:At the start of the epoch: mem (CPU python)=29036.36328125MB; mem (CPU total)=28808.390625MB
+INFO:root:[    5] Training loss: 0.72138546, Validation loss: 0.72061676, Gradient norm: 1.42663515
+INFO:root:At the start of the epoch: mem (CPU python)=29074.4765625MB; mem (CPU total)=28846.50390625MB
+INFO:root:[    6] Training loss: 0.72001916, Validation loss: 0.71934317, Gradient norm: 0.85264820
+INFO:root:At the start of the epoch: mem (CPU python)=29112.58984375MB; mem (CPU total)=28884.59375MB
+INFO:root:[    7] Training loss: 0.72013691, Validation loss: 0.71999204, Gradient norm: 1.07558740
+INFO:root:At the start of the epoch: mem (CPU python)=29150.69921875MB; mem (CPU total)=28922.953125MB
+INFO:root:[    8] Training loss: 0.71961656, Validation loss: 0.71901352, Gradient norm: 1.07969308
+INFO:root:At the start of the epoch: mem (CPU python)=29188.79296875MB; mem (CPU total)=28961.08203125MB
+INFO:root:[    9] Training loss: 0.71878871, Validation loss: 0.72106021, Gradient norm: 0.75812377
+INFO:root:At the start of the epoch: mem (CPU python)=29226.890625MB; mem (CPU total)=28999.703125MB
+INFO:root:[   10] Training loss: 0.71788302, Validation loss: 0.71672699, Gradient norm: 0.90199176
+INFO:root:At the start of the epoch: mem (CPU python)=29264.984375MB; mem (CPU total)=29038.046875MB
+INFO:root:[   11] Training loss: 0.71495317, Validation loss: 0.71285448, Gradient norm: 0.55763292
+INFO:root:At the start of the epoch: mem (CPU python)=29303.078125MB; mem (CPU total)=29076.15625MB
+INFO:root:[   12] Training loss: 0.71022618, Validation loss: 0.71071698, Gradient norm: 0.52208874
+INFO:root:At the start of the epoch: mem (CPU python)=29341.171875MB; mem (CPU total)=29114.22265625MB
+INFO:root:[   13] Training loss: 0.70569832, Validation loss: 0.70240888, Gradient norm: 0.67545990
+INFO:root:At the start of the epoch: mem (CPU python)=29379.26953125MB; mem (CPU total)=29152.3203125MB
+INFO:root:[   14] Training loss: 0.70098970, Validation loss: 0.69972100, Gradient norm: 0.41488842
+INFO:root:At the start of the epoch: mem (CPU python)=29417.3671875MB; mem (CPU total)=29190.4765625MB
+INFO:root:[   15] Training loss: 0.69655229, Validation loss: 0.69609427, Gradient norm: 0.45279528
+INFO:root:At the start of the epoch: mem (CPU python)=29455.4609375MB; mem (CPU total)=29228.84765625MB
+INFO:root:[   16] Training loss: 0.69208732, Validation loss: 0.69161399, Gradient norm: 0.36551341
+INFO:root:At the start of the epoch: mem (CPU python)=29493.55859375MB; mem (CPU total)=29267.203125MB
+INFO:root:[   17] Training loss: 0.68833797, Validation loss: 0.68840730, Gradient norm: 0.46539247
+INFO:root:At the start of the epoch: mem (CPU python)=29531.65234375MB; mem (CPU total)=29305.33203125MB
+INFO:root:[   18] Training loss: 0.68437561, Validation loss: 0.68508520, Gradient norm: 0.41611196
+INFO:root:At the start of the epoch: mem (CPU python)=29569.74609375MB; mem (CPU total)=29343.40625MB
+INFO:root:[   19] Training loss: 0.68122212, Validation loss: 0.68067941, Gradient norm: 0.28095262
+INFO:root:At the start of the epoch: mem (CPU python)=29607.83984375MB; mem (CPU total)=29381.38671875MB
+INFO:root:[   20] Training loss: 0.67843023, Validation loss: 0.67854932, Gradient norm: 0.35266339
+INFO:root:At the start of the epoch: mem (CPU python)=29645.94140625MB; mem (CPU total)=29419.72265625MB
+INFO:root:[   21] Training loss: 0.67575077, Validation loss: 0.67616508, Gradient norm: 0.28644417
+INFO:root:At the start of the epoch: mem (CPU python)=29684.03515625MB; mem (CPU total)=29457.84375MB
+INFO:root:[   22] Training loss: 0.67327482, Validation loss: 0.67359599, Gradient norm: 0.31581165
+INFO:root:At the start of the epoch: mem (CPU python)=29722.12890625MB; mem (CPU total)=29495.98046875MB
+INFO:root:[   23] Training loss: 0.67131145, Validation loss: 0.67061117, Gradient norm: 0.33268112
+INFO:root:At the start of the epoch: mem (CPU python)=29760.2265625MB; mem (CPU total)=29534.6171875MB
+INFO:root:[   24] Training loss: 0.66904914, Validation loss: 0.66927270, Gradient norm: 0.32513725
+INFO:root:At the start of the epoch: mem (CPU python)=29798.3203125MB; mem (CPU total)=29572.2421875MB
+INFO:root:[   25] Training loss: 0.66710477, Validation loss: 0.66741216, Gradient norm: 0.23564841
+INFO:root:At the start of the epoch: mem (CPU python)=29836.4140625MB; mem (CPU total)=29610.36328125MB
+INFO:root:[   26] Training loss: 0.66521811, Validation loss: 0.66509991, Gradient norm: 0.30592342
+INFO:root:At the start of the epoch: mem (CPU python)=29874.51171875MB; mem (CPU total)=29648.46484375MB
+INFO:root:[   27] Training loss: 0.66382276, Validation loss: 0.66469950, Gradient norm: 0.24371122
+INFO:root:At the start of the epoch: mem (CPU python)=29912.60546875MB; mem (CPU total)=29686.60546875MB
+INFO:root:[   28] Training loss: 0.66213545, Validation loss: 0.66199450, Gradient norm: 0.23269328
+INFO:root:At the start of the epoch: mem (CPU python)=29950.69921875MB; mem (CPU total)=29724.9609375MB
+INFO:root:[   29] Training loss: 0.66049954, Validation loss: 0.66217601, Gradient norm: 0.26199331
+INFO:root:At the start of the epoch: mem (CPU python)=29988.796875MB; mem (CPU total)=29763.10546875MB
+INFO:root:[   30] Training loss: 0.65943540, Validation loss: 0.66065893, Gradient norm: 0.28707518
+INFO:root:At the start of the epoch: mem (CPU python)=30026.89453125MB; mem (CPU total)=29801.2265625MB
+INFO:root:[   31] Training loss: 0.65827727, Validation loss: 0.65981327, Gradient norm: 0.29252704
+INFO:root:At the start of the epoch: mem (CPU python)=30064.98828125MB; mem (CPU total)=29840.0859375MB
+INFO:root:[   32] Training loss: 0.65652858, Validation loss: 0.65824419, Gradient norm: 0.22249724
+INFO:root:At the start of the epoch: mem (CPU python)=30103.08203125MB; mem (CPU total)=29878.41796875MB
+INFO:root:[   33] Training loss: 0.65584732, Validation loss: 0.65677034, Gradient norm: 0.23892017
+INFO:root:At the start of the epoch: mem (CPU python)=30141.1796875MB; mem (CPU total)=29916.77734375MB
+INFO:root:[   34] Training loss: 0.65437209, Validation loss: 0.65611491, Gradient norm: 0.24450050
+INFO:root:At the start of the epoch: mem (CPU python)=30179.2734375MB; mem (CPU total)=29954.625MB
+INFO:root:[   35] Training loss: 0.65351202, Validation loss: 0.65526211, Gradient norm: 0.27677183
+INFO:root:At the start of the epoch: mem (CPU python)=30217.37109375MB; mem (CPU total)=29993.0MB
+INFO:root:[   36] Training loss: 0.65198761, Validation loss: 0.65364318, Gradient norm: 0.23743453
+INFO:root:At the start of the epoch: mem (CPU python)=30255.46484375MB; mem (CPU total)=30031.0859375MB
+INFO:root:[   37] Training loss: 0.65143894, Validation loss: 0.65337188, Gradient norm: 0.39948209
+INFO:root:At the start of the epoch: mem (CPU python)=30293.56640625MB; mem (CPU total)=30068.96875MB
+INFO:root:[   38] Training loss: 0.65027195, Validation loss: 0.65209411, Gradient norm: 0.26380590
+INFO:root:At the start of the epoch: mem (CPU python)=30331.66015625MB; mem (CPU total)=30107.30078125MB
+INFO:root:[   39] Training loss: 0.64917570, Validation loss: 0.65148193, Gradient norm: 0.24454555
+INFO:root:At the start of the epoch: mem (CPU python)=30369.75390625MB; mem (CPU total)=30145.17578125MB
+INFO:root:[   40] Training loss: 0.64883873, Validation loss: 0.64993667, Gradient norm: 0.24128224
+INFO:root:At the start of the epoch: mem (CPU python)=30407.8515625MB; mem (CPU total)=30183.3203125MB
+INFO:root:[   41] Training loss: 0.64781607, Validation loss: 0.64991526, Gradient norm: 0.27337257
+INFO:root:At the start of the epoch: mem (CPU python)=30445.9453125MB; mem (CPU total)=30221.58984375MB
+INFO:root:[   42] Training loss: 0.64747027, Validation loss: 0.64907455, Gradient norm: 0.27932422
+INFO:root:At the start of the epoch: mem (CPU python)=30484.0390625MB; mem (CPU total)=30259.66796875MB
+INFO:root:[   43] Training loss: 0.64602266, Validation loss: 0.64861458, Gradient norm: 0.26001127
+INFO:root:At the start of the epoch: mem (CPU python)=30522.13671875MB; mem (CPU total)=30297.77734375MB
+INFO:root:[   44] Training loss: 0.64555055, Validation loss: 0.64767727, Gradient norm: 0.24408247
+INFO:root:At the start of the epoch: mem (CPU python)=30560.234375MB; mem (CPU total)=30334.5234375MB
+INFO:root:[   45] Training loss: 0.64468899, Validation loss: 0.64734773, Gradient norm: 0.28882793
+INFO:root:At the start of the epoch: mem (CPU python)=30598.328125MB; mem (CPU total)=30372.63671875MB
+INFO:root:[   46] Training loss: 0.64417271, Validation loss: 0.64781706, Gradient norm: 0.25937220
+INFO:root:At the start of the epoch: mem (CPU python)=30636.42578125MB; mem (CPU total)=30410.23046875MB
+INFO:root:[   47] Training loss: 0.64358873, Validation loss: 0.64527408, Gradient norm: 0.36138194
+INFO:root:At the start of the epoch: mem (CPU python)=30674.5234375MB; mem (CPU total)=30448.171875MB
+INFO:root:[   48] Training loss: 0.64287792, Validation loss: 0.64502437, Gradient norm: 0.21955471
+INFO:root:At the start of the epoch: mem (CPU python)=30712.6171875MB; mem (CPU total)=30486.78515625MB
+INFO:root:[   49] Training loss: 0.64191507, Validation loss: 0.64462980, Gradient norm: 0.34941719
+INFO:root:At the start of the epoch: mem (CPU python)=30750.7109375MB; mem (CPU total)=30524.44921875MB
+INFO:root:[   50] Training loss: 0.64189087, Validation loss: 0.64395558, Gradient norm: 0.28077087
+INFO:root:At the start of the epoch: mem (CPU python)=30788.80859375MB; mem (CPU total)=30562.4140625MB
+INFO:root:[   51] Training loss: 0.64073424, Validation loss: 0.64387719, Gradient norm: 0.29845568
+INFO:root:At the start of the epoch: mem (CPU python)=30826.90234375MB; mem (CPU total)=30600.8203125MB
+INFO:root:[   52] Training loss: 0.64079874, Validation loss: 0.64356974, Gradient norm: 0.38580605
+INFO:root:At the start of the epoch: mem (CPU python)=30864.99609375MB; mem (CPU total)=30639.22265625MB
+INFO:root:[   53] Training loss: 0.63938604, Validation loss: 0.64284703, Gradient norm: 0.30749114
+INFO:root:At the start of the epoch: mem (CPU python)=30903.08984375MB; mem (CPU total)=30678.61328125MB
+INFO:root:[   54] Training loss: 0.63895121, Validation loss: 0.64186593, Gradient norm: 0.30451292
+INFO:root:At the start of the epoch: mem (CPU python)=30941.19140625MB; mem (CPU total)=30716.46484375MB
+INFO:root:[   55] Training loss: 0.63861829, Validation loss: 0.64182250, Gradient norm: 0.28423418
+INFO:root:At the start of the epoch: mem (CPU python)=30979.28125MB; mem (CPU total)=30754.73828125MB
+INFO:root:[   56] Training loss: 0.63796662, Validation loss: 0.64063634, Gradient norm: 0.36018113
+INFO:root:At the start of the epoch: mem (CPU python)=31017.375MB; mem (CPU total)=30793.14453125MB
+INFO:root:[   57] Training loss: 0.63745579, Validation loss: 0.63915849, Gradient norm: 0.28282997
+INFO:root:At the start of the epoch: mem (CPU python)=31055.4765625MB; mem (CPU total)=30831.23828125MB
+INFO:root:[   58] Training loss: 0.63670550, Validation loss: 0.63973762, Gradient norm: 0.27098891
+INFO:root:At the start of the epoch: mem (CPU python)=31093.5703125MB; mem (CPU total)=30869.3359375MB
+INFO:root:[   59] Training loss: 0.63628379, Validation loss: 0.63959347, Gradient norm: 0.36247050
+INFO:root:At the start of the epoch: mem (CPU python)=31131.6640625MB; mem (CPU total)=30907.6484375MB
+INFO:root:[   60] Training loss: 0.63585911, Validation loss: 0.63929709, Gradient norm: 0.29188972
+INFO:root:At the start of the epoch: mem (CPU python)=31169.76171875MB; mem (CPU total)=30945.76953125MB
+INFO:root:[   61] Training loss: 0.63509121, Validation loss: 0.63828143, Gradient norm: 0.36696837
+INFO:root:At the start of the epoch: mem (CPU python)=31207.859375MB; mem (CPU total)=30984.375MB
+INFO:root:[   62] Training loss: 0.63454901, Validation loss: 0.63796804, Gradient norm: 0.29173876
+INFO:root:At the start of the epoch: mem (CPU python)=31245.94921875MB; mem (CPU total)=31022.76171875MB
+INFO:root:[   63] Training loss: 0.63418856, Validation loss: 0.63781844, Gradient norm: 0.31942298
+INFO:root:At the start of the epoch: mem (CPU python)=31284.04296875MB; mem (CPU total)=31060.91015625MB
+INFO:root:[   64] Training loss: 0.63369153, Validation loss: 0.63707330, Gradient norm: 0.27145242
+INFO:root:At the start of the epoch: mem (CPU python)=31322.14453125MB; mem (CPU total)=31098.5859375MB
+INFO:root:[   65] Training loss: 0.63347701, Validation loss: 0.63736264, Gradient norm: 0.34457540
+INFO:root:At the start of the epoch: mem (CPU python)=31360.23828125MB; mem (CPU total)=31136.66015625MB
+INFO:root:[   66] Training loss: 0.63260108, Validation loss: 0.63606938, Gradient norm: 0.30472159
+INFO:root:At the start of the epoch: mem (CPU python)=31398.33203125MB; mem (CPU total)=31175.0625MB
+INFO:root:[   67] Training loss: 0.63221874, Validation loss: 0.63701604, Gradient norm: 0.30132003
+INFO:root:At the start of the epoch: mem (CPU python)=31436.4296875MB; mem (CPU total)=31213.12890625MB
+INFO:root:[   68] Training loss: 0.63182254, Validation loss: 0.63650659, Gradient norm: 0.32098865
+INFO:root:At the start of the epoch: mem (CPU python)=31474.5234375MB; mem (CPU total)=31251.2421875MB
+INFO:root:[   69] Training loss: 0.63128125, Validation loss: 0.63496486, Gradient norm: 0.36963399
+INFO:root:At the start of the epoch: mem (CPU python)=31512.6171875MB; mem (CPU total)=31289.79296875MB
+INFO:root:[   70] Training loss: 0.63107906, Validation loss: 0.63495039, Gradient norm: 0.33913832
+INFO:root:At the start of the epoch: mem (CPU python)=31550.7109375MB; mem (CPU total)=31328.16015625MB
+INFO:root:[   71] Training loss: 0.63020214, Validation loss: 0.63429423, Gradient norm: 0.38510866
+INFO:root:At the start of the epoch: mem (CPU python)=31588.8125MB; mem (CPU total)=31366.3203125MB
+INFO:root:[   72] Training loss: 0.62992552, Validation loss: 0.63458125, Gradient norm: 0.30083922
+INFO:root:At the start of the epoch: mem (CPU python)=31626.90625MB; mem (CPU total)=31404.65234375MB
+INFO:root:[   73] Training loss: 0.62960996, Validation loss: 0.63389865, Gradient norm: 0.32104763
+INFO:root:At the start of the epoch: mem (CPU python)=31665.0MB; mem (CPU total)=31443.05078125MB
+INFO:root:[   74] Training loss: 0.62873090, Validation loss: 0.63401486, Gradient norm: 0.29771946
+INFO:root:At the start of the epoch: mem (CPU python)=31703.09765625MB; mem (CPU total)=31480.63671875MB
+INFO:root:[   75] Training loss: 0.62882634, Validation loss: 0.63334362, Gradient norm: 0.32293839
+INFO:root:At the start of the epoch: mem (CPU python)=31741.19140625MB; mem (CPU total)=31519.04296875MB
+INFO:root:[   76] Training loss: 0.62835884, Validation loss: 0.63293093, Gradient norm: 0.38363514
+INFO:root:At the start of the epoch: mem (CPU python)=31779.2890625MB; mem (CPU total)=31557.1484375MB
+INFO:root:[   77] Training loss: 0.62760630, Validation loss: 0.63274353, Gradient norm: 0.32278767
+INFO:root:At the start of the epoch: mem (CPU python)=31817.38671875MB; mem (CPU total)=31595.3125MB
+INFO:root:[   78] Training loss: 0.62769052, Validation loss: 0.63243188, Gradient norm: 0.29537524
+INFO:root:At the start of the epoch: mem (CPU python)=31855.48046875MB; mem (CPU total)=31633.67578125MB
+INFO:root:[   79] Training loss: 0.62718745, Validation loss: 0.63175488, Gradient norm: 0.35209653
+INFO:root:At the start of the epoch: mem (CPU python)=31893.57421875MB; mem (CPU total)=31671.0703125MB
+INFO:root:[   80] Training loss: 0.62688723, Validation loss: 0.63224514, Gradient norm: 0.35351295
+INFO:root:At the start of the epoch: mem (CPU python)=31931.671875MB; mem (CPU total)=31708.703125MB
+INFO:root:[   81] Training loss: 0.62643151, Validation loss: 0.63151088, Gradient norm: 0.32528125
+INFO:root:At the start of the epoch: mem (CPU python)=31969.76953125MB; mem (CPU total)=31746.578125MB
+INFO:root:[   82] Training loss: 0.62609980, Validation loss: 0.63139557, Gradient norm: 0.34128199
+INFO:root:At the start of the epoch: mem (CPU python)=32007.86328125MB; mem (CPU total)=31784.66796875MB
+INFO:root:[   83] Training loss: 0.62555929, Validation loss: 0.63053516, Gradient norm: 0.34779533
+INFO:root:At the start of the epoch: mem (CPU python)=32045.95703125MB; mem (CPU total)=31823.03515625MB
+INFO:root:[   84] Training loss: 0.62554755, Validation loss: 0.63073974, Gradient norm: 0.30238456
+INFO:root:At the start of the epoch: mem (CPU python)=32084.0546875MB; mem (CPU total)=31861.38671875MB
+INFO:root:[   85] Training loss: 0.62525931, Validation loss: 0.62947527, Gradient norm: 0.40020576
+INFO:root:At the start of the epoch: mem (CPU python)=32122.1484375MB; mem (CPU total)=31899.734375MB
+INFO:root:[   86] Training loss: 0.62463101, Validation loss: 0.62988013, Gradient norm: 0.31681007
+INFO:root:At the start of the epoch: mem (CPU python)=32160.2421875MB; mem (CPU total)=31938.09375MB
+INFO:root:[   87] Training loss: 0.62463200, Validation loss: 0.62978785, Gradient norm: 0.33997071
+INFO:root:At the start of the epoch: mem (CPU python)=32198.3359375MB; mem (CPU total)=31976.1953125MB
+INFO:root:[   88] Training loss: 0.62438865, Validation loss: 0.62947511, Gradient norm: 0.36494394
+INFO:root:At the start of the epoch: mem (CPU python)=32236.4375MB; mem (CPU total)=32014.3203125MB
+INFO:root:[   89] Training loss: 0.62415255, Validation loss: 0.63051958, Gradient norm: 0.44116655
+INFO:root:At the start of the epoch: mem (CPU python)=32274.53125MB; mem (CPU total)=32052.44140625MB
+INFO:root:[   90] Training loss: 0.62339339, Validation loss: 0.62810080, Gradient norm: 0.33028128
+INFO:root:At the start of the epoch: mem (CPU python)=32312.625MB; mem (CPU total)=32090.57421875MB
+INFO:root:[   91] Training loss: 0.62321797, Validation loss: 0.62902190, Gradient norm: 0.42372011
+INFO:root:At the start of the epoch: mem (CPU python)=32350.72265625MB; mem (CPU total)=32128.6640625MB
+INFO:root:[   92] Training loss: 0.62298960, Validation loss: 0.62811261, Gradient norm: 0.47337042
+INFO:root:At the start of the epoch: mem (CPU python)=32388.81640625MB; mem (CPU total)=32166.5MB
+INFO:root:[   93] Training loss: 0.62215362, Validation loss: 0.62724415, Gradient norm: 0.37326459
+INFO:root:At the start of the epoch: mem (CPU python)=32426.91015625MB; mem (CPU total)=32204.87109375MB
+INFO:root:[   94] Training loss: 0.62241635, Validation loss: 0.62811310, Gradient norm: 0.46656381
+INFO:root:At the start of the epoch: mem (CPU python)=32465.0078125MB; mem (CPU total)=32242.72265625MB
+INFO:root:[   95] Training loss: 0.62188290, Validation loss: 0.62892584, Gradient norm: 0.38009053
+INFO:root:At the start of the epoch: mem (CPU python)=32503.1015625MB; mem (CPU total)=32281.078125MB
+INFO:root:[   96] Training loss: 0.62169988, Validation loss: 0.62644967, Gradient norm: 0.36187346
+INFO:root:At the start of the epoch: mem (CPU python)=32541.19921875MB; mem (CPU total)=32319.22265625MB
+INFO:root:[   97] Training loss: 0.62161812, Validation loss: 0.62773987, Gradient norm: 0.35035571
+INFO:root:At the start of the epoch: mem (CPU python)=32579.29296875MB; mem (CPU total)=32357.296875MB
+INFO:root:[   98] Training loss: 0.62106049, Validation loss: 0.62696481, Gradient norm: 0.46018425
+INFO:root:At the start of the epoch: mem (CPU python)=32617.390625MB; mem (CPU total)=32395.65625MB
+INFO:root:[   99] Training loss: 0.62082051, Validation loss: 0.62816676, Gradient norm: 0.33485571
+INFO:root:At the start of the epoch: mem (CPU python)=32655.484375MB; mem (CPU total)=32433.75MB
+INFO:root:[  100] Training loss: 0.62085850, Validation loss: 0.62641369, Gradient norm: 0.44892554
+INFO:root:At the start of the epoch: mem (CPU python)=32693.578125MB; mem (CPU total)=32472.0625MB
+INFO:root:[  101] Training loss: 0.62069479, Validation loss: 0.62664820, Gradient norm: 0.41878395
+INFO:root:At the start of the epoch: mem (CPU python)=32731.67578125MB; mem (CPU total)=32510.4140625MB
+INFO:root:[  102] Training loss: 0.62005429, Validation loss: 0.62631949, Gradient norm: 0.36481544
+INFO:root:At the start of the epoch: mem (CPU python)=32769.76953125MB; mem (CPU total)=32548.359375MB
+INFO:root:[  103] Training loss: 0.62017133, Validation loss: 0.62640208, Gradient norm: 0.57325067
+INFO:root:At the start of the epoch: mem (CPU python)=32807.86328125MB; mem (CPU total)=32586.45703125MB
+INFO:root:[  104] Training loss: 0.61947436, Validation loss: 0.62456525, Gradient norm: 0.42063032
+INFO:root:At the start of the epoch: mem (CPU python)=32845.9609375MB; mem (CPU total)=32624.30859375MB
+INFO:root:[  105] Training loss: 0.61913743, Validation loss: 0.62546656, Gradient norm: 0.38040469
+INFO:root:At the start of the epoch: mem (CPU python)=32884.05859375MB; mem (CPU total)=32662.42578125MB
+INFO:root:[  106] Training loss: 0.61908987, Validation loss: 0.62467823, Gradient norm: 0.35660705
+INFO:root:At the start of the epoch: mem (CPU python)=32922.15234375MB; mem (CPU total)=32700.71875MB
+INFO:root:[  107] Training loss: 0.61878859, Validation loss: 0.62477147, Gradient norm: 0.45672161
+INFO:root:At the start of the epoch: mem (CPU python)=32960.24609375MB; mem (CPU total)=32738.8046875MB
+INFO:root:[  108] Training loss: 0.61905190, Validation loss: 0.62426913, Gradient norm: 0.45203398
+INFO:root:At the start of the epoch: mem (CPU python)=32998.34375MB; mem (CPU total)=32777.16796875MB
+INFO:root:[  109] Training loss: 0.61843101, Validation loss: 0.62545988, Gradient norm: 0.47548961
+INFO:root:At the start of the epoch: mem (CPU python)=33036.4375MB; mem (CPU total)=32815.265625MB
+INFO:root:[  110] Training loss: 0.61820081, Validation loss: 0.62517167, Gradient norm: 0.51107529
+INFO:root:At the start of the epoch: mem (CPU python)=33074.53125MB; mem (CPU total)=32853.37109375MB
+INFO:root:[  111] Training loss: 0.61808296, Validation loss: 0.62576190, Gradient norm: 0.37954146
+INFO:root:At the start of the epoch: mem (CPU python)=33112.6328125MB; mem (CPU total)=32891.484375MB
+INFO:root:[  112] Training loss: 0.61761104, Validation loss: 0.62438958, Gradient norm: 0.48133373
+INFO:root:At the start of the epoch: mem (CPU python)=33150.72265625MB; mem (CPU total)=32929.7734375MB
+INFO:root:[  113] Training loss: 0.61757900, Validation loss: 0.62468636, Gradient norm: 0.47620712
+INFO:root:At the start of the epoch: mem (CPU python)=33188.8203125MB; mem (CPU total)=32968.12109375MB
+INFO:root:[  114] Training loss: 0.61712891, Validation loss: 0.62511144, Gradient norm: 0.44139756
+INFO:root:At the start of the epoch: mem (CPU python)=33226.9140625MB; mem (CPU total)=33006.00390625MB
+INFO:root:Learning rate reduced to: 0.0005
+INFO:root:[  115] Training loss: 0.61718504, Validation loss: 0.62471561, Gradient norm: 0.49183659
+INFO:root:At the start of the epoch: mem (CPU python)=33265.01171875MB; mem (CPU total)=33044.140625MB
+INFO:root:Learning rate reduced to: 0.00025
+INFO:root:[  116] Training loss: 0.61566179, Validation loss: 0.62257855, Gradient norm: 0.33849698
+INFO:root:At the start of the epoch: mem (CPU python)=33303.10546875MB; mem (CPU total)=33082.51953125MB
+INFO:root:[  117] Training loss: 0.61512507, Validation loss: 0.62292494, Gradient norm: 0.25616975
+INFO:root:At the start of the epoch: mem (CPU python)=33341.203125MB; mem (CPU total)=33120.65234375MB
+INFO:root:[  118] Training loss: 0.61454601, Validation loss: 0.62186354, Gradient norm: 0.22653256
+INFO:root:At the start of the epoch: mem (CPU python)=33379.30078125MB; mem (CPU total)=33158.8125MB
+INFO:root:[  119] Training loss: 0.61429377, Validation loss: 0.62357476, Gradient norm: 0.24048964
+INFO:root:At the start of the epoch: mem (CPU python)=33417.39453125MB; mem (CPU total)=33196.92578125MB
+INFO:root:[  120] Training loss: 0.61469386, Validation loss: 0.62320323, Gradient norm: 0.24408271
+INFO:root:At the start of the epoch: mem (CPU python)=33455.48828125MB; mem (CPU total)=33542.79296875MB
+INFO:root:[  121] Training loss: 0.61445832, Validation loss: 0.62204041, Gradient norm: 0.24784920
+INFO:root:At the start of the epoch: mem (CPU python)=33493.5859375MB; mem (CPU total)=36729.90234375MB
+INFO:root:[  122] Training loss: 0.61437580, Validation loss: 0.62222035, Gradient norm: 0.27415681
+INFO:root:At the start of the epoch: mem (CPU python)=33531.68359375MB; mem (CPU total)=36801.078125MB
+INFO:root:[  123] Training loss: 0.61437414, Validation loss: 0.62267386, Gradient norm: 0.25158857
+INFO:root:At the start of the epoch: mem (CPU python)=33569.77734375MB; mem (CPU total)=36871.0234375MB
+INFO:root:[  124] Training loss: 0.61474911, Validation loss: 0.62125137, Gradient norm: 0.26506660
+INFO:root:At the start of the epoch: mem (CPU python)=33607.87109375MB; mem (CPU total)=36943.5078125MB
+INFO:root:[  125] Training loss: 0.61423039, Validation loss: 0.62185959, Gradient norm: 0.24989076
+INFO:root:At the start of the epoch: mem (CPU python)=33645.96875MB; mem (CPU total)=37015.7109375MB
+INFO:root:[  126] Training loss: 0.61447177, Validation loss: 0.62205906, Gradient norm: 0.24318991
+INFO:root:At the start of the epoch: mem (CPU python)=33684.0625MB; mem (CPU total)=37087.828125MB
+INFO:root:[  127] Training loss: 0.61403007, Validation loss: 0.62161580, Gradient norm: 0.30825281
+INFO:root:At the start of the epoch: mem (CPU python)=33722.15625MB; mem (CPU total)=37160.9140625MB
+INFO:root:[  128] Training loss: 0.61409163, Validation loss: 0.62227986, Gradient norm: 0.25957439
+INFO:root:At the start of the epoch: mem (CPU python)=33760.25390625MB; mem (CPU total)=37234.75390625MB
+INFO:root:[  129] Training loss: 0.61399658, Validation loss: 0.62191192, Gradient norm: 0.25592190
+INFO:root:At the start of the epoch: mem (CPU python)=33798.3515625MB; mem (CPU total)=37306.7109375MB
+INFO:root:[  130] Training loss: 0.61398421, Validation loss: 0.62283688, Gradient norm: 0.28761878
+INFO:root:At the start of the epoch: mem (CPU python)=33836.4453125MB; mem (CPU total)=37378.2578125MB
+INFO:root:Learning rate reduced to: 0.000125
+INFO:root:[  131] Training loss: 0.61435448, Validation loss: 0.62237598, Gradient norm: 0.30622787
+INFO:root:At the start of the epoch: mem (CPU python)=33874.5390625MB; mem (CPU total)=37451.640625MB
+INFO:root:Learning rate reduced to: 6.25e-05
+INFO:root:[  132] Training loss: 0.61354990, Validation loss: 0.62262656, Gradient norm: 0.22853494
+INFO:root:At the start of the epoch: mem (CPU python)=33912.63671875MB; mem (CPU total)=37526.42578125MB
+INFO:root:[  133] Training loss: 0.61365670, Validation loss: 0.62199781, Gradient norm: 0.22880360
+INFO:root:At the start of the epoch: mem (CPU python)=33950.73046875MB; mem (CPU total)=37600.21875MB
+INFO:root:EP 133: Early stopping
+INFO:root:After finishing all epochs: mem (CPU python)=33988.82421875MB; mem (CPU total)=37655.77734375MB
+INFO:root:Training the model took 9605.206s.
+INFO:root:Emptying the cuda cache took 0.048s.
+INFO:root:Starting evaluation: model FNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.87185
+INFO:root:EnergyScoreTrain: 0.61405
+INFO:root:CRPSTrain: 0.5461
+INFO:root:Gaussian NLLTrain: 2.69482
+INFO:root:CoverageTrain: 0.76801
+INFO:root:IntervalWidthTrain: 3.09035
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.88331
+INFO:root:EnergyScoreValidation: 0.62207
+INFO:root:CRPSValidation: 0.55249
+INFO:root:Gaussian NLLValidation: 2.71594
+INFO:root:CoverageValidation: 0.76489
+INFO:root:IntervalWidthValidation: 3.08689
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.88522
+INFO:root:EnergyScoreTest: 0.62344
+INFO:root:CRPSTest: 0.55367
+INFO:root:Gaussian NLLTest: 2.72494
+INFO:root:CoverageTest: 0.76378
+INFO:root:IntervalWidthTest: 3.0821
+INFO:root:After validation: mem (CPU python)=34031.83203125MB; mem (CPU total)=37821.328125MB
+INFO:root:###5 out of 5 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 123456789, 'model': 'FNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 64, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.2, 'fourier_dropout': 0.2, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12), 'n_samples': 3}
+INFO:root:After creating the dataloaders: mem (CPU python)=34031.83203125MB; mem (CPU total)=37838.9296875MB
+INFO:root:NumberParameters: 231589
+INFO:root:GPU memory allocated: 163577856
+INFO:root:After setting up the model: mem (CPU python)=34032.19921875MB; mem (CPU total)=37839.66796875MB
+INFO:root:Training starts now.
+INFO:root:At the start of the epoch: mem (CPU python)=34032.2109375MB; mem (CPU total)=37858.5234375MB
+INFO:root:[    1] Training loss: 0.76522529, Validation loss: 0.72593502, Gradient norm: 1.16638441
+INFO:root:At the start of the epoch: mem (CPU python)=34070.20703125MB; mem (CPU total)=37931.9453125MB
+INFO:root:[    2] Training loss: 0.72269104, Validation loss: 0.72181031, Gradient norm: 0.68357559
+INFO:root:At the start of the epoch: mem (CPU python)=34108.3046875MB; mem (CPU total)=38005.1015625MB
+INFO:root:[    3] Training loss: 0.72084850, Validation loss: 0.72118223, Gradient norm: 0.50748325
+INFO:root:At the start of the epoch: mem (CPU python)=34146.4140625MB; mem (CPU total)=38078.16796875MB
+INFO:root:[    4] Training loss: 0.72039445, Validation loss: 0.72021252, Gradient norm: 0.47384191
+INFO:root:At the start of the epoch: mem (CPU python)=34184.5078125MB; mem (CPU total)=38152.453125MB
+INFO:root:[    5] Training loss: 0.71990813, Validation loss: 0.71990056, Gradient norm: 0.53311608
+INFO:root:At the start of the epoch: mem (CPU python)=34222.62109375MB; mem (CPU total)=38224.078125MB
+INFO:root:[    6] Training loss: 0.71923218, Validation loss: 0.71859794, Gradient norm: 0.37988600
+INFO:root:At the start of the epoch: mem (CPU python)=34260.734375MB; mem (CPU total)=38297.98828125MB
+INFO:root:[    7] Training loss: 0.71872884, Validation loss: 0.71855424, Gradient norm: 0.37195270
+INFO:root:At the start of the epoch: mem (CPU python)=34298.828125MB; mem (CPU total)=38372.25MB
+INFO:root:[    8] Training loss: 0.71777014, Validation loss: 0.71710674, Gradient norm: 0.41739909
+INFO:root:At the start of the epoch: mem (CPU python)=34336.921875MB; mem (CPU total)=38446.5546875MB
+INFO:root:[    9] Training loss: 0.71518866, Validation loss: 0.71358410, Gradient norm: 0.29776741
+INFO:root:At the start of the epoch: mem (CPU python)=34375.01953125MB; mem (CPU total)=38520.24609375MB
+INFO:root:[   10] Training loss: 0.71012512, Validation loss: 0.70650964, Gradient norm: 0.32732651
+INFO:root:At the start of the epoch: mem (CPU python)=34413.11328125MB; mem (CPU total)=38594.109375MB
+INFO:root:[   11] Training loss: 0.70296897, Validation loss: 0.69960090, Gradient norm: 0.28689232
+INFO:root:At the start of the epoch: mem (CPU python)=34451.20703125MB; mem (CPU total)=38667.96484375MB
+INFO:root:[   12] Training loss: 0.69629597, Validation loss: 0.69526204, Gradient norm: 0.20593264
+INFO:root:At the start of the epoch: mem (CPU python)=34489.3046875MB; mem (CPU total)=38742.25MB
+INFO:root:[   13] Training loss: 0.69094010, Validation loss: 0.68846227, Gradient norm: 0.19698451
+INFO:root:At the start of the epoch: mem (CPU python)=34527.40234375MB; mem (CPU total)=38816.99609375MB
+INFO:root:[   14] Training loss: 0.68630522, Validation loss: 0.68492819, Gradient norm: 0.18552760
+INFO:root:At the start of the epoch: mem (CPU python)=34565.49609375MB; mem (CPU total)=38890.5390625MB
+INFO:root:[   15] Training loss: 0.68216955, Validation loss: 0.68140237, Gradient norm: 0.21392004
+INFO:root:At the start of the epoch: mem (CPU python)=34603.59375MB; mem (CPU total)=38964.2421875MB
+INFO:root:[   16] Training loss: 0.67834313, Validation loss: 0.67833459, Gradient norm: 0.18500953
+INFO:root:At the start of the epoch: mem (CPU python)=34641.69140625MB; mem (CPU total)=39038.80859375MB
+INFO:root:[   17] Training loss: 0.67554459, Validation loss: 0.67539936, Gradient norm: 0.17434602
+INFO:root:At the start of the epoch: mem (CPU python)=34679.78515625MB; mem (CPU total)=39113.0546875MB
+INFO:root:[   18] Training loss: 0.67285158, Validation loss: 0.67338248, Gradient norm: 0.20650550
+INFO:root:At the start of the epoch: mem (CPU python)=34717.87890625MB; mem (CPU total)=39186.6328125MB
+INFO:root:[   19] Training loss: 0.67006814, Validation loss: 0.67041602, Gradient norm: 0.16570507
+INFO:root:At the start of the epoch: mem (CPU python)=34755.9765625MB; mem (CPU total)=39261.04296875MB
+INFO:root:[   20] Training loss: 0.66796058, Validation loss: 0.66778704, Gradient norm: 0.18594178
+INFO:root:At the start of the epoch: mem (CPU python)=34794.0703125MB; mem (CPU total)=39333.296875MB
+INFO:root:[   21] Training loss: 0.66555096, Validation loss: 0.66674198, Gradient norm: 0.16005625
+INFO:root:At the start of the epoch: mem (CPU python)=34832.1640625MB; mem (CPU total)=39406.6953125MB
+INFO:root:[   22] Training loss: 0.66409037, Validation loss: 0.66479997, Gradient norm: 0.17853943
+INFO:root:At the start of the epoch: mem (CPU python)=34870.265625MB; mem (CPU total)=39479.74609375MB
+INFO:root:[   23] Training loss: 0.66248987, Validation loss: 0.66268901, Gradient norm: 0.17622134
+INFO:root:At the start of the epoch: mem (CPU python)=34908.359375MB; mem (CPU total)=39553.6171875MB
+INFO:root:[   24] Training loss: 0.66065824, Validation loss: 0.66069675, Gradient norm: 0.18661274
+INFO:root:At the start of the epoch: mem (CPU python)=34946.453125MB; mem (CPU total)=39627.671875MB
+INFO:root:[   25] Training loss: 0.65907676, Validation loss: 0.65953516, Gradient norm: 0.17083050
+INFO:root:At the start of the epoch: mem (CPU python)=34984.546875MB; mem (CPU total)=39701.9140625MB
+INFO:root:[   26] Training loss: 0.65748667, Validation loss: 0.65855974, Gradient norm: 0.20032480
+INFO:root:At the start of the epoch: mem (CPU python)=35022.64453125MB; mem (CPU total)=39775.765625MB
+INFO:root:[   27] Training loss: 0.65614286, Validation loss: 0.65730034, Gradient norm: 0.17481974
+INFO:root:At the start of the epoch: mem (CPU python)=35060.73828125MB; mem (CPU total)=39849.73828125MB
+INFO:root:[   28] Training loss: 0.65482803, Validation loss: 0.65577637, Gradient norm: 0.14055431
+INFO:root:At the start of the epoch: mem (CPU python)=35098.83203125MB; mem (CPU total)=39924.171875MB
+INFO:root:[   29] Training loss: 0.65380223, Validation loss: 0.65586498, Gradient norm: 0.18273777
+INFO:root:At the start of the epoch: mem (CPU python)=35136.93359375MB; mem (CPU total)=39998.41015625MB
+INFO:root:[   30] Training loss: 0.65253250, Validation loss: 0.65356130, Gradient norm: 0.18915468
+INFO:root:At the start of the epoch: mem (CPU python)=35175.02734375MB; mem (CPU total)=40072.3359375MB
+INFO:root:[   31] Training loss: 0.65136487, Validation loss: 0.65318145, Gradient norm: 0.17666172
+INFO:root:At the start of the epoch: mem (CPU python)=35213.12109375MB; mem (CPU total)=40146.421875MB
+INFO:root:[   32] Training loss: 0.65053812, Validation loss: 0.65219846, Gradient norm: 0.13489969
+INFO:root:At the start of the epoch: mem (CPU python)=35251.21875MB; mem (CPU total)=40222.421875MB
+INFO:root:[   33] Training loss: 0.64976079, Validation loss: 0.65168219, Gradient norm: 0.19996869
+INFO:root:At the start of the epoch: mem (CPU python)=35289.3125MB; mem (CPU total)=40296.69921875MB
+INFO:root:[   34] Training loss: 0.64867477, Validation loss: 0.65034297, Gradient norm: 0.13881663
+INFO:root:At the start of the epoch: mem (CPU python)=35327.40625MB; mem (CPU total)=40371.00390625MB
+INFO:root:[   35] Training loss: 0.64769532, Validation loss: 0.64941087, Gradient norm: 0.17553126
+INFO:root:At the start of the epoch: mem (CPU python)=35365.50390625MB; mem (CPU total)=40445.16796875MB
+INFO:root:[   36] Training loss: 0.64685099, Validation loss: 0.64880773, Gradient norm: 0.16034388
+INFO:root:At the start of the epoch: mem (CPU python)=35403.6015625MB; mem (CPU total)=40519.25MB
+INFO:root:[   37] Training loss: 0.64593090, Validation loss: 0.64827598, Gradient norm: 0.17406345
+INFO:root:At the start of the epoch: mem (CPU python)=35441.6953125MB; mem (CPU total)=40593.30859375MB
+INFO:root:[   38] Training loss: 0.64511658, Validation loss: 0.64694750, Gradient norm: 0.19468409
+INFO:root:At the start of the epoch: mem (CPU python)=35479.7890625MB; mem (CPU total)=40666.1953125MB
+INFO:root:[   39] Training loss: 0.64456084, Validation loss: 0.64648043, Gradient norm: 0.18878163
+INFO:root:At the start of the epoch: mem (CPU python)=35517.88671875MB; mem (CPU total)=40740.36328125MB
+INFO:root:[   40] Training loss: 0.64368770, Validation loss: 0.64613276, Gradient norm: 0.19031547
+INFO:root:At the start of the epoch: mem (CPU python)=35555.98046875MB; mem (CPU total)=40814.1796875MB
+INFO:root:[   41] Training loss: 0.64255024, Validation loss: 0.64515989, Gradient norm: 0.15088324
+INFO:root:At the start of the epoch: mem (CPU python)=35594.07421875MB; mem (CPU total)=40888.28515625MB
+INFO:root:[   42] Training loss: 0.64225419, Validation loss: 0.64455529, Gradient norm: 0.18360910
+INFO:root:At the start of the epoch: mem (CPU python)=35632.16796875MB; mem (CPU total)=40962.4453125MB
+INFO:root:[   43] Training loss: 0.64106399, Validation loss: 0.64392918, Gradient norm: 0.17085283
+INFO:root:At the start of the epoch: mem (CPU python)=35670.26953125MB; mem (CPU total)=41036.609375MB
+INFO:root:[   44] Training loss: 0.64103772, Validation loss: 0.64373872, Gradient norm: 0.17973279
+INFO:root:At the start of the epoch: mem (CPU python)=35708.3671875MB; mem (CPU total)=41112.3359375MB
+INFO:root:[   45] Training loss: 0.64012192, Validation loss: 0.64308477, Gradient norm: 0.18457846
+INFO:root:At the start of the epoch: mem (CPU python)=35746.4609375MB; mem (CPU total)=41187.38671875MB
+INFO:root:[   46] Training loss: 0.63948026, Validation loss: 0.64355217, Gradient norm: 0.20424771
+INFO:root:At the start of the epoch: mem (CPU python)=35784.55859375MB; mem (CPU total)=41262.16796875MB
+INFO:root:[   47] Training loss: 0.63906720, Validation loss: 0.64222416, Gradient norm: 0.20017919
+INFO:root:At the start of the epoch: mem (CPU python)=35822.65234375MB; mem (CPU total)=41337.515625MB
+INFO:root:[   48] Training loss: 0.63833915, Validation loss: 0.64105541, Gradient norm: 0.18435301
+INFO:root:At the start of the epoch: mem (CPU python)=35860.74609375MB; mem (CPU total)=41412.7578125MB
+INFO:root:[   49] Training loss: 0.63768664, Validation loss: 0.64083915, Gradient norm: 0.20671496
+INFO:root:At the start of the epoch: mem (CPU python)=35898.84765625MB; mem (CPU total)=41487.046875MB
+INFO:root:[   50] Training loss: 0.63738633, Validation loss: 0.63968909, Gradient norm: 0.17090531
+INFO:root:At the start of the epoch: mem (CPU python)=35936.94140625MB; mem (CPU total)=41561.234375MB
+INFO:root:[   51] Training loss: 0.63678681, Validation loss: 0.64029514, Gradient norm: 0.20256458
+INFO:root:At the start of the epoch: mem (CPU python)=35975.03515625MB; mem (CPU total)=41636.06640625MB
+INFO:root:[   52] Training loss: 0.63595787, Validation loss: 0.64032336, Gradient norm: 0.16286736
+INFO:root:At the start of the epoch: mem (CPU python)=36013.12890625MB; mem (CPU total)=41710.31640625MB
+INFO:root:[   53] Training loss: 0.63527506, Validation loss: 0.64041095, Gradient norm: 0.17743805
+INFO:root:At the start of the epoch: mem (CPU python)=36051.23046875MB; mem (CPU total)=41784.30078125MB
+INFO:root:[   54] Training loss: 0.63504769, Validation loss: 0.63835058, Gradient norm: 0.16943499
+INFO:root:At the start of the epoch: mem (CPU python)=36089.32421875MB; mem (CPU total)=41859.03125MB
+INFO:root:[   55] Training loss: 0.63474286, Validation loss: 0.63852553, Gradient norm: 0.19634117
+INFO:root:At the start of the epoch: mem (CPU python)=36127.41796875MB; mem (CPU total)=41935.48828125MB
+INFO:root:[   56] Training loss: 0.63421838, Validation loss: 0.63718263, Gradient norm: 0.22369344
+INFO:root:At the start of the epoch: mem (CPU python)=36165.515625MB; mem (CPU total)=42008.79296875MB
+INFO:root:[   57] Training loss: 0.63396925, Validation loss: 0.63740055, Gradient norm: 0.22571316
+INFO:root:At the start of the epoch: mem (CPU python)=36203.609375MB; mem (CPU total)=42081.8671875MB
+INFO:root:[   58] Training loss: 0.63353043, Validation loss: 0.63583423, Gradient norm: 0.23482997
+INFO:root:At the start of the epoch: mem (CPU python)=36241.703125MB; mem (CPU total)=42156.3671875MB
+INFO:root:[   59] Training loss: 0.63235951, Validation loss: 0.63665748, Gradient norm: 0.20194993
+INFO:root:At the start of the epoch: mem (CPU python)=36279.796875MB; mem (CPU total)=42230.8984375MB
+INFO:root:[   60] Training loss: 0.63243149, Validation loss: 0.63603226, Gradient norm: 0.18567841
+INFO:root:At the start of the epoch: mem (CPU python)=36317.8984375MB; mem (CPU total)=42305.15625MB
+INFO:root:[   61] Training loss: 0.63189696, Validation loss: 0.63607648, Gradient norm: 0.23226799
+INFO:root:At the start of the epoch: mem (CPU python)=36355.9921875MB; mem (CPU total)=42379.1328125MB
+INFO:root:[   62] Training loss: 0.63173845, Validation loss: 0.63519475, Gradient norm: 0.19131634
+INFO:root:At the start of the epoch: mem (CPU python)=36394.0859375MB; mem (CPU total)=42454.69140625MB
+INFO:root:[   63] Training loss: 0.63073743, Validation loss: 0.63603455, Gradient norm: 0.18900180
+INFO:root:At the start of the epoch: mem (CPU python)=36432.18359375MB; mem (CPU total)=42529.1328125MB
+INFO:root:[   64] Training loss: 0.63009232, Validation loss: 0.63428171, Gradient norm: 0.22617732
+INFO:root:At the start of the epoch: mem (CPU python)=36470.27734375MB; mem (CPU total)=42603.40625MB
+INFO:root:[   65] Training loss: 0.63015893, Validation loss: 0.63473248, Gradient norm: 0.22471375
+INFO:root:At the start of the epoch: mem (CPU python)=36508.37109375MB; mem (CPU total)=42678.703125MB
+INFO:root:[   66] Training loss: 0.62942223, Validation loss: 0.63312933, Gradient norm: 0.20389708
+INFO:root:At the start of the epoch: mem (CPU python)=36546.46875MB; mem (CPU total)=42752.99609375MB
+INFO:root:[   67] Training loss: 0.62910073, Validation loss: 0.63303086, Gradient norm: 0.23579646
+INFO:root:At the start of the epoch: mem (CPU python)=36584.5625MB; mem (CPU total)=42828.234375MB
+INFO:root:[   68] Training loss: 0.62841323, Validation loss: 0.63311559, Gradient norm: 0.23338013
+INFO:root:At the start of the epoch: mem (CPU python)=36622.65625MB; mem (CPU total)=42903.4609375MB
+INFO:root:[   69] Training loss: 0.62875459, Validation loss: 0.63165054, Gradient norm: 0.21068150
+INFO:root:At the start of the epoch: mem (CPU python)=36660.75390625MB; mem (CPU total)=42978.48828125MB
+INFO:root:[   70] Training loss: 0.62786616, Validation loss: 0.63244084, Gradient norm: 0.17116131
+INFO:root:At the start of the epoch: mem (CPU python)=36698.8515625MB; mem (CPU total)=43052.70703125MB
+INFO:root:[   71] Training loss: 0.62756774, Validation loss: 0.63205148, Gradient norm: 0.22532401
+INFO:root:At the start of the epoch: mem (CPU python)=36736.9453125MB; mem (CPU total)=43127.6953125MB
+INFO:root:[   72] Training loss: 0.62683716, Validation loss: 0.63234506, Gradient norm: 0.18862455
+INFO:root:At the start of the epoch: mem (CPU python)=36775.0390625MB; mem (CPU total)=43203.01953125MB
+INFO:root:[   73] Training loss: 0.62704214, Validation loss: 0.63195217, Gradient norm: 0.24948476
+INFO:root:At the start of the epoch: mem (CPU python)=36813.13671875MB; mem (CPU total)=43277.27734375MB
+INFO:root:[   74] Training loss: 0.62644995, Validation loss: 0.63155683, Gradient norm: 0.22687589
+INFO:root:At the start of the epoch: mem (CPU python)=36851.6171875MB; mem (CPU total)=43354.05078125MB
+INFO:root:[   75] Training loss: 0.62605688, Validation loss: 0.63184480, Gradient norm: 0.22905594
+INFO:root:At the start of the epoch: mem (CPU python)=36889.32421875MB; mem (CPU total)=43428.921875MB
+INFO:root:[   76] Training loss: 0.62576342, Validation loss: 0.63103849, Gradient norm: 0.21197541
+INFO:root:At the start of the epoch: mem (CPU python)=36927.41796875MB; mem (CPU total)=43503.58984375MB
+INFO:root:[   77] Training loss: 0.62539335, Validation loss: 0.63033049, Gradient norm: 0.24743258
+INFO:root:At the start of the epoch: mem (CPU python)=36965.515625MB; mem (CPU total)=43578.18359375MB
+INFO:root:[   78] Training loss: 0.62516960, Validation loss: 0.63022914, Gradient norm: 0.22053505
+INFO:root:At the start of the epoch: mem (CPU python)=37006.36328125MB; mem (CPU total)=43655.921875MB
+INFO:root:[   79] Training loss: 0.62474431, Validation loss: 0.62923756, Gradient norm: 0.20777543
+INFO:root:At the start of the epoch: mem (CPU python)=37044.45703125MB; mem (CPU total)=43731.5078125MB
+INFO:root:[   80] Training loss: 0.62456162, Validation loss: 0.62942140, Gradient norm: 0.23603092
+INFO:root:At the start of the epoch: mem (CPU python)=37082.5546875MB; mem (CPU total)=43805.5390625MB
+INFO:root:[   81] Training loss: 0.62470971, Validation loss: 0.62841355, Gradient norm: 0.33822066
+INFO:root:At the start of the epoch: mem (CPU python)=37120.6484375MB; mem (CPU total)=43880.0625MB
+INFO:root:[   82] Training loss: 0.62386267, Validation loss: 0.62919711, Gradient norm: 0.26134627
+INFO:root:At the start of the epoch: mem (CPU python)=37158.7421875MB; mem (CPU total)=43954.04296875MB
+INFO:root:[   83] Training loss: 0.62339821, Validation loss: 0.62881723, Gradient norm: 0.25168284
+INFO:root:At the start of the epoch: mem (CPU python)=37196.83984375MB; mem (CPU total)=44027.82421875MB
+INFO:root:[   84] Training loss: 0.62345698, Validation loss: 0.62932251, Gradient norm: 0.26715940
+INFO:root:At the start of the epoch: mem (CPU python)=37234.9375MB; mem (CPU total)=44103.125MB
+INFO:root:[   85] Training loss: 0.62323731, Validation loss: 0.62831977, Gradient norm: 0.27948425
+INFO:root:At the start of the epoch: mem (CPU python)=37273.02734375MB; mem (CPU total)=44177.875MB
+INFO:root:[   86] Training loss: 0.62278328, Validation loss: 0.62856082, Gradient norm: 0.24236010
+INFO:root:At the start of the epoch: mem (CPU python)=37311.125MB; mem (CPU total)=44251.8359375MB
+INFO:root:[   87] Training loss: 0.62252946, Validation loss: 0.62730695, Gradient norm: 0.26334607
+INFO:root:At the start of the epoch: mem (CPU python)=37349.22265625MB; mem (CPU total)=44327.140625MB
+INFO:root:[   88] Training loss: 0.62212530, Validation loss: 0.62796617, Gradient norm: 0.25058396
+INFO:root:At the start of the epoch: mem (CPU python)=37387.31640625MB; mem (CPU total)=44402.0390625MB
+INFO:root:[   89] Training loss: 0.62180868, Validation loss: 0.62717028, Gradient norm: 0.35386720
+INFO:root:At the start of the epoch: mem (CPU python)=37425.41015625MB; mem (CPU total)=44476.390625MB
+INFO:root:[   90] Training loss: 0.62176712, Validation loss: 0.62704830, Gradient norm: 0.30309533
+INFO:root:At the start of the epoch: mem (CPU python)=37463.5078125MB; mem (CPU total)=44552.09375MB
+INFO:root:[   91] Training loss: 0.62134454, Validation loss: 0.62763332, Gradient norm: 0.25888653
+INFO:root:At the start of the epoch: mem (CPU python)=37501.609375MB; mem (CPU total)=44626.375MB
+INFO:root:[   92] Training loss: 0.62114142, Validation loss: 0.62635177, Gradient norm: 0.27774446
+INFO:root:At the start of the epoch: mem (CPU python)=37539.703125MB; mem (CPU total)=44700.57421875MB
+INFO:root:[   93] Training loss: 0.62062268, Validation loss: 0.62610229, Gradient norm: 0.31305729
+INFO:root:At the start of the epoch: mem (CPU python)=37577.796875MB; mem (CPU total)=44775.109375MB
+INFO:root:[   94] Training loss: 0.62070532, Validation loss: 0.62633789, Gradient norm: 0.30393089
+INFO:root:At the start of the epoch: mem (CPU python)=37615.8984375MB; mem (CPU total)=44850.4296875MB
+INFO:root:[   95] Training loss: 0.62066725, Validation loss: 0.62654895, Gradient norm: 0.28347096
+INFO:root:At the start of the epoch: mem (CPU python)=37653.9921875MB; mem (CPU total)=44924.75MB
+INFO:root:[   96] Training loss: 0.62005925, Validation loss: 0.62569711, Gradient norm: 0.33455236
+INFO:root:At the start of the epoch: mem (CPU python)=37692.0859375MB; mem (CPU total)=44999.55078125MB
+INFO:root:[   97] Training loss: 0.61978847, Validation loss: 0.62561747, Gradient norm: 0.27248970
+INFO:root:At the start of the epoch: mem (CPU python)=37730.18359375MB; mem (CPU total)=45075.05078125MB
+INFO:root:[   98] Training loss: 0.61942808, Validation loss: 0.62659580, Gradient norm: 0.28364957
+INFO:root:At the start of the epoch: mem (CPU python)=37768.27734375MB; mem (CPU total)=45148.66015625MB
+INFO:root:[   99] Training loss: 0.61941238, Validation loss: 0.62587382, Gradient norm: 0.33544410
+INFO:root:At the start of the epoch: mem (CPU python)=37806.37109375MB; mem (CPU total)=45222.99609375MB
+INFO:root:[  100] Training loss: 0.61899770, Validation loss: 0.62541546, Gradient norm: 0.32846132
+INFO:root:At the start of the epoch: mem (CPU python)=37844.46875MB; mem (CPU total)=45297.59375MB
+INFO:root:[  101] Training loss: 0.61904853, Validation loss: 0.62542111, Gradient norm: 0.36934320
+INFO:root:At the start of the epoch: mem (CPU python)=37882.5625MB; mem (CPU total)=45374.12890625MB
+INFO:root:[  102] Training loss: 0.61848307, Validation loss: 0.62576908, Gradient norm: 0.31839790
+INFO:root:At the start of the epoch: mem (CPU python)=37920.65625MB; mem (CPU total)=45448.515625MB
+INFO:root:[  103] Training loss: 0.61857085, Validation loss: 0.62443164, Gradient norm: 0.39668695
+INFO:root:At the start of the epoch: mem (CPU python)=37958.75390625MB; mem (CPU total)=45521.8515625MB
+INFO:root:[  104] Training loss: 0.61799726, Validation loss: 0.62354529, Gradient norm: 0.36802914
+INFO:root:At the start of the epoch: mem (CPU python)=37996.8515625MB; mem (CPU total)=45595.5234375MB
+INFO:root:[  105] Training loss: 0.61779536, Validation loss: 0.62417936, Gradient norm: 0.44982950
+INFO:root:At the start of the epoch: mem (CPU python)=38034.9453125MB; mem (CPU total)=45668.5546875MB
+INFO:root:[  106] Training loss: 0.61757048, Validation loss: 0.62368739, Gradient norm: 0.34123974
+INFO:root:At the start of the epoch: mem (CPU python)=38073.0390625MB; mem (CPU total)=45742.3203125MB
+INFO:root:[  107] Training loss: 0.61764095, Validation loss: 0.62362436, Gradient norm: 0.34499537
+INFO:root:At the start of the epoch: mem (CPU python)=38111.13671875MB; mem (CPU total)=45817.1015625MB
+INFO:root:[  108] Training loss: 0.61734029, Validation loss: 0.62305542, Gradient norm: 0.35826337
+INFO:root:At the start of the epoch: mem (CPU python)=38149.23046875MB; mem (CPU total)=45890.59375MB
+INFO:root:[  109] Training loss: 0.61705772, Validation loss: 0.62362403, Gradient norm: 0.43346018
+INFO:root:At the start of the epoch: mem (CPU python)=38187.32421875MB; mem (CPU total)=45964.6640625MB
+INFO:root:[  110] Training loss: 0.61702642, Validation loss: 0.62356233, Gradient norm: 0.38710351
+INFO:root:At the start of the epoch: mem (CPU python)=38225.421875MB; mem (CPU total)=46039.703125MB
+INFO:root:[  111] Training loss: 0.61702945, Validation loss: 0.62410247, Gradient norm: 0.45155845
+INFO:root:At the start of the epoch: mem (CPU python)=38263.515625MB; mem (CPU total)=46113.953125MB
+INFO:root:[  112] Training loss: 0.61610671, Validation loss: 0.62384399, Gradient norm: 0.38081011
+INFO:root:At the start of the epoch: mem (CPU python)=38301.61328125MB; mem (CPU total)=46188.13671875MB
+INFO:root:[  113] Training loss: 0.61609103, Validation loss: 0.62364963, Gradient norm: 0.41994140
+INFO:root:At the start of the epoch: mem (CPU python)=38339.70703125MB; mem (CPU total)=46262.6953125MB
+INFO:root:[  114] Training loss: 0.61588820, Validation loss: 0.62340816, Gradient norm: 0.41447991
+INFO:root:At the start of the epoch: mem (CPU python)=38377.8046875MB; mem (CPU total)=46337.16015625MB
+INFO:root:Learning rate reduced to: 0.0005
+INFO:root:[  115] Training loss: 0.61591618, Validation loss: 0.62289677, Gradient norm: 0.45819039
+INFO:root:At the start of the epoch: mem (CPU python)=38415.8984375MB; mem (CPU total)=46411.42578125MB
+INFO:root:[  116] Training loss: 0.61475138, Validation loss: 0.62161468, Gradient norm: 0.32464661
+INFO:root:At the start of the epoch: mem (CPU python)=38453.9921875MB; mem (CPU total)=46486.4921875MB
+INFO:root:[  117] Training loss: 0.61452524, Validation loss: 0.62221820, Gradient norm: 0.29442339
+INFO:root:At the start of the epoch: mem (CPU python)=38492.08984375MB; mem (CPU total)=46560.54296875MB
+INFO:root:[  118] Training loss: 0.61449812, Validation loss: 0.62208477, Gradient norm: 0.32275447
+INFO:root:At the start of the epoch: mem (CPU python)=38530.1875MB; mem (CPU total)=46635.26953125MB
+INFO:root:[  119] Training loss: 0.61394145, Validation loss: 0.62198923, Gradient norm: 0.30651288
+INFO:root:At the start of the epoch: mem (CPU python)=38568.27734375MB; mem (CPU total)=46709.7578125MB
+INFO:root:[  120] Training loss: 0.61392702, Validation loss: 0.62169532, Gradient norm: 0.30216829
+INFO:root:At the start of the epoch: mem (CPU python)=38606.37109375MB; mem (CPU total)=46785.61328125MB
+INFO:root:[  121] Training loss: 0.61393172, Validation loss: 0.62184215, Gradient norm: 0.33955995
+INFO:root:At the start of the epoch: mem (CPU python)=38644.47265625MB; mem (CPU total)=46838.109375MB
+INFO:root:[  122] Training loss: 0.61372986, Validation loss: 0.62161963, Gradient norm: 0.31165269
+INFO:root:At the start of the epoch: mem (CPU python)=38682.56640625MB; mem (CPU total)=46890.9609375MB
+INFO:root:Learning rate reduced to: 0.00025
+INFO:root:[  123] Training loss: 0.61373030, Validation loss: 0.62252513, Gradient norm: 0.34899739
+INFO:root:At the start of the epoch: mem (CPU python)=38720.66015625MB; mem (CPU total)=46942.3671875MB
+INFO:root:Learning rate reduced to: 0.000125
+INFO:root:[  124] Training loss: 0.61352484, Validation loss: 0.62125788, Gradient norm: 0.28690858
+INFO:root:At the start of the epoch: mem (CPU python)=38758.7578125MB; mem (CPU total)=47020.91796875MB
+INFO:root:[  125] Training loss: 0.61272354, Validation loss: 0.62078895, Gradient norm: 0.22467625
+INFO:root:At the start of the epoch: mem (CPU python)=38796.8515625MB; mem (CPU total)=47094.9921875MB
+INFO:root:[  126] Training loss: 0.61290972, Validation loss: 0.61974813, Gradient norm: 0.22718500
+INFO:root:At the start of the epoch: mem (CPU python)=38834.9453125MB; mem (CPU total)=47168.8046875MB
+INFO:root:[  127] Training loss: 0.61307541, Validation loss: 0.62044401, Gradient norm: 0.24959285
+INFO:root:At the start of the epoch: mem (CPU python)=38873.0390625MB; mem (CPU total)=47242.52734375MB
+INFO:root:[  128] Training loss: 0.61312303, Validation loss: 0.62182013, Gradient norm: 0.22158672
+INFO:root:At the start of the epoch: mem (CPU python)=38911.140625MB; mem (CPU total)=47317.27734375MB
+INFO:root:[  129] Training loss: 0.61280372, Validation loss: 0.62034043, Gradient norm: 0.24889602
+INFO:root:At the start of the epoch: mem (CPU python)=38949.234375MB; mem (CPU total)=47391.59375MB
+INFO:root:[  130] Training loss: 0.61263892, Validation loss: 0.62110876, Gradient norm: 0.23467319
+INFO:root:At the start of the epoch: mem (CPU python)=38987.328125MB; mem (CPU total)=47466.1796875MB
+INFO:root:[  131] Training loss: 0.61250136, Validation loss: 0.62041649, Gradient norm: 0.24263240
+INFO:root:At the start of the epoch: mem (CPU python)=39025.42578125MB; mem (CPU total)=47540.671875MB
+INFO:root:[  132] Training loss: 0.61293980, Validation loss: 0.62166451, Gradient norm: 0.20844653
+INFO:root:At the start of the epoch: mem (CPU python)=39063.51953125MB; mem (CPU total)=47615.234375MB
+INFO:root:Learning rate reduced to: 6.25e-05
+INFO:root:[  133] Training loss: 0.61293399, Validation loss: 0.62165826, Gradient norm: 0.24153391
+INFO:root:At the start of the epoch: mem (CPU python)=39101.61328125MB; mem (CPU total)=47690.53515625MB
+INFO:root:[  134] Training loss: 0.61262281, Validation loss: 0.62052321, Gradient norm: 0.22521114
+INFO:root:At the start of the epoch: mem (CPU python)=39139.7109375MB; mem (CPU total)=47765.09375MB
+INFO:root:[  135] Training loss: 0.61212661, Validation loss: 0.62022175, Gradient norm: 0.21796363
+INFO:root:At the start of the epoch: mem (CPU python)=39177.80859375MB; mem (CPU total)=47839.90625MB
+INFO:root:EP 135: Early stopping
+INFO:root:After finishing all epochs: mem (CPU python)=39215.80859375MB; mem (CPU total)=47895.51953125MB
+INFO:root:Training the model took 10717.79s.
+INFO:root:Emptying the cuda cache took 0.05s.
+INFO:root:Starting evaluation: model FNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.86992
+INFO:root:EnergyScoreTrain: 0.61269
+INFO:root:CRPSTrain: 0.56038
+INFO:root:Gaussian NLLTrain: 6.6898
+INFO:root:CoverageTrain: 0.73577
+INFO:root:IntervalWidthTrain: 3.05383
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.88172
+INFO:root:EnergyScoreValidation: 0.62088
+INFO:root:CRPSValidation: 0.56671
+INFO:root:Gaussian NLLValidation: 6.72013
+INFO:root:CoverageValidation: 0.73278
+INFO:root:IntervalWidthValidation: 3.05117
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.88278
+INFO:root:EnergyScoreTest: 0.62169
+INFO:root:CRPSTest: 0.56747
+INFO:root:Gaussian NLLTest: 6.73509
+INFO:root:CoverageTest: 0.73194
+INFO:root:IntervalWidthTest: 3.04693
+INFO:root:After validation: mem (CPU python)=39258.9375MB; mem (CPU total)=48042.1875MB
