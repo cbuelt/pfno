@@ -45,6 +45,12 @@ The code includes methods for reproducing the results, as well as general implem
 
 -
 
+# Code
+| File / Folder | Description |
+| ---- | ----------- | 
+| `config` | Includes the config files used for the models and experiments. |
+
+
 # Methodology
 -
 
