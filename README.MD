@@ -13,42 +13,26 @@ The code includes methods for reproducing the results, as well as general implem
 
 | Folder | Description |
 | ---- | ----------- | 
-| `abc` | Contains code related to the Approximate Bayesian Computing (ABC) method. |
-| `application` | Contains code regarding the empirical part of the thesis. |
-| `data` | Contains the data used in the thesis and required to reproduce the results. |
-| `evaluation` | Contains code for evaluating the different models. |
-| `imgs` | Contains the images used in the repository description. |
-| `mle` | Contains code related to the Pairwise Likelihood approach. |
-| `networks` | Contains the implementation of the neural networks. |
-| `plots` | Contains code for the plots used in the thesis. |
-| `scripts` | Contains scripts for reproducing results. |
-| `simulation` | Contains code for simulating max-stable processes. |
+| `config` | Contains the config files for the different experiments. |
+| `data` | Contains the scripts for downloading and generating data. |
+| `evaluation` | Contains code for generating the plots. |
+| `models` | Includes the different models and methods. |
+| `scripts` | Contains utility scripts. |
 | `utils` | Contains utility functions. |
+| `main.py` | Main file to rund and evaluate experiments. |
 
 # Setup
 
-1. Install `Python` (see [here](https://python.org/)) and `R` (see [here](https://www.r-project.org/)).
-	- `Python` is easiest installed by using the anaconda package manager (see [here](https://www.anaconda.com/)).
-1. Clone project   
-    - ```git clone https://github.com/cbuelt/spatio-temporal-extremes```
-1. Install the `R` packages.
-	- Source the file `utils/requirements.R`.
-1. Install the python requirements.
-    - Create a conda environment using ```conda env create -f utils/requirements.yml```
-    - For help see see [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
+1. Clone project
+1. In your shell run ```install.sh```. This will create the environment and install all relevant packages.
 
 # Data
 
--
+Scripts for downloading or generating the data automatically can be found in the data directory.
 
 # Reproducing results
 
--
-
-# Code
-| File / Folder | Description |
-| ---- | ----------- | 
-| `config` | Includes the config files used for the models and experiments. |
+You can reproduce experiments, by adjusting the config files for each experiment and running the script ```main.py```. Furthermore, you can set the ```only_validate``` flag in the config to evaluate an experiment using an already trained model. As the evaluation process is bound to a specific seed, this will reproduce the exact results from the main paper.
 
 
 # Methodology
@@ -60,6 +44,10 @@ The code includes methods for reproducing the results, as well as general implem
 
 # License
 This work is published under the MIT license.
+
+
+
+
 
 
 
