@@ -1,4 +1,4 @@
-# PNO
+# Probabilistic neural operators for functional uncertainty quantification
 
 This repository contains the code accompanying the paper
 > Bülte, Scholl, Kutyniok
@@ -35,12 +35,7 @@ Scripts for downloading or generating the data automatically can be found in the
 You can reproduce experiments, by adjusting the config files for each experiment and running the script ```main.py```. Furthermore, you can set the ```only_validate``` flag in the config to evaluate an experiment using an already trained model. As the evaluation process is bound to a specific seed, this will reproduce the exact results from the main paper.
 
 
-# Methodology
--
 
-
-## Some results
-- 
 
 # License
 This work is published under the MIT license.
