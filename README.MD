@@ -30,11 +30,13 @@ The code includes methods for reproducing the results, as well as general implem
 
 Scripts for downloading or generating the data automatically can be found in the data directory.
 
-# Reproducing results
+# Running the code
 
-You can reproduce experiments, by adjusting the config files for each experiment and running the script ```main.py```. Furthermore, you can set the ```only_validate``` flag in the config to evaluate an experiment using an already trained model. As the evaluation process is bound to a specific seed, this will reproduce the exact results from the main paper.
+You can run a specific model by calling the script ```main.py```. You can use the existing config files or adjust them to your needs and then call ```main.py --config "config.ini"```. You can adjust the hyperparameters, training parameters, models and datasets. Calling the script will train the model and create an output folder with the performance metrics and other logging information.
 
+## Reproduce results
 
+You can reproduce experiments, by using the existing config files. Furthermore, you can set the ```only_validate``` flag in the config to evaluate an experiment using an already trained model. As the evaluation process is bound to a specific seed, this will reproduce the exact results from the main paper.
 
 
 # License
