@@ -69,7 +69,7 @@ def append_results_dict(results_dict, data_parameters, training_parameters, t_tr
         results_dict[key].append(training_parameters[key])
     results_dict['t_training'].append(t_training)
     
-def get_weigth_filenames_directory(directory):
+def get_weight_filenames_directory(directory):
     # Get the names of all weight files in a directory 
     filenames = [os.path.join(directory, filename) for filename in os.listdir(directory) if filename.endswith('.pt')]
     filenames = [filename for filename in filenames if (not filename[:-3].endswith('la_state'))]
@@ -98,11 +98,11 @@ if __name__ == '__main__':
                                 training_parameters_dict.keys()}
     
     # In case you ONLY want to validate all models in a certain directory:
-    # This prepares the filename_to_validate field in training_parameters_dict to contain the names of all weigth files in the directoy you want to validate
+    # This prepares the filename_to_validate field in training_parameters_dict to contain the names of all weight files in the directoy you want to validate
     if config['META'].get('only_validate', None):
         filename_to_validate = config['META']['only_validate']
         if not filename_to_validate.endswith('.pt'):
-            filename_to_validate = get_weigth_filenames_directory(os.path.join(results_path, filename_to_validate))
+            filename_to_validate = get_weight_filenames_directory(os.path.join(results_path, filename_to_validate))
         else:
             filename_to_validate = os.path.join(results_path, filename_to_validate)
         training_parameters_dict['filename_to_validate'] = filename_to_validate
