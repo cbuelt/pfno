@@ -70,6 +70,7 @@ def append_results_dict(results_dict, data_parameters, training_parameters, t_tr
     results_dict['t_training'].append(t_training)
     
 def get_weigth_filenames_directory(directory):
+    # Get the names of all weight files in a directory 
     filenames = [os.path.join(directory, filename) for filename in os.listdir(directory) if filename.endswith('.pt')]
     filenames = [filename for filename in filenames if (not filename[:-3].endswith('la_state'))]
     return filenames
@@ -96,6 +97,8 @@ if __name__ == '__main__':
     training_parameters_dict = {key: ast.literal_eval(training_parameters_dict[key]) for key in
                                 training_parameters_dict.keys()}
     
+    # In case you ONLY want to validate all models in a certain directory:
+    # This prepares the filename_to_validate field in training_parameters_dict to contain the names of all weigth files in the directoy you want to validate
     if config['META'].get('only_validate', None):
         filename_to_validate = config['META']['only_validate']
         if not filename_to_validate.endswith('.pt'):
@@ -216,6 +219,7 @@ if __name__ == '__main__':
                         
             logging.info(using('After creating the dataloaders'))
             if training_parameters.get('filename_to_validate', None):
+                # In case you ONLY want to validate all models in a certain directory; loads the model (instead of training it)
                 in_channels = next(iter(train_loader))[0].shape[1]
                 out_channels = next(iter(train_loader))[1].shape[1]
                 
@@ -232,11 +236,12 @@ if __name__ == '__main__':
                 train_utils.resume(model, filename)
                 t_training = -1
             else:
+                # In case you want to train the models
                 t_0 = time()
                 d_time_train = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
                 model, filename = trainer(train_loader, val_loader, directory=directory, training_parameters=training_parameters,
-                                            data_parameters = data_parameters,logging=logging, filename_ending=filename_ending, d_time=d_time_train,
-                                            domain_range=domain_range, results_dict=results_dict)
+                                          data_parameters = data_parameters, logging=logging, filename_ending=filename_ending, d_time=d_time_train,
+                                          domain_range=domain_range, results_dict=results_dict)
                             
                 t_1 = time()
                 t_training = np.round(t_1 - t_0, 3)
