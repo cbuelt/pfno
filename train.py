@@ -78,6 +78,8 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
     if training_parameters['init'] != 'default':
         train_utils.initialize_weights(model, training_parameters['init'])
 
+    train_utils.resume(model, training_parameters.get('finetuning', None))
+    
     n_parameters = 0
     for parameter in model.parameters():
         n_parameters += parameter.nelement()
@@ -191,8 +193,13 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
                     filename = os.path.join(directory, f'Datetime_{d_time}_Loss_{filename_ending}.pt')
                     train_utils.checkpoint(model, filename)
 
-                # Early stopping
-                if training_parameters['early_stopping'] and epoch > 50:
+                # Early stopping (If the model is only getting finetuned, run at least 5 epochs. Otherwise at least 50.)
+                if training_parameters['finetuning']:
+                    min_n_epochs = 5
+                else:
+                    min_n_epochs = 50
+                    
+                if training_parameters['early_stopping'] and (epoch > min_n_epochs):
                     if early_stopper.early_stop(validation_loss):
                         logging.info(f'EP {epoch}: Early stopping')    
                         break

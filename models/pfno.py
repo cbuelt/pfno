@@ -65,6 +65,13 @@ class PNO_Wrapper(nn.Module):
 
         # stack along the second dimension and add a last dimension if missing.
         return torch.atleast_3d(torch.stack(outputs, dim=-1))
+    
+    def load_state_dict(self, state_dict, strict = True, assign = False):
+        if list(state_dict.keys())[0].startswith('model'):
+            return super().load_state_dict(state_dict, strict, assign)
+        else: 
+            self.model.load_state_dict(state_dict, strict, assign)
+            return self
 
 
 class PFNO(BaseModel, name="PFNO"):

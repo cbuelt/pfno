@@ -35,7 +35,7 @@ msg = 'Start main'
 # initialize parser
 parser = argparse.ArgumentParser(description=msg)
 default_config = 'debug.ini'
-default_config = 'ks/fno_laplace.ini'
+default_config = 'ks/fno_sr_dropout_finetuning.ini'
 
 parser.add_argument('-c', '--config', help='Name of the config file:', default=default_config)
 parser.add_argument('-f', '--results_folder', help='Name of the results folder (only use if you only want to evaluate the models):', default=None)
@@ -98,7 +98,7 @@ if __name__ == '__main__':
                                 training_parameters_dict.keys()}
     
     # In case you ONLY want to validate all models in a certain directory:
-    # This prepares the filename_to_validate field in training_parameters_dict to contain the names of all weight files in the directoy you want to validate
+    # This prepares the filename_to_validate field in training_parameters_dict to contain the names of all weight files in the directory you want to validate
     if config['META'].get('only_validate', None):
         filename_to_validate = config['META']['only_validate']
         if not filename_to_validate.endswith('.pt'):
