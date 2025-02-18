@@ -1,13 +1,12 @@
 # Probabilistic neural operators for functional uncertainty quantification
 
 This repository contains the code accompanying the paper
-> Bülte, Scholl, Kutyniok
-     
+> Bülte, C., Scholl, P., Kutyniok, G. (2025). Probabilistic neural operators for functional uncertainty quantification.     
     
 The code includes methods for reproducing the results, as well as general implementation of our parameter and functional estimation approaches. For an overview of the code and the methodology, see below.
 
 # Abstract
-- 
+Neural operators aim to approximate the solution operator of a system of differential equations purely from data. They have shown immense success in modeling complex dynamical systems across various domains. However, the occurrence of uncertainties inherent in both model and data has so far rarely been taken into account\textemdash{}a critical limitation in complex, chaotic systems such as weather forecasting. In this paper, we introduce the probabilistic neural operator (PNO), a framework for learning probability distributions over the output function space of neural operators. PNO extends neural operators with generative modeling based on strictly proper scoring rules, integrating uncertainty information directly into the training process. We provide a theoretical justification for the approach and demonstrate improved performance in quantifying uncertainty across different domains and with respect to different baselines. Furthermore, PNO requires minimal adjustment to existing architectures, shows improved performance for most probabilistic prediction tasks, and leads to well-calibrated predictive distributions and adequate uncertainty representations even for long dynamical trajectories. Implementing our approach into large-scale models for physical applications can lead to improvements in corresponding uncertainty quantification and extreme event identification, ultimately leading to a deeper understanding of the prediction of such surrogate models.
  
 # Repository structure
 
