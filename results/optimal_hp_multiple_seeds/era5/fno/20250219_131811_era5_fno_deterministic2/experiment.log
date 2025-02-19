@@ -1,0 +1,45 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:: mem (CPU python)=551.0234375MB; mem (CPU total)=3000.328125MB
+INFO:root:############### Starting experiment with config file era5/fno_deterministic2.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'era5', 'max_training_set_size': 20000, 'init_steps': 10, 'pred_horizon': 10}
+INFO:root:After loading the datasets: mem (CPU python)=5469.859375MB; mem (CPU total)=3012.5MB
+INFO:root:###1 out of 2 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 1234567, 'model': 'FNO', 'uncertainty_quantification': 'deterministic', 'batch_size': 16, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/era5/fno/20240914_121556_era5_fno_laplace2/Datetime_20240914_121607_Loss_era5_FNO_laplace_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=5469.859375MB; mem (CPU total)=3012.5MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification deterministic
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.01442
+INFO:root:EnergyScoreValidation: 0.01379
+INFO:root:CRPSValidation: 0.01549
+INFO:root:Gaussian NLLValidation: 222983123.87247
+INFO:root:CoverageValidation: 0.0
+INFO:root:IntervalWidthValidation: 0.0
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.02518
+INFO:root:EnergyScoreTest: 0.02455
+INFO:root:CRPSTest: 0.0268
+INFO:root:Gaussian NLLTest: 689459418.23243
+INFO:root:CoverageTest: 0.0
+INFO:root:IntervalWidthTest: 0.0
+INFO:root:After validation: mem (CPU python)=5469.859375MB; mem (CPU total)=3450.62109375MB
+INFO:root:###2 out of 2 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 1234567, 'model': 'FNO', 'uncertainty_quantification': 'deterministic', 'batch_size': 16, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 20, 'projection_channels': 128, 'lifting_channels': 128, 'n_modes': (10, 12, 12), 'n_samples': 3, 'filename_to_validate': 'results/optimal_hp_multiple_seeds/era5/fno/20240914_121556_era5_fno_laplace2/Datetime_20240915_085115_Loss_era5_FNO_laplace_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=5469.859375MB; mem (CPU total)=3450.50390625MB
+INFO:root:Starting evaluation: model FNO & uncertainty quantification deterministic
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.01398
+INFO:root:EnergyScoreValidation: 0.01334
+INFO:root:CRPSValidation: 0.015
+INFO:root:Gaussian NLLValidation: 209189852.84607
+INFO:root:CoverageValidation: 0.0
+INFO:root:IntervalWidthValidation: 0.0
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.02507
+INFO:root:EnergyScoreTest: 0.02444
+INFO:root:CRPSTest: 0.02673
+INFO:root:Gaussian NLLTest: 682271653.99026
+INFO:root:CoverageTest: 0.0
+INFO:root:IntervalWidthTest: 0.0
+INFO:root:After validation: mem (CPU python)=5469.859375MB; mem (CPU total)=3644.609375MB

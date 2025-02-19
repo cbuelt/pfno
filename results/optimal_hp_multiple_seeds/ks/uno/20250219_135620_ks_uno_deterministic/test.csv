@@ -1,0 +1,55 @@
+,0,1,2,3,4,5,6,7,8
+dataset_name,KS,KS,KS,KS,KS,KS,KS,KS,KS
+max_training_set_size,10000,10000,10000,10000,10000,10000,10000,10000,10000
+downscaling_factor,1,1,1,1,1,1,1,1,1
+temporal_downscaling,2,2,2,2,2,2,2,2,2
+init_steps,20,20,20,20,20,20,20,20,20
+t_start,0,0,0,0,0,0,0,0,0
+pred_horizon,20,20,20,20,20,20,20,20,20
+seed,123456789,123456789,123456789,123456789,123456789,123456789,123456789,123456789,123456789
+model,UNO,UNO,UNO,UNO,UNO,UNO,UNO,UNO,UNO
+uncertainty_quantification,deterministic,deterministic,deterministic,deterministic,deterministic,deterministic,deterministic,deterministic,deterministic
+batch_size,32,32,32,32,32,32,32,32,32
+n_epochs,1000,1000,1000,1000,1000,1000,1000,1000,1000
+early_stopping,10,10,10,10,10,10,10,10,10
+init,default,default,default,default,default,default,default,default,default
+learning_rate,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+lr_schedule,no,no,no,no,no,no,no,no,no
+optimizer,adam,adam,adam,adam,adam,adam,adam,adam,adam
+gradient_clipping,1,1,1,1,1,1,1,1,1
+layer_normalization,True,True,True,True,True,True,True,True,True
+data_loader_pin_memory,False,False,False,False,False,False,False,False,False
+data_loader_num_workers,0,0,0,0,0,0,0,0,0
+distributed_training,False,False,False,False,False,False,False,False,False
+alpha,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05
+n_samples_uq,100,100,100,100,100,100,100,100,100
+weight_decay,0,0,0,0,0,0,0,0,0
+dropout,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+fourier_dropout,,,,,,,,,
+hidden_channels,16,16,16,16,16,16,16,16,16
+projection_channels,32,32,32,32,32,32,32,32,32
+lifting_channels,32,32,32,32,32,32,32,32,32
+n_samples,3,3,3,3,3,3,3,3,3
+filename_to_validate,results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240915_182949_Loss_KS_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240915_200247_Loss_KS_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240915_224148_Loss_KS_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240916_021248_Loss_KS_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240916_045804_Loss_KS_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240916_075940_Loss_KS_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240916_114837_Loss_KS_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240916_155504_Loss_KS_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/ks/uno/20240915_182859_ks_uno_laplace/Datetime_20240916_193359_Loss_KS_UNO_laplace_dropout_0.001.pt
+uno_out_channels,"[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]"
+uno_scalings,"[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]"
+uno_n_modes,"[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]"
+t_training,-1,-1,-1,-1,-1,-1,-1,-1,-1
+MSETrain,0.93596,0.93253,0.93741,0.93813,1.01142,0.92932,0.9317,0.94361,0.94663
+EnergyScoreTrain,0.93566,0.93222,0.93713,0.93785,1.01113,0.92902,0.93141,0.94333,0.94636
+CRPSTrain,0.7524,0.74831,0.75386,0.7554,0.82507,0.74507,0.74786,0.76056,0.76248
+Gaussian NLLTrain,438822575363.4138,435590606975.4312,440171350407.3958,440827273361.63513,512346555824.3558,432601210115.4137,434846596391.8225,445979402021.5469,448828015101.72424
+CoverageTrain,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+IntervalWidthTrain,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+MSEValidation,0.94019,0.93796,0.9427,0.94324,1.01458,0.93466,0.937,0.94743,0.95206
+EnergyScoreValidation,0.93988,0.93764,0.94243,0.94296,1.01429,0.93435,0.93671,0.94715,0.95178
+CRPSValidation,0.75639,0.75336,0.75875,0.76011,0.82799,0.7502,0.75288,0.76412,0.76747
+Gaussian NLLValidation,442822751536.9244,440682088875.8045,445177485066.2402,445645093892.5516,515540864932.9778,437623283894.04456,439844027032.4624,449622800830.00903,454038071104.8532
+CoverageValidation,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+IntervalWidthValidation,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+MSETest,0.9393,0.9372,0.94218,0.94213,1.01422,0.93381,0.93625,0.94677,0.95118
+EnergyScoreTest,0.939,0.93688,0.94191,0.94185,1.01392,0.9335,0.93594,0.94649,0.9509
+CRPSTest,0.75575,0.75289,0.75861,0.75915,0.82771,0.74954,0.75224,0.76386,0.76664
+Gaussian NLLTest,441926835503.10406,439964558163.96765,444652479578.1118,444575572295.68005,515140512120.83185,436757438136.32007,439091686539.26373,448952361811.96814,453146632781.82367
+CoverageTest,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+IntervalWidthTest,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0

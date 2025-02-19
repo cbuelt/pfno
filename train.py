@@ -78,7 +78,8 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
     if training_parameters['init'] != 'default':
         train_utils.initialize_weights(model, training_parameters['init'])
 
-    train_utils.resume(model, training_parameters.get('finetuning', None))
+    if training_parameters.get('finetuning', None):
+        train_utils.resume(model, training_parameters.get('finetuning', None))
     
     n_parameters = 0
     for parameter in model.parameters():
