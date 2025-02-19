@@ -195,7 +195,7 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
                     train_utils.checkpoint(model, filename)
 
                 # Early stopping (If the model is only getting finetuned, run at least 5 epochs. Otherwise at least 50.)
-                if training_parameters['finetuning']:
+                if training_parameters.get('finetuning', None):
                     min_n_epochs = 5
                 else:
                     min_n_epochs = 50
