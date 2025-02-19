@@ -1,7 +1,8 @@
 # Probabilistic neural operators for functional uncertainty quantification
 
 This repository contains the code accompanying the paper
-> Bülte, C., Scholl, P., Kutyniok, G. (2025). Probabilistic neural operators for functional uncertainty quantification.     
+> Bülte, C., Scholl, P., Kutyniok, G. (2025). Probabilistic neural operators for functional uncertainty quantification
+> (preprint available at https://arxiv.org/abs/2502.12902).     
     
 The code includes methods for reproducing the results, as well as general implementation of our parameter and functional estimation approaches. For an overview of the code and the methodology, see below.
 
