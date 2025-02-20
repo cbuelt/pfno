@@ -24,18 +24,30 @@ def train(net, optimizer, input, target, criterion, gradient_clipping, **kwargs)
     train_horizon = kwargs.get("train_horizon", None)
     uncertainty_quantification = kwargs.get("uncertainty_quantification", None)
     optimizer.zero_grad(set_to_none=True)        
-    if train_horizon is None:
+    if (train_horizon is None):
         out = net(input.float())    
         loss = criterion(out, target)
     else:
         # Multi step loss
-        out = net(input.float())
-        multiloss = criterion(out, target[:,:,0])
-        for step in range(1,train_horizon):
-            if uncertainty_quantification.startswith('scoring-rule'):
-                out = out.mean(axis = -1)
-            out = net(out)
-            multiloss += criterion(out, target[:,:,step])
+        # If not scoring rule: out.shape = (batch_size, channels, image.shape)
+        # If scoring rule: out.shape = (batch_size, channels, image.shape, n_samples)
+        if uncertainty_quantification.startswith('scoring-rule'):
+            output = torch.zeros(*target.shape, net.n_samples, device=device)
+            for sample in net.n_samples:
+                out = net(input.float(), n_samples=1).squeeze(-1)
+                output[:,:,0,...,sample] = out
+                for step in range(1,train_horizon): 
+                    out = net(out, n_samples=1).squeeze(-1)
+                    output[:,:,step,...,sample] = out
+            multiloss = criterion(output, target)
+        else:
+            out = net(input.float())      
+            multiloss = criterion(out, target[:,:,0])
+            for step in range(1,train_horizon): 
+                out = net(out)
+                multiloss += criterion(out, target[:,:,step])
+                
+
         loss = multiloss/train_horizon
 
     loss.backward()
@@ -167,6 +179,7 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
                     model.eval()
                 
                 validation_loss = 0
+
                 with torch.no_grad():
                     for input, target in val_loader:
                         input = input.to(device)
@@ -175,13 +188,23 @@ def trainer(train_loader, val_loader, directory, training_parameters, data_param
                             out = model(input)
                             validation_loss += criterion(out, target).item()
                         else:
-                            out = model(input)
-                            validation_loss += criterion(out, target[:,:,0]).item() / t
-                            for step in range(1,t):
-                                if uncertainty_quantification.startswith('scoring-rule'):
-                                    out = out.mean(axis = -1)
-                                out = model(out)
-                                validation_loss += criterion(out, target[:,:,step]).item() / t
+                            if uncertainty_quantification.startswith('scoring-rule'):
+                                output = torch.zeros(*target.shape, model.n_samples, device=device)
+                                for sample in model.n_samples:
+                                    out = model(input.float(), n_samples=1).squeeze(-1)
+                                    output[:,:,0,...,sample] = out
+                                    for step in range(1, t): 
+                                        out = model(out, n_samples=1).squeeze(-1)
+                                        output[:,:,step,...,sample] = out
+                                multiloss = criterion(output, target)
+                            else:
+                                out = model(input.float())      
+                                multiloss = criterion(out, target[:,:,0])
+                                for step in range(1, t): 
+                                    out = model(out)
+                                    multiloss += criterion(out, target[:,:,step])
+                                    
+                            validation_loss = (multiloss/ t ).item()
 
                 validation_loss_list.append(validation_loss / report_every / len(val_loader))
                 training_loss_list.append(running_loss / report_every / (len(train_loader)))

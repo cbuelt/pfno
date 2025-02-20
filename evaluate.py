@@ -159,18 +159,21 @@ def evaluate_autoregressive(
                 u = u[:, :, -1].to(device)
                 batch_size = a.shape[0]
                 # Autoregressive steps
-                for _ in range(pred_horizon - 1):
-                    a = train_utils.autoregressive_step(
-                        uncertainty_quantification, model, a
-                    )
-                # Final step
-                out = generate_samples(
-                    uncertainty_quantification,
-                    model,
-                    a,
-                    u,
-                    training_parameters["n_samples_uq"],
-                )
+                out = torch.zeros(*u.shape, training_parameters["n_samples_uq"], device=device)
+                for sample in range(training_parameters["n_samples_uq"]):
+                    for _ in range(pred_horizon):
+                        # a = train_utils.autoregressive_step(
+                        #     uncertainty_quantification, model, a
+                        # )
+                        a = generate_samples(
+                            uncertainty_quantification,
+                            model,
+                            a,
+                            u,
+                            1
+                            ).squeeze(-1)
+                    out[..., sample] = a
+                
                 # Losses
                 mse += (
                     l2loss(out.mean(axis=-1), u).item()
