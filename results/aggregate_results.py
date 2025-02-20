@@ -26,7 +26,7 @@ def get_methods(results_dir:str, experiment:str, model:str) -> list:
     methods = [extract_name(f) for f in folders]
     return methods
 
-def process_experiment(results_dir: str, experiment: str, model: str) -> pd.DataFrame:
+def process_experiment(results_dir: str, experiment: str, model: str, agg_groups: list = ["uncertainty_quantification"]) -> pd.DataFrame:
     path = f"{results_dir}/{experiment}/{model}/"
     results = pd.DataFrame()
     # Loop over subfolders
@@ -40,14 +40,15 @@ def process_experiment(results_dir: str, experiment: str, model: str) -> pd.Data
                 results = pd.concat([results, results_df], axis = 1)
     metrics = get_metrics()
     rows = metrics.copy()
-    rows.append("uncertainty_quantification")
+    for g in agg_groups:
+        rows.append(g)
     results = results.loc[rows]
     results.loc[metrics] = results.loc[metrics].astype("float32")
     results = results.transpose()
     # Group by uncertainty quantification method
-    mean = results.groupby("uncertainty_quantification").mean().astype("float32")
+    mean = results.groupby(agg_groups).mean().astype("float32")
     mean.insert(0, "Statistic", "Mean")
-    std = results.groupby("uncertainty_quantification").std().astype("float32")
+    std = results.groupby(agg_groups).std().astype("float32")
     std.insert(0, "Statistic", "Std")
 
     results_df = pd.concat([mean.transpose(), std.transpose()], axis = 1)

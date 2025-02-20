@@ -1,3 +1,5 @@
+# Script to download the ERA5 dataset from WeatherBench2. The script filters the data to the Europe grid and the specified date range.
+
 import apache_beam 
 import weatherbench2
 import xarray as xr

@@ -1,3 +1,5 @@
+# Script to download, process and split Darcy Flow datasets from the PDEBench source.
+
 import numpy as np
 import pandas as pd
 import xarray as xr

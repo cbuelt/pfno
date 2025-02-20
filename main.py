@@ -1,12 +1,10 @@
-import numpy as np
+# Main function to run the experiments.
 
+import numpy as np
 import torch
 import gc
-import torch.multiprocessing as mp
 from torch.utils.data import DataLoader, random_split
-
 import pandas as pd
-
 from time import time
 import os
 import sys
@@ -17,8 +15,7 @@ import argparse
 import configparser
 import ast
 import shutil
-
-from data.datasets import DarcyFlowDataset, SWEDataset, KSDataset, ERA5Dataset, SSWEDataset
+from data.datasets import DarcyFlowDataset, KSDataset, ERA5Dataset, SSWEDataset
 from train import trainer, using
 from utils import train_utils
 from evaluate import start_evaluation
@@ -39,7 +36,6 @@ default_config = 'sswe/sfno_deterministic_2_1.ini'
 
 parser.add_argument('-c', '--config', help='Name of the config file:', default=default_config)
 parser.add_argument('-f', '--results_folder', help='Name of the results folder (only use if you only want to evaluate the models):', default=None)
-
 args = parser.parse_args()
 
 config_name = args.config
@@ -129,24 +125,7 @@ if __name__ == '__main__':
         if data_parameters['dataset_name'] == 'DarcyFlow':
             train_data = DarcyFlowDataset(data_dir, test = False, downscaling_factor=int(data_parameters['downscaling_factor']))
             train_data_full_res = DarcyFlowDataset(data_dir, test = False)
-            test_data = DarcyFlowDataset(data_dir, test = True)
-        elif data_parameters['dataset_name'] == 'SWE':
-            downscaling_factor = int(data_parameters['downscaling_factor'])
-            temporal_downscaling_factor = int(data_parameters['temporal_downscaling'])
-            pred_horizon = data_parameters['pred_horizon']
-            t_start = data_parameters['t_start']
-            init_steps = data_parameters['init_steps']
-            ood = data_parameters["ood"]
-            
-            assert 100 > temporal_downscaling_factor * (pred_horizon + t_start + init_steps)
-            
-            train_data = SWEDataset(data_dir, test = False, downscaling_factor=downscaling_factor, mode = "autoregressive",
-                        pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
-                        temporal_downscaling_factor=temporal_downscaling_factor, ood = ood)
-            test_data = SWEDataset(data_dir, test = True, mode = "autoregressive",
-                        pred_horizon=pred_horizon, t_start=t_start, init_steps=init_steps,
-                        temporal_downscaling_factor=temporal_downscaling_factor, ood = ood)
-            
+            test_data = DarcyFlowDataset(data_dir, test = True)            
         elif data_parameters["dataset_name"] == "KS":
             downscaling_factor = int(data_parameters['downscaling_factor'])
             temporal_downscaling_factor = int(data_parameters['temporal_downscaling'])

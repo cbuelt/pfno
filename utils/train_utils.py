@@ -1,16 +1,18 @@
+# Description: Utility functions for training the models.
+
 from itertools import product
 import torch
 import torch.nn as nn
-import torch.distributed as dist
 import numpy as np
-import os
 import utils.losses as losses
 from models import FNO, PNO_Wrapper, UNO, PFNO, PUNO, SFNO, PSFNO
 from models import LA_Wrapper
 
 
-def autoregressive_step(uncertainty_quantification:str, model:any, a:torch.Tensor)->torch.Tensor:
-    """ Method to perform an autoregressive step for the given model and input.
+def autoregressive_step(
+    uncertainty_quantification: str, model: any, a: torch.Tensor
+) -> torch.Tensor:
+    """Method to perform an autoregressive step for the given model and input.
     Args:
         uncertainty_quantification (str): UQ method
         model (any): Underlying neural network model
@@ -33,8 +35,8 @@ def autoregressive_step(uncertainty_quantification:str, model:any, a:torch.Tenso
     return out
 
 
-def log_and_save_evaluation(value:float, key:str, results_dict:dict, logging):
-    """ Method to log and save evaluation results.
+def log_and_save_evaluation(value: float, key: str, results_dict: dict, logging):
+    """Method to log and save evaluation results.
 
     Args:
         value (float): Value to save
@@ -60,7 +62,6 @@ def checkpoint(model, filename):
         model.save_state_dict(filename)
     else:
         torch.save(model.state_dict(), filename)
-        
 
 
 def resume(model, filename):
@@ -70,7 +71,7 @@ def resume(model, filename):
         model (_type_): The torch model.
         filename (_type_): The filename including the path to load the model.
     """
-    
+
     if isinstance(model, LA_Wrapper):
         model.load_state_dict(filename)
     else:
@@ -78,7 +79,7 @@ def resume(model, filename):
 
 
 def get_criterion(training_parameters, domain_range, d, device):
-    """ Get the criterion for the model training.
+    """Get the criterion for the model training.
 
     Args:
         training_parameters (_type_): Dictionary of training parameters
@@ -121,8 +122,8 @@ def initialize_weights(model, init):
                 )
 
 
-def setup_model(training_parameters:dict, device, in_channels:int, out_channels:int):
-    """ Return the model specified by the training parameters.
+def setup_model(training_parameters: dict, device, in_channels: int, out_channels: int):
+    """Return the model specified by the training parameters.
 
     Args:
         training_parameters (dict): Dictionary of training parameters
@@ -222,6 +223,7 @@ class EarlyStopper:
     """
     Class for early stopping in training.
     """
+
     def __init__(self, patience=1, min_delta=0):
         self.patience = patience
         self.min_delta = min_delta
@@ -237,7 +239,6 @@ class EarlyStopper:
             if self.counter >= self.patience:
                 return True
         return False
-
 
 
 def get_hyperparameters_combination(hp_dict, except_keys=[]):
