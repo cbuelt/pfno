@@ -39,20 +39,33 @@ def train(net, optimizer, input, target, criterion, gradient_clipping, **kwargs)
     """
     train_horizon = kwargs.get("train_horizon", None)
     uncertainty_quantification = kwargs.get("uncertainty_quantification", None)
-    optimizer.zero_grad(set_to_none=True)
-    if train_horizon is None:
-        out = net(input.float())
+    optimizer.zero_grad(set_to_none=True)        
+    if (train_horizon is None):
+        out = net(input.float())    
         loss = criterion(out, target)
     else:
         # Multi step loss
-        out = net(input.float())
-        multiloss = criterion(out, target[:, :, 0])
-        for step in range(1, train_horizon):
-            if uncertainty_quantification.startswith("scoring-rule"):
-                out = out.mean(axis=-1)
-            out = net(out)
-            multiloss += criterion(out, target[:, :, step])
-        loss = multiloss / train_horizon
+        # If not scoring rule: out.shape = (batch_size, channels, image.shape)
+        # If scoring rule: out.shape = (batch_size, channels, image.shape, n_samples)
+        if uncertainty_quantification.startswith('scoring-rule'):
+            output = torch.zeros(*target.shape, net.n_samples, device=device)
+            for sample in net.n_samples:
+                out = net(input.float(), n_samples=1).squeeze(-1)
+                output[:,:,0,...,sample] = out
+                for step in range(1,train_horizon): 
+                    out = net(out, n_samples=1).squeeze(-1)
+                    output[:,:,step,...,sample] = out
+            multiloss = criterion(output, target)
+        else:
+            out = net(input.float())      
+            multiloss = criterion(out, target[:,:,0])
+            for step in range(1,train_horizon): 
+                out = net(out)
+                multiloss += criterion(out, target[:,:,step])
+                
+
+        loss = multiloss/train_horizon
+
     loss.backward()
 
     gradient_norm = 0
@@ -122,6 +135,9 @@ def trainer(
     if training_parameters["init"] != "default":
         train_utils.initialize_weights(model, training_parameters["init"])
 
+    if training_parameters.get('finetuning', None):
+        train_utils.resume(model, training_parameters.get('finetuning', None))
+    
     n_parameters = 0
     for parameter in model.parameters():
         n_parameters += parameter.nelement()
@@ -235,6 +251,7 @@ def trainer(
                     model.eval()
 
                 validation_loss = 0
+
                 with torch.no_grad():
                     for input, target in val_loader:
                         input = input.to(device)
@@ -243,19 +260,24 @@ def trainer(
                             out = model(input)
                             validation_loss += criterion(out, target).item()
                         else:
-                            out = model(input)
-                            validation_loss += (
-                                criterion(out, target[:, :, 0]).item() / t
-                            )
-                            for step in range(1, t):
-                                if uncertainty_quantification.startswith(
-                                    "scoring-rule"
-                                ):
-                                    out = out.mean(axis=-1)
-                                out = model(out)
-                                validation_loss += (
-                                    criterion(out, target[:, :, step]).item() / t
-                                )
+                            if uncertainty_quantification.startswith('scoring-rule'):
+                                output = torch.zeros(*target.shape, model.n_samples, device=device)
+                                for sample in model.n_samples:
+                                    out = model(input.float(), n_samples=1).squeeze(-1)
+                                    output[:,:,0,...,sample] = out
+                                    for step in range(1, t): 
+                                        out = model(out, n_samples=1).squeeze(-1)
+                                        output[:,:,step,...,sample] = out
+                                multiloss = criterion(output, target)
+                            else:
+                                out = model(input.float())      
+                                multiloss = criterion(out, target[:,:,0])
+                                for step in range(1, t): 
+                                    out = model(out)
+                                    multiloss += criterion(out, target[:,:,step])
+                                    
+                            validation_loss = (multiloss/ t ).item()
+
 
                 validation_loss_list.append(
                     validation_loss / report_every / len(val_loader)
@@ -274,8 +296,14 @@ def trainer(
                     )
                     train_utils.checkpoint(model, filename)
 
-                # Early stopping
-                if training_parameters["early_stopping"] and epoch > 50:
+                # Early stopping (If the model is only getting finetuned, run at least 5 epochs. Otherwise at least 50.)
+                if training_parameters.get('finetuning', None):
+                    min_n_epochs = 5
+                else:
+                    min_n_epochs = 50
+                    
+                if training_parameters['early_stopping'] and (epoch > min_n_epochs):
+
                     if early_stopper.early_stop(validation_loss):
                         logging.info(f"EP {epoch}: Early stopping")
                         break

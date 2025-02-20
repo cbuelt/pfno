@@ -1,6 +1,6 @@
 import torch
 
-from models import generate_mcd_samples, LA_Wrapper
+from models import generate_mcd_samples, generate_deterministic_samples, LA_Wrapper
 from utils import losses, train_utils
 import numpy as np
 
@@ -34,6 +34,8 @@ def generate_samples(
         out = model.predictive_samples(a, n_samples=n_samples)
     elif uncertainty_quantification.startswith("scoring-rule"):
         out = model(a, n_samples=n_samples)
+    elif uncertainty_quantification == 'deterministic':
+        out = generate_deterministic_samples(model, a, u.shape, n_samples=n_samples)
     return out
 
 
@@ -157,18 +159,21 @@ def evaluate_autoregressive(
                 u = u[:, :, -1].to(device)
                 batch_size = a.shape[0]
                 # Autoregressive steps
-                for _ in range(pred_horizon - 1):
-                    a = train_utils.autoregressive_step(
-                        uncertainty_quantification, model, a
-                    )
-                # Final step
-                out = generate_samples(
-                    uncertainty_quantification,
-                    model,
-                    a,
-                    u,
-                    training_parameters["n_samples_uq"],
-                )
+                out = torch.zeros(*u.shape, training_parameters["n_samples_uq"], device=device)
+                for sample in range(training_parameters["n_samples_uq"]):
+                    for _ in range(pred_horizon):
+                        # a = train_utils.autoregressive_step(
+                        #     uncertainty_quantification, model, a
+                        # )
+                        a = generate_samples(
+                            uncertainty_quantification,
+                            model,
+                            a,
+                            u,
+                            1
+                            ).squeeze(-1)
+                    out[..., sample] = a
+                
                 # Losses
                 mse += (
                     l2loss(out.mean(axis=-1), u).item()
