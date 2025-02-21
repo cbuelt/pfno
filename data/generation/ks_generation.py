@@ -1,3 +1,5 @@
+# Description: Script to generate data for the Kuramoto-Sivashinsky equation.
+
 import pde
 from pde.grids import GridBase
 import numpy as np
@@ -105,6 +107,7 @@ def aggregate(config:dict)-> None:
 
 
 def main(config, sim = True):
+    np.random.seed(config["sim"]["seed"])
     # Simulate data
     if sim:
         simulate(config)

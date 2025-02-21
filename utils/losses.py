@@ -1,3 +1,5 @@
+# Implements the different losses used in the training of the models.
+
 import math
 import numpy as np
 from typing import List

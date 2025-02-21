@@ -1,3 +1,5 @@
+# This file provides the implementation of the wrapper function to generate samples from a model using Monte Carlo Dropout.
+
 import torch
 
 def generate_mcd_samples(
