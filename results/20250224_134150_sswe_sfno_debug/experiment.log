@@ -1,0 +1,25 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:: mem (CPU python)=602.7109375MB; mem (CPU total)=3098.80859375MB
+INFO:root:############### Starting experiment with config file sswe/sfno_debug.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'SSWE', 'max_training_set_size': 5000, 'pred_horizon': 1, 'train_horizon': 2, 'stepwise_evaluation': False}
+INFO:root:After loading the datasets: mem (CPU python)=614.44921875MB; mem (CPU total)=3103.83984375MB
+INFO:root:###1 out of 1 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 1, 'model': 'SFNO', 'uncertainty_quantification': 'scoring-rule-reparam', 'batch_size': 8, 'n_epochs': 1, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.01, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3}
+INFO:root:After creating the dataloaders: mem (CPU python)=620.109375MB; mem (CPU total)=3080.5546875MB
+INFO:root:NumberParameters: 294054
+INFO:root:GPU memory allocated: 2097152
+INFO:root:After setting up the model: mem (CPU python)=871.7421875MB; mem (CPU total)=3288.6953125MB
+INFO:root:Training starts now.
+INFO:root:At the start of the epoch: mem (CPU python)=886.87890625MB; mem (CPU total)=3304.69140625MB
+INFO:root:[    1] Training loss: 0.53336143, Validation loss: 0.50301024, Gradient norm: 0.36468499
+INFO:root:Training for autoregressive step 2 starts now.
+INFO:root:Learning rate reduced to: [0.0025]
+INFO:root:At the start of the epoch: mem (CPU python)=1310.57421875MB; mem (CPU total)=3612.84375MB
+INFO:root:[    2] Training loss: 0.54179791, Validation loss: 0.53613950, Gradient norm: 0.34750025
+INFO:root:After finishing all epochs: mem (CPU python)=1357.08203125MB; mem (CPU total)=3652.19921875MB
+INFO:root:Training the model took 1175.299s.
+INFO:root:Emptying the cuda cache took 0.127s.
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification scoring-rule-reparam
+INFO:root:Evaluating the model on Validation data.

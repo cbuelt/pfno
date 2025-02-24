@@ -64,7 +64,10 @@ def train(net, optimizer, input, target, criterion, gradient_clipping, **kwargs)
                 for step in range(1,train_horizon): 
                     out = net(out, n_samples=1).squeeze(-1)
                     output[:,:,step,...,sample] = out
-            loss = criterion(output, target)
+            
+            multiloss = 0
+            for step in range(train_horizon):
+                multiloss += criterion(output[:,:,step], target[:,:,step])
         else:
             out = net(input.float())      
             multiloss = criterion(out, target[:,:,0])
@@ -76,8 +79,7 @@ def train(net, optimizer, input, target, criterion, gradient_clipping, **kwargs)
                 out = net(out)
                 multiloss += criterion(out, target[:,:,step])
                 
-
-            loss = multiloss/train_horizon
+        loss = multiloss/train_horizon
 
     loss.backward()
 
@@ -281,6 +283,10 @@ def trainer(
                             
                             if uncertainty_quantification.startswith('scoring-rule'):
                                 output = torch.zeros(*target.shape, model.n_samples, device=device)
+                                
+                                if uncertainty_quantification == 'scoring-rule-reparam':
+                                    model.eval()
+                                
                                 for sample in range(model.n_samples):
                                     out = model(input.float(), n_samples=1).squeeze(-1)
                                     output[:,:,0,...,sample] = out
@@ -293,19 +299,22 @@ def trainer(
                 
                                         out = model(out, n_samples=1).squeeze(-1)
                                         output[:,:,step,...,sample] = out
-                                validation_loss += criterion(output, target).item()
+                                        
+                                multiloss = 0
+                                for step in range(t):
+                                    multiloss += criterion(output[:,:,step], target[:,:,step])                            
+                                
                             else:
                                 out = model(input.float())      
                                 multiloss = criterion(out, target[:,:,0])
                                 for step in range(1, t): 
                                     torch.set_rng_state(cpu_seed)
                                     torch.cuda.set_rng_state(gpu_seed)
-                
                                     
                                     out = model(out)
                                     multiloss += criterion(out, target[:,:,step]).item()
                                     
-                                validation_loss += (multiloss/ t ).item()
+                            validation_loss += (multiloss/t).item()
 
 
                 validation_loss_list.append(
