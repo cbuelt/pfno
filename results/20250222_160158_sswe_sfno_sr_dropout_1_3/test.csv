@@ -1,0 +1,45 @@
+,0,1,2
+dataset_name,SSWE,SSWE,SSWE
+max_training_set_size,5000,5000,5000
+pred_horizon,1,1,1
+train_horizon,1,1,1
+stepwise_evaluation,False,False,False
+seed,1234567,12345678,123456789
+model,SFNO,SFNO,SFNO
+uncertainty_quantification,scoring-rule-dropout,scoring-rule-dropout,scoring-rule-dropout
+batch_size,8,8,8
+n_epochs,1000,1000,1000
+early_stopping,10,10,10
+init,default,default,default
+learning_rate,0.005,0.005,0.005
+lr_schedule,step,step,step
+optimizer,adam,adam,adam
+gradient_clipping,1,1,1
+layer_normalization,True,True,True
+data_loader_pin_memory,False,False,False
+data_loader_num_workers,0,0,0
+distributed_training,False,False,False
+alpha,0.05,0.05,0.05
+n_samples_uq,100,100,100
+weight_decay,0,0,0
+dropout,0.01,0.01,0.01
+fourier_dropout,,,
+hidden_channels,32,32,32
+projection_channels,256,256,256
+lifting_channels,256,256,256
+n_modes,"(32, 32)","(32, 32)","(32, 32)"
+n_samples,3,3,3
+t_training,11478.586,8364.703,6088.265
+NumberParameters,284835,284835,284835
+MSEValidation,0.39222,0.34087,0.34339
+EnergyScoreValidation,0.30367,0.25674,0.25916
+CRPSValidation,0.12422,0.10344,0.10291
+Gaussian NLLValidation,0.55357,-0.05167,-0.07557
+CoverageValidation,0.69993,0.75787,0.77072
+IntervalWidthValidation,0.39575,0.40151,0.39493
+MSETest,0.41597,0.36052,0.36648
+EnergyScoreTest,0.32634,0.27411,0.28002
+CRPSTest,0.13274,0.11103,0.11197
+Gaussian NLLTest,0.87967,0.15508,0.18169
+CoverageTest,0.67282,0.73566,0.73613
+IntervalWidthTest,0.38818,0.40041,0.39038

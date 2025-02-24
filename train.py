@@ -228,6 +228,7 @@ def trainer(
                 input = input.to(device)
                 target = target.to(device)
                 if training_parameters["model"] == "SFNO":
+                    # SSWE is the only autoregressive dataset and we use the SFNO there. For this reason, we have to transfer the parameter t (train_horizon) in this case.
                     batch_loss, batch_grad_norm = train(
                         model,
                         optimizer,
