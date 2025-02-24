@@ -161,7 +161,7 @@ def evaluate_autoregressive(
                 # Autoregressive steps
                 out = torch.zeros(*u.shape, training_parameters["n_samples_uq"], device=device)
                 
-                for sample in range(training_parameters["n_samples_uq"]):
+                for n_sample in range(training_parameters["n_samples_uq"]):
                     cpu_seed = torch.get_rng_state()            
                     gpu_seed = torch.cuda.get_rng_state()
                     
@@ -184,7 +184,7 @@ def evaluate_autoregressive(
                             u,
                             1
                             ).squeeze(-1)
-                    out[..., sample] = a
+                    out[..., n_sample] = a
                 
                 # Losses
                 mse += (

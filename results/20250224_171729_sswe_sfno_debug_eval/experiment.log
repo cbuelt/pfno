@@ -1,0 +1,26 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:: mem (CPU python)=550.80859375MB; mem (CPU total)=3141.44921875MB
+INFO:root:############### Starting experiment with config file sswe/sfno_debug_eval.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'SSWE', 'max_training_set_size': 5000, 'pred_horizon': 1, 'train_horizon': 1, 'stepwise_evaluation': False}
+INFO:root:After loading the datasets: mem (CPU python)=562.0MB; mem (CPU total)=3145.8671875MB
+INFO:root:###1 out of 1 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 1, 'model': 'SFNO', 'uncertainty_quantification': 'deterministic', 'batch_size': 32, 'n_epochs': 1000, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.005, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.001, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 256, 'lifting_channels': 256, 'n_modes': (32, 32), 'n_samples': 3, 'filename_to_validate': 'results/20250224_171226_sswe_sfno_debug/Datetime_20250224_171227_Loss_SSWE_SFNO_deterministic_dropout_0.01.pt'}
+INFO:root:After creating the dataloaders: mem (CPU python)=563.20703125MB; mem (CPU total)=3145.8671875MB
+INFO:root:Starting evaluation: model SFNO & uncertainty quantification deterministic
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.67745
+INFO:root:EnergyScoreValidation: 0.67745
+INFO:root:CRPSValidation: 0.30062
+INFO:root:Gaussian NLLValidation: 76564971965.75525
+INFO:root:CoverageValidation: 0.0
+INFO:root:IntervalWidthValidation: 0.0
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.68016
+INFO:root:EnergyScoreTest: 0.67543
+INFO:root:CRPSTest: 0.30034
+INFO:root:Gaussian NLLTest: 77188645322.752
+INFO:root:CoverageTest: 0.0
+INFO:root:IntervalWidthTest: 0.0
+INFO:root:After validation: mem (CPU python)=1169.78515625MB; mem (CPU total)=3621.64453125MB

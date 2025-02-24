@@ -47,17 +47,17 @@ def train(net, optimizer, input, target, criterion, gradient_clipping, **kwargs)
         # Multi step loss
         # If not scoring rule: out.shape = (batch_size, channels, image.shape)
         # If scoring rule: out.shape = (batch_size, channels, image.shape, n_samples)
-        cpu_seed = torch.get_rng_state()            
-        gpu_seed = torch.cuda.get_rng_state()
+        # cpu_seed = torch.get_rng_state()            
+        # gpu_seed = torch.cuda.get_rng_state()
         
         if uncertainty_quantification.startswith('scoring-rule'):
             output = torch.zeros(*target.shape, net.n_samples, device=device)
             for sample in range(net.n_samples):
                 # scoring-rule-reparam samples the noise directly, which is why we want it to sample new noise in every step of the trajectory
                 # All other UQ methods sample a network, which we want to use throughout the whole trajectory => Fix the seed
-                if uncertainty_quantification != 'scoring-rule-reparam':
-                    torch.set_rng_state(cpu_seed)
-                    torch.cuda.set_rng_state(gpu_seed)
+                # if uncertainty_quantification != 'scoring-rule-reparam':
+                #     torch.set_rng_state(cpu_seed)
+                #     torch.cuda.set_rng_state(gpu_seed)
                 
                 out = net(input.float(), n_samples=1).squeeze(-1)
                 output[:,:,0,...,sample] = out
@@ -73,8 +73,8 @@ def train(net, optimizer, input, target, criterion, gradient_clipping, **kwargs)
             multiloss = criterion(out, target[:,:,0])
             for step in range(1,train_horizon): 
                 # All other UQ methods (apart from scoring-rule-reparam) sample a network, which we want to use throughout the whole trajectory => Fix the seed
-                torch.set_rng_state(cpu_seed)
-                torch.cuda.set_rng_state(gpu_seed)
+                # torch.set_rng_state(cpu_seed)
+                # torch.cuda.set_rng_state(gpu_seed)
 
                 out = net(out)
                 multiloss += criterion(out, target[:,:,step])
@@ -277,15 +277,12 @@ def trainer(
                             validation_loss += criterion(out, target).item()
                         else:
                             
-                            cpu_seed = torch.get_rng_state()            
-                            gpu_seed = torch.cuda.get_rng_state()
+                            # cpu_seed = torch.get_rng_state()            
+                            # gpu_seed = torch.cuda.get_rng_state()
         
                             
                             if uncertainty_quantification.startswith('scoring-rule'):
                                 output = torch.zeros(*target.shape, model.n_samples, device=device)
-                                
-                                if uncertainty_quantification == 'scoring-rule-reparam':
-                                    model.eval()
                                 
                                 for sample in range(model.n_samples):
                                     out = model(input.float(), n_samples=1).squeeze(-1)
@@ -293,9 +290,9 @@ def trainer(
                                     for step in range(1, t): 
                                         # scoring-rule-reparam samples the noise directly, which is why we want it to sample new noise in every step of the trajectory
                                         # All other UQ methods sample a network, which we want to use throughout the whole trajectory => Fix the seed
-                                        if training_parameters['uncertainty_quantification'] != 'scoring-rule-reparam':
-                                            torch.set_rng_state(cpu_seed)
-                                            torch.cuda.set_rng_state(gpu_seed)
+                                        # if training_parameters['uncertainty_quantification'] != 'scoring-rule-reparam':
+                                        #     torch.set_rng_state(cpu_seed)
+                                        #     torch.cuda.set_rng_state(gpu_seed)
                 
                                         out = model(out, n_samples=1).squeeze(-1)
                                         output[:,:,step,...,sample] = out
@@ -308,8 +305,8 @@ def trainer(
                                 out = model(input.float())      
                                 multiloss = criterion(out, target[:,:,0])
                                 for step in range(1, t): 
-                                    torch.set_rng_state(cpu_seed)
-                                    torch.cuda.set_rng_state(gpu_seed)
+                                    # torch.set_rng_state(cpu_seed)
+                                    # torch.cuda.set_rng_state(gpu_seed)
                                     
                                     out = model(out)
                                     multiloss += criterion(out, target[:,:,step]).item()

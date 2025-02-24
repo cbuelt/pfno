@@ -1,0 +1,45 @@
+,0
+dataset_name,SSWE
+max_training_set_size,5000
+pred_horizon,10
+train_horizon,1
+stepwise_evaluation,False
+seed,1
+model,SFNO
+uncertainty_quantification,deterministic
+batch_size,8
+n_epochs,2
+early_stopping,10
+init,default
+learning_rate,0.005
+lr_schedule,step
+optimizer,adam
+gradient_clipping,1
+layer_normalization,True
+data_loader_pin_memory,False
+data_loader_num_workers,0
+distributed_training,False
+alpha,0.05
+n_samples_uq,100
+weight_decay,0
+dropout,0.01
+fourier_dropout,
+hidden_channels,32
+projection_channels,256
+lifting_channels,256
+n_modes,"(32, 32)"
+n_samples,3
+t_training,356.823
+NumberParameters,284835
+MSEValidation,0.58396
+EnergyScoreValidation,0.58396
+CRPSValidation,0.23978
+Gaussian NLLValidation,56903879525.22878
+CoverageValidation,0.0
+IntervalWidthValidation,0.0
+MSETest,1.90627
+EnergyScoreTest,1.89788
+CRPSTest,0.77683
+Gaussian NLLTest,613382834487.2961
+CoverageTest,0.0
+IntervalWidthTest,0.0
