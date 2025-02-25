@@ -4,9 +4,9 @@ max_training_set_size,5000
 pred_horizon,1
 train_horizon,1
 stepwise_evaluation,False
-seed,1234567
+seed,1
 model,SFNO
-uncertainty_quantification,scoring-rule-dropout
+uncertainty_quantification,scoring-rule-reparam
 batch_size,32
 n_epochs,1000
 early_stopping,10
@@ -22,24 +22,24 @@ distributed_training,False
 alpha,0.05
 n_samples_uq,100
 weight_decay,0
-dropout,0.01
+dropout,0.005
 fourier_dropout,
 hidden_channels,32
 projection_channels,256
 lifting_channels,256
 n_modes,"(32, 32)"
 n_samples,3
-t_training,7018.273
-NumberParameters,284835
-MSEValidation,0.29409
-EnergyScoreValidation,0.22311
-CRPSValidation,0.08896
-Gaussian NLLValidation,-0.44575
-CoverageValidation,0.9949
-IntervalWidthValidation,0.96979
-MSETest,0.32739
-EnergyScoreTest,0.24095
-CRPSTest,0.09819
-Gaussian NLLTest,-0.38074
-CoverageTest,0.98698
-IntervalWidthTest,0.9659
+t_training,9067.772
+NumberParameters,294054
+MSEValidation,0.41743
+EnergyScoreValidation,0.30077
+CRPSValidation,0.15775
+Gaussian NLLValidation,2389921878.77297
+CoverageValidation,0.28557
+IntervalWidthValidation,0.30497
+MSETest,0.42799
+EnergyScoreTest,0.30919
+CRPSTest,0.16345
+Gaussian NLLTest,2496700575.744
+CoverageTest,0.28436
+IntervalWidthTest,0.3069

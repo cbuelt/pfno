@@ -553,4 +553,4 @@ class PUNO(nn.Module):
 
 
 # SFNO
-PSFNO = partialclass("PSFNO", PFNO, conv_module=SphericalConv)
+PSFNO = partialclass("PSFNO", PFNO, factorization="dense", conv_module=SphericalConv)

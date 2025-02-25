@@ -50,7 +50,7 @@ def train(net, optimizer, input, target, criterion, gradient_clipping, **kwargs)
         # cpu_seed = torch.get_rng_state()            
         # gpu_seed = torch.cuda.get_rng_state()
         
-        if uncertainty_quantification.startswith('scoring-rule'):
+        if uncertainty_quantification == 'scoring-rule-dropout':
             output = torch.zeros(*target.shape, net.n_samples, device=device)
             for sample in range(net.n_samples):
                 # scoring-rule-reparam samples the noise directly, which is why we want it to sample new noise in every step of the trajectory
@@ -75,7 +75,8 @@ def train(net, optimizer, input, target, criterion, gradient_clipping, **kwargs)
                 # All other UQ methods (apart from scoring-rule-reparam) sample a network, which we want to use throughout the whole trajectory => Fix the seed
                 # torch.set_rng_state(cpu_seed)
                 # torch.cuda.set_rng_state(gpu_seed)
-
+                if uncertainty_quantification == "scoring-rule-reparam":
+                    out = out.mean(axis=-1)
                 out = net(out)
                 multiloss += criterion(out, target[:,:,step])
                 
@@ -281,7 +282,7 @@ def trainer(
                             # gpu_seed = torch.cuda.get_rng_state()
         
                             
-                            if uncertainty_quantification.startswith('scoring-rule'):
+                            if uncertainty_quantification == 'scoring-rule-reparam':
                                 output = torch.zeros(*target.shape, model.n_samples, device=device)
                                 
                                 for sample in range(model.n_samples):
@@ -309,6 +310,8 @@ def trainer(
                                     # torch.cuda.set_rng_state(gpu_seed)
                                     
                                     out = model(out)
+                                    if uncertainty_quantification == "scoring-rule-reparam":
+                                        out = out.mean(axis=-1)
                                     multiloss += criterion(out, target[:,:,step]).item()
                                     
                             validation_loss += (multiloss/t).item()
