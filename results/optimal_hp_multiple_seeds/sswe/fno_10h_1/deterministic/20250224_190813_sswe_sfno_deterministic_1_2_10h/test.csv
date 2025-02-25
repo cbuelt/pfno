@@ -1,0 +1,45 @@
+,0,1,2
+dataset_name,SSWE,SSWE,SSWE
+max_training_set_size,5000,5000,5000
+pred_horizon,10,10,10
+train_horizon,1,1,1
+stepwise_evaluation,False,False,False
+seed,12345,12345,12345
+model,SFNO,SFNO,SFNO
+uncertainty_quantification,deterministic,deterministic,deterministic
+batch_size,32,32,32
+n_epochs,1000,1000,1000
+early_stopping,10,10,10
+init,default,default,default
+learning_rate,0.005,0.005,0.005
+lr_schedule,step,step,step
+optimizer,adam,adam,adam
+gradient_clipping,1,1,1
+layer_normalization,True,True,True
+data_loader_pin_memory,False,False,False
+data_loader_num_workers,0,0,0
+distributed_training,False,False,False
+alpha,0.05,0.05,0.05
+n_samples_uq,100,100,100
+weight_decay,0,0,0
+dropout,0.001,0.001,0.001
+fourier_dropout,,,
+hidden_channels,32,32,32
+projection_channels,256,256,256
+lifting_channels,256,256,256
+n_modes,"(32, 32)","(32, 32)","(32, 32)"
+n_samples,3,3,3
+filename_to_validate,results/optimal_hp_multiple_seeds/sswe/fno_1h_1/deterministic/20250222_052433_sswe_sfno_deterministic_1_2/Datetime_20250222_052434_Loss_SSWE_SFNO_deterministic_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_1h_1/deterministic/20250222_052433_sswe_sfno_deterministic_1_2/Datetime_20250222_062830_Loss_SSWE_SFNO_deterministic_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_1h_1/deterministic/20250222_052433_sswe_sfno_deterministic_1_2/Datetime_20250222_080947_Loss_SSWE_SFNO_deterministic_dropout_0.001.pt
+t_training,-1,-1,-1
+MSEValidation,0.28887,0.27993,0.29222
+EnergyScoreValidation,0.28887,0.27993,0.29222
+CRPSValidation,0.11377,0.10951,0.11382
+Gaussian NLLValidation,14504631014.8209,13182592815.80368,14334467795.71819
+CoverageValidation,0.0,0.0,0.0
+IntervalWidthValidation,0.0,0.0,0.0
+MSETest,1.30737,1.00574,0.97668
+EnergyScoreTest,1.30059,1.00059,0.9721
+CRPSTest,0.54474,0.43532,0.4195
+Gaussian NLLTest,291971247636.48,170763749818.36792,161960611282.94394
+CoverageTest,0.0,0.0,0.0
+IntervalWidthTest,0.0,0.0,0.0
