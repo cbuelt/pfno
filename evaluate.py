@@ -162,17 +162,17 @@ def evaluate_autoregressive(
                 out = torch.zeros(*u.shape, training_parameters["n_samples_uq"], device=device)
                 
                 for n_sample in range(training_parameters["n_samples_uq"]):
-                    # cpu_seed = torch.get_rng_state()            
-                    # gpu_seed = torch.cuda.get_rng_state()
+                    cpu_seed = torch.get_rng_state()            
+                    gpu_seed = torch.cuda.get_rng_state()
                     
                     a = input
                     
                     for _ in range(pred_horizon):
                         # scoring-rule-reparam samples the noise directly, which is why we want it to sample new noise in every step of the trajectory
                         # All other UQ methods sample a network, which we want to use throughout the whole trajectory => Fix the seed
-                        # if training_parameters['uncertainty_quantification'] != 'scoring-rule-reparam':
-                        #     torch.set_rng_state(cpu_seed)
-                        #     torch.cuda.set_rng_state(gpu_seed)
+                        if training_parameters['uncertainty_quantification'] != 'scoring-rule-reparam':
+                            torch.set_rng_state(cpu_seed)
+                            torch.cuda.set_rng_state(gpu_seed)
                         
                         # a = train_utils.autoregressive_step(
                         #     uncertainty_quantification, model, a
