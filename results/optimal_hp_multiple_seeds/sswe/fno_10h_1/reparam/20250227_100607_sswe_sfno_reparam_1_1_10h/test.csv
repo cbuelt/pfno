@@ -1,0 +1,45 @@
+,0,1,2
+dataset_name,SSWE,SSWE,SSWE
+max_training_set_size,5000,5000,5000
+pred_horizon,10,10,10
+train_horizon,1,1,1
+stepwise_evaluation,False,False,False
+seed,12345,12345,12345
+model,SFNO,SFNO,SFNO
+uncertainty_quantification,scoring-rule-reparam,scoring-rule-reparam,scoring-rule-reparam
+batch_size,32,32,32
+n_epochs,1000,1000,1000
+early_stopping,10,10,10
+init,default,default,default
+learning_rate,0.005,0.005,0.005
+lr_schedule,step,step,step
+optimizer,adam,adam,adam
+gradient_clipping,1,1,1
+layer_normalization,True,True,True
+data_loader_pin_memory,False,False,False
+data_loader_num_workers,0,0,0
+distributed_training,False,False,False
+alpha,0.05,0.05,0.05
+n_samples_uq,100,100,100
+weight_decay,0,0,0
+dropout,0.005,0.005,0.005
+fourier_dropout,,,
+hidden_channels,32,32,32
+projection_channels,256,256,256
+lifting_channels,256,256,256
+n_modes,"(32, 32)","(32, 32)","(32, 32)"
+n_samples,3,3,3
+filename_to_validate,results/optimal_hp_multiple_seeds/sswe/fno_1h_1/reparam/20250225_165356_sswe_sfno_reparam_1_1/Datetime_20250225_165357_Loss_SSWE_SFNO_scoring-rule-reparam_dropout_0.005.pt,results/optimal_hp_multiple_seeds/sswe/fno_1h_1/reparam/20250225_165356_sswe_sfno_reparam_1_1/Datetime_20250225_180147_Loss_SSWE_SFNO_scoring-rule-reparam_dropout_0.005.pt,results/optimal_hp_multiple_seeds/sswe/fno_1h_1/reparam/20250225_165356_sswe_sfno_reparam_1_1/Datetime_20250225_190745_Loss_SSWE_SFNO_scoring-rule-reparam_dropout_0.005.pt
+t_training,-1,-1,-1
+MSEValidation,0.34598,0.3798,0.3446
+EnergyScoreValidation,0.24367,0.26735,0.24279
+CRPSValidation,0.13953,0.15158,0.13929
+Gaussian NLLValidation,16729771928.76124,20268245620.6316,16663320183.43232
+CoverageValidation,0.1096,0.09846,0.09661
+IntervalWidthValidation,0.25182,0.26134,0.2399
+MSETest,1.23948,1.19522,1.21746
+EnergyScoreTest,0.93642,0.88163,0.89843
+CRPSTest,0.43445,0.41515,0.41685
+Gaussian NLLTest,7.16906,6.92129,6.02595
+CoverageTest,0.58012,0.59869,0.62413
+IntervalWidthTest,1.24091,1.3874,1.42096
