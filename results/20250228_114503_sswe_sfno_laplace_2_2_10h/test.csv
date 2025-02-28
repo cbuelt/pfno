@@ -1,0 +1,45 @@
+,0,1,2
+dataset_name,SSWE,SSWE,SSWE
+max_training_set_size,5000,5000,5000
+pred_horizon,10,10,10
+train_horizon,2,2,2
+stepwise_evaluation,False,False,False
+seed,12345,12345,12345
+model,SFNO,SFNO,SFNO
+uncertainty_quantification,laplace,laplace,laplace
+batch_size,32,32,32
+n_epochs,1000,1000,1000
+early_stopping,10,10,10
+init,default,default,default
+learning_rate,0.005,0.005,0.005
+lr_schedule,step,step,step
+optimizer,adam,adam,adam
+gradient_clipping,1,1,1
+layer_normalization,True,True,True
+data_loader_pin_memory,False,False,False
+data_loader_num_workers,0,0,0
+distributed_training,False,False,False
+alpha,0.05,0.05,0.05
+n_samples_uq,100,100,100
+weight_decay,0,0,0
+dropout,0.001,0.001,0.001
+fourier_dropout,,,
+hidden_channels,32,32,32
+projection_channels,256,256,256
+lifting_channels,256,256,256
+n_modes,"(32, 32)","(32, 32)","(32, 32)"
+n_samples,3,3,3
+filename_to_validate,results/optimal_hp_multiple_seeds/sswe/fno_1h_2/laplace/same_seed/20250227_041607_sswe_sfno_laplace_2_2/Datetime_20250227_041607_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_1h_2/laplace/same_seed/20250227_041607_sswe_sfno_laplace_2_2/Datetime_20250227_071134_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_1h_2/laplace/same_seed/20250227_041607_sswe_sfno_laplace_2_2/Datetime_20250227_122055_Loss_SSWE_SFNO_laplace_dropout_0.001.pt
+t_training,-1,-1,-1
+MSEValidation,0.41478,0.40778,0.40752
+EnergyScoreValidation,0.33761,0.31997,0.31739
+CRPSValidation,0.15233,0.14429,0.14261
+Gaussian NLLValidation,0.27997,0.21762,0.18543
+CoverageValidation,0.98868,0.98043,0.98273
+IntervalWidthValidation,1.76336,1.61796,1.54943
+MSETest,2757973.92066,1773.43727,39.12023
+EnergyScoreTest,11329.28775,12.12707,5.61185
+CRPSTest,4905.51753,5.1324,2.41262
+Gaussian NLLTest,33.39066,6.94463,5.21953
+CoverageTest,1.0,1.0,1.0
+IntervalWidthTest,1765405.57025,752.28996,194.81605
