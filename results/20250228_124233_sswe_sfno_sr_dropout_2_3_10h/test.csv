@@ -1,0 +1,45 @@
+,0,1,2
+dataset_name,SSWE,SSWE,SSWE
+max_training_set_size,5000,5000,5000
+pred_horizon,10,10,10
+train_horizon,2,2,2
+stepwise_evaluation,False,False,False
+seed,12345,12345,12345
+model,SFNO,SFNO,SFNO
+uncertainty_quantification,scoring-rule-dropout,scoring-rule-dropout,scoring-rule-dropout
+batch_size,32,32,32
+n_epochs,1000,1000,1000
+early_stopping,10,10,10
+init,default,default,default
+learning_rate,0.005,0.005,0.005
+lr_schedule,step,step,step
+optimizer,adam,adam,adam
+gradient_clipping,1,1,1
+layer_normalization,True,True,True
+data_loader_pin_memory,False,False,False
+data_loader_num_workers,0,0,0
+distributed_training,False,False,False
+alpha,0.05,0.05,0.05
+n_samples_uq,100,100,100
+weight_decay,0,0,0
+dropout,0.01,0.01,0.01
+fourier_dropout,,,
+hidden_channels,32,32,32
+projection_channels,256,256,256
+lifting_channels,256,256,256
+n_modes,"(32, 32)","(32, 32)","(32, 32)"
+n_samples,3,3,3
+filename_to_validate,results/optimal_hp_multiple_seeds/sswe/fno_1h_2/sr_dropout/same_seed/20250227_191219_sswe_sfno_sr_dropout_2_3/Datetime_20250227_191220_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt,results/optimal_hp_multiple_seeds/sswe/fno_1h_2/sr_dropout/same_seed/20250227_191219_sswe_sfno_sr_dropout_2_3/Datetime_20250227_221913_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt,results/optimal_hp_multiple_seeds/sswe/fno_1h_2/sr_dropout/same_seed/20250227_191219_sswe_sfno_sr_dropout_2_3/Datetime_20250228_012327_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt
+t_training,-1,-1,-1
+MSEValidation,0.3678,0.34013,0.36123
+EnergyScoreValidation,0.28122,0.26701,0.27838
+CRPSValidation,0.11714,0.1115,0.11559
+Gaussian NLLValidation,-0.13905,-0.15668,-0.14983
+CoverageValidation,0.98144,0.99194,0.98735
+IntervalWidthValidation,1.22822,1.24536,1.23217
+MSETest,6179542.45998,145069.89799,1.81034
+EnergyScoreTest,-697.79722,-9.47027,0.68399
+CRPSTest,0.34945,0.29614,0.29171
+Gaussian NLLTest,3138.30169,3.60598,1.14668
+CoverageTest,0.99651,0.99629,0.99485
+IntervalWidthTest,4.39731,4.36641,3.46862
