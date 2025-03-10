@@ -36,6 +36,9 @@ def generate_samples(
         out = model(a, n_samples=n_samples)
     elif uncertainty_quantification == 'deterministic':
         out = generate_deterministic_samples(model, a, u.shape, n_samples=n_samples)
+    elif uncertainty_quantification == 'ensemble':
+        model.eval()
+        out = model(a)
     return out
 
 
