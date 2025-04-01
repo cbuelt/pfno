@@ -1,0 +1,55 @@
+,0,1,2,3
+dataset_name,KS,KS,KS,KS
+max_training_set_size,10000,10000,10000,10000
+downscaling_factor,1,1,1,1
+temporal_downscaling,2,2,2,2
+init_steps,20,20,20,20
+t_start,0,0,0,0
+pred_horizon,20,20,20,20
+seed,1234,1234,1234,1234
+model,UNO,UNO,UNO,UNO
+uncertainty_quantification,laplace,dropout,scoring-rule-dropout,scoring-rule-reparam
+batch_size,32,32,32,32
+n_epochs,2,2,2,2
+early_stopping,10,10,10,10
+init,default,default,default,default
+learning_rate,0.001,0.001,0.001,0.001
+lr_schedule,step,step,step,step
+optimizer,adam,adam,adam,adam
+gradient_clipping,1,1,1,1
+layer_normalization,True,True,True,True
+data_loader_pin_memory,False,False,False,False
+data_loader_num_workers,0,0,0,0
+distributed_training,False,False,False,False
+alpha,0.05,0.05,0.05,0.05
+n_samples_uq,100,100,100,100
+weight_decay,0,0,0,0
+dropout,0.05,0.05,0.05,0.05
+fourier_dropout,,,,
+hidden_channels,16,16,16,16
+projection_channels,32,32,32,32
+lifting_channels,32,32,32,32
+n_samples,3,3,3,3
+uno_out_channels,"[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]","[16, 32, 64, 128, 64, 32, 16]"
+uno_scalings,"[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]","[[1.0, 0.75], [1.0, 0.667], [1.0, 0.5], [1.0, 1.0], [1.0, 2.0], [1.0, 1.5], [1.0, 1.334]]"
+uno_n_modes,"[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]","[[4, 20], [4, 14], [4, 6], [7, 6], [7, 6], [10, 14], [10, 20]]"
+t_training,90.609,83.015,126.281,84.876
+NumberParameters,1687601,1687601,1687601,1688178
+MSETrain,0.97986,0.97971,1.01381,0.98664
+EnergyScoreTrain,0.88627,0.91682,0.71367,0.69443
+CRPSTrain,0.72207,0.7679,0.63361,0.57075
+Gaussian NLLTrain,25.7819,550.3593,1.47173,1.57763
+CoverageTrain,0.25126,0.12144,0.96001,0.89504
+IntervalWidthTrain,0.61829,0.2723,4.70003,3.55185
+MSEValidation,0.98111,0.98102,1.0143,0.98808
+EnergyScoreValidation,0.88757,0.91851,0.71401,0.69545
+CRPSValidation,0.72331,0.76945,0.63399,0.57173
+Gaussian NLLValidation,25.80357,554.95095,1.47239,1.57532
+CoverageValidation,0.24924,0.12013,0.95995,0.89498
+IntervalWidthValidation,0.61517,0.27058,4.69987,3.55454
+MSETest,0.98085,0.98059,1.01411,0.98724
+EnergyScoreTest,0.88743,0.91782,0.71387,0.69484
+CRPSTest,0.72328,0.769,0.63397,0.57122
+Gaussian NLLTest,25.83534,552.84281,1.4719,1.57569
+CoverageTest,0.24897,0.12077,0.96003,0.89519
+IntervalWidthTest,0.61427,0.27162,4.69976,3.55289

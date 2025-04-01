@@ -1,0 +1,51 @@
+,0,1,2,3,4,5,6,7,8
+dataset_name,DarcyFlow,DarcyFlow,DarcyFlow,DarcyFlow,DarcyFlow,DarcyFlow,DarcyFlow,DarcyFlow,DarcyFlow
+max_training_set_size,10000,10000,10000,10000,10000,10000,10000,10000,10000
+downscaling_factor,2,2,2,2,2,2,2,2,2
+seed,12345,12345,12345,12345,12345,12345,12345,12345,12345
+model,UNO,UNO,UNO,UNO,UNO,UNO,UNO,UNO,UNO
+uncertainty_quantification,deterministic,deterministic,deterministic,deterministic,deterministic,deterministic,deterministic,deterministic,deterministic
+batch_size,64,64,64,64,64,64,64,64,64
+n_epochs,1000,1000,1000,1000,1000,1000,1000,1000,1000
+early_stopping,10,10,10,10,10,10,10,10,10
+init,default,default,default,default,default,default,default,default,default
+learning_rate,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+lr_schedule,no,no,no,no,no,no,no,no,no
+optimizer,adam,adam,adam,adam,adam,adam,adam,adam,adam
+gradient_clipping,1,1,1,1,1,1,1,1,1
+layer_normalization,True,True,True,True,True,True,True,True,True
+data_loader_pin_memory,False,False,False,False,False,False,False,False,False
+data_loader_num_workers,0,0,0,0,0,0,0,0,0
+distributed_training,False,False,False,False,False,False,False,False,False
+alpha,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05
+n_samples_uq,100,100,100,100,100,100,100,100,100
+weight_decay,0,0,0,0,0,0,0,0,0
+dropout,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+fourier_dropout,,,,,,,,,
+hidden_channels,32,32,32,32,32,32,32,32,32
+projection_channels,32,32,32,32,32,32,32,32,32
+lifting_channels,32,32,32,32,32,32,32,32,32
+n_samples,3,3,3,3,3,3,3,3,3
+filename_to_validate,results/optimal_hp_multiple_seeds/darcy_flow/uno/20241024_132217_darcy_flow_uno_laplace/Datetime_20241024_132226_Loss_DarcyFlow_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/darcy_flow/uno/20241024_132217_darcy_flow_uno_laplace/Datetime_20241024_141413_Loss_DarcyFlow_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/darcy_flow/uno/20241024_132217_darcy_flow_uno_laplace/Datetime_20241024_150729_Loss_DarcyFlow_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/darcy_flow/uno/20241024_132217_darcy_flow_uno_laplace/Datetime_20241024_160528_Loss_DarcyFlow_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/darcy_flow/uno/20241024_132217_darcy_flow_uno_laplace/Datetime_20241024_170248_Loss_DarcyFlow_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/darcy_flow/uno/20241024_132217_darcy_flow_uno_laplace/Datetime_20241024_181252_Loss_DarcyFlow_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/darcy_flow/uno/20241024_132217_darcy_flow_uno_laplace/Datetime_20241024_192026_Loss_DarcyFlow_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/darcy_flow/uno/20241024_132217_darcy_flow_uno_laplace/Datetime_20241024_204643_Loss_DarcyFlow_UNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/darcy_flow/uno/20241024_132217_darcy_flow_uno_laplace/Datetime_20241024_220558_Loss_DarcyFlow_UNO_laplace_dropout_0.001.pt
+uno_out_channels,"[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]"
+uno_scalings,"[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]"
+uno_n_modes,"[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]"
+t_training,-1,-1,-1,-1,-1,-1,-1,-1,-1
+MSETrain,0.11993,0.12542,0.13918,0.13525,0.12222,0.15354,0.13877,0.12012,0.13395
+EnergyScoreTrain,0.11965,0.12516,0.13889,0.13499,0.12195,0.15328,0.1385,0.11985,0.13369
+CRPSTrain,0.09819,0.09978,0.11176,0.10791,0.09798,0.12391,0.11058,0.09478,0.10678
+Gaussian NLLTrain,14630792161.84888,15925998296.74666,18544120148.19554,18724060121.88444,16196612455.53779,24665184601.88442,19772716181.61778,15437889868.79999,18072149254.82666
+CoverageTrain,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+IntervalWidthTrain,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+MSEValidation,0.17489,0.18548,0.1969,0.19548,0.19091,0.19503,0.20058,0.19245,0.19708
+EnergyScoreValidation,0.1744,0.18498,0.19641,0.195,0.19041,0.19454,0.2001,0.19196,0.19654
+CRPSValidation,0.14035,0.14774,0.15755,0.15643,0.15282,0.15781,0.16008,0.15433,0.15743
+Gaussian NLLValidation,24577055784.95998,26945873519.50222,28741384355.84001,28513316604.58667,28833566997.61777,31976129991.1111,30164149261.65334,27756749682.91556,30012257302.75555
+CoverageValidation,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+IntervalWidthValidation,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+MSETest,0.17847,0.18809,0.19855,0.19811,0.19495,0.19925,0.20222,0.19494,0.19921
+EnergyScoreTest,0.17796,0.18761,0.19805,0.19761,0.19445,0.19879,0.20173,0.19447,0.19871
+CRPSTest,0.1436,0.15026,0.15871,0.15883,0.15663,0.16182,0.16218,0.15658,0.15954
+Gaussian NLLTest,25470489714.688,27778020589.568,29145979469.824,29123127230.46399,30235696431.10401,33068580634.624,30400749355.008,28712025858.048,30774349447.168
+CoverageTest,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+IntervalWidthTest,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0

@@ -1,0 +1,51 @@
+,0,1,2,3
+dataset_name,DarcyFlow,DarcyFlow,DarcyFlow,DarcyFlow
+max_training_set_size,10000,10000,10000,10000
+downscaling_factor,2,2,2,2
+seed,1234,1234,1234,1234
+model,UNO,UNO,UNO,UNO
+uncertainty_quantification,laplace,dropout,scoring-rule-dropout,scoring-rule-reparam
+batch_size,64,64,64,64
+n_epochs,2,2,2,2
+early_stopping,10,10,10,10
+init,default,default,default,default
+learning_rate,0.001,0.001,0.001,0.001
+lr_schedule,step,step,step,step
+optimizer,adam,adam,adam,adam
+gradient_clipping,1,1,1,1
+layer_normalization,True,True,True,True
+data_loader_pin_memory,False,False,False,False
+data_loader_num_workers,0,0,0,0
+distributed_training,False,False,False,False
+alpha,0.05,0.05,0.05,0.05
+n_samples_uq,100,100,100,100
+weight_decay,0,0,0,0
+dropout,0.05,0.05,0.05,0.05
+fourier_dropout,,,,
+hidden_channels,32,32,32,32
+projection_channels,32,32,32,32
+lifting_channels,32,32,32,32
+n_samples,3,3,3,3
+uno_out_channels,"[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]","[64, 128, 128, 64, 32]"
+uno_scalings,"[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]","[[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]]"
+uno_n_modes,"[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]","[[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]"
+t_training,115.574,90.377,147.5,91.809
+NumberParameters,5814913,5814913,5814913,5816002
+MSETrain,0.21774,0.20024,0.24663,0.22015
+EnergyScoreTrain,0.17433,0.15706,0.18009,0.16027
+CRPSTrain,0.14235,0.12803,0.1456,0.13085
+Gaussian NLLTrain,2.57941,1.11383,-0.00295,0.22386
+CoverageTrain,0.73792,0.71595,0.90228,0.83686
+IntervalWidthTrain,0.42562,0.37282,0.89072,0.71035
+MSEValidation,0.24195,0.23302,0.3017,0.2385
+EnergyScoreValidation,0.19411,0.18477,0.22373,0.17315
+CRPSValidation,0.15761,0.15181,0.18269,0.14026
+Gaussian NLLValidation,2.98066,2.02165,0.3989,0.45235
+CoverageValidation,0.68989,0.63553,0.82941,0.79557
+IntervalWidthValidation,0.43909,0.3774,0.87291,0.69728
+MSETest,0.24947,0.23819,0.30597,0.24259
+EnergyScoreTest,0.20122,0.1898,0.22768,0.17644
+CRPSTest,0.1636,0.15651,0.18596,0.14308
+Gaussian NLLTest,3.27451,2.20186,0.43181,0.53185
+CoverageTest,0.68674,0.62714,0.82751,0.78921
+IntervalWidthTest,0.44107,0.37651,0.87016,0.69666

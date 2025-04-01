@@ -1,0 +1,53 @@
+,0
+dataset_name,KS
+max_training_set_size,10000
+downscaling_factor,1
+temporal_downscaling,2
+init_steps,20
+t_start,0
+pred_horizon,20
+seed,123456789
+model,FNO
+uncertainty_quantification,scoring-rule-dropout
+batch_size,32
+n_epochs,25
+early_stopping,10
+init,default
+learning_rate,0.001
+lr_schedule,step
+optimizer,adam
+gradient_clipping,1
+layer_normalization,True
+data_loader_pin_memory,False
+data_loader_num_workers,0
+distributed_training,False
+alpha,0.05
+n_samples_uq,100
+weight_decay,0
+dropout,0.1
+fourier_dropout,
+hidden_channels,20
+projection_channels,128
+lifting_channels,128
+n_modes,"(10, 12)"
+n_samples,50
+t_training,4536.358
+NumberParameters,231589
+MSETrain,0.91359
+EnergyScoreTrain,0.64375
+CRPSTrain,0.55984
+Gaussian NLLTrain,1.86056
+CoverageTrain,0.78101
+IntervalWidthTrain,3.1631
+MSEValidation,0.92
+EnergyScoreValidation,0.6483
+CRPSValidation,0.56358
+Gaussian NLLValidation,1.87016
+CoverageValidation,0.77904
+IntervalWidthValidation,3.15767
+MSETest,0.92084
+EnergyScoreTest,0.64895
+CRPSTest,0.56409
+Gaussian NLLTest,1.87216
+CoverageTest,0.77835
+IntervalWidthTest,3.15054

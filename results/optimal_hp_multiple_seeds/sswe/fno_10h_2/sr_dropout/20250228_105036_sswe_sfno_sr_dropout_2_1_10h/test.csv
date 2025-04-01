@@ -1,0 +1,45 @@
+,0,1,2
+dataset_name,SSWE,SSWE,SSWE
+max_training_set_size,5000,5000,5000
+pred_horizon,10,10,10
+train_horizon,2,2,2
+stepwise_evaluation,False,False,False
+seed,12345,12345,12345
+model,SFNO,SFNO,SFNO
+uncertainty_quantification,scoring-rule-dropout,scoring-rule-dropout,scoring-rule-dropout
+batch_size,32,32,32
+n_epochs,1000,1000,1000
+early_stopping,10,10,10
+init,default,default,default
+learning_rate,0.005,0.005,0.005
+lr_schedule,step,step,step
+optimizer,adam,adam,adam
+gradient_clipping,1,1,1
+layer_normalization,True,True,True
+data_loader_pin_memory,False,False,False
+data_loader_num_workers,0,0,0
+distributed_training,False,False,False
+alpha,0.05,0.05,0.05
+n_samples_uq,100,100,100
+weight_decay,0,0,0
+dropout,0.01,0.01,0.01
+fourier_dropout,,,
+hidden_channels,32,32,32
+projection_channels,256,256,256
+lifting_channels,256,256,256
+n_modes,"(32, 32)","(32, 32)","(32, 32)"
+n_samples,3,3,3
+filename_to_validate,results/optimal_hp_multiple_seeds/sswe/fno_1h_2/sr_dropout/same_seed/20250226_220449_sswe_sfno_sr_dropout_2_1/Datetime_20250226_220450_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt,results/optimal_hp_multiple_seeds/sswe/fno_1h_2/sr_dropout/same_seed/20250226_220449_sswe_sfno_sr_dropout_2_1/Datetime_20250227_012358_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt,results/optimal_hp_multiple_seeds/sswe/fno_1h_2/sr_dropout/same_seed/20250226_220449_sswe_sfno_sr_dropout_2_1/Datetime_20250227_045436_Loss_SSWE_SFNO_scoring-rule-dropout_dropout_0.01.pt
+t_training,-1,-1,-1
+MSEValidation,0.35528,0.38288,0.35983
+EnergyScoreValidation,0.27383,0.2866,0.2809
+CRPSValidation,0.11386,0.1194,0.11699
+Gaussian NLLValidation,-0.16468,-0.11899,-0.12725
+CoverageValidation,0.98428,0.98736,0.98491
+IntervalWidthValidation,1.21267,1.2362,1.27231
+MSETest,980.56935,2235892.36663,197921.82205
+EnergyScoreTest,0.66044,-245.3221,-13.80137
+CRPSTest,0.29879,0.31349,0.32801
+Gaussian NLLTest,2.68343,99.18555,5.18957
+CoverageTest,0.99652,0.98503,0.99338
+IntervalWidthTest,5.45441,3.63791,6.8873

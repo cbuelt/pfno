@@ -1,0 +1,44 @@
+,0
+dataset_name,era5
+max_training_set_size,20000
+init_steps,10
+pred_horizon,10
+seed,1
+model,FNO
+uncertainty_quantification,scoring-rule-dropout
+batch_size,8
+n_epochs,1000
+early_stopping,10
+init,default
+learning_rate,0.005
+lr_schedule,step
+optimizer,adam
+gradient_clipping,1
+layer_normalization,True
+data_loader_pin_memory,False
+data_loader_num_workers,0
+distributed_training,False
+alpha,0.05
+n_samples_uq,100
+weight_decay,0
+dropout,0.2
+fourier_dropout,
+hidden_channels,20
+projection_channels,128
+lifting_channels,128
+n_modes,"(10, 12, 12)"
+n_samples,3
+t_training,231206.268
+NumberParameters,2695717
+MSEValidation,0.01584
+EnergyScoreValidation,0.01126
+CRPSValidation,0.01236
+Gaussian NLLValidation,-2.40708
+CoverageValidation,0.96747
+IntervalWidthValidation,0.10142
+MSETest,0.02428
+EnergyScoreTest,0.01739
+CRPSTest,0.01879
+Gaussian NLLTest,-1.95785
+CoverageTest,0.86605
+IntervalWidthTest,0.09915

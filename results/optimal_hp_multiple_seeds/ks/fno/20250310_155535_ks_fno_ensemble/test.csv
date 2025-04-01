@@ -1,0 +1,53 @@
+,0,1,2
+dataset_name,KS,KS,KS
+max_training_set_size,10000,10000,10000
+downscaling_factor,1,1,1
+temporal_downscaling,2,2,2
+init_steps,20,20,20
+t_start,0,0,0
+pred_horizon,20,20,20
+seed,123456789,123456789,123456789
+model,FNO,FNO,FNO
+uncertainty_quantification,ensemble,ensemble,ensemble
+batch_size,64,64,64
+n_epochs,1000,1000,1000
+early_stopping,10,10,10
+init,default,default,default
+learning_rate,0.001,0.001,0.001
+lr_schedule,step,step,step
+optimizer,adam,adam,adam
+gradient_clipping,1,1,1
+layer_normalization,True,True,True
+data_loader_pin_memory,False,False,False
+data_loader_num_workers,0,0,0
+distributed_training,False,False,False
+alpha,0.05,0.05,0.05
+n_samples_uq,3,3,3
+weight_decay,0,0,0
+dropout,0.01,0.01,0.01
+fourier_dropout,,,
+hidden_channels,20,20,20
+projection_channels,128,128,128
+lifting_channels,128,128,128
+n_modes,"(10, 12)","(10, 12)","(10, 12)"
+n_samples,3,3,3
+filename_to_validate,"['results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_142933_Loss_KS_FNO_laplace_dropout_0.01.pt', 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_151907_Loss_KS_FNO_laplace_dropout_0.01.pt', 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_161423_Loss_KS_FNO_laplace_dropout_0.01.pt']","['results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_170642_Loss_KS_FNO_laplace_dropout_0.01.pt', 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_180044_Loss_KS_FNO_laplace_dropout_0.01.pt', 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_190715_Loss_KS_FNO_laplace_dropout_0.01.pt']","['results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_202421_Loss_KS_FNO_laplace_dropout_0.01.pt', 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_214915_Loss_KS_FNO_laplace_dropout_0.01.pt', 'results/optimal_hp_multiple_seeds/ks/fno/20240911_142834_ks_fno_laplace/Datetime_20240911_231941_Loss_KS_FNO_laplace_dropout_0.01.pt']"
+t_training,-1,-1,-1
+MSETrain,0.865,0.86774,0.86418
+EnergyScoreTrain,0.71391,0.71101,0.69948
+CRPSTrain,0.5724,0.57601,0.56571
+Gaussian NLLTrain,345.67881,466.07979,313.07874
+CoverageTrain,0.2119,0.2127,0.22175
+IntervalWidthTrain,0.36163,0.36892,0.39474
+MSEValidation,0.88347,0.88466,0.88203
+EnergyScoreValidation,0.73018,0.72554,0.71505
+CRPSValidation,0.58621,0.5884,0.57887
+Gaussian NLLValidation,312.00273,948.6928,329.37279
+CoverageValidation,0.20864,0.20994,0.21895
+IntervalWidthValidation,0.36636,0.37393,0.39965
+MSETest,0.88462,0.88616,0.88399
+EnergyScoreTest,0.73153,0.72773,0.71744
+CRPSTest,0.58774,0.59064,0.58111
+Gaussian NLLTest,294.3225,603.69537,344.43322
+CoverageTest,0.20732,0.20759,0.21694
+IntervalWidthTest,0.36541,0.37175,0.39837

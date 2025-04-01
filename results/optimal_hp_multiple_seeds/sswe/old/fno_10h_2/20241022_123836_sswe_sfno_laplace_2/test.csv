@@ -1,0 +1,45 @@
+,0,1,2,3,4,5,6,7,8
+dataset_name,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE,SSWE
+max_training_set_size,5000,5000,5000,5000,5000,5000,5000,5000,5000
+pred_horizon,10,10,10,10,10,10,10,10,10
+train_horizon,2,2,2,2,2,2,2,2,2
+stepwise_evaluation,False,False,False,False,False,False,False,False,False
+seed,123456789,123456789,123456789,123456789,123456789,123456789,123456789,123456789,123456789
+model,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO,SFNO
+uncertainty_quantification,laplace,laplace,laplace,laplace,laplace,laplace,laplace,laplace,laplace
+batch_size,32,32,32,32,32,32,32,32,32
+n_epochs,1000,1000,1000,1000,1000,1000,1000,1000,1000
+early_stopping,10,10,10,10,10,10,10,10,10
+init,default,default,default,default,default,default,default,default,default
+learning_rate,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
+lr_schedule,step,step,step,step,step,step,step,step,step
+optimizer,adam,adam,adam,adam,adam,adam,adam,adam,adam
+gradient_clipping,1,1,1,1,1,1,1,1,1
+layer_normalization,True,True,True,True,True,True,True,True,True
+data_loader_pin_memory,False,False,False,False,False,False,False,False,False
+data_loader_num_workers,0,0,0,0,0,0,0,0,0
+distributed_training,False,False,False,False,False,False,False,False,False
+alpha,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05
+n_samples_uq,100,100,100,100,100,100,100,100,100
+weight_decay,0,0,0,0,0,0,0,0,0
+dropout,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+fourier_dropout,,,,,,,,,
+hidden_channels,32,32,32,32,32,32,32,32,32
+projection_channels,256,256,256,256,256,256,256,256,256
+lifting_channels,256,256,256,256,256,256,256,256,256
+n_modes,"(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)","(32, 32)"
+n_samples,3,3,3,3,3,3,3,3,3
+filename_to_validate,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241002_140512_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241002_163841_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241002_181221_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241002_203505_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241002_231721_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241003_014615_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241003_043035_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241003_081416_Loss_SSWE_SFNO_laplace_dropout_0.001.pt,results/optimal_hp_multiple_seeds/sswe/fno_2/20241002_140510_sswe_sfno_laplace_2/Datetime_20241003_122834_Loss_SSWE_SFNO_laplace_dropout_0.001.pt
+t_training,-1,-1,-1,-1,-1,-1,-1,-1,-1
+MSEValidation,0.51845,0.51626,0.71062,0.677,0.48975,0.53889,0.52646,0.62144,0.68849
+EnergyScoreValidation,0.37556,0.38304,0.52457,0.53965,0.36024,0.39318,0.37406,0.46983,0.5076
+CRPSValidation,0.16754,0.17072,0.22693,0.22864,0.16063,0.16548,0.16604,0.20732,0.2168
+Gaussian NLLValidation,0.30389,0.32268,1.0464,3.10157,0.27784,0.49952,0.2872,1.45212,0.90607
+CoverageValidation,0.94552,0.96919,0.77941,0.62443,0.95729,0.82468,0.91559,0.70232,0.78114
+IntervalWidthValidation,1.41136,1.60309,0.96572,0.5697,1.45358,0.79532,1.17935,0.71524,0.92772
+MSETest,1.22231,1.4997,2.21686,1.35613,1.19662,1.31749,1.67012,1.32656,2.05894
+EnergyScoreTest,0.93129,1.1307,1.89405,1.20453,0.92126,1.09375,1.34035,1.13165,1.70321
+CRPSTest,0.40124,0.47281,0.77097,0.50906,0.38954,0.46155,0.56323,0.47975,0.72071
+Gaussian NLLTest,2.02245,1.75016,9.02302,19.0466,1.98508,5.55266,3.67932,9.25727,6.14576
+CoverageTest,0.72161,0.78579,0.48424,0.33689,0.72426,0.53167,0.62218,0.44943,0.5268
+IntervalWidthTest,1.42114,1.97739,1.18911,0.51692,1.33521,0.86182,1.3707,0.70951,1.3511

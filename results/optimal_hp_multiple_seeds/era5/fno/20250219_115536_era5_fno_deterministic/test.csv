@@ -1,0 +1,44 @@
+,0,1
+dataset_name,era5,era5
+max_training_set_size,20000,20000
+init_steps,10,10
+pred_horizon,10,10
+seed,12,12
+model,FNO,FNO
+uncertainty_quantification,deterministic,deterministic
+batch_size,16,16
+n_epochs,1000,1000
+early_stopping,10,10
+init,default,default
+learning_rate,0.01,0.01
+lr_schedule,step,step
+optimizer,adam,adam
+gradient_clipping,1,1
+layer_normalization,True,True
+data_loader_pin_memory,False,False
+data_loader_num_workers,0,0
+distributed_training,False,False
+alpha,0.05,0.05
+n_samples_uq,100,100
+weight_decay,0,0
+dropout,0.01,0.01
+fourier_dropout,,
+hidden_channels,20,20
+projection_channels,128,128
+lifting_channels,128,128
+n_modes,"(10, 12, 12)","(10, 12, 12)"
+n_samples,3,3
+filename_to_validate,results/optimal_hp_multiple_seeds/era5/fno/20241008_125404_era5_fno_laplace/Datetime_20241008_125429_Loss_era5_FNO_laplace_dropout_0.01.pt,results/optimal_hp_multiple_seeds/era5/fno/20241008_125404_era5_fno_laplace/Datetime_20241009_074921_Loss_era5_FNO_laplace_dropout_0.01.pt
+t_training,-1,-1
+MSEValidation,0.0158,0.01682
+EnergyScoreValidation,0.01517,0.01619
+CRPSValidation,0.01704,0.01822
+Gaussian NLLValidation,268546835.35139,302999399.27323
+CoverageValidation,0.0,0.0
+IntervalWidthValidation,0.0,0.0
+MSETest,0.02497,0.02494
+EnergyScoreTest,0.02434,0.02432
+CRPSTest,0.02661,0.02678
+Gaussian NLLTest,677386937.63118,674843829.53375
+CoverageTest,0.0,0.0
+IntervalWidthTest,0.0,0.0

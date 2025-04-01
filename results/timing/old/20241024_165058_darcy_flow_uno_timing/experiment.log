@@ -1,0 +1,155 @@
+INFO:root:Starting the logger.
+INFO:root:Using cuda.
+INFO:root:: mem (CPU python)=576.95703125MB; mem (CPU total)=1028.68359375MB
+INFO:root:############### Starting experiment with config file darcy_flow/uno_timing.ini ###############
+INFO:root:###1 out of 1 data set parameter combinations ###
+INFO:root:Data parameters: {'dataset_name': 'DarcyFlow', 'max_training_set_size': 10000, 'downscaling_factor': 2}
+INFO:root:After loading the datasets: mem (CPU python)=1997.01171875MB; mem (CPU total)=1038.55859375MB
+INFO:root:###1 out of 4 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 1234, 'model': 'UNO', 'uncertainty_quantification': 'laplace', 'batch_size': 64, 'n_epochs': 2, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.05, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'uno_out_channels': [64, 128, 128, 64, 32], 'uno_scalings': [[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]], 'uno_n_modes': [[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=1997.01171875MB; mem (CPU total)=1038.55859375MB
+INFO:root:NumberParameters: 5814913
+INFO:root:GPU memory allocated: 44040192
+INFO:root:After setting up the model: mem (CPU python)=2225.125MB; mem (CPU total)=2419.98046875MB
+INFO:root:Training starts now.
+INFO:root:At the start of the epoch: mem (CPU python)=2225.125MB; mem (CPU total)=2427.46484375MB
+INFO:root:[    1] Training loss: 0.34492600, Validation loss: 0.28996452, Gradient norm: 1.92053804
+INFO:root:At the start of the epoch: mem (CPU python)=4466.09765625MB; mem (CPU total)=4214.796875MB
+INFO:root:[    2] Training loss: 0.24850526, Validation loss: 0.24454363, Gradient norm: 1.80113568
+INFO:root:After finishing all epochs: mem (CPU python)=4542.453125MB; mem (CPU total)=4291.1953125MB
+INFO:root:Training the model took 115.574s.
+INFO:root:Emptying the cuda cache took 0.02s.
+INFO:root:Starting evaluation: model UNO & uncertainty quantification laplace
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.21774
+INFO:root:EnergyScoreTrain: 0.17433
+INFO:root:CRPSTrain: 0.14235
+INFO:root:Gaussian NLLTrain: 2.57941
+INFO:root:CoverageTrain: 0.73792
+INFO:root:IntervalWidthTrain: 0.42562
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.24195
+INFO:root:EnergyScoreValidation: 0.19411
+INFO:root:CRPSValidation: 0.15761
+INFO:root:Gaussian NLLValidation: 2.98066
+INFO:root:CoverageValidation: 0.68989
+INFO:root:IntervalWidthValidation: 0.43909
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.24947
+INFO:root:EnergyScoreTest: 0.20122
+INFO:root:CRPSTest: 0.1636
+INFO:root:Gaussian NLLTest: 3.27451
+INFO:root:CoverageTest: 0.68674
+INFO:root:IntervalWidthTest: 0.44107
+INFO:root:After validation: mem (CPU python)=5021.55078125MB; mem (CPU total)=4624.859375MB
+INFO:root:###2 out of 4 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 1234, 'model': 'UNO', 'uncertainty_quantification': 'dropout', 'batch_size': 64, 'n_epochs': 2, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.05, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'uno_out_channels': [64, 128, 128, 64, 32], 'uno_scalings': [[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]], 'uno_n_modes': [[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=5021.55078125MB; mem (CPU total)=4624.8515625MB
+INFO:root:NumberParameters: 5814913
+INFO:root:GPU memory allocated: 136314880
+INFO:root:After setting up the model: mem (CPU python)=5033.05078125MB; mem (CPU total)=4636.234375MB
+INFO:root:Training starts now.
+INFO:root:At the start of the epoch: mem (CPU python)=5033.05078125MB; mem (CPU total)=4636.4765625MB
+INFO:root:[    1] Training loss: 0.34486884, Validation loss: 0.31428534, Gradient norm: 1.91016942
+INFO:root:At the start of the epoch: mem (CPU python)=5120.84375MB; mem (CPU total)=4724.890625MB
+INFO:root:[    2] Training loss: 0.24770154, Validation loss: 0.26035996, Gradient norm: 1.80911161
+INFO:root:After finishing all epochs: mem (CPU python)=5197.1015625MB; mem (CPU total)=4801.19140625MB
+INFO:root:Training the model took 90.377s.
+INFO:root:Emptying the cuda cache took 0.018s.
+INFO:root:Starting evaluation: model UNO & uncertainty quantification dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.20024
+INFO:root:EnergyScoreTrain: 0.15706
+INFO:root:CRPSTrain: 0.12803
+INFO:root:Gaussian NLLTrain: 1.11383
+INFO:root:CoverageTrain: 0.71595
+INFO:root:IntervalWidthTrain: 0.37282
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.23302
+INFO:root:EnergyScoreValidation: 0.18477
+INFO:root:CRPSValidation: 0.15181
+INFO:root:Gaussian NLLValidation: 2.02165
+INFO:root:CoverageValidation: 0.63553
+INFO:root:IntervalWidthValidation: 0.3774
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.23819
+INFO:root:EnergyScoreTest: 0.1898
+INFO:root:CRPSTest: 0.15651
+INFO:root:Gaussian NLLTest: 2.20186
+INFO:root:CoverageTest: 0.62714
+INFO:root:IntervalWidthTest: 0.37651
+INFO:root:After validation: mem (CPU python)=5382.87890625MB; mem (CPU total)=4882.359375MB
+INFO:root:###3 out of 4 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 1234, 'model': 'UNO', 'uncertainty_quantification': 'scoring-rule-dropout', 'batch_size': 64, 'n_epochs': 2, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.05, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'uno_out_channels': [64, 128, 128, 64, 32], 'uno_scalings': [[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]], 'uno_n_modes': [[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=5382.87890625MB; mem (CPU total)=4882.359375MB
+INFO:root:NumberParameters: 5814913
+INFO:root:GPU memory allocated: 92274688
+INFO:root:After setting up the model: mem (CPU python)=5382.87890625MB; mem (CPU total)=4882.359375MB
+INFO:root:Training starts now.
+INFO:root:At the start of the epoch: mem (CPU python)=5382.87890625MB; mem (CPU total)=4882.60546875MB
+INFO:root:[    1] Training loss: 0.29007559, Validation loss: 0.24757174, Gradient norm: 3.68408508
+INFO:root:At the start of the epoch: mem (CPU python)=5382.87890625MB; mem (CPU total)=4959.75390625MB
+INFO:root:[    2] Training loss: 0.18820147, Validation loss: 0.22875854, Gradient norm: 2.48944297
+INFO:root:After finishing all epochs: mem (CPU python)=5437.66015625MB; mem (CPU total)=5035.94140625MB
+INFO:root:Training the model took 147.5s.
+INFO:root:Emptying the cuda cache took 0.03s.
+INFO:root:Starting evaluation: model UNO & uncertainty quantification scoring-rule-dropout
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.24663
+INFO:root:EnergyScoreTrain: 0.18009
+INFO:root:CRPSTrain: 0.1456
+INFO:root:Gaussian NLLTrain: -0.00295
+INFO:root:CoverageTrain: 0.90228
+INFO:root:IntervalWidthTrain: 0.89072
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.3017
+INFO:root:EnergyScoreValidation: 0.22373
+INFO:root:CRPSValidation: 0.18269
+INFO:root:Gaussian NLLValidation: 0.3989
+INFO:root:CoverageValidation: 0.82941
+INFO:root:IntervalWidthValidation: 0.87291
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.30597
+INFO:root:EnergyScoreTest: 0.22768
+INFO:root:CRPSTest: 0.18596
+INFO:root:Gaussian NLLTest: 0.43181
+INFO:root:CoverageTest: 0.82751
+INFO:root:IntervalWidthTest: 0.87016
+INFO:root:After validation: mem (CPU python)=5524.4375MB; mem (CPU total)=5122.85546875MB
+INFO:root:###4 out of 4 training parameter combinations ###
+INFO:root:Training parameters: {'seed': 1234, 'model': 'UNO', 'uncertainty_quantification': 'scoring-rule-reparam', 'batch_size': 64, 'n_epochs': 2, 'early_stopping': 10, 'init': 'default', 'learning_rate': 0.001, 'lr_schedule': 'step', 'optimizer': 'adam', 'gradient_clipping': 1, 'layer_normalization': True, 'data_loader_pin_memory': False, 'data_loader_num_workers': 0, 'distributed_training': False, 'alpha': 0.05, 'n_samples_uq': 100, 'weight_decay': 0, 'dropout': 0.05, 'fourier_dropout': None, 'hidden_channels': 32, 'projection_channels': 32, 'lifting_channels': 32, 'n_samples': 3, 'uno_out_channels': [64, 128, 128, 64, 32], 'uno_scalings': [[0.5, 0.5], [0.5, 0.5], [1.0, 1.0], [2.0, 2.0], [2.0, 2.0]], 'uno_n_modes': [[18, 18], [8, 8], [8, 8], [8, 8], [18, 18]]}
+INFO:root:After creating the dataloaders: mem (CPU python)=5524.4375MB; mem (CPU total)=5122.79296875MB
+INFO:root:NumberParameters: 5816002
+INFO:root:GPU memory allocated: 314572800
+INFO:root:After setting up the model: mem (CPU python)=5525.67578125MB; mem (CPU total)=5123.77734375MB
+INFO:root:Training starts now.
+INFO:root:At the start of the epoch: mem (CPU python)=5525.67578125MB; mem (CPU total)=5124.02734375MB
+INFO:root:[    1] Training loss: 0.25569710, Validation loss: 0.20096410, Gradient norm: 1.67107006
+INFO:root:At the start of the epoch: mem (CPU python)=5621.37109375MB; mem (CPU total)=5219.79296875MB
+INFO:root:[    2] Training loss: 0.18491016, Validation loss: 0.17266991, Gradient norm: 1.54042576
+INFO:root:After finishing all epochs: mem (CPU python)=5698.359375MB; mem (CPU total)=5296.96484375MB
+INFO:root:Training the model took 91.809s.
+INFO:root:Emptying the cuda cache took 0.015s.
+INFO:root:Starting evaluation: model UNO & uncertainty quantification scoring-rule-reparam
+INFO:root:Evaluating the model on Train data.
+INFO:root:MSETrain: 0.22015
+INFO:root:EnergyScoreTrain: 0.16027
+INFO:root:CRPSTrain: 0.13085
+INFO:root:Gaussian NLLTrain: 0.22386
+INFO:root:CoverageTrain: 0.83686
+INFO:root:IntervalWidthTrain: 0.71035
+INFO:root:Evaluating the model on Validation data.
+INFO:root:MSEValidation: 0.2385
+INFO:root:EnergyScoreValidation: 0.17315
+INFO:root:CRPSValidation: 0.14026
+INFO:root:Gaussian NLLValidation: 0.45235
+INFO:root:CoverageValidation: 0.79557
+INFO:root:IntervalWidthValidation: 0.69728
+INFO:root:Evaluating the model on Test data.
+INFO:root:MSETest: 0.24259
+INFO:root:EnergyScoreTest: 0.17644
+INFO:root:CRPSTest: 0.14308
+INFO:root:Gaussian NLLTest: 0.53185
+INFO:root:CoverageTest: 0.78921
+INFO:root:IntervalWidthTest: 0.69666
+INFO:root:After validation: mem (CPU python)=5859.91015625MB; mem (CPU total)=5361.14453125MB

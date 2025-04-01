@@ -1,0 +1,44 @@
+,0,1
+dataset_name,era5,era5
+max_training_set_size,20000,20000
+init_steps,10,10
+pred_horizon,10,10
+seed,1,12
+model,FNO,FNO
+uncertainty_quantification,scoring-rule-reparam,scoring-rule-reparam
+batch_size,16,16
+n_epochs,1000,1000
+early_stopping,10,10
+init,default,default
+learning_rate,0.005,0.005
+lr_schedule,step,step
+optimizer,adam,adam
+gradient_clipping,1,1
+layer_normalization,True,True
+data_loader_pin_memory,False,False
+data_loader_num_workers,0,0
+distributed_training,False,False
+alpha,0.05,0.05
+n_samples_uq,100,100
+weight_decay,0,0
+dropout,0.1,0.1
+fourier_dropout,,
+hidden_channels,20,20
+projection_channels,128,128
+lifting_channels,128,128
+n_modes,"(10, 12, 12)","(10, 12, 12)"
+n_samples,3,3
+t_training,61122.85,51726.147
+NumberParameters,2698534,2698534
+MSEValidation,0.01634,0.0167
+EnergyScoreValidation,0.01188,0.01216
+CRPSValidation,0.01319,0.01407
+Gaussian NLLValidation,2028.83615,1246.97212
+CoverageValidation,0.79628,0.73225
+IntervalWidthValidation,0.05816,0.056
+MSETest,0.02393,0.02419
+EnergyScoreTest,0.01857,0.01879
+CRPSTest,0.02012,0.02105
+Gaussian NLLTest,2449.52952,18.79805
+CoverageTest,0.66127,0.62516
+IntervalWidthTest,0.05769,0.05539

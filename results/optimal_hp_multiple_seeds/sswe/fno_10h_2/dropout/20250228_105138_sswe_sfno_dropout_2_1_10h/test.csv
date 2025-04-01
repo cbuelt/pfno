@@ -1,0 +1,45 @@
+,0,1,2
+dataset_name,SSWE,SSWE,SSWE
+max_training_set_size,5000,5000,5000
+pred_horizon,10,10,10
+train_horizon,2,2,2
+stepwise_evaluation,False,False,False
+seed,12345,12345,12345
+model,SFNO,SFNO,SFNO
+uncertainty_quantification,dropout,dropout,dropout
+batch_size,32,32,32
+n_epochs,1000,1000,1000
+early_stopping,10,10,10
+init,default,default,default
+learning_rate,0.005,0.005,0.005
+lr_schedule,step,step,step
+optimizer,adam,adam,adam
+gradient_clipping,1,1,1
+layer_normalization,True,True,True
+data_loader_pin_memory,False,False,False
+data_loader_num_workers,0,0,0
+distributed_training,False,False,False
+alpha,0.05,0.05,0.05
+n_samples_uq,100,100,100
+weight_decay,0,0,0
+dropout,0.01,0.01,0.01
+fourier_dropout,,,
+hidden_channels,32,32,32
+projection_channels,256,256,256
+lifting_channels,256,256,256
+n_modes,"(32, 32)","(32, 32)","(32, 32)"
+n_samples,3,3,3
+filename_to_validate,results/optimal_hp_multiple_seeds/sswe/fno_1h_2/dropout/same_seed/20250226_172028_sswe_sfno_dropout_2_1/Datetime_20250226_172029_Loss_SSWE_SFNO_dropout_dropout_0.01.pt,results/optimal_hp_multiple_seeds/sswe/fno_1h_2/dropout/same_seed/20250226_172028_sswe_sfno_dropout_2_1/Datetime_20250226_195644_Loss_SSWE_SFNO_dropout_dropout_0.01.pt,results/optimal_hp_multiple_seeds/sswe/fno_1h_2/dropout/same_seed/20250226_172028_sswe_sfno_dropout_2_1/Datetime_20250226_232738_Loss_SSWE_SFNO_dropout_dropout_0.01.pt
+t_training,-1,-1,-1
+MSEValidation,3.02877,2.93739,3.82132
+EnergyScoreValidation,2.78539,2.38486,3.29907
+CRPSValidation,1.18583,1.05222,1.7228
+Gaussian NLLValidation,22.60099,3.89593,12.14184
+CoverageValidation,0.1784,0.49333,0.20459
+IntervalWidthValidation,0.81557,2.27311,2.06008
+MSETest,54.36318,19130198729.72801,740972943.616
+EnergyScoreTest,25.31409,67179152.544,33274810.112
+CRPSTest,10.09194,30485193.904,13371112.872
+Gaussian NLLTest,4.88156,7605258203.96794,740364.00157
+CoverageTest,0.99035,0.75777,0.99973
+IntervalWidthTest,159.81718,5695307134.976,1430363683.84
